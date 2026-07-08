@@ -1,0 +1,4190 @@
+[
+  {
+    "id": "7a7e88f8-b89a-4ad5-b97a-5a73259671d8",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 3,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-11T09:02:04.910Z",
+    "closed": true,
+    "closedAt": "2026-02-11T09:02:45.691Z"
+  },
+  {
+    "id": "d5d6ad53-f8a5-4732-8d6c-379dc4df3798",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-11T22:11:57.786Z",
+    "closed": true,
+    "closedAt": "2026-02-13T21:49:32.188Z"
+  },
+  {
+    "id": "529facd1-9473-4d86-a7f5-205f52322625",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 5,
+        "note": "بدون سكر"
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 3,
+        "note": "اثنين بارد واحد حار"
+      }
+    ],
+    "createdAt": "2026-02-11T22:24:02.452Z",
+    "closed": true,
+    "closedAt": "2026-02-15T17:59:47.977Z"
+  },
+  {
+    "id": "0543846f-2299-4325-bdfc-14be7b52feaa",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 4,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-11T22:26:35.158Z",
+    "closed": true,
+    "closedAt": "2026-02-15T23:21:26.739Z"
+  },
+  {
+    "id": "1e8edfe6-5457-45b8-a48a-1b61a4d144ac",
+    "tableId": "3",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-12T22:09:25.559Z",
+    "closed": true,
+    "closedAt": "2026-02-18T12:47:53.750Z"
+  },
+  {
+    "id": "45f4ab98-1412-4b63-bc2b-82d2eab7e425",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-12T22:17:18.957Z",
+    "closed": true,
+    "closedAt": "2026-02-13T21:49:34.181Z"
+  },
+  {
+    "id": "ebf6a861-938f-45de-b2d5-bb14613a4e7f",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-15T17:58:38.941Z",
+    "closed": true,
+    "closedAt": "2026-02-15T23:37:08.924Z"
+  },
+  {
+    "id": "4c47e832-cf3c-42eb-9409-a12ca520b9ca",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 4,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-15T17:59:30.575Z",
+    "closed": true,
+    "closedAt": "2026-02-15T23:37:12.245Z"
+  },
+  {
+    "id": "25f2ae6c-0823-4156-b690-bde68e0c14ba",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-15T23:05:15.116Z",
+    "closed": true,
+    "closedAt": "2026-02-15T23:21:30.833Z"
+  },
+  {
+    "id": "90248c1e-8af5-434b-a68f-40be13e5e71a",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-15T23:20:18.887Z",
+    "closed": true,
+    "closedAt": "2026-02-15T23:21:34.541Z"
+  },
+  {
+    "id": "1dfad44d-cfb9-4570-a679-3c53fe3a2e7c",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 7,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-15T23:20:32.396Z",
+    "closed": true,
+    "closedAt": "2026-02-15T23:22:13.040Z"
+  },
+  {
+    "id": "0d071864-34ea-435e-8211-c192092727da",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-15T23:36:49.440Z",
+    "closed": true,
+    "closedAt": "2026-02-15T23:37:15.262Z"
+  },
+  {
+    "id": "7bda720a-f959-4981-9773-4b2e0e9cf8d7",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-16T23:37:48.680Z",
+    "closed": true,
+    "closedAt": "2026-02-16T23:38:19.333Z"
+  },
+  {
+    "id": "4b464da2-cf7f-4890-a8de-6e88ac0d1f28",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 3,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 2,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 2,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-18T12:08:10.236Z",
+    "closed": true,
+    "closedAt": "2026-02-18T12:08:31.142Z"
+  },
+  {
+    "id": "bd51c3e5-32c8-42d6-b0c0-973e1f8b4a72",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 3,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 3,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 2,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-18T12:45:37.740Z",
+    "closed": true,
+    "closedAt": "2026-02-18T12:45:55.028Z"
+  },
+  {
+    "id": "48c2f2ae-3cf4-44c5-87d4-c8919905156a",
+    "tableId": "3",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 2,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-18T12:47:43.453Z",
+    "closed": true,
+    "closedAt": "2026-02-18T12:47:57.889Z"
+  },
+  {
+    "id": "710002af-4a9c-499d-968d-75a6011854f6",
+    "tableId": "3",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "7d84a980-38a9-4aca-9364-cf02ade9dd79",
+        "name": "هوت شوت",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-18T12:50:45.382Z",
+    "closed": true,
+    "closedAt": "2026-02-18T12:50:56.209Z"
+  },
+  {
+    "id": "53b0464c-a537-460e-b108-155ed8694889",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-20T14:06:42.287Z",
+    "closed": true,
+    "closedAt": "2026-02-21T00:32:20.240Z"
+  },
+  {
+    "id": "d9b96e21-73dd-4582-860e-7fcad3f9d34c",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-21T00:23:23.971Z",
+    "closed": true,
+    "closedAt": "2026-02-21T00:32:37.272Z"
+  },
+  {
+    "id": "191b2f32-7a5b-4e5d-ad90-106148cfc916",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-21T00:31:37.164Z",
+    "closed": true,
+    "closedAt": "2026-02-21T00:32:50.592Z"
+  },
+  {
+    "id": "cc910155-67ce-4671-b3ee-8d9c3e06923c",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 2,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-21T00:31:57.761Z",
+    "closed": true,
+    "closedAt": "2026-02-21T00:32:53.726Z"
+  },
+  {
+    "id": "5854607d-77f4-4554-b0a7-a7c9abe2180a",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-21T11:44:37.397Z",
+    "closed": true,
+    "closedAt": "2026-02-21T11:45:06.364Z"
+  },
+  {
+    "id": "fce76c70-dcb1-4813-9c02-3442c8cecafe",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-21T11:44:47.774Z",
+    "closed": true,
+    "closedAt": "2026-02-21T11:45:16.882Z"
+  },
+  {
+    "id": "81f743f4-a098-4855-b14f-2c80b71c9dbc",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-23T14:47:40.756Z",
+    "closed": true,
+    "closedAt": "2026-02-23T14:47:52.787Z"
+  },
+  {
+    "id": "4f86db99-b3de-41aa-8c78-d3d072286bf2",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-02-28T14:26:19.235Z",
+    "closed": true,
+    "closedAt": "2026-02-28T14:26:29.373Z"
+  },
+  {
+    "id": "0f94f571-99a6-471e-82cf-8ab0d6be5b61",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-01T19:41:37.858Z",
+    "closed": true,
+    "closedAt": "2026-03-01T20:11:51.796Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "69c7bfa5-8b9b-4f21-becf-8d9f2c41d48e",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-01T20:12:04.296Z",
+    "closed": true,
+    "closedAt": "2026-03-01T20:12:12.732Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T2-003",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-01T21:08:52.284Z",
+    "closed": true,
+    "closedAt": "2026-03-02T13:56:12.739Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T2-005",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-02T13:55:59.233Z",
+    "closed": true,
+    "closedAt": "2026-03-02T13:56:17.519Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T2-006",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T00:14:06.457Z",
+    "closed": true,
+    "closedAt": "2026-03-03T00:14:37.537Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-007",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T00:14:14.791Z",
+    "closed": true,
+    "closedAt": "2026-03-03T00:14:27.153Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-008",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T00:16:57.073Z",
+    "closed": true,
+    "closedAt": "2026-03-03T00:17:20.504Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T3-009",
+    "tableId": "3",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "7d84a980-38a9-4aca-9364-cf02ade9dd79",
+        "name": "هوت شوت",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T00:17:12.567Z",
+    "closed": true,
+    "closedAt": "2026-03-03T00:17:30.984Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-010",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T23:45:55.824Z",
+    "closed": true,
+    "closedAt": "2026-03-03T23:46:35.670Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T2-011",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T23:46:05.893Z",
+    "closed": true,
+    "closedAt": "2026-03-03T23:47:06.004Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T3-012",
+    "tableId": "3",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T23:46:15.596Z",
+    "closed": true,
+    "closedAt": "2026-03-03T23:47:39.673Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T1-013",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-03T23:56:47.181Z",
+    "closed": true,
+    "closedAt": "2026-03-03T23:56:57.145Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T1-016",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "7d84a980-38a9-4aca-9364-cf02ade9dd79",
+        "name": "هوت شوت",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-07T13:51:15.967Z",
+    "closed": true,
+    "closedAt": "2026-03-07T14:14:30.441Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-017",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "7d84a980-38a9-4aca-9364-cf02ade9dd79",
+        "name": "هوت شوت",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-07T14:03:03.675Z",
+    "closed": true,
+    "closedAt": "2026-03-07T14:27:04.791Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-019",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "7d84a980-38a9-4aca-9364-cf02ade9dd79",
+        "name": "هوت شوت",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-07T14:11:09.976Z",
+    "closed": true,
+    "closedAt": "2026-03-12T20:36:02.766Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-020",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-07T14:14:12.975Z",
+    "closed": true,
+    "closedAt": "2026-03-12T20:36:06.138Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-021",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-07T14:30:02.314Z",
+    "closed": true,
+    "closedAt": "2026-03-12T20:36:09.066Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-003",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-13T12:13:15.918Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:34.497Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-004",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-13T12:13:57.598Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:36.731Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T1-001",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-23T08:34:52.787Z",
+    "closed": true,
+    "closedAt": "2026-03-23T08:46:04.791Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-002",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-23T08:35:04.154Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:39.064Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T1-001",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:28:36.396Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:44:31.931Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T2-002",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:29:03.328Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:23.604Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-003",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:30:34.258Z",
+    "closed": true,
+    "closedAt": "2026-03-25T17:48:04.447Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-004",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:30:49.750Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:44:55.523Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-005",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:31:01.275Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:46.566Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T4-006",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:31:12.794Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:49.000Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-007",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:37:58.651Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:44:36.203Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T14-008",
+    "tableId": "14",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:38:08.914Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:27:16.258Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T1-009",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:43:10.093Z",
+    "closed": true,
+    "closedAt": "2026-03-25T17:48:43.267Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-010",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "264780af-9d58-4ea6-8830-52f3e2b91bfd",
+        "name": "لاتيه",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:43:48.753Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:44:40.136Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-011",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:48:57.440Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:51.084Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T14-012",
+    "tableId": "14",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:49:09.439Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:27:18.066Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T5-013",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 2,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:49:47.650Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:08.586Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-014",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:49:57.686Z",
+    "closed": true,
+    "closedAt": "2026-03-25T17:50:39.651Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T6-015",
+    "tableId": "6",
+    "items": [
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:50:11.520Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:31.807Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-016",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      },
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:56:02.934Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:44:42.269Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T3-017",
+    "tableId": "3",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T17:57:03.487Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:00:59.535Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-018",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:00:21.984Z",
+    "closed": true,
+    "closedAt": "2026-03-25T17:51:14.715Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T8-019",
+    "tableId": "8",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:00:31.809Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:55.514Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T1-020",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:00:43.030Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:44:44.319Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T5-021",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:02:30.194Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:10.369Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T5-022",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:02:39.935Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:12.005Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-023",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:30:07.002Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:09:51.296Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-024",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:30:53.607Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:03.775Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-025",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:30:53.851Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:01.574Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T1-026",
+    "tableId": "1",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:31:08.617Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:24:58.899Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T7-027",
+    "tableId": "7",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:34:11.003Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:45.196Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T11-028",
+    "tableId": "11",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:34:46.801Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:27:05.381Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T2-029",
+    "tableId": "2",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:35:47.977Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:25.878Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-030",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:36:00.972Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:53.201Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-031",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:39:25.571Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:55.301Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T5-032",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:39:55.960Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:13.804Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T3-033",
+    "tableId": "3",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:40:09.148Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:01:02.038Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-034",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:40:21.647Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:57.215Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T5-035",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:46:16.599Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:15.705Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T5-036",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:53:52.490Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:18.022Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T6-037",
+    "tableId": "6",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:53:59.653Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:33.809Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T5-038",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T18:57:42.326Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:19.806Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T6-039",
+    "tableId": "6",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:00:59.346Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:36.024Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T5-040",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:06:56.717Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:21.556Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T5-041",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "f02dc75a-82d4-4eb2-bd1f-1793f5476654",
+        "name": "قهوة تركية",
+        "price": 2500,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:08:34.246Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:23.341Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T5-042",
+    "tableId": "5",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:09:00.630Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:25.123Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T4-043",
+    "tableId": "4",
+    "items": [
+      {
+        "menuId": "da4dc788-834e-416d-829f-21537b175d8d",
+        "name": "كبتشينو",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:09:44.398Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:25:59.250Z",
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "T6-044",
+    "tableId": "6",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:15:28.780Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:37.658Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T7-045",
+    "tableId": "7",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:15:40.441Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:46.843Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T7-046",
+    "tableId": "7",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:16:01.500Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:49.008Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T6-047",
+    "tableId": "6",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:21:12.816Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:26:39.208Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T14-048",
+    "tableId": "14",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": ""
+      }
+    ],
+    "createdAt": "2026-03-24T19:21:23.662Z",
+    "closed": true,
+    "closedAt": "2026-03-25T18:27:19.850Z",
+    "paymentMethod": "card"
+  },
+  {
+    "id": "T10-001",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 3,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T08:46:42.141Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Gch",
+    "customerSessionId": "sess_1783068394344_bbp4axi",
+    "closedAt": "2026-07-03T08:56:02.644Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-002",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T11:21:58.891Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "بيي",
+    "customerSessionId": "sess_1783077682161_pt7w6mn",
+    "closedAt": "2026-07-03T11:25:37.801Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-003",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 3,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T11:23:31.476Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "بيي",
+    "customerSessionId": "sess_1783077682161_pt7w6mn",
+    "kitchenBatchId": "kb-10-mr4uhonb",
+    "bundledCustomerNames": [
+      "بيي",
+      "علي"
+    ],
+    "closedAt": "2026-07-03T11:24:11.022Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-004",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 2,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "علي"
+      }
+    ],
+    "createdAt": "2026-07-03T11:23:31.518Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783077786420_y9qek9t",
+    "kitchenBatchId": "kb-10-mr4uhonb",
+    "bundledCustomerNames": [
+      "بيي",
+      "علي"
+    ],
+    "closedAt": "2026-07-03T11:25:37.841Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-005",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "وسط",
+          "الكمية": "وسط"
+        }
+      }
+    ],
+    "createdAt": "2026-07-03T11:43:46.749Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "ف",
+    "customerSessionId": "sess_1783078996733_6kjae4u",
+    "closedAt": "2026-07-03T11:43:54.321Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T3-006",
+    "tableId": "3",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:04:18.270Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "شش",
+    "customerSessionId": "sess_1783080238326_m0p03hs",
+    "closedAt": "2026-07-03T12:10:08.074Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T3-007",
+    "tableId": "3",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:10:22.078Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "سس",
+    "customerSessionId": "sess_1783080614231_nr5ewpn",
+    "closedAt": "2026-07-03T12:10:29.036Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-008",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:11:04.145Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "ببق",
+    "customerSessionId": "sess_1783080657720_qmpon3j",
+    "closedAt": "2026-07-03T12:11:06.891Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-009",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:11:24.913Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "ببب",
+    "customerSessionId": "sess_1783080678886_hk6p2n9",
+    "closedAt": "2026-07-03T12:11:27.721Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-010",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:25:11.869Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783081492705_92o1ao3",
+    "closedAt": "2026-07-03T12:25:18.827Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-011",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:25:34.334Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783081492705_92o1ao3",
+    "closedAt": "2026-07-03T12:25:37.110Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-012",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:25:44.612Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783081492705_92o1ao3",
+    "closedAt": "2026-07-03T12:26:50.766Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-013",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "وسط",
+          "الكمية": "كثير"
+        }
+      }
+    ],
+    "createdAt": "2026-07-03T12:29:03.691Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783081732082_01ouih7",
+    "closedAt": "2026-07-03T12:54:05.911Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-014",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:30:02.852Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783081732082_01ouih7",
+    "closedAt": "2026-07-03T12:30:21.094Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-015",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:39:21.609Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "اذر",
+    "customerSessionId": "sess_1783082335942_vdjdqxo",
+    "closedAt": "2026-07-03T12:54:05.962Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-016",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:54:21.342Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783083255028_0vyc048",
+    "closedAt": "2026-07-03T12:54:24.768Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-017",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:54:31.052Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783083255028_0vyc048",
+    "closedAt": "2026-07-03T13:14:12.533Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-018",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fce3295f-c14e-4bf7-92b3-ca229b6b615b",
+        "name": "موهيتو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 2,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 2,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "قليل سكر",
+          "الكمية": "وسط"
+        }
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 3,
+        "note": "فدفلفافل",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-03T12:57:01.752Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783083255028_0vyc048",
+    "closedAt": "2026-07-03T12:58:11.873Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-019",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "قليل",
+          "الكمية": "كثير"
+        }
+      },
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "مقمبكثم",
+        "selectedOptions": {
+          "السكر": "قليل"
+        }
+      }
+    ],
+    "createdAt": "2026-07-04T08:24:30.255Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783153418996_3eu82z1",
+    "closedAt": "2026-07-04T08:24:37.485Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-020",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 4,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T08:24:51.389Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783153418996_3eu82z1",
+    "closedAt": "2026-07-04T08:24:54.307Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-021",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T08:25:03.432Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783153418996_3eu82z1",
+    "closedAt": "2026-07-04T08:25:56.823Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-022",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T08:46:40.696Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783154790839_3pwtopq",
+    "closedAt": "2026-07-04T08:46:45.201Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-023",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T08:57:29.746Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783155409883_gz2cp6j",
+    "closedAt": "2026-07-04T08:57:36.640Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-024",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T08:57:49.965Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783155409883_gz2cp6j",
+    "closedAt": "2026-07-04T10:09:20.352Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-025",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 2,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T09:32:04.783Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783155409883_gz2cp6j",
+    "closedAt": "2026-07-04T09:33:27.514Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-026",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T09:33:44.288Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783155409883_gz2cp6j",
+    "closedAt": "2026-07-04T09:33:58.595Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-027",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-04T09:43:13.348Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783158165144_hgvg4kc",
+    "closedAt": "2026-07-04T10:09:20.416Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T10-028",
+    "tableId": "10",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "حار يكون",
+        "selectedOptions": {
+          "السكر": "كثير",
+          "الكمية": "وسط"
+        }
+      }
+    ],
+    "createdAt": "2026-07-04T09:46:09.614Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783158165144_hgvg4kc",
+    "closedAt": "2026-07-04T10:09:20.493Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-029",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 2,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "كثير",
+          "الكمية": "كثير"
+        },
+        "orderedByName": "مصطفى"
+      }
+    ],
+    "createdAt": "2026-07-05T08:17:40.321Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783239314864_x95khc7",
+    "kitchenBatchId": "kb-1-mr7iqdp7",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T09:48:53.541Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-030",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "ع",
+        "selectedOptions": {},
+        "orderedByName": "علي"
+      }
+    ],
+    "createdAt": "2026-07-05T08:17:40.354Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783239336422_6n500z5",
+    "kitchenBatchId": "kb-1-mr7iqdp7",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T09:48:53.583Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-031",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "علي"
+      }
+    ],
+    "createdAt": "2026-07-05T10:07:24.841Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783245947300_obmyfp1",
+    "kitchenBatchId": "kb-1-mr7mnick",
+    "bundledCustomerNames": [
+      "علي",
+      "مصطفى"
+    ],
+    "closedAt": "2026-07-05T11:16:20.628Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-032",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "الكمية": "وسط"
+        },
+        "orderedByName": "مصطفى"
+      }
+    ],
+    "createdAt": "2026-07-05T10:07:24.875Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783245962002_1x7uf34",
+    "kitchenBatchId": "kb-1-mr7mnick",
+    "bundledCustomerNames": [
+      "علي",
+      "مصطفى"
+    ],
+    "closedAt": "2026-07-05T11:16:20.718Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-033",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "الكمية": "وسط"
+        }
+      }
+    ],
+    "createdAt": "2026-07-05T11:18:37.436Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783250185725_yhkz598",
+    "closedAt": "2026-07-05T11:19:26.009Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-034",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "وسط",
+          "الكمية": "وسط"
+        },
+        "orderedByName": "مصطفى"
+      }
+    ],
+    "createdAt": "2026-07-05T11:47:18.868Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783252000785_9ejw35i",
+    "kitchenBatchId": "kb-1-mr7q7zd3",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T11:47:24.291Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-035",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "علي"
+      }
+    ],
+    "createdAt": "2026-07-05T11:47:18.985Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783252011484_4gi6e6m",
+    "kitchenBatchId": "kb-1-mr7q7zd3",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T11:47:24.291Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-036",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T11:48:15.671Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783252011484_4gi6e6m",
+    "closedAt": "2026-07-05T11:49:25.520Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-037",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T11:49:54.701Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783252124543_r1xuxo0",
+    "closedAt": "2026-07-05T11:50:04.262Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-038",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T11:52:15.584Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "غب",
+    "customerSessionId": "sess_1783252319975_9qsfoe1",
+    "closedAt": "2026-07-05T11:53:13.174Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-039",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T11:52:39.932Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "غب",
+    "customerSessionId": "sess_1783252319975_9qsfoe1",
+    "closedAt": "2026-07-05T11:52:43.453Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-040",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T11:52:50.531Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783252011484_4gi6e6m",
+    "closedAt": "2026-07-05T11:52:56.073Z",
+    "rejectedByCashier": true,
+    "cancelReason": "cashier_rejected_approval",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-041",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+        "name": "امريكانو",
+        "price": 8000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "عادي"
+      }
+    ],
+    "createdAt": "2026-07-05T11:54:21.228Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "عادي",
+    "customerSessionId": "sess_1783252410886_fadfegq",
+    "kitchenBatchId": "kb-1-mr7qh198",
+    "bundledCustomerNames": [
+      "عادي",
+      "عليك"
+    ],
+    "closedAt": "2026-07-05T12:00:28.861Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-042",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "عليك"
+      }
+    ],
+    "createdAt": "2026-07-05T11:54:21.312Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "عليك",
+    "customerSessionId": "sess_1783252416248_rlkj5fz",
+    "kitchenBatchId": "kb-1-mr7qh198",
+    "bundledCustomerNames": [
+      "عادي",
+      "عليك"
+    ],
+    "closedAt": "2026-07-05T12:00:28.921Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-043",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "علي اني",
+        "selectedOptions": {},
+        "orderedByName": "خ"
+      }
+    ],
+    "createdAt": "2026-07-05T12:01:17.598Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "خ",
+    "customerSessionId": "sess_1783252815968_mnjbggj",
+    "kitchenBatchId": "kb-1-mr7qpyj4",
+    "bundledCustomerNames": [
+      "خ",
+      "مصطفى"
+    ],
+    "closedAt": "2026-07-05T12:02:31.076Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-044",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "وسط",
+          "الكمية": "كثير"
+        },
+        "orderedByName": "مصطفى"
+      }
+    ],
+    "createdAt": "2026-07-05T12:01:17.712Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783252841987_jgupfka",
+    "kitchenBatchId": "kb-1-mr7qpyj4",
+    "bundledCustomerNames": [
+      "خ",
+      "مصطفى"
+    ],
+    "closedAt": "2026-07-05T12:02:31.143Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-045",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "مصطفى"
+      }
+    ],
+    "createdAt": "2026-07-05T12:03:31.752Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783252962970_egdca1y",
+    "kitchenBatchId": "kb-1-mr7qsu1k",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T12:04:40.469Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-046",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "هذا طلب علي",
+        "selectedOptions": {},
+        "orderedByName": "علي"
+      }
+    ],
+    "createdAt": "2026-07-05T12:03:31.869Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783252966568_xtzda68",
+    "kitchenBatchId": "kb-1-mr7qsu1k",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T12:04:40.538Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-047",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 2,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T12:05:30.104Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783253120934_jpa5g8m",
+    "closedAt": "2026-07-05T12:07:44.852Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-048",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T12:05:41.904Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783253114553_reek7px",
+    "closedAt": "2026-07-05T12:07:44.902Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-049",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+        "name": "مكسيكي",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T12:06:12.482Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783253120934_jpa5g8m",
+    "closedAt": "2026-07-05T12:06:46.781Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-050",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T13:41:07.760Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783258829097_q1wjkdf",
+    "closedAt": "2026-07-05T13:41:16.893Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-051",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T14:02:21.593Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783259985457_pxphvtf",
+    "closedAt": "2026-07-05T14:04:11.106Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-052",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T14:37:56.470Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783261123506_99ssnui",
+    "closedAt": "2026-07-05T14:49:29.348Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-053",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T14:38:53.564Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783261123506_99ssnui",
+    "closedAt": "2026-07-05T14:49:29.391Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-054",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T14:51:29.990Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783261366952_mcjmn34",
+    "closedAt": "2026-07-05T15:09:53.764Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-055",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T14:52:51.318Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783263128416_p6eibel",
+    "closedAt": "2026-07-05T15:09:53.815Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-056",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "c96e54d6-e21e-433c-916f-5865c0019566",
+        "name": "موهيتو",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "مصطفى"
+      }
+    ],
+    "createdAt": "2026-07-05T14:54:23.105Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "مصطفى",
+    "customerSessionId": "sess_1783261366952_mcjmn34",
+    "kitchenBatchId": "kb-1-mr7wwk1n",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T15:09:53.859Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-057",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "علي"
+      }
+    ],
+    "createdAt": "2026-07-05T14:54:23.142Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783263128416_p6eibel",
+    "kitchenBatchId": "kb-1-mr7wwk1n",
+    "bundledCustomerNames": [
+      "مصطفى",
+      "علي"
+    ],
+    "closedAt": "2026-07-05T15:09:53.905Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-058",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 3,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T22:46:15.457Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali",
+    "customerSessionId": "sess_1783291413611_dfn595a",
+    "closedAt": "2026-07-05T22:57:08.274Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-059",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 2,
+        "note": "Ali",
+        "selectedOptions": {
+          "السكر": "قليل",
+          "الكمية": "كثير"
+        }
+      },
+      {
+        "menuId": "fce3295f-c14e-4bf7-92b3-ca229b6b615b",
+        "name": "موهيتو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T22:50:11.129Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali",
+    "customerSessionId": "sess_1783291413611_dfn595a",
+    "closedAt": "2026-07-05T22:57:08.383Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-060",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "وسط",
+          "الكمية": "كثير"
+        }
+      }
+    ],
+    "createdAt": "2026-07-05T22:57:25.622Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali jan",
+    "customerSessionId": "sess_1783292237742_4yvilz1",
+    "closedAt": "2026-07-05T23:24:22.925Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-061",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "الكمية": "وسط"
+        }
+      }
+    ],
+    "createdAt": "2026-07-05T23:01:05.340Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali jan",
+    "customerSessionId": "sess_1783292237742_4yvilz1",
+    "closedAt": "2026-07-05T23:24:23.071Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-062",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-05T23:17:25.272Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali jan",
+    "customerSessionId": "sess_1783292237742_4yvilz1",
+    "closedAt": "2026-07-05T23:24:23.145Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-063",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 3,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-07T10:42:17.652Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali",
+    "customerSessionId": "sess_1783420924761_g5bjwhz",
+    "closedAt": "2026-07-07T10:44:09.653Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-064",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 2,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-07T10:45:57.126Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali",
+    "customerSessionId": "sess_1783421121454_pot8892",
+    "closedAt": "2026-07-07T11:09:29.946Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-065",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "c96e54d6-e21e-433c-916f-5865c0019566",
+        "name": "موهيتو",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "bb60a4ba-b3e1-459b-86f3-edd95aea7da5",
+        "name": "موهيتو بلو",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "e66d8dcf-b15b-4a67-b427-5be796b71fc6",
+        "name": "موهيتو بليمون ونعناع",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+        "name": "اسبيرسو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {
+          "السكر": "قليل سكر",
+          "الكمية": "وسط"
+        }
+      }
+    ],
+    "createdAt": "2026-07-07T11:09:11.023Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "Ali",
+    "customerSessionId": "sess_1783421121454_pot8892",
+    "closedAt": "2026-07-07T11:09:13.584Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-066",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "bb60a4ba-b3e1-459b-86f3-edd95aea7da5",
+        "name": "موهيتو بلو",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "c96e54d6-e21e-433c-916f-5865c0019566",
+        "name": "موهيتو",
+        "price": 2000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      },
+      {
+        "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+        "name": "كوماند لاتي",
+        "price": 3000,
+        "quantity": 1,
+        "note": "هبتبنبربه",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-07T20:35:19.023Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783456497838_6l7p590",
+    "closedAt": "2026-07-07T20:52:13.956Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-067",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fce3295f-c14e-4bf7-92b3-ca229b6b615b",
+        "name": "موهيتو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-07T20:53:08.543Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "jj",
+    "customerSessionId": "sess_1783457546324_ciugnxb",
+    "closedAt": "2026-07-07T20:53:36.344Z",
+    "cancelledByCustomer": true,
+    "cancelReason": "customer_cancel_pending",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-068",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fce3295f-c14e-4bf7-92b3-ca229b6b615b",
+        "name": "موهيتو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-08T09:12:49.515Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "aa",
+    "customerSessionId": "sess_1783501955777_xj4si9i",
+    "closedAt": "2026-07-08T09:24:55.031Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-069",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "علي"
+      }
+    ],
+    "createdAt": "2026-07-08T09:23:12.763Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783502036748_1qjvarx",
+    "kitchenBatchId": "kb-1-mrbve7zr",
+    "bundledCustomerNames": [
+      "علي",
+      "aa"
+    ],
+    "closedAt": "2026-07-08T09:24:55.080Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-070",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fce3295f-c14e-4bf7-92b3-ca229b6b615b",
+        "name": "موهيتو",
+        "price": 5000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {},
+        "orderedByName": "aa"
+      }
+    ],
+    "createdAt": "2026-07-08T09:23:12.798Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "aa",
+    "customerSessionId": "sess_1783501955777_xj4si9i",
+    "kitchenBatchId": "kb-1-mrbve7zr",
+    "bundledCustomerNames": [
+      "علي",
+      "aa"
+    ],
+    "closedAt": "2026-07-08T09:24:55.128Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  },
+  {
+    "id": "T1-071",
+    "tableId": "1",
+    "orderType": "DINE_IN",
+    "items": [
+      {
+        "menuId": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+        "name": "لاتي",
+        "price": 20000,
+        "quantity": 1,
+        "note": "",
+        "selectedOptions": {}
+      }
+    ],
+    "createdAt": "2026-07-08T09:26:45.129Z",
+    "open_date": "2026-07-03",
+    "cash_session_id": "2026-07-03T08:46:17.361Z",
+    "closed": true,
+    "tillOpenedAt": "2026-07-03T08:46:17.361Z",
+    "customerName": "علي",
+    "customerSessionId": "sess_1783502782931_ohqhwin",
+    "closedAt": "2026-07-08T09:37:39.208Z",
+    "paymentMethod": "cash",
+    "close_open_date": "2026-07-03"
+  }
+]

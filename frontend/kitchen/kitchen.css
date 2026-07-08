@@ -1,0 +1,1350 @@
+/**
+ * شاشة المطبخ — تخطيط وأنماط
+ * الهيكل: ملخص سريع (عرض كامل) ثم الطلبات الحالية (عرض كامل)
+ */
+
+/* ——— صفحة ——— */
+.kitchen-page {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.kitchen-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ——— رأس ——— */
+.kitchen-header.kitchen-page-header {
+  padding: 0.75rem 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.35rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: #181b20;
+  flex-shrink: 0;
+}
+
+.kitchen-header-start {
+  justify-self: start;
+  min-width: 0;
+}
+
+.kitchen-header-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.kitchen-header-cafe-name {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  margin: 0;
+  padding: 0 0.5rem;
+  max-width: min(52vw, 22rem);
+  text-align: center;
+  font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+  font-size: clamp(1.15rem, 3.2vw, 1.65rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: #ffd86b;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kitchen-header-cafe-name:empty,
+.kitchen-header-cafe-name[hidden] {
+  display: none;
+}
+
+.kitchen-header-actions {
+  justify-self: end;
+  grid-column: 3;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .kitchen-header.kitchen-page-header {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  .kitchen-header-cafe-name {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: 100%;
+    margin-top: 0.15rem;
+  }
+  .kitchen-header-actions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+/* ——— المحتوى الرئيسي ——— */
+.kitchen-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/**
+ * عرض الطابور: عمود واحد بعرض الشاشة
+ * 1) ملخص سريع (أعلى)
+ * 2) الطلبات الحالية (أسفل)
+ */
+.kitchen-queue-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  align-items: stretch;
+}
+
+/* hidden + display:flex على نفس العنصر — يجب !important وإلا تظهر الصفحتان معاً */
+.kitchen-queue-view[hidden],
+.kitchen-avail-page[hidden] {
+  display: none !important;
+}
+
+.kitchen-main[data-kitchen-view="queue"] .kitchen-avail-page {
+  display: none !important;
+}
+
+.kitchen-main[data-kitchen-view="availability"] .kitchen-queue-view {
+  display: none !important;
+}
+
+body.kitchen-page--availability .kitchen-avail-open-btn {
+  display: none !important;
+}
+
+/* لوحات */
+.kitchen-panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+}
+
+.kitchen-panel--summary {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.kitchen-panel--orders {
+  flex: 1 1 auto;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.kitchen-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.kitchen-panel-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.kitchen-panel-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0.35rem 0 0 0;
+  line-height: 1.35;
+}
+
+.kitchen-panel-body {
+  margin-top: 0.75rem;
+}
+
+.kitchen-panel--orders .kitchen-panel-body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ——— ملخص سريع ——— */
+.kitchen-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.kitchen-summary-card {
+  border-radius: 12px;
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #fff;
+  min-height: 72px;
+  justify-content: center;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.kitchen-summary-card .label {
+  font-size: 0.82rem;
+  opacity: 0.92;
+  line-height: 1.25;
+}
+
+.kitchen-summary-card .value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.kitchen-summary-card--new {
+  background: rgba(138, 180, 248, 0.14);
+  border: 1px solid rgba(138, 180, 248, 0.45);
+}
+.kitchen-summary-card--inprogress {
+  background: rgba(251, 188, 4, 0.16);
+  border: 1px solid rgba(251, 188, 4, 0.5);
+}
+.kitchen-summary-card--prepared {
+  background: rgba(52, 168, 83, 0.18);
+  border: 1px solid rgba(52, 168, 83, 0.55);
+}
+.kitchen-summary-card--oldest {
+  background: rgba(255, 167, 38, 0.16);
+  border: 1px solid rgba(255, 167, 38, 0.5);
+}
+
+/* ——— سير العمل (أقسام الطلبات) ——— */
+.kitchen-workflow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.kitchen-workflow-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/** شريط عنوان خفيف يميّز منطقة «جديدة» vs «قيد التجهيز» */
+.kitchen-workflow-zone-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.4rem 0.65rem;
+  border-radius: 8px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.kitchen-workflow-zone-label--new {
+  color: #fdd663;
+  background: rgba(251, 188, 4, 0.12);
+  border: 1px solid rgba(251, 188, 4, 0.35);
+}
+
+.kitchen-workflow-zone-label--preparing {
+  color: #ffcc80;
+  background: rgba(255, 152, 0, 0.18);
+  border: 1px solid rgba(255, 152, 0, 0.45);
+  box-shadow: 0 0 12px rgba(255, 152, 0, 0.12);
+}
+
+/** خلفية خفيفة لمنطقة التجهيز لتفرقتها عن «جديدة» */
+.kitchen-workflow-col--new {
+  padding: 0.5rem 0.65rem 0.65rem;
+  border-radius: 12px;
+  background: rgba(251, 188, 4, 0.04);
+  border: 1px solid rgba(251, 188, 4, 0.12);
+}
+
+.kitchen-workflow-col--preparing {
+  padding: 0.5rem 0.65rem 0.65rem;
+  border-radius: 12px;
+  background: rgba(255, 152, 0, 0.07);
+  border: 1px solid rgba(255, 152, 0, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(255, 152, 0, 0.08);
+}
+
+.kitchen-workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin-inline: 0;
+  padding: 0.5rem 0.55rem 0.55rem;
+  gap: 0.28rem;
+  border-radius: 10px;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-header__table {
+  font-size: 1.18rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-header__table--service {
+  font-size: 1.32rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-header__type {
+  font-size: 0.76rem;
+  padding: 0.18rem 0.48rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-header__time {
+  font-size: 0.68rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-customer {
+  margin: 0.1rem 0 0.2rem;
+  padding: 0;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-customer__text {
+  font-size: 0.72rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-badge {
+  font-size: 0.66rem;
+  padding: 0.14rem 0.38rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-item {
+  padding: 0.28rem 0;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-item__qty {
+  font-size: 1.35rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-item__sep {
+  font-size: 1.05rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-item__name {
+  font-size: 1.3rem;
+}
+
+.kitchen-workflow-grid .kitchen-ticket-footer .btn-kitchen {
+  font-size: 0.82rem;
+  min-height: 40px;
+  padding: 0.5rem 0.65rem;
+}
+
+/* ——— تذاكر KDS ——— */
+.kitchen-ticket {
+  position: relative;
+  background: #111418;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.06);
+  padding: 0.55rem 0.65rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  min-height: 0;
+  max-width: 280px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.32);
+  transition:
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* رأس التذكرة: طاولة + نوع الطلب + الوقت */
+.kitchen-ticket-header {
+  margin: 0;
+  padding: 0 0 0.32rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kitchen-ticket-header__grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0.18rem 0.45rem;
+  width: 100%;
+  direction: rtl;
+}
+
+.kitchen-ticket-header__table {
+  grid-column: 1;
+  grid-row: 1;
+  font-weight: 900;
+  font-size: 1.22rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #0a0a0a;
+}
+
+.kitchen-ticket-header__table--service {
+  font-size: 1.38rem;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  color: #0a0a0a;
+}
+
+.kitchen-ticket-header__type {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.25;
+  padding: 0.22rem 0.55rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.kitchen-ticket-header__time {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem;
+  font-size: 0.74rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.62));
+  font-weight: 600;
+}
+
+.kitchen-ticket-elapsed {
+  font-variant-numeric: tabular-nums;
+}
+
+.kitchen-ticket-finish-suffix {
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+/* قائمة المنتجات — الكمية × الاسم */
+.kitchen-ticket-items {
+  list-style: none;
+  margin: 0.12rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.kitchen-ticket-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.1rem;
+  padding: 0.34rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.kitchen-ticket-item:last-child {
+  border-bottom: none;
+}
+
+.kitchen-ticket-item__line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.22rem 0.34rem;
+  direction: rtl;
+  width: 100%;
+}
+
+.kitchen-ticket-item__qty {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #7eb8ff;
+}
+
+.kitchen-ticket-item__sep {
+  flex-shrink: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.55;
+  color: #1e3a5f;
+}
+
+.kitchen-ticket-item__name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: right;
+  word-break: break-word;
+  color: #0a0a0a;
+}
+
+.kitchen-item-modifiers {
+  list-style: none;
+  margin: 0.22rem 0 0;
+  padding: 0 0.55rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.24rem;
+  direction: rtl;
+}
+
+.kitchen-item-modifier {
+  position: relative;
+  padding-inline-start: 0.9rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: right;
+  word-break: break-word;
+}
+
+.kitchen-item-modifier::before {
+  content: "•";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.kitchen-item-modifier--option {
+  color: #4b5563;
+}
+
+.kitchen-item-modifier--option::before {
+  color: #6b7280;
+}
+
+.kitchen-item-modifier--option .kitchen-item-modifier__key {
+  color: #374151;
+  font-weight: 700;
+}
+
+.kitchen-item-modifier--option .kitchen-item-modifier__val {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.kitchen-item-modifier--note {
+  color: #c2410c;
+}
+
+.kitchen-item-modifier--note::before {
+  color: #ea580c;
+}
+
+.kitchen-item-modifier--note .kitchen-item-modifier__key {
+  font-weight: 800;
+  color: #9a3412;
+}
+
+.kitchen-item-modifier--note .kitchen-item-modifier__val {
+  font-weight: 700;
+  color: #c2410c;
+  background: rgba(251, 146, 60, 0.16);
+  border-radius: 5px;
+  padding: 0.06rem 0.3rem;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* صاحب الطلب — نص ثانوي خفيف */
+.kitchen-ticket-customer {
+  margin: 0.08rem 0 0.12rem;
+  padding: 0;
+  background: none;
+  border: none;
+  direction: rtl;
+}
+
+.kitchen-ticket-customer__text {
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-muted, rgba(255, 255, 255, 0.55));
+  text-align: right;
+  word-break: break-word;
+}
+
+.kitchen-ticket-footer {
+  margin-top: auto;
+  display: flex;
+  width: 100%;
+  padding-top: 0.28rem;
+}
+
+.btn-kitchen {
+  width: 100%;
+  flex: 1 1 100%;
+  border-radius: 10px;
+  min-height: 44px;
+  padding: 0.62rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-kitchen:active {
+  transform: scale(0.97);
+}
+
+.btn-kitchen-primary {
+  background: #34a853;
+  color: #fff;
+}
+.btn-kitchen-primary:hover {
+  background: #2f9b4c;
+}
+
+/** زر إنهاء التجهيز — لون يتماشى مع كرت التجهيز (برتقالي) */
+.btn-kitchen-prep-done {
+  background: linear-gradient(180deg, #ff9800, #e65100);
+  color: #fff;
+  font-weight: 700;
+}
+.btn-kitchen-prep-done:hover {
+  background: linear-gradient(180deg, #ffa726, #ef6c00);
+}
+
+.btn-kitchen-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-kitchen-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/** الزبون يعدّل الطلب: إطار متقطع برتقالي + لوحة تحذير واضحة */
+.kitchen-ticket--status-editing {
+  border: 2px dashed rgba(255, 152, 0, 0.9);
+  background: linear-gradient(165deg, #261a10 0%, #120d08 100%);
+  box-shadow:
+    0 6px 22px rgba(255, 120, 0, 0.22),
+    0 0 0 1px rgba(255, 180, 80, 0.2) inset,
+    0 -1px 0 rgba(255, 152, 0, 0.25) inset;
+  animation: kitchen-ticket-editing-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes kitchen-ticket-editing-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 6px 22px rgba(255, 120, 0, 0.22),
+      0 0 0 1px rgba(255, 180, 80, 0.2) inset,
+      0 -1px 0 rgba(255, 152, 0, 0.25) inset;
+  }
+  50% {
+    box-shadow:
+      0 8px 28px rgba(255, 140, 0, 0.32),
+      0 0 0 1px rgba(255, 200, 120, 0.28) inset,
+      0 -1px 0 rgba(255, 170, 80, 0.35) inset;
+  }
+}
+
+.kitchen-ticket-editing-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0.1rem 0 0.45rem 0;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.36rem 0.62rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 167, 77, 0.55);
+  background: rgba(38, 25, 10, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+}
+
+.kitchen-ticket-editing-banner__icon {
+  flex-shrink: 0;
+  width: 1.35rem;
+  height: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  line-height: 1;
+  border-radius: 999px;
+  background: rgba(255, 152, 0, 0.2);
+  border: 1px solid rgba(255, 193, 120, 0.3);
+  color: #ffd89a;
+}
+
+.kitchen-ticket-editing-banner__title {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #ffdca8;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.kitchen-ticket-badge--editing {
+  color: #1a0d00;
+  background: linear-gradient(180deg, #ffb74d 0%, #f57c00 100%);
+  border: 1px solid rgba(255, 213, 160, 0.5);
+  box-shadow: 0 2px 10px rgba(255, 140, 0, 0.45);
+}
+
+/** زر «بدء التجهيز» أثناء التعديل: داكن وواضح أنه غير نشط */
+.btn-kitchen--disabled.btn-kitchen-primary {
+  background: linear-gradient(180deg, #2f3430, #1a1d1b) !important;
+  color: rgba(255, 255, 255, 0.38) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 1;
+  filter: none;
+  font-weight: 600;
+}
+
+.btn-kitchen--disabled:active {
+  transform: none;
+}
+
+/** جديد: ذهبي واضح — يختلف عن برتقالي التجهيز */
+.kitchen-ticket--status-new {
+  border-color: rgba(253, 216, 99, 0.65);
+  background: linear-gradient(165deg, #1e1a12 0%, #16140e 100%);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(251, 188, 4, 0.15) inset;
+}
+
+/** قيد التجهيز: برتقالي/عنبر — يبرز فور الضغط على «بدء التجهيز» */
+.kitchen-ticket--status-preparing {
+  border-color: rgba(255, 167, 77, 0.95);
+  border-inline-start-width: 5px;
+  border-inline-start-color: #ff9800;
+  background: linear-gradient(165deg, #2a1f14 0%, #1a1510 100%);
+  box-shadow:
+    0 4px 20px rgba(255, 120, 40, 0.18),
+    0 0 0 1px rgba(255, 152, 0, 0.25) inset;
+}
+
+.kitchen-ticket-badge {
+  align-self: flex-start;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: none;
+  padding: 0.16rem 0.48rem;
+  border-radius: 6px;
+  letter-spacing: 0.03em;
+}
+
+.kitchen-ticket-badge--new {
+  color: #1a1408;
+  background: linear-gradient(180deg, #fdd663, #e6a517);
+}
+
+.kitchen-ticket-badge--preparing {
+  color: #1a0f00;
+  background: linear-gradient(180deg, #ffb74d, #f57c00);
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.35);
+}
+
+.kitchen-ticket-badge--batch {
+  color: #e8f4ff;
+  background: linear-gradient(180deg, #4a7ab8, #2d5a94);
+  margin-bottom: 0.15rem;
+}
+
+.kitchen-item-by {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #8ec8ff;
+  margin-bottom: 0.05rem;
+  letter-spacing: 0.02em;
+  text-align: right;
+  direction: rtl;
+}
+
+.kitchen-ticket--status-completed {
+  border-color: rgba(52, 168, 83, 0.85);
+  background: #12351f;
+}
+
+.kitchen-ticket--delayed {
+  box-shadow: 0 0 0 2px rgba(234, 67, 53, 0.55);
+}
+
+.kitchen-ticket--flash-in {
+  animation: kitchen-ticket-pop 0.45s ease-out;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+@keyframes kitchen-ticket-pop {
+  0% {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.kitchen-empty {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding: 1rem;
+  text-align: center;
+}
+
+/* ——— صندوق اليوم ——— */
+#kitchenTodayGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 270px));
+  justify-content: start;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+#kitchenTodayGrid .kitchen-ticket {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+#kitchenTodayGrid .kitchen-empty {
+  flex: 1 1 100%;
+}
+
+.kitchen-view-today {
+  width: 100%;
+}
+
+/* ——— تخطيط متجاوب ——— */
+@media (max-width: 1280px) {
+  .kitchen-workflow-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .kitchen-workflow-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .kitchen-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .kitchen-workflow-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .kitchen-main {
+    padding: 0.65rem;
+  }
+
+  .kitchen-workflow-grid,
+  #kitchenTodayGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .kitchen-summary-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.35rem;
+  }
+
+  .kitchen-summary-card {
+    flex: 0 0 minmax(130px, 42vw);
+  }
+}
+
+/* ——— إدارة توفر المواد (صفحة كاملة) ——— */
+.kitchen-avail-open-btn {
+  white-space: nowrap;
+  font-size: 0.88rem;
+}
+
+.kitchen-avail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  animation: kitchenAvailPageIn 0.28s ease;
+}
+
+.kitchen-avail-page.is-active {
+  animation: kitchenAvailPageIn 0.28s ease;
+}
+
+@keyframes kitchenAvailPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kitchen-avail-page__header {
+  padding: 0.25rem 0 0.35rem;
+}
+
+.kitchen-avail-page__header-top {
+  margin-bottom: 0.65rem;
+}
+
+.kitchen-avail-page__back {
+  font-size: 0.88rem;
+}
+
+.kitchen-avail-page__title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+  font-weight: 700;
+}
+
+.kitchen-avail-page__desc {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.kitchen-avail-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.kitchen-avail-stat-card {
+  background: #181b20;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 0.85rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.kitchen-avail-stat-card__label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.kitchen-avail-stat-card__value {
+  font-size: clamp(1.25rem, 3vw, 1.65rem);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.kitchen-avail-stat-card--ok {
+  border-color: rgba(129, 201, 149, 0.22);
+}
+
+.kitchen-avail-stat-card--ok .kitchen-avail-stat-card__value {
+  color: #81c995;
+}
+
+.kitchen-avail-stat-card--off {
+  border-color: rgba(242, 139, 130, 0.22);
+}
+
+.kitchen-avail-stat-card--off .kitchen-avail-stat-card__value {
+  color: #f28b82;
+}
+
+.kitchen-avail-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.kitchen-avail-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  padding: 0.55rem 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kitchen-avail-search-wrap:focus-within {
+  border-color: rgba(138, 180, 248, 0.45);
+  box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.12);
+}
+
+.kitchen-avail-search-icon {
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+.kitchen-avail-search {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.kitchen-avail-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.kitchen-avail-filter {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.kitchen-avail-filter:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.kitchen-avail-filter.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #111;
+  font-weight: 600;
+}
+
+.kitchen-avail-loading,
+.kitchen-avail-empty {
+  margin: 0;
+  text-align: center;
+  padding: 1rem;
+}
+
+.kitchen-empty--inline {
+  padding: 0.75rem 0.5rem;
+  margin: 0;
+}
+
+.kitchen-avail-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.kitchen-avail-products-flat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  animation: kitchenAvailExpand 0.22s ease;
+}
+
+.kitchen-avail-cat {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  background: #181b20;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kitchen-avail-cat.is-expanded {
+  border-color: rgba(138, 180, 248, 0.22);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+}
+
+.kitchen-avail-cat__head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: right;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.kitchen-avail-cat__head:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.kitchen-avail-cat__img-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
+}
+
+.kitchen-avail-cat__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kitchen-avail-cat__meta {
+  min-width: 0;
+}
+
+.kitchen-avail-cat__title {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.kitchen-avail-cat__counts {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.kitchen-avail-cat__off {
+  color: #f28b82;
+}
+
+.kitchen-avail-cat__chevron {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-left: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(-45deg);
+  transition: transform 0.22s ease;
+  margin-inline-start: 0.25rem;
+}
+
+.kitchen-avail-cat.is-expanded .kitchen-avail-cat__chevron {
+  transform: rotate(135deg);
+}
+
+.kitchen-avail-cat__products {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.45rem 0.65rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  animation: kitchenAvailExpand 0.22s ease;
+}
+
+@keyframes kitchenAvailExpand {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.kitchen-avail-product {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: opacity 0.25s ease, background 0.2s ease;
+}
+
+.kitchen-avail-product--off {
+  opacity: 0.72;
+}
+
+.kitchen-avail-product__thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.kitchen-avail-product__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kitchen-avail-product__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.kitchen-avail-product__name {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.kitchen-avail-product__price {
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.kitchen-avail-product__badge {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #f28b82;
+  background: rgba(242, 139, 130, 0.12);
+  border: 1px solid rgba(242, 139, 130, 0.25);
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+}
+
+.kitchen-avail-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.kitchen-avail-switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.kitchen-avail-switch__track {
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  transition: background 0.2s ease;
+  position: relative;
+}
+
+.kitchen-avail-switch__track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.kitchen-avail-switch__input:checked + .kitchen-avail-switch__track {
+  background: var(--accent);
+}
+
+.kitchen-avail-switch__input:checked + .kitchen-avail-switch__track::after {
+  transform: translateX(-20px);
+  background: #111;
+}
+
+.kitchen-avail-switch__input:focus-visible + .kitchen-avail-switch__track {
+  outline: 2px solid rgba(138, 180, 248, 0.55);
+  outline-offset: 2px;
+}
+
+.kitchen-avail-switch__input:disabled + .kitchen-avail-switch__track {
+  opacity: 0.55;
+}
+
+@media (max-width: 720px) {
+  .kitchen-avail-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .kitchen-avail-cat__head {
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    padding: 0.65rem;
+  }
+
+  .kitchen-avail-cat__img-wrap {
+    width: 56px;
+    height: 56px;
+  }
+
+  .kitchen-avail-product {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+  }
+
+  .kitchen-avail-product__thumb {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1024px) {
+  .kitchen-avail-page {
+    max-width: 100%;
+  }
+}

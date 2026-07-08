@@ -1,0 +1,147 @@
+[
+  {
+    "id": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+    "name": "اسبيرسو",
+    "price": 5000,
+    "imageUrl": "/uploads/1770847842528-353257488.jpg",
+    "ingredients": "قهوة وحليب",
+    "createdAt": "2026-02-11T08:54:56.403Z",
+    "category": "قهوة",
+    "options": [
+      {
+        "title": "السكر",
+        "type": "single",
+        "values": [
+          "بدون سكر",
+          "قليل سكر",
+          "وسط سكر"
+        ]
+      },
+      {
+        "title": "الكمية",
+        "type": "single",
+        "values": [
+          "قليل",
+          "وسط",
+          "كبير"
+        ]
+      }
+    ],
+    "isAvailable": true
+  },
+  {
+    "id": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+    "name": "كوماند لاتي",
+    "price": 3000,
+    "category": "قهوة",
+    "imageUrl": "/uploads/1771418841004-423740790.jpg",
+    "ingredients": "",
+    "createdAt": "2026-02-18T12:47:23.788Z",
+    "isAvailable": true
+  },
+  {
+    "id": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+    "name": "امريكانو",
+    "price": 8000,
+    "category": "قهوة",
+    "imageUrl": "/uploads/1771419022060-538602820.jpg",
+    "ingredients": "",
+    "createdAt": "2026-02-18T12:50:24.569Z",
+    "isAvailable": true
+  },
+  {
+    "id": "f6edb59e-63d5-40dd-8260-3e95ca3f98be",
+    "name": "مكسيكي",
+    "price": 2000,
+    "category": "المشروبات الباردة",
+    "imageUrl": "/uploads/1780095129428-76452103.jpg",
+    "ingredients": "تايجر مع ليمون",
+    "options": [
+      {
+        "title": "السكر",
+        "type": "single",
+        "values": [
+          "قليل",
+          "وسط",
+          "كثير"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-29T22:52:47.358Z",
+    "isAvailable": false
+  },
+  {
+    "id": "c96e54d6-e21e-433c-916f-5865c0019566",
+    "name": "موهيتو",
+    "price": 2000,
+    "category": "المشروبات المنعشة",
+    "imageUrl": "/uploads/1780244648375-747127883.jpg",
+    "ingredients": "مكون من سيفن مع ليمون",
+    "options": [],
+    "createdAt": "2026-05-31T16:24:12.299Z",
+    "isAvailable": true
+  },
+  {
+    "id": "bb60a4ba-b3e1-459b-86f3-edd95aea7da5",
+    "name": "موهيتو بلو",
+    "price": 2000,
+    "category": "المشروبات المنعشة",
+    "imageUrl": "/uploads/1780244726884-245690886.jpg",
+    "ingredients": "",
+    "options": [],
+    "createdAt": "2026-05-31T16:25:28.958Z",
+    "isAvailable": true
+  },
+  {
+    "id": "e66d8dcf-b15b-4a67-b427-5be796b71fc6",
+    "name": "موهيتو بليمون ونعناع",
+    "price": 2000,
+    "category": "المشروبات المنعشة",
+    "imageUrl": "/uploads/1780244768299-859083695.jpg",
+    "ingredients": "",
+    "options": [],
+    "createdAt": "2026-05-31T16:26:10.156Z",
+    "isAvailable": true
+  },
+  {
+    "id": "fcd10f7a-f5f4-42e8-839a-7705dc10ac0c",
+    "name": "لاتي",
+    "price": 20000,
+    "category": "المشروبات الساخنة",
+    "imageUrl": "/uploads/1780246708846-466082164.jpg",
+    "ingredients": "بسيلشسيلسشيلس",
+    "options": [
+      {
+        "title": "السكر",
+        "type": "single",
+        "values": [
+          "قليل",
+          "وسط",
+          "كثير"
+        ]
+      },
+      {
+        "title": "الكمية",
+        "type": "single",
+        "values": [
+          "قليل",
+          "وسط",
+          "كثير"
+        ]
+      }
+    ],
+    "createdAt": "2026-05-31T16:58:31.476Z",
+    "isAvailable": true
+  },
+  {
+    "id": "fce3295f-c14e-4bf7-92b3-ca229b6b615b",
+    "name": "موهيتو",
+    "price": 5000,
+    "category": "اخر عرض",
+    "imageUrl": "/uploads/1780811951763-554561433.jpg",
+    "ingredients": "يتكون من سفين ومادة طبع وليمون",
+    "options": [],
+    "createdAt": "2026-06-07T05:59:53.773Z",
+    "isAvailable": true
+  }
+]

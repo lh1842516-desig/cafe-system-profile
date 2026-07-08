@@ -1,0 +1,506 @@
+{
+  "tables": {
+    "1": {
+      "items": [
+        {
+          "id": "cid_hrdc5n_moe2nvan",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_5ekjv7_moe2d7gr",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_gwzxho_moeojog3",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_lfxevv_moeoj950",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_14dn81_moeuxytn",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_ow8ptm_moeuwtyy",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_u3p1lu_moeuyp88",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_ow8ptm_moeuwtyy",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_vpa5zv_mofjf7z7",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_0hp6v2_mofhqoqs",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_2lf50g_mofjguka",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_0hp6v2_mofhqoqs",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_e2jmsh_mofjgxsz",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_0hp6v2_mofhqoqs",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_trqwcr_mofjhaik",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::ق",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "ق",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_c8h2nx_mofhrnod",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_sp0ng9_mohguesy",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_0hp6v2_mofhqoqs",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_hasjk9_moid5ukr",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_7apcm73j_moid3hkl",
+          "ownerLabel": ""
+        }
+      ],
+      "updatedAt": "2026-05-03T00:03:42.502Z"
+    },
+    "2": {
+      "items": [],
+      "updatedAt": "2026-05-03T00:27:00.598Z"
+    },
+    "3": {
+      "items": [
+        {
+          "id": "cid_4yit3m_moeoteni",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_lfxevv_moeoj950",
+          "ownerLabel": "cid_lfxe"
+        },
+        {
+          "id": "cid_zpbgnk_moeoues8",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_lfxevv_moeoj950",
+          "ownerLabel": "cid_lfxe"
+        },
+        {
+          "id": "cid_c0pg0b_moeoujjz",
+          "key": "1::1b720c29-ad1c-49a5-b957-c83a9788205d::::",
+          "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+          "name": "كوماند لاتي",
+          "price": 3000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_lfxevv_moeoj950",
+          "ownerLabel": "cid_lfxe"
+        },
+        {
+          "id": "cid_tb2r8v_moeoun70",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_l9xmex_moeooh19",
+          "ownerLabel": "cid_l9xm"
+        },
+        {
+          "id": "cid_4e1djj_moep8jfk",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_zzfpfr_moep79x4",
+          "ownerLabel": "cid_zzfp"
+        },
+        {
+          "id": "cid_crxp1h_moeq5zj5",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_grupt3_moeppjaj",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_muho59_moeqs0e4",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_grupt3_moeppjaj",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_npmmnu_moeumwsj",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_grupt3_moeppjaj",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_2t8bxy_moeupxmu",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_grupt3_moeppjaj",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_1ofrql_moeuq2r9",
+          "key": "1::1b720c29-ad1c-49a5-b957-c83a9788205d::::",
+          "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+          "name": "كوماند لاتي",
+          "price": 3000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_grupt3_moeppjaj",
+          "ownerLabel": ""
+        }
+      ],
+      "updatedAt": "2026-05-01T22:24:48.876Z"
+    },
+    "4": {
+      "items": [],
+      "updatedAt": "2026-05-02T22:21:53.678Z"
+    },
+    "5": {
+      "items": [
+        {
+          "id": "cid_oh38jl_mohgxddc",
+          "key": "1::1b720c29-ad1c-49a5-b957-c83a9788205d::::",
+          "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+          "name": "كوماند لاتي",
+          "price": 3000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_n8wr2l_mohgs25o",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_nrysaj_mohhhdkv",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "cid_i7nyh5_mohgvlih",
+          "ownerLabel": ""
+        }
+      ],
+      "updatedAt": "2026-04-30T01:27:58.348Z"
+    },
+    "9": {
+      "items": [
+        {
+          "id": "cid_wwkad2_mooxsl11",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_7kgyos1l_monhumv4",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_0439ek_mooxsnh4",
+          "key": "1::1b720c29-ad1c-49a5-b957-c83a9788205d::::",
+          "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+          "name": "كوماند لاتي",
+          "price": 3000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_7kgyos1l_monhumv4",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_oygdys_mooxsp87",
+          "key": "1::bb15d9c5-cfc2-440d-a5a7-22d83f4791ce::::",
+          "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+          "name": "اسبيرسو",
+          "price": 5000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_7kgyos1l_monhumv4",
+          "ownerLabel": ""
+        }
+      ],
+      "updatedAt": "2026-05-02T23:14:41.894Z"
+    },
+    "10": {
+      "items": [],
+      "updatedAt": "2026-04-25T21:32:25.863Z"
+    },
+    "12": {
+      "items": [
+        {
+          "id": "cid_wsx8pp_moid8sb2",
+          "key": "1::1b720c29-ad1c-49a5-b957-c83a9788205d::::",
+          "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+          "name": "كوماند لاتي",
+          "price": 3000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_bt8uplf7_moid66xe",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_4wtzau_moidg53u",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_1kphniqv_moidel25",
+          "ownerLabel": ""
+        }
+      ],
+      "updatedAt": "2026-04-28T09:29:33.993Z"
+    },
+    "14": {
+      "items": [
+        {
+          "id": "cid_kd864c_mooymfi5",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_7kgyos1l_monhumv4",
+          "ownerLabel": ""
+        }
+      ],
+      "updatedAt": "2026-05-02T23:37:59.467Z"
+    },
+    "19": {
+      "items": [],
+      "updatedAt": "2026-05-03T00:19:50.941Z"
+    },
+    "20": {
+      "items": [
+        {
+          "id": "cid_ejsqt4_momwrpkv",
+          "key": "1::1b720c29-ad1c-49a5-b957-c83a9788205d::::",
+          "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+          "name": "كوماند لاتي",
+          "price": 3000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_3j40rkc4_momwlyr3",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_l0t4ms_momws1n5",
+          "key": "1::76a541bd-fbe1-4015-ada1-f6f468af6ae9::::",
+          "menuId": "76a541bd-fbe1-4015-ada1-f6f468af6ae9",
+          "name": "امريكانو",
+          "price": 8000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_3j40rkc4_momwlyr3",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_8jm80i_momws3tz",
+          "key": "1::1b720c29-ad1c-49a5-b957-c83a9788205d::::",
+          "menuId": "1b720c29-ad1c-49a5-b957-c83a9788205d",
+          "name": "كوماند لاتي",
+          "price": 3000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {},
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_3j40rkc4_momwlyr3",
+          "ownerLabel": ""
+        },
+        {
+          "id": "cid_9z5yoe_momwt80d",
+          "key": "1::bb15d9c5-cfc2-440d-a5a7-22d83f4791ce::%D8%A7%D9%84%D8%B3%D9%83%D8%B1=%D9%82%D9%84%D9%8A%D9%84%20%D8%B3%D9%83%D8%B1&%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9=%D9%88%D8%B3%D8%B7::",
+          "menuId": "bb15d9c5-cfc2-440d-a5a7-22d83f4791ce",
+          "name": "اسبيرسو",
+          "price": 5000,
+          "quantity": 1,
+          "note": "",
+          "selectedOptions": {
+            "السكر": "قليل سكر",
+            "الكمية": "وسط"
+          },
+          "orderBatch": 1,
+          "fromServerOrder": false,
+          "ownerDeviceId": "uid_zihuko8x_momwlosk",
+          "ownerLabel": ""
+        }
+      ],
+      "updatedAt": "2026-05-01T12:51:49.742Z"
+    }
+  }
+}

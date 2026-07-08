@@ -1,0 +1,3542 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="admin-app-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#F5F7FA">
+  <title>لوحة تحكم الأدمن — نظام الكافيه</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <style>
+    :root {
+      --safe-top: env(safe-area-inset-top, 0);
+      --safe-bottom: env(safe-area-inset-bottom, 0);
+      --safe-right: env(safe-area-inset-right, 0);
+      --safe-left: env(safe-area-inset-left, 0);
+    }
+    .admin-wrap {
+      display: flex;
+      min-height: 100vh;
+      min-height: calc(100vh - var(--safe-top) - var(--safe-bottom));
+      background: #16191e;
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+      padding-right: var(--safe-right);
+      padding-left: var(--safe-left);
+    }
+    .admin-main {
+      flex: 1;
+      min-width: 0;
+      margin-right: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* App Bar — ثابت في الأعلى ليتسنى التنقل بين الصفحات دون اختفائه */
+    .admin-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 50;
+      background: #1e2228;
+      padding: 0 1rem;
+      padding-top: max(0, var(--safe-top));
+      min-height: 56px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+      outline: none;
+    }
+    .admin-main {
+      padding-top: 56px;
+      padding-top: calc(56px + var(--safe-top));
+    }
+    /* عنوان الهيدر في الوسط تماماً على كل الأجهزة */
+    .admin-header h1 {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(0.95rem, 4vw, 1.1rem);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin: 0;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: calc(100% - 8rem);
+      pointer-events: none;
+    }
+    .admin-header .btn-home {
+      grid-column: 3;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-self: end;
+      border: none;
+      font-family: inherit;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+    .admin-header .btn-home:hover {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+    }
+    /* زر القائمة — واضح وقابل للنقر، متناسق مع زر الرئيسية */
+    .admin-header .btn-menu {
+      grid-column: 1;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      min-height: 44px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.08);
+      outline: none;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 10px;
+      justify-self: end;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
+      position: relative;
+      z-index: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .admin-header .btn-menu:hover {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border-color: rgba(255,255,255,0.12);
+    }
+    .admin-header .btn-menu:active {
+      transform: scale(0.98);
+    }
+    .admin-header .btn-menu:focus {
+      box-shadow: none;
+      outline: none;
+    }
+    .admin-header .btn-menu:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(138,180,248,0.5);
+    }
+    .admin-header .btn-menu .menu-icon {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 18px;
+      height: 14px;
+    }
+    .admin-header .btn-menu .menu-icon span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: currentColor;
+      border-radius: 1px;
+    }
+    @media (max-width: 768px) {
+      .admin-header .btn-menu { display: inline-flex; }
+    }
+
+    .admin-content {
+      flex: 1;
+      padding: 1rem 1.25rem;
+      padding-bottom: max(1rem, var(--safe-bottom));
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (max-width: 768px) {
+      .admin-content {
+        padding: 0.875rem 1rem;
+        padding-left: max(1rem, var(--safe-left));
+        padding-right: max(1rem, var(--safe-right));
+      }
+      .admin-page .page-title { font-size: 1rem; margin-bottom: 0.875rem; }
+      .reports-card { padding: 1rem; }
+      .reports-dateline { font-size: 0.8125rem; margin-bottom: 1rem; }
+    }
+    @media (min-width: 769px) {
+      .admin-content { padding: 1.5rem; }
+    }
+    .admin-page { display: none; }
+    .admin-page.active { display: block; }
+    .admin-page .page-title {
+      font-size: clamp(1rem, 4vw, 1.125rem);
+      font-weight: 600;
+      color: #e8eaed;
+      margin: 0 0 1rem 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    @media (min-width: 769px) {
+      .admin-page .page-title { margin-bottom: 1.25rem; }
+    }
+
+    /* الشريط الجانبي — على الموبايل: يظهر عند النقر (☰). على الشاشات الكبيرة: ثابت دائماً */
+    .admin-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 280px;
+      max-width: 85vw;
+      height: 100vh;
+      height: 100dvh;
+      background: #1a1d23;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, width 0.22s ease;
+      z-index: 100;
+      padding-top: var(--safe-top);
+      padding-right: var(--safe-right);
+      box-shadow: none;
+    }
+    .admin-sidebar.mobile-open {
+      transform: translateX(0);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.4);
+    }
+    .admin-sidebar.collapsed { width: 72px; }
+    .admin-sidebar.collapsed .nav-label { display: none; }
+    /* من 769px فما فوق: الشريط ثابت ومرئي دائماً — تنقل سلس بدون فتح القائمة */
+    @media (min-width: 769px) {
+      .admin-sidebar {
+        transform: none;
+        box-shadow: none;
+      }
+      .admin-main {
+        margin-right: 280px;
+        transition: margin-right 0.22s ease;
+      }
+      .admin-header {
+        right: 280px;
+        transition: right 0.22s ease;
+      }
+      .admin-wrap.sidebar-collapsed .admin-main { margin-right: 72px; }
+      .admin-wrap.sidebar-collapsed .admin-header { right: 72px; }
+      .sidebar-backdrop.mobile-open {
+        display: none;
+        pointer-events: none;
+      }
+    }
+    @media (min-width: 769px) and (max-width: 900px) {
+      .admin-sidebar { width: 240px; }
+      .admin-main { margin-right: 240px; }
+      .admin-header { right: 240px; }
+      .admin-wrap.sidebar-collapsed .admin-main { margin-right: 72px; }
+      .admin-wrap.sidebar-collapsed .admin-header { right: 72px; }
+    }
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 99;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .sidebar-backdrop.mobile-open {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .sidebar-brand {
+      height: 56px;
+      padding: 0 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .sidebar-brand .brand-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e8eaed;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .admin-sidebar.collapsed .brand-text { display: none; }
+    .sidebar-toggle {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.06);
+      border: none;
+      color: #9aa0a6;
+      cursor: pointer;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .sidebar-toggle:hover {
+      background: rgba(255,255,255,0.1);
+      color: #e8eaed;
+    }
+    .sidebar-toggle:focus {
+      outline: none;
+    }
+    @media (min-width: 769px) {
+      .sidebar-toggle { display: flex; }
+    }
+    .admin-sidebar.collapsed .sidebar-toggle .icon-expand { display: inline; }
+    .admin-sidebar.collapsed .sidebar-toggle .icon-collapse { display: none; }
+    .admin-sidebar .sidebar-toggle .icon-expand { display: none; }
+    .admin-sidebar .sidebar-toggle .icon-collapse { display: inline; }
+    .sidebar-nav {
+      flex: 1;
+      padding: 0.75rem 0;
+      overflow-y: auto;
+    }
+    .nav-label {
+      font-size: 0.7rem;
+      color: #6b7280;
+      padding: 0 1rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border: none;
+      background: none;
+      color: #9aa0a6;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: right;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: #e8eaed; }
+    .nav-item.active { background: rgba(138, 180, 248, 0.12); color: #8ab4f8; }
+    .nav-icon { font-size: 1rem; }
+    .admin-sidebar.collapsed .nav-item span:not(.nav-icon) { display: none; }
+    .admin-sidebar.collapsed .nav-item { justify-content: center; padding: 0.65rem; }
+
+    /* ——— الإعدادات ——— */
+    #pageSettings .settings-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: none;
+    }
+    #pageSettings .settings-top-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      align-items: stretch;
+    }
+    #pageSettings .settings-top-row .settings-card {
+      max-width: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    #pageSettings .settings-top-row .settings-card form {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    #pageSettings .settings-top-row .form-actions {
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+    #pageSettings .settings-card:not(.settings-card--tables):not(.settings-top-row .settings-card) {
+      max-width: 520px;
+    }
+    @media (max-width: 960px) {
+      #pageSettings .settings-top-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    #pageSettings .admin-login-input-wrap input {
+      padding-left: 3.1rem !important;
+      padding-right: 1rem !important;
+    }
+    #pageSettings .admin-login-eye {
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: #9aa0a6;
+    }
+    #pageSettings .admin-login-eye:hover {
+      color: #8ab4f8;
+      background: rgba(138, 180, 248, 0.12);
+      border-color: rgba(138, 180, 248, 0.35);
+    }
+    #pageSettings .settings-security-error {
+      margin: 0 0 0.75rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffb4ab;
+      background: rgba(255, 107, 107, 0.12);
+      border: 1px solid rgba(255, 107, 107, 0.25);
+    }
+    #pageSettings .settings-security-error[hidden] { display: none !important; }
+    .settings-card--tables {
+      width: 100%;
+      max-width: none;
+    }
+    .settings-card {
+      background: #1e2228;
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .settings-card__title {
+      margin: 0 0 0.35rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #e8eaed;
+    }
+    .settings-card__desc {
+      margin: 0 0 1.25rem;
+      font-size: 0.85rem;
+      color: #9aa0a6;
+      line-height: 1.45;
+    }
+    .settings-logo-preview {
+      width: 88px;
+      height: 88px;
+      border-radius: 14px;
+      object-fit: contain;
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.15);
+      margin-bottom: 0.75rem;
+    }
+    .settings-logo-empty {
+      width: 88px;
+      height: 88px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: #9aa0a6;
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.15);
+      margin-bottom: 0.75rem;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .settings-logo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .settings-table-count {
+      font-size: 0.95rem;
+      color: #bdc1c6;
+      margin: 0;
+    }
+    .settings-table-count strong {
+      color: #8ab4f8;
+      font-weight: 700;
+    }
+    .settings-table-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .settings-table-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+      gap: 0.65rem;
+      width: 100%;
+    }
+    @media (min-width: 900px) {
+      .settings-table-list {
+        grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+        gap: 0.7rem;
+      }
+    }
+    .settings-table-card {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      min-height: 132px;
+      padding: 0.5rem 0.45rem 0.45rem;
+      border-radius: 12px;
+      background: #252a31;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      min-width: 0;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .settings-table-card:hover {
+      border-color: rgba(138, 180, 248, 0.35);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
+    .settings-table-card__status {
+      align-self: center;
+      flex-shrink: 0;
+      font-size: 0.58rem;
+      font-weight: 600;
+      padding: 0.15rem 0.4rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: #9aa0a6;
+      white-space: nowrap;
+    }
+    .settings-table-card__status.is-ok {
+      color: #81c995;
+      background: rgba(129, 201, 149, 0.14);
+    }
+    .settings-table-card__status.is-missing {
+      color: #f28b82;
+      background: rgba(242, 139, 130, 0.14);
+    }
+    .settings-table-card__body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.15rem;
+      min-height: 52px;
+    }
+    .settings-table-card__name {
+      margin: 0;
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: #9aa0a6;
+      line-height: 1.2;
+    }
+    .settings-table-card__name span {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1;
+      color: #8ab4f8;
+      font-variant-numeric: tabular-nums;
+    }
+    .settings-table-card__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      width: 100%;
+      flex-shrink: 0;
+    }
+    .settings-table-card__actions .btn {
+      width: 100%;
+      padding: 0.35rem 0.4rem;
+      font-size: 0.64rem;
+      min-height: 30px;
+      line-height: 1.15;
+    }
+    .settings-table-card__actions .btn-danger {
+      margin-top: 0;
+    }
+    .settings-table-empty {
+      text-align: center;
+      color: #9aa0a6;
+      padding: 1.25rem 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* ——— نموذج إضافة عنصر: تصميم احترافي ومتناسق مع الصفحة ——— */
+    .form-card {
+      background: #1e2228;
+      border-radius: 14px;
+      padding: 1.75rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-top: 2px solid rgba(138, 180, 248, 0.35);
+      max-width: 520px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    @media (min-width: 769px) {
+      .form-card { padding: 2rem 2rem; }
+    }
+    .form-card .form-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 15%, rgba(255,255,255,0.06) 85%, transparent);
+      margin: 1.5rem 0;
+      border: none;
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group:last-of-type { margin-bottom: 0; }
+    .form-group label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #e8eaed;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      min-height: 48px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #252930;
+      color: #e8eaed;
+      font-size: 16px;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+    @media (min-width: 769px) {
+      .form-group input, .form-group select, .form-group textarea {
+        padding: 0.65rem 1rem;
+        min-height: 44px;
+        font-size: 0.9375rem;
+      }
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #8ab4f8;
+      box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.2);
+    }
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239aa0a6' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.25rem;
+    }
+    .form-group textarea {
+      min-height: 96px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .form-group input[type="file"] {
+      padding: 0.5rem 1rem;
+      min-height: 44px;
+      font-size: 0.875rem;
+      color: #9aa0a6;
+    }
+    .form-group input[type="file"]::file-selector-button {
+      padding: 0.4rem 0.85rem;
+      margin-left: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: #e8eaed;
+      font-size: 0.8125rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .form-group input[type="file"]::file-selector-button:hover {
+      background: rgba(255,255,255,0.12);
+    }
+    .iqd-price-field {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #252930;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .iqd-price-field:focus-within {
+      border-color: #8ab4f8;
+      box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.2);
+    }
+    .iqd-price-field input {
+      flex: 1;
+      min-width: 0;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      text-align: left;
+      direction: ltr;
+      font-variant-numeric: tabular-nums;
+    }
+    .iqd-price-field input:focus {
+      outline: none;
+      box-shadow: none !important;
+    }
+    .iqd-price-spin {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      border-inline-start: 1px solid rgba(255,255,255,0.12);
+    }
+    .iqd-price-spin__btn {
+      flex: 1;
+      min-width: 2.25rem;
+      padding: 0 0.5rem;
+      border: none;
+      background: rgba(255,255,255,0.06);
+      color: #9aa0a6;
+      font-size: 0.65rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .iqd-price-spin__btn:hover {
+      background: rgba(138, 180, 248, 0.15);
+      color: #e8eaed;
+    }
+    .iqd-price-spin__btn:active {
+      background: rgba(138, 180, 248, 0.28);
+    }
+    .iqd-price-spin__btn + .iqd-price-spin__btn {
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .form-hint.admin-option-hint {
+      font-size: 0.78rem;
+      color: rgba(232, 234, 237, 0.65);
+      margin: -0.25rem 0 0.65rem;
+      line-height: 1.45;
+    }
+    .item-option-groups-wrap {
+      max-height: 360px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 0.65rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.08);
+      padding: 0.5rem;
+    }
+    .item-option-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 0;
+    }
+    .item-option-group-row {
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 0;
+      background: rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+    .item-option-accordion__header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.75rem;
+      min-height: 48px;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.28s ease;
+    }
+    .item-option-group-row.is-open .item-option-accordion__header {
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+    .item-option-accordion__trigger {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      color: #9aa0a6;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .item-option-accordion__trigger:hover {
+      background: rgba(255,255,255,0.1);
+      color: #e8eaed;
+    }
+    .item-option-accordion__trigger:focus-visible {
+      outline: 2px solid rgba(138, 180, 248, 0.6);
+      outline-offset: 2px;
+    }
+    .item-option-chevron {
+      display: block;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: rotate(-90deg);
+    }
+    .item-option-group-row.is-open .item-option-chevron {
+      transform: rotate(0deg);
+    }
+    .item-option-title-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    .item-option-title-wrap .opt-group-title {
+      width: 100%;
+      margin: 0;
+      min-height: 44px;
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.04);
+    }
+    .item-option-title-wrap .opt-group-title:focus {
+      border-color: rgba(138, 180, 248, 0.45);
+      background: rgba(255,255,255,0.06);
+    }
+    .item-option-group-row:not(.is-open) .item-option-title-wrap .opt-group-title {
+      background: transparent;
+      cursor: pointer;
+    }
+    .item-option-accordion__panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .item-option-group-row:not(.is-open) .item-option-accordion__panel {
+      pointer-events: none;
+    }
+    .item-option-group-row.is-open .item-option-accordion__panel {
+      grid-template-rows: 1fr;
+    }
+    .item-option-accordion__panel-inner {
+      overflow: hidden;
+      min-height: 0;
+    }
+    .item-option-accordion__body {
+      padding: 0 0.85rem 0.85rem;
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .item-option-group-row__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .item-option-tag-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      border: 1px solid var(--admin-input-border, rgba(255,255,255,0.12));
+      background: var(--admin-input-bg, rgba(0,0,0,0.14));
+    }
+    .item-option-tag-input-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0.45rem;
+      min-height: 44px;
+    }
+    .opt-group-tag-input {
+      flex: 1;
+      min-width: 0;
+      min-height: 44px;
+      margin: 0;
+      padding: 0.55rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: #e8eaed;
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+    .opt-group-tag-input::placeholder {
+      color: rgba(232, 234, 237, 0.45);
+    }
+    .opt-group-tag-input:focus {
+      outline: none;
+      border-color: rgba(138, 180, 248, 0.55);
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.18);
+    }
+    .item-option-tag-add-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 0.85rem;
+      border: 1px solid rgba(138, 180, 248, 0.35);
+      border-radius: 10px;
+      background: rgba(138, 180, 248, 0.16);
+      color: #8ab4f8;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .item-option-tag-add-btn:hover {
+      background: rgba(138, 180, 248, 0.28);
+      border-color: rgba(138, 180, 248, 0.55);
+      color: #fff;
+    }
+    .item-option-tag-add-btn:focus-visible {
+      outline: 2px solid rgba(138, 180, 248, 0.6);
+      outline-offset: 2px;
+    }
+    .item-option-chips-preview {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem 0.45rem;
+      min-height: 0;
+    }
+    .item-option-chips-preview:empty {
+      display: none;
+    }
+    .item-option-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      max-width: 100%;
+      padding: 0.28rem 0.45rem 0.28rem 0.35rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(138, 180, 248, 0.1);
+      font-size: 0.8125rem;
+      color: #e8eaed;
+      line-height: 1.3;
+    }
+    .item-option-chip-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 200px;
+    }
+    .item-option-chip-remove {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      color: #e8eaed;
+      font-size: 0.85rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .item-option-chip-remove:hover {
+      background: rgba(242, 139, 130, 0.35);
+      color: #fff;
+    }
+    .item-option-group-remove {
+      min-width: 36px;
+      min-height: 36px;
+      padding: 0 0.5rem;
+      border-radius: 10px;
+    }
+    .form-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+    }
+    .form-actions .btn {
+      min-height: 48px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9375rem;
+    }
+    .form-actions .btn-primary {
+      background: #8ab4f8;
+      color: #1a1d23;
+    }
+    .form-actions .btn-primary:hover {
+      background: #aecbfa;
+    }
+    .form-actions .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: #e8eaed;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .form-actions .btn-secondary:hover {
+      background: rgba(255,255,255,0.12);
+    }
+    .img-preview {
+      max-width: 140px;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #252930;
+      margin-top: 0.75rem;
+      display: block;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    /* بطاقات الإحصائيات — شبكة متجاوبة (حتى 7 بطاقات) */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      min-width: 0;
+    }
+    @media (min-width: 900px) {
+      .stats-row { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 420px) {
+      .stats-row { gap: 0.75rem; margin-bottom: 1.25rem; }
+    }
+    .stat-card {
+      background: #1e2228;
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      min-height: 90px;
+      box-sizing: border-box;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .stat-card:hover {
+      border-color: rgba(138, 180, 248, 0.25);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .stat-card .label {
+      font-size: 0.8125rem;
+      color: #9aa0a6;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      display: block;
+    }
+    .stat-card .value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #8ab4f8;
+      letter-spacing: -0.02em;
+      display: block;
+      word-break: break-word;
+    }
+    .stat-card .value.muted { color: #e8eaed; font-size: 1rem; }
+    .stat-card .value.long { font-size: 0.95rem; }
+
+    /* صفحة أرباح وتقارير اليوم — مرن مع الموبايل */
+    .reports-card {
+      background: #1e2228;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1.5rem;
+      max-width: 100%;
+      min-width: 0;
+    }
+    .reports-dateline {
+      font-size: 0.875rem;
+      color: #9aa0a6;
+      margin: 0 0 1.25rem 0;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .closing-card-row { margin-top: 1rem; }
+    .closing-card-row .stat-card.closing-till-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+      max-width: 320px;
+    }
+    .closing-card-row .closing-date { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .closing-card-row .closing-row { display: flex; justify-content: space-between; width: 100%; gap: 1rem; }
+    .closing-card-row .closing-row .label { margin: 0; }
+    .closing-card-row .closing-note .value { text-align: right; word-break: break-word; }
+    .closing-card-row .stat-card.closing-till-card {
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .closing-card-row .stat-card.closing-till-card:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(138, 180, 248, 0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .closing-card-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .closing-card-row .stat-card.closing-till-card:hover .closing-card-hint {
+      color: var(--accent);
+    }
+
+    /* نافذة تفاصيل القاصة */
+    .add-category-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      padding: 1rem;
+    }
+    .add-category-overlay[style*="display: none"] { display: none !important; }
+    .add-category-modal {
+      position: relative;
+      background: var(--surface);
+      border-radius: var(--radius, 12px);
+      padding: 1.5rem;
+      max-width: 360px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .add-category-title {
+      margin: 0 0 1rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text, #e8eaed);
+    }
+    .add-category-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .add-category-input {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.2);
+      color: var(--text, #e8eaed);
+    }
+    .add-category-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .add-category-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+    .add-category-close {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .add-category-close:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    /* نافذة تعديل اسم التصنيف */
+    .rename-category-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      padding: 1rem;
+    }
+    .rename-category-overlay[style*="display: none"] { display: none !important; }
+    .rename-category-modal {
+      position: relative;
+      background: var(--surface);
+      border-radius: var(--radius, 12px);
+      padding: 1.5rem;
+      max-width: 380px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .rename-category-title { margin: 0 0 1rem 0; font-size: 1.1rem; font-weight: 600; color: var(--text, #e8eaed); }
+    .rename-category-form { display: flex; flex-direction: column; gap: 1rem; }
+    .rename-category-label { font-size: 0.9rem; color: var(--text-muted); }
+    .rename-category-input {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.2);
+      color: var(--text, #e8eaed);
+    }
+    .rename-category-input:focus { outline: none; border-color: var(--accent); }
+    .rename-category-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
+    .rename-category-close {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .rename-category-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+    /* نافذة تأكيد حذف التصنيف — تصميم تحذيري */
+    .delete-category-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      padding: 1rem;
+    }
+    .delete-category-overlay[style*="display: none"] { display: none !important; }
+    .delete-category-modal {
+      position: relative;
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 0;
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid rgba(220, 80, 80, 0.25);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(220, 80, 80, 0.1);
+    }
+    .delete-category-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 1.5rem 0;
+    }
+    .delete-category-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(220, 80, 80, 0.2);
+      flex-shrink: 0;
+    }
+    .delete-category-icon::before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 22px;
+      margin: 9px 0 0 9px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e88a8a'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+    }
+    .delete-category-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #e88a8a;
+    }
+    .delete-category-message-wrap {
+      padding: 1rem 1.5rem 0;
+    }
+    .delete-category-message {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-muted, #9aa0a6);
+      line-height: 1.6;
+    }
+    .delete-category-message strong { color: var(--text, #e8eaed); }
+    .delete-category-message .delete-warning-hint {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #e88a8a;
+    }
+    .delete-category-actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+    .delete-category-actions .btn-danger {
+      background: #b33;
+      color: #fff;
+      border: 1px solid #b33;
+    }
+    .delete-category-actions .btn-danger:hover {
+      background: #a22;
+      border-color: #a22;
+    }
+    .delete-category-close {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .delete-category-close:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .closing-detail-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .closing-detail-overlay::-webkit-scrollbar { display: none; }
+    .closing-detail-overlay.show { display: flex; }
+    .closing-detail-modal {
+      background: #1e2228;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      max-width: min(560px, 96vw);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+    }
+    .closing-detail-modal .modal-header {
+      padding: 1rem 1.35rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .closing-detail-modal .modal-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .closing-detail-modal .modal-close {
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: rgba(255,255,255,0.08);
+      color: #9aa0a6;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .closing-detail-modal .modal-close:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+    .closing-detail-modal .modal-body {
+      padding: 1rem 1.35rem 1.25rem;
+      overflow: visible;
+      min-width: 0;
+    }
+    .closing-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+    .closing-detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.75rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      min-width: 0;
+    }
+    .closing-detail-grid .closing-detail-row { padding: 0.35rem 0; }
+    .closing-detail-row:last-child { border-bottom: none; }
+    .closing-detail-row .label { font-size: 0.85rem; color: #9aa0a6; margin: 0; flex-shrink: 0; }
+    .closing-detail-row .value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e8eaed;
+      margin: 0;
+      text-align: left;
+      word-wrap: break-word;
+      word-break: break-word;
+      min-width: 0;
+    }
+    .closing-detail-row .value.value-datetime { white-space: nowrap; }
+    .closing-detail-row .value.accent { color: #8ab4f8; }
+    .closing-detail-section {
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .closing-detail-section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #8ab4f8;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 0.02em;
+    }
+    .closing-detail-list { list-style: none; padding: 0; margin: 0; max-height: 7rem; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; }
+    .closing-detail-list::-webkit-scrollbar { display: none; }
+    .closing-detail-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.35rem 0;
+      font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      min-width: 0;
+    }
+    .closing-detail-list li:last-child { border-bottom: none; }
+    .closing-detail-list .item-name { color: #e8eaed; word-wrap: break-word; min-width: 0; }
+    .closing-detail-list .item-amount { color: #8ab4f8; font-weight: 600; flex-shrink: 0; font-size: 0.85rem; }
+
+    /* عنوان صفحة المنيو مع رجوع / زر الإضافة + */
+    .menu-page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .menu-page-header .page-title {
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+      flex: 1;
+      min-width: 0;
+    }
+    .btn-back-categories {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e8eaed;
+      background: #252930;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .btn-back-categories:hover {
+      background: #2e333b;
+      border-color: rgba(138, 180, 248, 0.35);
+      color: #8ab4f8;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+    .btn-back-categories:active {
+      transform: scale(0.98);
+    }
+    .btn-add-menu-item {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: #8ab4f8;
+      color: #1a1d23;
+      font-size: 1.75rem;
+      font-weight: 300;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 2px 8px rgba(138, 180, 248, 0.35);
+    }
+    .btn-add-menu-item:hover {
+      background: #aecbfa;
+      transform: scale(1.05);
+    }
+    .btn-add-menu-item:active {
+      transform: scale(0.98);
+    }
+
+    /* مربعات التصنيفات — عرض المنيو */
+    .menu-categories-wrap {
+      width: 100%;
+    }
+    .menu-page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .menu-page-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-add-category {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border-radius: 10px;
+    }
+    .menu-category-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .menu-category-card {
+      position: relative;
+      background: var(--surface);
+      border-radius: var(--radius, 12px);
+      border: 2px solid transparent;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      text-align: center;
+    }
+    .menu-category-card:hover {
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .menu-category-card:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .menu-category-card .category-name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text, #e8eaed);
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+    .menu-category-card .category-count {
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+    .menu-category-card__thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 0.45rem;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .menu-category-card__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .menu-category-card-footer {
+      margin-top: auto;
+      padding-top: 0.65rem;
+      width: 100%;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .menu-category-card .btn-delete-category {
+      width: 100%;
+      padding: 0.45rem 0.6rem;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #c97a7a;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      font-family: inherit;
+    }
+    .menu-category-card .btn-delete-category:hover {
+      background: rgba(220, 80, 80, 0.15);
+      color: #e88a8a;
+      border-color: rgba(220, 80, 80, 0.3);
+    }
+    .menu-category-card .btn-delete-category-icon {
+      width: 14px;
+      height: 14px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c97a7a'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
+      transition: background 0.2s;
+    }
+    .menu-category-card .btn-delete-category:hover .btn-delete-category-icon {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e88a8a'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E");
+    }
+    .menu-category-detail {
+      width: 100%;
+      display: block;
+    }
+    .menu-category-detail-body {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      width: 100%;
+      min-width: 0;
+    }
+    .menu-category-detail-list {
+      flex: 1;
+      min-width: 0;
+    }
+    @media (max-width: 768px) {
+      .menu-category-detail-body {
+        flex-direction: column;
+      }
+      .menu-category-cover {
+        width: min(240px, 100%);
+        max-width: 240px;
+        margin: 0 auto;
+      }
+    }
+    .menu-category-detail-toolbar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.75rem 1rem;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      position: relative;
+      z-index: 5;
+      direction: ltr;
+    }
+    .menu-category-detail-toolbar .btn-back-categories {
+      grid-column: 1;
+      justify-self: start;
+      flex-shrink: 0;
+      padding: 0.48rem 0.9rem;
+      font-size: 0.875rem;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #2b313a 0%, #252b34 100%);
+      border-color: rgba(255,255,255,0.12);
+      color: #eef2f8;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.22);
+    }
+    .menu-category-detail-title {
+      grid-column: 2;
+      justify-self: center;
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text, #e8eaed);
+      min-width: 0;
+      text-align: center;
+      direction: rtl;
+    }
+    .menu-category-detail-actions {
+      grid-column: 3;
+      justify-self: end;
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      direction: rtl;
+    }
+    @media (max-width: 860px) {
+      .menu-category-detail-toolbar {
+        grid-template-columns: 1fr;
+        direction: rtl;
+      }
+      .menu-category-detail-toolbar .btn-back-categories,
+      .menu-category-detail-title,
+      .menu-category-detail-actions {
+        grid-column: 1;
+        justify-self: stretch;
+      }
+      .menu-category-detail-title {
+        text-align: center;
+      }
+      .menu-category-detail-actions {
+        justify-content: center;
+      }
+    }
+
+    .menu-category-detail-actions .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    .btn-edit-category-name {
+      background: rgba(138, 180, 248, 0.15);
+      color: #8ab4f8;
+      border: 1px solid rgba(138, 180, 248, 0.3);
+    }
+    .btn-edit-category-name:hover {
+      background: rgba(138, 180, 248, 0.25);
+      border-color: rgba(138, 180, 248, 0.5);
+    }
+    .btn-delete-category-outside {
+      background: rgba(220, 80, 80, 0.12);
+      color: #c97a7a;
+      border: 1px solid rgba(220, 80, 80, 0.3);
+    }
+    .btn-delete-category-outside:hover {
+      background: rgba(220, 80, 80, 0.22);
+      color: #e88a8a;
+      border-color: rgba(220, 80, 80, 0.45);
+    }
+    /* غلاف التصنيف — يظهر للزبائن كصورة رئيسية للتصنيف (ليس صورة منتج) */
+    .menu-category-cover {
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      margin-bottom: 1.25rem;
+      padding: 1.15rem 1.25rem 1.35rem;
+      border-radius: 14px;
+      background: linear-gradient(165deg, rgba(138, 180, 248, 0.06) 0%, rgba(255,255,255,0.02) 45%, rgba(0,0,0,0.12) 100%);
+      border: 1px solid rgba(138, 180, 248, 0.12);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-category-cover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 3px;
+      border-radius: 14px 14px 0 0;
+      background: linear-gradient(90deg, rgba(138, 180, 248, 0.15), rgba(138, 180, 248, 0.55), rgba(138, 180, 248, 0.15));
+      opacity: 0.85;
+    }
+    .menu-category-cover__head {
+      text-align: center;
+      margin-bottom: 1.1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-category-cover__badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #8ab4f8;
+      background: rgba(138, 180, 248, 0.1);
+      border: 1px solid rgba(138, 180, 248, 0.22);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.45rem;
+    }
+    .menu-category-cover__title {
+      margin: 0 0 0.35rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text, #e8eaed);
+      line-height: 1.35;
+    }
+    .menu-category-cover__hint {
+      margin: 0 auto;
+      max-width: 26rem;
+      font-size: 0.8rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.52);
+    }
+    .menu-category-cover__body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-category-cover__frame {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    .menu-category-cover__frame .menu-category-detail-preview-wrap {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border-radius: 0;
+      border: none;
+      background: rgba(0,0,0,0.25);
+    }
+    .menu-category-detail-preview-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .menu-category-detail-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .menu-category-detail-no-img {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.42);
+      padding: 0.75rem 1rem;
+      text-align: center;
+      line-height: 1.45;
+      max-width: 12rem;
+    }
+    .menu-category-cover__actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+    .menu-category-cover__actions .btn-category-image-pick {
+      min-width: 7.5rem;
+    }
+    .btn-category-image-pick {
+      background: rgba(138, 180, 248, 0.14);
+      color: #8ab4f8;
+      border: 1px solid rgba(138, 180, 248, 0.32);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-category-image-pick:hover {
+      background: rgba(138, 180, 248, 0.24);
+      border-color: rgba(138, 180, 248, 0.5);
+    }
+    .btn-category-image-remove {
+      background: transparent;
+      color: rgba(255,255,255,0.48);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-category-image-remove:hover {
+      color: #c97a7a;
+      border-color: rgba(220, 80, 80, 0.38);
+    }
+
+    /* نافذة إدارة صورة التصنيف */
+    .category-image-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 14, 21, 0.7);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1040;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .category-image-overlay[style*="display: none"] { display: none !important; }
+    .category-image-modal {
+      width: min(470px, calc(100vw - 2rem));
+      background: #1b2028;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      position: relative;
+      padding: 0.9rem;
+    }
+    .category-image-close-x {
+      position: absolute;
+      top: 0.55rem;
+      inset-inline-end: 0.55rem;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      background: linear-gradient(180deg, #2b313a 0%, #252b34 100%);
+      color: #eef2f8;
+      font-size: 1.15rem;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .category-image-close-x:hover {
+      background: #2e333b;
+      border-color: rgba(138, 180, 248, 0.35);
+      color: #8ab4f8;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+    .category-image-title {
+      margin: 0 0 0.3rem 0;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #f1f4f9;
+    }
+    .category-image-desc {
+      margin: 0 0 0.85rem 0;
+      color: rgba(255,255,255,0.62);
+      font-size: 0.88rem;
+    }
+    .category-image-preview-box {
+      position: relative;
+      width: min(320px, 100%);
+      aspect-ratio: 4 / 3;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.35);
+      overflow: hidden;
+      margin-bottom: 0.9rem;
+      margin-inline: auto;
+    }
+    .category-image-preview-box.is-loading { opacity: 0.72; }
+    .category-image-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      background: #232a33;
+    }
+    .category-image-empty {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-weight: 700;
+      font-size: 0.9rem;
+      background: rgba(0,0,0,0.15);
+      border: 1.5px dashed rgba(255,255,255,0.18);
+      border-radius: 12px;
+    }
+    .category-image-actions {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 480px) {
+      .category-image-actions { gap: 0.45rem; }
+      .category-image-actions .btn { flex: 1; min-width: 0; }
+    }
+
+    /* عرض المنيو — بطاقات مدمجة ومرتبة */
+    .menu-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.75rem;
+      width: 100%;
+    }
+    .menu-card-admin {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      min-width: 0;
+      background: #1e2228;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.12s ease;
+    }
+    .menu-card-admin:hover {
+      border-color: rgba(255,255,255,0.1);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+      transform: translateY(-1px);
+    }
+    .menu-card-admin img {
+      width: 100%;
+      min-width: 0;
+      height: 110px;
+      object-fit: cover;
+      object-position: center;
+      background: #252930;
+      display: block;
+    }
+    .menu-card-admin .body {
+      flex: 1;
+      padding: 0.65rem 0.75rem 0.75rem;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .menu-card-admin .name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #e8eaed;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .menu-card-admin .meta {
+      display: none;
+    }
+    .menu-card-admin .price {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #8ab4f8;
+      margin: 0;
+    }
+    .menu-card-admin .actions {
+      display: flex;
+      gap: 0.4rem;
+      width: 100%;
+      margin-top: 0.25rem;
+    }
+    .menu-card-admin .btn {
+      min-height: 36px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8rem;
+    }
+
+    .orders-table-wrap {
+      background: #1e2228;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: visible;
+      -webkit-overflow-scrolling: touch;
+    }
+    .orders-table { width: 100%; border-collapse: collapse; }
+    .orders-table th {
+      padding: 0.75rem 1rem;
+      text-align: right;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #6b7280;
+      background: rgba(0,0,0,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .orders-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.875rem;
+    }
+    .orders-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+    /* عرض التاريخ والوقت — مرتب وأنيق ومتوافق مع كل الأجهزة */
+    .date-time-block {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.15rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      color: #e8eaed;
+    }
+    .date-time-time {
+      font-weight: 600;
+      color: #8ab4f8;
+    }
+    .date-time-date {
+      font-size: 0.8125rem;
+      color: #9aa0a6;
+    }
+    @media (max-width: 768px) {
+      .date-time-block { align-items: flex-start; }
+      .orders-table td[data-label="التاريخ والوقت"] .date-time-block {
+        gap: 0.25rem;
+      }
+    }
+
+    /* مجموع طلبات اليوم — جدول مجمّع حسب الطاولة */
+    .today-grouped-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .today-table-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .today-table-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .today-table-card-head:hover { background: rgba(255,255,255,0.04); }
+    .today-table-card-head__text {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.85rem;
+      min-width: 0;
+      flex: 1;
+      line-height: 1.55;
+    }
+    .today-table-card-head .table-num { font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+    .today-table-card-head .table-meta-sep { color: rgba(255, 255, 255, 0.35); padding: 0 0.15rem; }
+    .today-table-card-head .table-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.55rem 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .today-table-card-head .table-meta__part { white-space: nowrap; }
+    .today-table-card-head .table-meta__part--pay { font-weight: 600; color: rgba(250, 250, 250, 0.78); }
+    .today-table-card-head__aside {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+    .today-table-card-head .table-total { font-size: 1.1rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .today-table-card-head .table-toggle { font-size: 0.9rem; color: var(--text-muted); }
+    .today-detail-table .col-num { text-align: center; white-space: nowrap; }
+    .today-detail-table .btn-today-session-receipt { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
+    .today-table-card-detail {
+      display: none;
+      padding: 0 1.25rem 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .today-table-card.expanded .today-table-card-detail { display: block; }
+    .today-table-card.expanded .table-toggle { transform: rotate(180deg); }
+    .today-detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .today-detail-table th {
+      text-align: right;
+      padding: 0.5rem 0.6rem;
+      background: rgba(0,0,0,0.15);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .today-detail-table td { padding: 0.5rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .today-detail-table .col-amount { color: var(--accent); font-weight: 600; }
+    .today-detail-table .today-payment-cell { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .today-detail-table .payment-method-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 5.5rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .today-detail-table .payment-method-badge.payment-cash {
+      background: rgba(100, 180, 120, 0.25);
+      color: #7dd39e;
+      border: 1px solid rgba(100, 180, 120, 0.4);
+    }
+    .today-detail-table .payment-method-badge.payment-card {
+      background: rgba(138, 180, 248, 0.2);
+      color: var(--accent);
+      border: 1px solid rgba(138, 180, 248, 0.4);
+    }
+    .today-detail-table .btn-receipt { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
+    /* مودال وصل الجلسة — نفس الكاشير */
+    .today-session-receipt-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+    .today-session-receipt-modal.open { opacity: 1; visibility: visible; }
+    .today-session-receipt-modal__dialog {
+      width: min(420px, 100%);
+      max-height: min(88vh, 640px);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid rgba(138, 180, 248, 0.18);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), 0 16px 48px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+    .today-session-receipt-modal__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.75rem 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, #2e333b 0%, var(--surface) 100%);
+    }
+    .today-session-receipt-modal__title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .today-session-receipt-modal__close-x {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      margin: 0;
+      border: 1px solid rgba(138, 180, 248, 0.5);
+      border-radius: 8px;
+      background: rgba(138, 180, 248, 0.22);
+      color: #f0f4fc;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .today-session-receipt-modal__close-x:hover {
+      background: rgba(138, 180, 248, 0.38);
+      color: #fff;
+      border-color: var(--accent-hover);
+    }
+    .today-session-receipt-modal__body {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 0.75rem 0.85rem;
+      background: var(--surface);
+    }
+    .today-session-order-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0.55rem 0.65rem;
+      margin-bottom: 0.55rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      background: var(--surface2);
+    }
+    .today-session-order-row:last-child { margin-bottom: 0; }
+    .today-session-order-row__main { display: flex; flex-direction: column; gap: 0.12rem; flex: 1; min-width: 0; }
+    .today-session-order-row__title { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+    .today-session-order-row__time { font-size: 0.72rem; color: var(--text-muted); }
+    .today-session-order-row__amount { font-size: 0.85rem; font-weight: 800; color: var(--accent); }
+    .today-session-order-row .btn-today-order-detail {
+      flex-shrink: 0;
+      min-height: 36px;
+      padding: 0.42rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 1px solid rgba(138, 180, 248, 0.6);
+      background: linear-gradient(180deg, #b8d4fc 0%, var(--accent) 100%);
+      color: #12151c;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+    }
+    .today-session-order-row .btn-today-order-detail:hover {
+      background: linear-gradient(180deg, #d0e4ff 0%, var(--accent-hover) 100%);
+      border-color: var(--accent-hover);
+      color: #0a0c10;
+    }
+    .today-session-receipt-modal__footer {
+      padding: 0.65rem 0.85rem 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(0deg, #1c2129 0%, var(--surface) 100%);
+    }
+    .today-session-receipt-modal__total { font-size: 1rem; font-weight: 800; color: var(--accent); margin-bottom: 0.35rem; }
+    .today-session-receipt-modal__payment { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+    /* مودال تفاصيل الطلب — نفس الكاشير */
+    .cashier-table-order-modal {
+      --cm-bg: var(--surface);
+      --cm-surface2: var(--surface2);
+      --cm-accent: var(--accent);
+      --cm-text: var(--text);
+      --cm-muted: var(--text-muted);
+      position: fixed;
+      inset: 0;
+      z-index: 1250;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.55);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+    .cashier-table-order-modal.open { opacity: 1; visibility: visible; }
+    .cashier-table-order-modal__dialog {
+      background: var(--cm-bg);
+      color: var(--cm-text);
+      border-radius: var(--radius);
+      border: 1px solid rgba(138, 180, 248, 0.18);
+      max-width: 480px;
+      width: 100%;
+      max-height: min(88vh, 620px);
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow), 0 16px 48px rgba(0, 0, 0, 0.45);
+    }
+    .cashier-table-order-modal__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, #2e333b 0%, var(--cm-bg) 100%);
+    }
+    .cashier-table-order-modal__title { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--cm-accent); }
+    .cashier-table-order-modal__subtitle { margin: 0.2rem 0 0; font-size: 0.82rem; color: var(--cm-muted); }
+    .cashier-table-order-modal__close-x {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0;
+      margin: 0;
+      border: 1px solid rgba(138, 180, 248, 0.5);
+      border-radius: 8px;
+      background: rgba(138, 180, 248, 0.22);
+      color: #f0f4fc;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .cashier-table-order-modal__close-x:hover {
+      background: rgba(138, 180, 248, 0.38);
+      color: #fff;
+      border-color: var(--accent-hover);
+    }
+    .cashier-table-order-modal__table-wrap {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 0.25rem 0.85rem 0.45rem;
+    }
+    .cashier-table-order-modal__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .cashier-table-order-modal__table thead th {
+      text-align: right;
+      padding: 0.3rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--cm-accent);
+      border-bottom: 2px solid rgba(138, 180, 248, 0.45);
+    }
+    .cashier-table-order-modal__table tbody td {
+      padding: 0.24rem 0.3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .cashier-table-order-modal__table .col-line-sub { font-weight: 700; color: var(--cm-accent); text-align: end; }
+    .cashier-table-order-modal__footer {
+      padding: 0.85rem 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(0deg, #1c2129 0%, var(--cm-bg) 100%);
+    }
+    .cashier-table-order-modal__total { font-size: 0.95rem; font-weight: 700; color: var(--cm-accent); }
+    @media (max-width: 640px) {
+      .today-table-card-head { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* على الموبايل: عرض كل طلب كبطاقة مرتبة بدل الجدول — مرن وسلس */
+    @media (max-width: 768px) {
+      .orders-table-wrap {
+        overflow: visible;
+        padding: 0;
+        background: transparent;
+        border: none;
+      }
+      .orders-table {
+        display: block;
+      }
+      .orders-table thead {
+        display: none;
+      }
+      .orders-table tbody {
+        display: block;
+      }
+      .orders-table tbody tr {
+        display: block;
+        background: #1e2228;
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .orders-table tbody tr:hover {
+        border-color: rgba(255,255,255,0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      }
+      .orders-table tbody tr:last-child { margin-bottom: 0; }
+      .orders-table td {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.5rem 0;
+        border: none;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        font-size: 0.9rem;
+      }
+      .orders-table td:last-child {
+        border-bottom: none;
+        padding-top: 0.75rem;
+        padding-bottom: 0;
+      }
+      .orders-table td[data-label=""]::before { content: none; }
+      .orders-table td::before {
+        content: attr(data-label);
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #9aa0a6;
+        flex-shrink: 0;
+        min-width: 7rem;
+        text-align: right;
+      }
+      .orders-table td.td-actions {
+        justify-content: flex-start;
+      }
+      .orders-table td.td-actions .btn {
+        min-height: 44px;
+        padding: 0.6rem 1rem;
+      }
+      .orders-table td {
+        word-break: break-word;
+      }
+    }
+    @media (min-width: 769px) {
+      .orders-table-wrap { overflow: auto; }
+      .orders-table { min-width: 640px; }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: #9aa0a6;
+      font-size: 0.9rem;
+    }
+
+    .toast-wrap {
+      position: fixed;
+      bottom: max(1.25rem, var(--safe-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      padding: 0 1rem;
+      pointer-events: none;
+    }
+    .toast {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      padding: 0.95rem 1.4rem;
+      min-width: min(92vw, 340px);
+      max-width: min(92vw, 420px);
+      background: #ffffff;
+      border: 2px solid #c5d0de;
+      border-radius: 12px;
+      color: #1a1d23;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+      box-shadow:
+        0 10px 32px rgba(0, 0, 0, 0.16),
+        0 0 0 1px rgba(0, 0, 0, 0.04);
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      pointer-events: auto;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .toast::before {
+      flex-shrink: 0;
+      width: 1.85rem;
+      height: 1.85rem;
+      border-radius: 50%;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .toast--success {
+      border-color: #1f9d63;
+      background: #ecfdf3;
+      color: #0b3d2a;
+      box-shadow:
+        0 10px 32px rgba(31, 157, 99, 0.24),
+        0 0 0 1px rgba(31, 157, 99, 0.12);
+    }
+    .toast--success::before {
+      content: '✓';
+      background: #1f9d63;
+      color: #ffffff;
+    }
+    .toast--error {
+      border-color: #d64545;
+      background: #fff4f4;
+      color: #7a1c1c;
+      box-shadow:
+        0 10px 32px rgba(214, 69, 69, 0.22),
+        0 0 0 1px rgba(214, 69, 69, 0.1);
+    }
+    .toast--error::before {
+      content: '!';
+      background: #d64545;
+      color: #ffffff;
+    }
+
+    /* عرض الوصل — نفس تصميم صفحة الكاشير */
+    .receipt-overlay.admin-receipt-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+    .receipt-overlay.admin-receipt-overlay.open { opacity: 1; visibility: visible; }
+    .admin-receipt-overlay .receipt-box.receipt-box-card {
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 420px;
+      width: 90%;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .admin-receipt-overlay .receipt-card-header {
+      padding: 1rem 1.25rem;
+      background: rgba(0,0,0,0.25);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .admin-receipt-overlay .receipt-table-num {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 0.25rem 0;
+    }
+    .admin-receipt-overlay .receipt-date,
+    .admin-receipt-overlay .receipt-order-id {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .admin-receipt-overlay .receipt-card-body {
+      padding: 1rem 1.25rem;
+    }
+    .admin-receipt-overlay .receipt-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .admin-receipt-overlay .receipt-items-table th {
+      text-align: right;
+      padding: 0.5rem 0.6rem;
+      background: rgba(0,0,0,0.15);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .admin-receipt-overlay .receipt-items-table td {
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .admin-receipt-overlay .receipt-items-table .col-name { font-weight: 500; }
+    .admin-receipt-overlay .receipt-items-table .col-qty { text-align: center; }
+    .admin-receipt-overlay .receipt-items-table .col-price { color: var(--accent); font-weight: 600; }
+    .admin-receipt-overlay .receipt-card-total {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.12);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .admin-receipt-overlay .receipt-box-actions {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.08);
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+    @media print {
+      .receipt-overlay.admin-receipt-overlay { background: #fff; }
+      .admin-receipt-overlay .receipt-box { background: #fff; color: #000; border: 1px solid #ddd; }
+      .admin-receipt-overlay .receipt-table-num,
+      .admin-receipt-overlay .receipt-card-total { color: #1a73e8; }
+      .admin-receipt-overlay .receipt-items-table .col-price { color: #1a73e8; }
+      .admin-receipt-overlay .receipt-box-actions { display: none; }
+    }
+
+    /* شريط فلترة التقارير والأرشيف — متجاوب ومرتب */
+    .archive-filter-bar {
+      background: #1e2228;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .archive-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+    .archive-filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .archive-filter-group label {
+      font-size: 0.8rem;
+      color: #e8eaed;
+      font-weight: 500;
+    }
+    .archive-input {
+      padding: 0.6rem 0.75rem;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.15);
+      background: #fff;
+      color: #1a1d23;
+      font-size: 16px;
+      min-width: 120px;
+    }
+    .archive-input:focus {
+      outline: none;
+      border-color: #8ab4f8;
+      box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.25);
+    }
+    .archive-input::placeholder {
+      color: #6b7280;
+    }
+    @media (max-width: 768px) {
+      .archive-filter-bar { padding: 1rem; margin-bottom: 1.25rem; }
+      .archive-filter-row { gap: 0.75rem; }
+      .archive-filter-group { min-width: 0; flex: 1 1 120px; }
+      .archive-input { min-width: 0; width: 100%; }
+      .archive-filter-row .btn { width: 100%; min-height: 48px; }
+    }
+    .archive-sample-notice {
+      background: rgba(138, 180, 248, 0.15);
+      border: 1px solid rgba(138, 180, 248, 0.35);
+      color: #8ab4f8;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .archive-closings-section {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .archive-closings-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 0.35rem 0;
+    }
+    .archive-closings-hint {
+      font-size: 0.8rem;
+      color: #9aa0a6;
+      margin: 0 0 1rem 0;
+    }
+    .archive-closings-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .archive-closings-row .stat-card.archive-closing-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+      max-width: 320px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .archive-closings-row .stat-card.archive-closing-card:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(138, 180, 248, 0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .archive-closings-row .archive-closing-date { font-size: 0.9rem; color: var(--text-muted); }
+    .archive-closings-row .archive-closing-duration { font-size: 0.85rem; color: var(--accent); }
+    .archive-closings-row .closing-row { display: flex; justify-content: space-between; width: 100%; gap: 1rem; }
+    .archive-closings-row .closing-card-hint { margin-top: 0.75rem; padding-top: 0.65rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.8rem; color: var(--text-muted); }
+    .archive-closings-row .stat-card.archive-closing-card:hover .closing-card-hint { color: var(--accent); }
+    .archive-closings-empty { margin-top: 0.5rem; }
+
+    /* تسجيل دخول الأدمن */
+    .admin-login-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 180, 216, 0.12) 0%, transparent 55%),
+        linear-gradient(165deg, #0a1628 0%, #0d2137 45%, #081420 100%);
+    }
+    .admin-login-gate[hidden] { display: none !important; }
+    .admin-login-card {
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem 1.75rem 1.75rem;
+      border-radius: 20px;
+      background: rgba(12, 28, 48, 0.92);
+      border: 1px solid rgba(0, 200, 220, 0.22);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      text-align: center;
+    }
+    .admin-login-logo {
+      width: min(155px, 58vw);
+      height: auto;
+      margin: 0 auto 1rem;
+      display: block;
+      border-radius: 12px;
+    }
+    .admin-login-title {
+      margin: 0 0 0.35rem;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .admin-login-subtitle {
+      margin: 0 0 1.5rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+    .admin-login-form { text-align: right; }
+    .admin-login-form .form-group { margin-bottom: 1rem; }
+    .admin-login-form label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 600;
+    }
+    .admin-login-form input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 200, 220, 0.35);
+      background: rgba(6, 18, 32, 0.85);
+      color: #fff;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .admin-login-form input:focus {
+      outline: none;
+      border-color: #00c8dc;
+      box-shadow: 0 0 0 3px rgba(0, 200, 220, 0.18);
+    }
+    .admin-login-error {
+      margin: 0 0 1rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      background: rgba(220, 53, 69, 0.15);
+      border: 1px solid rgba(220, 53, 69, 0.35);
+      color: #ff8a8a;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+    .admin-login-error[hidden] { display: none !important; }
+    .btn-admin-login {
+      width: 100%;
+      margin-top: 0.25rem;
+      padding: 0.85rem 1rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(0, 180, 216, 0.35);
+    }
+    .btn-admin-login:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 180, 216, 0.45);
+    }
+    .admin-login-input-wrap {
+      position: relative;
+    }
+    .admin-login-input-wrap input {
+      padding-left: 3.1rem !important;
+      padding-right: 1rem !important;
+    }
+    .admin-login-eye {
+      position: absolute;
+      left: 0.55rem;
+      right: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.35rem;
+      height: 2.35rem;
+      padding: 0;
+      border: 1px solid #b8c4d0;
+      border-radius: 8px;
+      background: #eef2f6;
+      color: #3d5166;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+      z-index: 5;
+      pointer-events: auto;
+    }
+    .admin-login-eye:hover {
+      color: #0077a8;
+      background: #dff3fb;
+      border-color: #00b4d8;
+    }
+    .admin-login-eye svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      fill: currentColor;
+      pointer-events: none;
+    }
+    .admin-login-eye .eye-show { display: none; }
+    .admin-login-eye .eye-hide { display: block; }
+    .admin-login-eye.is-visible .eye-show { display: block; }
+    .admin-login-eye.is-visible .eye-hide { display: none; }
+    .btn-admin-forgot {
+      display: block;
+      width: 100%;
+      margin-top: 0.85rem;
+      padding: 0.35rem 0.5rem;
+      border: none;
+      background: transparent;
+      color: rgba(0, 200, 220, 0.9);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .btn-admin-forgot:hover { color: #5ce1f5; }
+    .admin-login-recovery[hidden],
+    .admin-login-normal[hidden] { display: none !important; }
+    .btn-admin-back-login {
+      display: block;
+      width: 100%;
+      margin-top: 0.75rem;
+      padding: 0.35rem 0.5rem;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .btn-admin-back-login:hover { color: #fff; }
+    .admin-app:not(.admin-authenticated) .admin-wrap[hidden] { display: none !important; }
+
+    /* أنيميشن دخول الأدمن */
+    @keyframes adminLoginGateExit {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+      55% {
+        opacity: 0.85;
+        transform: scale(1.03);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.08) translateY(-18px);
+        filter: blur(10px);
+      }
+    }
+    @keyframes adminLoginCardSuccess {
+      0% {
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+        border-color: rgba(0, 200, 220, 0.22);
+      }
+      40% {
+        box-shadow:
+          0 28px 56px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(92, 225, 245, 0.45) inset,
+          0 0 42px rgba(0, 200, 220, 0.35);
+        border-color: rgba(92, 225, 245, 0.65);
+      }
+      100% {
+        box-shadow:
+          0 24px 48px rgba(0, 0, 0, 0.45),
+          0 0 0 1px rgba(0, 200, 220, 0.3) inset,
+          0 0 28px rgba(0, 200, 220, 0.2);
+        border-color: rgba(0, 200, 220, 0.4);
+      }
+    }
+    @keyframes adminLoginBtnSuccess {
+      0% { transform: scale(1); }
+      35% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+    @keyframes adminLoginSuccessRing {
+      0% {
+        opacity: 0.75;
+        transform: translate(-50%, -50%) scale(0.35);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2.2);
+      }
+    }
+    @keyframes adminAppEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(28px) scale(0.98);
+        filter: blur(6px);
+      }
+      65% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.005);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+    @keyframes adminLoginShake {
+      0%, 100% { transform: translateX(0); }
+      18% { transform: translateX(-10px); }
+      36% { transform: translateX(10px); }
+      54% { transform: translateX(-7px); }
+      72% { transform: translateX(7px); }
+      90% { transform: translateX(-3px); }
+    }
+    .admin-login-gate.is-exiting {
+      pointer-events: none;
+    }
+    .admin-login-gate.is-exiting .admin-login-card {
+      animation: adminLoginGateExit 0.72s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    .admin-login-card.is-success-pulse {
+      animation: adminLoginCardSuccess 0.55s ease-out forwards;
+      position: relative;
+      overflow: hidden;
+    }
+    .admin-login-card.is-success-pulse::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 120%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 2px solid rgba(92, 225, 245, 0.55);
+      animation: adminLoginSuccessRing 0.65s ease-out forwards;
+      pointer-events: none;
+    }
+    .btn-admin-login.is-success {
+      animation: adminLoginBtnSuccess 0.45s ease-out;
+      background: linear-gradient(135deg, #2dd4bf 0%, #00b4d8 55%, #0096c7 100%);
+      box-shadow: 0 6px 24px rgba(45, 212, 191, 0.45);
+    }
+    .btn-admin-login:disabled {
+      opacity: 0.92;
+      cursor: wait;
+    }
+    .admin-login-card.is-shake {
+      animation: adminLoginShake 0.48s ease-out;
+    }
+    .admin-wrap.is-entering {
+      animation: adminAppEnter 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .admin-login-gate.is-exiting .admin-login-card,
+      .admin-login-card.is-success-pulse,
+      .admin-login-card.is-shake,
+      .admin-wrap.is-entering,
+      .btn-admin-login.is-success {
+        animation: none !important;
+      }
+      .admin-login-card.is-success-pulse::after {
+        display: none;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/admin-theme.css?v=20260609-add-item-ui">
+  <style>
+    body.admin-app .admin-login-form .form-group label {
+      color: #ffffff;
+      font-weight: 600;
+    }
+    body.admin-app .admin-login-form .admin-login-eye {
+      color: #3d5166;
+      background: #eef2f6;
+      border: 1px solid #b8c4d0;
+    }
+    body.admin-app .admin-login-form .admin-login-eye:hover {
+      color: #0077a8;
+      background: #dff3fb;
+      border-color: #00b4d8;
+    }
+  </style>
+</head>
+<body class="admin-app">
+  <div id="adminLoginGate" class="admin-login-gate" aria-label="تسجيل دخول الأدمن">
+    <div class="admin-login-card">
+      <img src="/admin/assets/ah-systems-logo.png" alt="A.H SYSTEMS &amp; WEB SOLUTIONS" class="admin-login-logo" width="155" height="auto">
+      <h2 class="admin-login-title">تسجيل الدخول</h2>
+      <p class="admin-login-subtitle">لوحة تحكم الأدمن</p>
+      <form id="adminLoginForm" class="admin-login-form" autocomplete="on">
+        <div id="adminLoginNormal" class="admin-login-normal">
+          <div class="form-group">
+            <label for="adminLoginUser">اسم المستخدم</label>
+            <input type="text" id="adminLoginUser" name="username" autocomplete="username" placeholder="أدخل اسم المستخدم">
+          </div>
+          <div class="form-group">
+            <label for="adminLoginPass">رمز الدخول</label>
+            <div class="admin-login-input-wrap">
+              <input type="password" id="adminLoginPass" name="password" autocomplete="current-password" placeholder="أدخل رمز الدخول">
+              <button type="button" class="admin-login-eye" id="btnTogglePass" aria-label="إظهار رمز الدخول" title="إظهار رمز الدخول">
+                <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+              </button>
+            </div>
+          </div>
+          <p id="adminLoginError" class="admin-login-error" hidden role="alert"></p>
+          <button type="submit" class="btn-admin-login">دخول</button>
+          <button type="button" class="btn-admin-forgot" id="btnForgotPass">هل نسيت رمز الدخول؟</button>
+        </div>
+        <div id="adminLoginRecovery" class="admin-login-recovery" hidden>
+          <div class="form-group">
+            <label for="adminRecoveryCode">رمز الاستيراد</label>
+            <div class="admin-login-input-wrap">
+              <input type="password" id="adminRecoveryCode" name="recovery" autocomplete="off" placeholder="أدخل رمز الاستيراد">
+              <button type="button" class="admin-login-eye" id="btnToggleRecovery" aria-label="إظهار رمز الاستيراد" title="إظهار رمز الاستيراد">
+                <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+              </button>
+            </div>
+          </div>
+          <p id="adminRecoveryError" class="admin-login-error" hidden role="alert"></p>
+          <button type="submit" class="btn-admin-login">دخول</button>
+          <button type="button" class="btn-admin-back-login" id="btnBackToLogin">العودة لتسجيل الدخول</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="admin-wrap" id="adminAppWrap" hidden aria-hidden="true">
+    <main class="admin-main" id="adminMain">
+      <header class="admin-header">
+        <button type="button" class="btn-menu" id="btnMenuOpen" aria-label="فتح القائمة">
+          <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>القائمة</span>
+        </button>
+        <h1>لوحة تحكم الأدمن</h1>
+        <a href="../" class="btn-home" id="btnHome">الرئيسية</a>
+      </header>
+      <div class="admin-content">
+        <div id="pageAddItem" class="admin-page">
+          <h2 class="page-title" id="pageAddItemTitle">إضافة عنصر جديد</h2>
+          <div class="form-card">
+            <form id="formAddItem">
+              <input type="hidden" id="editId">
+              <div class="form-group">
+                <label for="itemName">اسم العنصر</label>
+                <input type="text" id="itemName" required placeholder="مثال: إسبريسو">
+              </div>
+              <div class="form-group">
+                <label for="itemPrice">السعر (IQD)</label>
+                <div class="iqd-price-field">
+                  <input type="text" id="itemPrice" inputmode="numeric" autocomplete="off" value="0" dir="ltr" aria-label="السعر بالدينار العراقي" placeholder="0">
+                  <div class="iqd-price-spin" aria-hidden="true">
+                    <button type="button" class="iqd-price-spin__btn" id="itemPriceUp" tabindex="-1" title="زيادة 1,000 دينار">▲</button>
+                    <button type="button" class="iqd-price-spin__btn" id="itemPriceDown" tabindex="-1" title="نقصان 1,000 دينار">▼</button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="itemCategory">التصنيف</label>
+                <select id="itemCategory">
+                  <option value="">— اختر —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="itemImage">صورة العنصر</label>
+                <input type="hidden" id="itemImageUrl">
+                <input type="file" id="itemImage" accept="image/*">
+                <img id="itemImagePreview" class="img-preview" alt="" style="display: none;">
+              </div>
+              <div class="form-group">
+                <label for="itemIngredients">وصف اختياري</label>
+                <textarea id="itemIngredients" placeholder="مكونات أو وصف..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="btnAddOptionGroup">تخصيص المنتج (اختياري)</label>
+                <p class="form-hint admin-option-hint">أضف خياراً (مثل السكر أو الحجم)، ثم أدخل كل قيمة على حدة واضغط Enter أو زر + لإضافتها كشارة.</p>
+                <div class="item-option-groups-wrap">
+                  <div id="itemOptionGroups" class="item-option-groups"></div>
+                </div>
+                <button type="button" class="btn btn-secondary" id="btnAddOptionGroup">➕ إضافة خيار</button>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="btnCancelEdit">رجوع</button>
+                <button type="submit" class="btn btn-primary">حفظ</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="pageViewMenu" class="admin-page">
+          <div class="menu-page-header" id="menuPageHeader">
+            <h2 class="page-title" id="menuPageTitle">عرض تصنيفات</h2>
+            <div class="menu-page-actions">
+              <button type="button" class="btn btn-primary btn-add-category" id="btnAddCategory" title="إضافة تصنيف جديد">+ إضافة تصنيف</button>
+              <button type="button" class="btn-add-menu-item" id="btnAddMenuItem" style="display: none;" title="إضافة منتج" aria-label="إضافة منتج">+</button>
+            </div>
+          </div>
+          <div id="menuCategoriesWrap" class="menu-categories-wrap">
+            <div id="menuCategoryCards" class="menu-category-cards"></div>
+            <div id="emptyCategories" class="empty-state" style="display: none;">لا توجد تصنيفات. أضف تصنيفاً من الزر أعلاه أو أضف عناصر من القائمة الجانبية.</div>
+          </div>
+          <div id="menuCategoryDetail" class="menu-category-detail" style="display: none;">
+            <div class="menu-category-detail-toolbar">
+              <button type="button" class="btn-back-categories" id="btnBackCategories" aria-label="رجوع إلى التصنيفات">رجوع</button>
+              <h3 class="menu-category-detail-title" id="menuCategoryDetailTitle"></h3>
+              <div class="menu-category-detail-actions">
+                <button type="button" class="btn btn-edit-category-name" id="btnEditCategoryName" title="تعديل اسم التصنيف">تعديل الاسم</button>
+                <button type="button" class="btn btn-edit-category-name" id="btnPickCategoryImage" title="إضافة/تغيير صورة الغلاف">إضافة صورة لتصنيف</button>
+                <button type="button" class="btn btn-delete-category-outside" id="btnDeleteCategoryOutside" title="حذف التصنيف وجميع منتجاته">حذف التصنيف</button>
+              </div>
+            </div>
+            <div class="menu-category-detail-body">
+              <section class="menu-category-detail-list">
+                <div id="menuList" class="menu-cards"></div>
+                <div id="emptyMenu" class="empty-state" style="display: none;">لا توجد عناصر في هذا التصنيف. اضغط + لإضافة عنصر.</div>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div id="pageReports" class="admin-page active">
+          <h2 class="page-title">أرباح وتقارير اليوم</h2>
+          <div class="reports-card">
+            <p class="reports-dateline" id="reportsDateline"></p>
+            <div id="statsSection" class="stats-row"></div>
+            <div id="closingCardSection" class="stats-row closing-card-row"></div>
+          </div>
+        </div>
+        <div id="pageTodayOrders" class="admin-page">
+          <h2 class="page-title">مجموع طلبات اليوم</h2>
+          <div class="today-grouped-list" id="todayGroupedList"></div>
+          <div id="emptyOrders" class="empty-state" style="display: none;">لا توجد طلبات مغلقة اليوم.</div>
+        </div>
+        <div id="pageArchive" class="admin-page">
+          <h2 class="page-title">التقارير والأرشيف</h2>
+          <div class="archive-filter-bar">
+            <div class="archive-filter-row">
+              <div class="archive-filter-group">
+                <label>يوم</label>
+                <input type="date" id="archiveDate" class="archive-input">
+              </div>
+              <div class="archive-filter-group">
+                <label>شهر</label>
+                <input type="month" id="archiveMonth" class="archive-input">
+              </div>
+              <div class="archive-filter-group">
+                <label>سنة</label>
+                <input type="number" id="archiveYear" class="archive-input" min="2020" max="2030" placeholder="2026">
+              </div>
+              <button type="button" class="btn btn-primary" id="btnArchiveReport">عرض التقارير</button>
+            </div>
+          </div>
+          <div id="archiveSampleNotice" class="archive-sample-notice" style="display: none;">بيانات تجريبية للعرض فقط — لا تُحفظ في النظام.</div>
+          <div id="archiveStatsRow" class="stats-row"></div>
+          <section id="archiveClosingsSection" class="archive-closings-section" aria-labelledby="archiveClosingsTitle" style="display: none;">
+            <h3 id="archiveClosingsTitle" class="archive-closings-title">تقارير القاصة</h3>
+            <p class="archive-closings-hint">القاصات المعروضة حسب تاريخ ووقت الفتح (opened_at) للتاريخ المحدد.</p>
+            <div id="archiveClosingsRow" class="stats-row archive-closings-row"></div>
+            <p id="archiveClosingsEmpty" class="empty-state archive-closings-empty" style="display: none;">لا توجد قاصات فُتحت في هذا التاريخ.</p>
+          </section>
+          <div class="today-grouped-list" id="archiveGroupedList"></div>
+          <div id="emptyArchive" class="empty-state" style="display: none;">لا توجد طلبات في الفترة المحددة.</div>
+        </div>
+        <div id="pageSettings" class="admin-page">
+          <h2 class="page-title">الإعدادات</h2>
+          <div class="settings-stack">
+            <div class="settings-top-row">
+              <section class="settings-card" aria-labelledby="settingsCafeTitle">
+                <h3 id="settingsCafeTitle" class="settings-card__title">إعدادات الكافيه</h3>
+                <p class="settings-card__desc">اسم الكافيه والشعار يظهران في صفحة الترحيب ومنيو الزبائن.</p>
+                <form id="formCafeSettings">
+                  <div class="form-group">
+                    <label for="settingsCafeName">اسم الكافيه</label>
+                    <input type="text" id="settingsCafeName" maxlength="80" placeholder="مثال: Shot Cafe" autocomplete="organization">
+                  </div>
+                  <div class="form-group">
+                    <label>شعار الكافيه</label>
+                    <div id="settingsLogoPreviewWrap">
+                      <div class="settings-logo-empty" id="settingsLogoEmpty">لا يوجد شعار</div>
+                      <img id="settingsLogoPreview" class="settings-logo-preview" alt="شعار الكافيه" style="display:none;">
+                    </div>
+                    <input type="file" id="settingsLogoInput" accept="image/png,image/jpeg,image/webp" hidden>
+                    <div class="settings-logo-actions">
+                      <button type="button" class="btn btn-secondary" id="btnSettingsLogoUpload">رفع صورة</button>
+                      <button type="button" class="btn btn-danger" id="btnSettingsLogoDelete" style="display:none;">حذف الشعار</button>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="btnSaveCafeSettings">حفظ التغييرات</button>
+                  </div>
+                </form>
+              </section>
+              <section class="settings-card" aria-labelledby="settingsSecurityTitle">
+                <h3 id="settingsSecurityTitle" class="settings-card__title">إعدادات الأمان</h3>
+                <p class="settings-card__desc">تغيير رمز دخول لوحة التحكم. استخدم الرمز الحالي ثم عيّن الرمز الجديد.</p>
+                <form id="formSecuritySettings" autocomplete="off">
+                  <div class="form-group">
+                    <label for="settingsCurrentPassword">رمز الدخول الحالي</label>
+                    <div class="admin-login-input-wrap">
+                      <input type="password" id="settingsCurrentPassword" autocomplete="current-password" placeholder="أدخل رمز الدخول الحالي">
+                      <button type="button" class="admin-login-eye" id="btnToggleCurrentPass" aria-label="إظهار رمز الدخول الحالي" title="إظهار رمز الدخول الحالي">
+                        <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="settingsNewPassword">تعيين الرمز الجديد</label>
+                    <div class="admin-login-input-wrap">
+                      <input type="password" id="settingsNewPassword" autocomplete="new-password" placeholder="أدخل الرمز الجديد">
+                      <button type="button" class="admin-login-eye" id="btnToggleNewPass" aria-label="إظهار الرمز الجديد" title="إظهار الرمز الجديد">
+                        <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="settingsConfirmPassword">تأكيد الرمز الجديد</label>
+                    <div class="admin-login-input-wrap">
+                      <input type="password" id="settingsConfirmPassword" autocomplete="new-password" placeholder="أعد إدخال الرمز الجديد">
+                      <button type="button" class="admin-login-eye" id="btnToggleConfirmPass" aria-label="إظهار تأكيد الرمز" title="إظهار تأكيد الرمز">
+                        <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <p id="settingsSecurityError" class="settings-security-error" hidden role="alert"></p>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="btnSaveSecuritySettings">حفظ التغييرات</button>
+                  </div>
+                </form>
+              </section>
+            </div>
+            <section class="settings-card settings-card--tables" aria-labelledby="settingsTablesTitle">
+              <h3 id="settingsTablesTitle" class="settings-card__title">إعدادات الطاولات</h3>
+              <p class="settings-card__desc">إضافة أو حذف الطاولات مع توليد QR تلقائياً للزبائن.</p>
+              <div class="settings-table-toolbar">
+                <p class="settings-table-count" id="settingsTableCount">عدد الطاولات الحالية: <strong>0</strong></p>
+                <button type="button" class="btn btn-primary" id="btnAddTable">إضافة طاولة</button>
+              </div>
+              <div class="settings-table-list" id="settingsTableList"></div>
+              <p class="settings-table-empty" id="settingsTableEmpty" style="display:none;">لا توجد طاولات. اضغط «إضافة طاولة».</p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+    <aside class="admin-sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-text">لوحة التحكم</span>
+        <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="طي القائمة">
+          <span class="icon-collapse" aria-hidden="true">◀</span>
+          <span class="icon-expand" aria-hidden="true">▶</span>
+        </button>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">القائمة</div>
+        <button type="button" class="nav-item active" data-page="reports">
+          <span class="nav-icon">📈</span>
+          <span>أرباح وتقارير اليوم</span>
+        </button>
+        <button type="button" class="nav-item" data-page="today-orders">
+          <span class="nav-icon">📊</span>
+          <span>مجموع طلبات اليوم</span>
+        </button>
+        <button type="button" class="nav-item" data-page="view-menu">
+          <span class="nav-icon">📋</span>
+          <span>عرض تصنيفات</span>
+        </button>
+        <button type="button" class="nav-item" data-page="add-item">
+          <span class="nav-icon">➕</span>
+          <span>إضافة عنصر</span>
+        </button>
+        <button type="button" class="nav-item" data-page="archive">
+          <span class="nav-icon">📁</span>
+          <span>التقارير والأرشيف</span>
+        </button>
+        <button type="button" class="nav-item" data-page="settings">
+          <span class="nav-icon">⚙️</span>
+          <span>الإعدادات</span>
+        </button>
+      </nav>
+    </aside>
+  </div>
+  <div class="toast-wrap" id="toastWrap" aria-live="polite"><div class="toast" id="toast" role="status"></div></div>
+  <div class="add-category-overlay" id="addCategoryOverlay" aria-hidden="true" style="display: none;">
+    <div class="add-category-modal" role="dialog" aria-labelledby="addCategoryTitle" aria-modal="true">
+      <h3 id="addCategoryTitle" class="add-category-title">إضافة تصنيف جديد</h3>
+      <div class="add-category-form">
+        <input type="text" id="addCategoryInput" class="add-category-input" placeholder="اسم التصنيف" autocomplete="off" aria-label="اسم التصنيف">
+        <div class="add-category-actions">
+          <button type="button" class="btn btn-secondary" id="btnAddCategoryCancel">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="btnAddCategorySubmit">إضافة</button>
+        </div>
+      </div>
+      <button type="button" class="modal-close add-category-close" id="btnAddCategoryClose" aria-label="إغلاق">×</button>
+    </div>
+  </div>
+  <div class="rename-category-overlay" id="renameCategoryOverlay" aria-hidden="true" style="display: none;">
+    <div class="rename-category-modal" role="dialog" aria-labelledby="renameCategoryTitle" aria-modal="true">
+      <h3 id="renameCategoryTitle" class="rename-category-title">تعديل اسم التصنيف</h3>
+      <div class="rename-category-form">
+        <label for="renameCategoryInput" class="rename-category-label">الاسم الجديد</label>
+        <input type="text" id="renameCategoryInput" class="rename-category-input" placeholder="اسم التصنيف" autocomplete="off" aria-label="الاسم الجديد">
+        <div class="rename-category-actions">
+          <button type="button" class="btn btn-secondary" id="btnRenameCategoryCancel">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="btnRenameCategorySubmit">حفظ</button>
+        </div>
+      </div>
+      <button type="button" class="modal-close rename-category-close" id="btnRenameCategoryClose" aria-label="إغلاق">×</button>
+    </div>
+  </div>
+  <div class="delete-category-overlay" id="deleteCategoryOverlay" aria-hidden="true" style="display: none;">
+    <div class="delete-category-modal" role="dialog" aria-labelledby="deleteCategoryTitle" aria-modal="true">
+      <div class="delete-category-header">
+        <span class="delete-category-icon" aria-hidden="true"></span>
+        <h3 id="deleteCategoryTitle" class="delete-category-title">حذف التصنيف ومنتجاته</h3>
+      </div>
+      <div class="delete-category-message-wrap">
+        <p class="delete-category-message" id="deleteCategoryMessage"></p>
+      </div>
+      <div class="delete-category-actions">
+        <button type="button" class="btn btn-secondary" id="btnDeleteCategoryCancel">إلغاء</button>
+        <button type="button" class="btn btn-danger" id="btnDeleteCategoryConfirm">حذف نهائي</button>
+      </div>
+      <button type="button" class="modal-close delete-category-close" id="btnDeleteCategoryClose" aria-label="إغلاق">×</button>
+    </div>
+  </div>
+  <div class="category-image-overlay" id="categoryImageOverlay" aria-hidden="true" style="display: none;">
+    <div class="category-image-modal" role="dialog" aria-labelledby="categoryImageTitle" aria-modal="true">
+      <button type="button" class="category-image-close-x" id="btnCategoryImageCloseX" aria-label="إغلاق">×</button>
+      <h3 class="category-image-title" id="categoryImageTitle">صورة التصنيف</h3>
+      <p class="category-image-desc" id="categoryImageDesc">يمكنك تغيير أو إزالة صورة الغلاف الخاصة بهذا التصنيف.</p>
+      <input type="file" id="menuCategoryImageInput" accept="image/*" tabindex="-1" aria-hidden="true" style="position:absolute;width:0;height:0;opacity:0;left:-9999px">
+      <div class="category-image-preview-box" id="categoryImagePreviewBox">
+        <img id="menuCategoryImagePreview" class="category-image-preview" alt="" style="display:none;">
+        <div class="category-image-empty" id="categoryImageEmpty">لا توجد صورة لهذا التصنيف</div>
+      </div>
+      <div class="category-image-actions">
+        <button type="button" class="btn btn-primary" id="btnCategoryImageChange">تغيير صورة</button>
+        <button type="button" class="btn btn-danger" id="btnRemoveCategoryImage">إزالة الصورة</button>
+      </div>
+    </div>
+  </div>
+  <div class="closing-detail-overlay" id="closingDetailOverlay" aria-hidden="true">
+    <div class="closing-detail-modal" id="closingDetailModal" role="dialog" aria-labelledby="closingDetailTitle" aria-modal="true">
+      <div class="modal-header">
+        <h3 id="closingDetailTitle">تفاصيل القاصة</h3>
+        <button type="button" class="modal-close" id="btnCloseClosingDetail" aria-label="إغلاق">×</button>
+      </div>
+      <div class="modal-body" id="closingDetailBody"></div>
+    </div>
+  </div>
+  <div class="today-session-receipt-modal" id="todaySessionReceiptOverlay" aria-hidden="true">
+    <div class="today-session-receipt-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="todaySessionReceiptTitle">
+      <div class="today-session-receipt-modal__head">
+        <h2 id="todaySessionReceiptTitle" class="today-session-receipt-modal__title"></h2>
+        <button type="button" class="today-session-receipt-modal__close-x" id="todaySessionReceiptCloseX" aria-label="إغلاق">×</button>
+      </div>
+      <div class="today-session-receipt-modal__body" id="todaySessionReceiptOrders"></div>
+      <div class="today-session-receipt-modal__footer">
+        <div class="today-session-receipt-modal__total" id="todaySessionReceiptTotal"></div>
+        <div class="today-session-receipt-modal__payment" id="todaySessionReceiptPayment"></div>
+      </div>
+    </div>
+  </div>
+  <div class="cashier-table-order-modal" id="cashierTableOrderDetailOverlay" aria-hidden="true">
+    <div class="cashier-table-order-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="cashierTableOrderDetailTitle">
+      <div class="cashier-table-order-modal__head">
+        <div>
+          <h2 id="cashierTableOrderDetailTitle" class="cashier-table-order-modal__title"></h2>
+          <p class="cashier-table-order-modal__subtitle" id="cashierTableOrderDetailSubtitle"></p>
+        </div>
+        <button type="button" class="cashier-table-order-modal__close-x" id="cashierTableOrderDetailCloseX" aria-label="إغلاق">×</button>
+      </div>
+      <div class="cashier-table-order-modal__table-wrap">
+        <table class="cashier-table-order-modal__table">
+          <thead>
+            <tr>
+              <th scope="col">اسم المنتج</th>
+              <th scope="col">الكمية</th>
+              <th scope="col">السعر</th>
+              <th scope="col">المجموع</th>
+            </tr>
+          </thead>
+          <tbody id="cashierTableOrderDetailBody"></tbody>
+        </table>
+      </div>
+      <div class="cashier-table-order-modal__footer">
+        <div class="cashier-table-order-modal__total" id="cashierTableOrderDetailTotal"></div>
+      </div>
+    </div>
+  </div>
+  <div class="receipt-overlay admin-receipt-overlay" id="receiptOverlay">
+    <div class="receipt-box receipt-box-card" id="receiptBox">
+      <div class="receipt-card-header">
+        <p class="receipt-table-num" id="receiptTableNum">طاولة 1</p>
+        <p class="receipt-date" id="receiptDate"></p>
+        <p class="receipt-order-id" id="receiptOrderId"></p>
+      </div>
+      <div class="receipt-card-body">
+        <table class="receipt-items-table" aria-label="قائمة الطلبات">
+          <thead><tr><th>اسم المنتج</th><th>الكمية</th><th>السعر</th></tr></thead>
+          <tbody id="receiptItems"></tbody>
+        </table>
+      </div>
+      <div class="receipt-card-total" id="receiptTotal">المجموع الكلي: 0 IQD</div>
+      <div class="receipt-box-actions">
+        <button type="button" class="btn btn-secondary" id="btnCloseReceipt">إغلاق</button>
+        <button type="button" class="btn btn-primary" id="btnPrintReceipt">طباعة</button>
+      </div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="../js/cafe-dialog.js?v=20260607-dialog"></script>
+  <script src="../js/api.js?v=20260609-admin-security"></script>
+  <script src="admin-settings.js?v=20260603-logo-delete-fix"></script>
+  <script src="admin-security.js?v=20260609-admin-security"></script>
+  <script src="admin-auth.js?v=20260609-admin-security"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

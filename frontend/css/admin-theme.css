@@ -1,0 +1,1149 @@
+/**
+ * ثيم لوحة التحكم — نفس ألوان الكاشير (Light POS)
+ * متغيرات خاصة بالأدمن — تعديل ألوان فقط
+ */
+body.admin-app {
+  color-scheme: light;
+
+  /* —— متغيرات الأدمن —— */
+  --admin-bg: #F5F7FA;
+  --admin-bg-elevated: #FFFFFF;
+  --admin-surface: #FFFFFF;
+  --admin-surface2: #EFF2F6;
+  --admin-surface3: #E8ECF2;
+  --admin-text: #2D3748;
+  --admin-text-secondary: #718096;
+  --admin-text-muted: #718096;
+  --admin-border: #E2E8F0;
+  --admin-border-accent: rgba(37, 99, 235, 0.35);
+  --admin-accent: #2563EB;
+  --admin-accent-hover: #1D4ED8;
+  --admin-accent-rgb: 37, 99, 235;
+  --admin-accent-soft: rgba(37, 99, 235, 0.08);
+  --admin-accent-soft-strong: rgba(37, 99, 235, 0.12);
+  --admin-on-accent: #FFFFFF;
+  --admin-brand: #92400E;
+  --admin-brand-soft: rgba(146, 64, 14, 0.08);
+  --admin-success: #16A34A;
+  --admin-success-soft: rgba(22, 163, 74, 0.12);
+  --admin-warning: #EA580C;
+  --admin-warning-soft: rgba(234, 88, 12, 0.12);
+  --admin-danger: #DC2626;
+  --admin-danger-soft: rgba(220, 38, 38, 0.12);
+  --admin-shadow: 0 1px 3px rgba(45, 55, 72, 0.08);
+  --admin-shadow-md: 0 4px 12px rgba(45, 55, 72, 0.1);
+  --admin-input-bg: #FFFFFF;
+  --admin-input-border: #CBD5E0;
+  --admin-input-focus-ring: rgba(37, 99, 235, 0.2);
+  --admin-summary-bg: #EFF6FF;
+  --admin-summary-border: #BFDBFE;
+
+  /* ربط common.css لبقية المكوّنات */
+  --bg: var(--admin-bg);
+  --surface: var(--admin-surface);
+  --surface2: var(--admin-surface2);
+  --text: var(--admin-text);
+  --text-muted: var(--admin-text-muted);
+  --accent: var(--admin-accent);
+  --accent-hover: var(--admin-accent-hover);
+  --success: var(--admin-success);
+  --danger: var(--admin-danger);
+  --radius: 12px;
+  --shadow: var(--admin-shadow);
+
+  color: var(--admin-text);
+}
+
+html.admin-app-root,
+body.admin-app {
+  background-color: #F5F7FA !important;
+  color: var(--admin-text);
+}
+
+/* ——— هيكل عام ——— */
+body.admin-app .admin-wrap,
+body.admin-app .admin-main,
+body.admin-app .admin-content {
+  background-color: #F5F7FA;
+}
+
+body.admin-app .admin-header {
+  background: #F5F7FA;
+  border-bottom-color: var(--admin-border);
+  box-shadow: none;
+}
+
+body.admin-app .admin-header h1 {
+  color: var(--admin-text);
+}
+
+body.admin-app .admin-header .btn-home,
+body.admin-app .admin-header .btn-menu {
+  background: var(--admin-surface2);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+body.admin-app .admin-header .btn-home:hover,
+body.admin-app .admin-header .btn-menu:hover {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+  color: var(--admin-accent);
+}
+
+/* ——— الشريط الجانبي ——— */
+body.admin-app .admin-sidebar {
+  background: #EFF2F6;
+  border-right-color: var(--admin-border);
+  box-shadow: var(--admin-shadow-md);
+}
+
+body.admin-app .sidebar-brand {
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .sidebar-brand .brand-text {
+  color: var(--admin-text);
+}
+
+body.admin-app .sidebar-toggle {
+  background: var(--admin-surface2);
+  color: var(--admin-text-secondary);
+}
+
+body.admin-app .sidebar-toggle:hover {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+body.admin-app .nav-label {
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .nav-item {
+  color: var(--admin-text-secondary);
+}
+
+body.admin-app .nav-item:hover {
+  background: var(--admin-surface2);
+  color: var(--admin-text);
+}
+
+body.admin-app .nav-item.active {
+  background: var(--admin-accent-soft-strong);
+  color: var(--admin-accent);
+  box-shadow: inset 3px 0 0 var(--admin-accent);
+}
+
+body.admin-app .sidebar-backdrop {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+/* ——— عناوين وصفحات ——— */
+body.admin-app .admin-page .page-title {
+  color: var(--admin-text);
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .settings-card__title,
+body.admin-app .archive-closings-title {
+  color: var(--admin-brand);
+}
+
+body.admin-app .settings-card__desc,
+body.admin-app .reports-dateline,
+body.admin-app .archive-closings-hint,
+body.admin-app .form-hint.admin-option-hint {
+  color: var(--admin-text-muted);
+}
+
+/* ——— بطاقات ——— */
+body.admin-app .settings-card,
+body.admin-app .form-card,
+body.admin-app .stat-card,
+body.admin-app .reports-card,
+body.admin-app .menu-card-admin,
+body.admin-app .settings-table-card {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+  box-shadow: var(--admin-shadow);
+}
+
+body.admin-app .stat-card:hover,
+body.admin-app .settings-table-card:hover,
+body.admin-app .menu-card-admin:hover {
+  border-color: var(--admin-border-accent);
+  box-shadow: var(--admin-shadow-md);
+}
+
+body.admin-app .stat-card .label {
+  color: var(--admin-text);
+  font-weight: 700;
+}
+
+body.admin-app .stat-card .value {
+  color: var(--admin-accent);
+}
+
+body.admin-app .stat-card .value.muted {
+  color: var(--admin-text);
+}
+
+body.admin-app .settings-table-count {
+  color: var(--admin-text-secondary);
+}
+
+body.admin-app .settings-table-count strong {
+  color: var(--admin-accent);
+}
+
+body.admin-app .settings-table-card__status {
+  background: var(--admin-surface2);
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .settings-table-card__status.is-ok {
+  color: var(--admin-success);
+  background: var(--admin-success-soft);
+}
+
+body.admin-app .settings-table-card__status.is-missing {
+  color: var(--admin-danger);
+  background: var(--admin-danger-soft);
+}
+
+body.admin-app .menu-card-admin .name {
+  color: var(--admin-text);
+}
+
+body.admin-app .menu-card-admin .meta {
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .menu-card-admin .price {
+  color: var(--admin-accent);
+}
+
+/* ——— حقول النماذج (واضحة) ——— */
+body.admin-app .form-group label,
+body.admin-app .archive-filter-group label {
+  color: var(--admin-text);
+  font-weight: 700;
+}
+
+body.admin-app .form-card .form-group > label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+body.admin-app .form-card .form-hint.admin-option-hint {
+  margin: -0.15rem 0 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--admin-text-secondary);
+}
+
+body.admin-app .form-group input,
+body.admin-app .form-group textarea,
+body.admin-app .archive-input,
+body.admin-app .cashbox-input-inline {
+  background-color: var(--admin-input-bg);
+  color: var(--admin-text);
+  border-color: var(--admin-input-border);
+  box-shadow: inset 0 1px 2px rgba(45, 55, 72, 0.04);
+}
+
+body.admin-app .form-group select {
+  background-color: var(--admin-input-bg);
+  color: var(--admin-text);
+  border-color: var(--admin-input-border);
+  box-shadow: inset 0 1px 2px rgba(45, 55, 72, 0.04);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  background-position: inset-inline-end 1rem center;
+  padding-inline-end: 2.25rem;
+}
+
+body.admin-app .form-group input::placeholder,
+body.admin-app .form-group textarea::placeholder,
+body.admin-app .archive-input::placeholder {
+  color: #A0AEC0;
+}
+
+body.admin-app .form-group input:focus,
+body.admin-app .form-group textarea:focus,
+body.admin-app .archive-input:focus {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-input-focus-ring);
+  background-color: var(--admin-input-bg);
+}
+
+body.admin-app .form-group select:focus {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-input-focus-ring);
+  background-color: var(--admin-input-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  background-position: inset-inline-end 1rem center;
+}
+
+body.admin-app .form-group input[type="file"] {
+  color: var(--admin-text-secondary);
+  background: var(--admin-surface2);
+}
+
+body.admin-app .form-group input[type="file"]::file-selector-button {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+  color: var(--admin-accent);
+}
+
+body.admin-app .form-group input[type="file"]::file-selector-button:hover {
+  background: var(--admin-accent-soft-strong);
+}
+
+body.admin-app .iqd-price-field {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-input-border);
+}
+
+body.admin-app .iqd-price-field:focus-within {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-input-focus-ring);
+}
+
+body.admin-app .iqd-price-field input {
+  color: var(--admin-text);
+  background: transparent;
+}
+
+body.admin-app .iqd-price-spin {
+  border-inline-start-color: var(--admin-border);
+}
+
+body.admin-app .iqd-price-spin__btn {
+  background: var(--admin-surface2);
+  color: var(--admin-text-secondary);
+}
+
+body.admin-app .iqd-price-spin__btn:hover {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+body.admin-app .iqd-price-spin__btn + .iqd-price-spin__btn {
+  border-top-color: var(--admin-border);
+}
+
+/* خيارات المنتج / إعدادات */
+body.admin-app .item-option-groups-wrap {
+  background: var(--admin-surface2);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .item-option-group-row {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .item-option-accordion__header {
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .item-option-accordion__trigger {
+  background: var(--admin-surface2);
+  color: var(--admin-text-secondary);
+}
+
+body.admin-app .item-option-accordion__trigger:hover {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+body.admin-app .settings-logo-preview,
+body.admin-app .settings-logo-empty {
+  background: var(--admin-surface2);
+  border-color: var(--admin-input-border);
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .form-card .form-divider {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--admin-border) 15%,
+    var(--admin-border) 85%,
+    transparent
+  );
+}
+
+/* ——— جداول ——— */
+body.admin-app .orders-table-wrap {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .orders-table th {
+  background: var(--admin-surface2);
+  color: var(--admin-brand);
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .orders-table td {
+  color: var(--admin-text);
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .orders-table tbody tr:hover {
+  background: var(--admin-accent-soft);
+}
+
+/* ——— أرشيف ——— */
+body.admin-app .archive-filter-bar {
+  background: var(--admin-summary-bg);
+  border-color: var(--admin-summary-border);
+}
+
+body.admin-app .archive-sample-notice {
+  background: var(--admin-warning-soft);
+  color: var(--admin-warning);
+  border-color: rgba(234, 88, 12, 0.35);
+}
+
+body.admin-app .archive-closings-row .stat-card.archive-closing-card:hover {
+  background: var(--admin-accent-soft);
+}
+
+body.admin-app .archive-closings-row .archive-closing-date,
+body.admin-app .closing-card-row .closing-date {
+  color: var(--admin-text-muted);
+}
+
+/* ——— مودالات ——— */
+body.admin-app .add-category-overlay,
+body.admin-app .rename-category-overlay,
+body.admin-app .delete-category-overlay,
+body.admin-app .closing-detail-overlay,
+body.admin-app .category-image-overlay {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+body.admin-app .add-category-modal,
+body.admin-app .rename-category-modal,
+body.admin-app .delete-category-modal,
+body.admin-app .closing-detail-modal,
+body.admin-app .category-image-modal {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+  box-shadow: var(--admin-shadow-md);
+}
+
+body.admin-app .add-category-title,
+body.admin-app .rename-category-title {
+  color: var(--admin-brand);
+}
+
+body.admin-app .rename-category-label {
+  color: var(--admin-text);
+  font-weight: 700;
+}
+
+body.admin-app .add-category-input,
+body.admin-app .rename-category-input {
+  background: var(--admin-input-bg);
+  color: var(--admin-text);
+  border-color: var(--admin-input-border);
+}
+
+body.admin-app .add-category-input:focus,
+body.admin-app .rename-category-input:focus {
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-input-focus-ring);
+}
+
+body.admin-app .add-category-close:hover,
+body.admin-app .rename-category-close:hover,
+body.admin-app .delete-category-close:hover {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+}
+
+body.admin-app .delete-category-modal {
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+body.admin-app .delete-category-title {
+  color: var(--admin-danger);
+}
+
+body.admin-app .delete-category-message strong {
+  color: var(--admin-text);
+}
+
+body.admin-app .delete-category-actions .btn-danger {
+  background: var(--admin-danger);
+  border-color: var(--admin-danger);
+}
+
+body.admin-app .closing-detail-modal .modal-header {
+  background: var(--admin-surface2);
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .closing-detail-modal .modal-header h3 {
+  color: var(--admin-brand);
+}
+
+body.admin-app .closing-detail-modal .modal-close {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+  border-color: var(--admin-border-accent);
+}
+
+body.admin-app .closing-detail-modal .modal-close:hover {
+  background: var(--admin-accent-soft-strong);
+}
+
+body.admin-app .closing-detail-modal .modal-body {
+  color: var(--admin-text);
+}
+
+/* ——— طلبات اليوم (مودالات مشتركة) ——— */
+body.admin-app .today-summary-item {
+  background: var(--admin-summary-bg);
+  border-color: var(--admin-summary-border);
+}
+
+body.admin-app .today-summary-item--type {
+  background: #FFF7ED;
+  border-color: #FED7AA;
+}
+
+body.admin-app .today-summary-item .label {
+  color: var(--admin-text);
+  font-weight: 800;
+}
+
+body.admin-app .today-summary-item .value {
+  color: var(--admin-accent);
+}
+
+body.admin-app .today-table-card {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .today-table-card-head .table-total {
+  color: var(--admin-accent);
+}
+
+body.admin-app .today-session-receipt-modal__title,
+body.admin-app .cashier-table-order-modal__title {
+  color: var(--admin-brand);
+}
+
+/* ——— أزرار common ——— */
+body.admin-app .btn-primary {
+  background: var(--admin-accent);
+  color: var(--admin-on-accent);
+}
+
+body.admin-app .btn-primary:hover {
+  background: var(--admin-accent-hover);
+  color: var(--admin-on-accent);
+}
+
+body.admin-app .btn-secondary {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text);
+}
+
+body.admin-app .btn-secondary:hover {
+  background: var(--admin-surface2);
+  color: var(--admin-text);
+}
+
+body.admin-app .btn-danger {
+  background: var(--admin-danger);
+  color: var(--admin-on-accent);
+}
+
+body.admin-app .alert-success {
+  background: var(--admin-success-soft);
+  color: var(--admin-success);
+}
+
+body.admin-app .alert-error {
+  background: var(--admin-danger-soft);
+  color: var(--admin-danger);
+}
+
+/* ——— نماذج إضافية ——— */
+body.admin-app .form-actions {
+  border-top-color: var(--admin-border);
+}
+
+body.admin-app .form-actions .btn-primary {
+  background: var(--admin-accent);
+  color: var(--admin-on-accent);
+}
+
+body.admin-app .form-actions .btn-primary:hover {
+  background: var(--admin-accent-hover);
+  color: var(--admin-on-accent);
+}
+
+body.admin-app .form-actions .btn-secondary {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+body.admin-app .form-actions .btn-secondary:hover {
+  background: var(--admin-surface2);
+}
+
+body.admin-app .img-preview {
+  background: var(--admin-surface2);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .item-option-title-wrap .opt-group-title {
+  color: var(--admin-text);
+  border-color: var(--admin-input-border);
+  background: var(--admin-input-bg);
+}
+
+body.admin-app .item-option-title-wrap .opt-group-title:focus {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-accent);
+  box-shadow: 0 0 0 3px var(--admin-input-focus-ring);
+}
+
+body.admin-app .item-option-group-row:not(.is-open) .item-option-title-wrap .opt-group-title {
+  background: var(--admin-surface2);
+  border-color: transparent;
+}
+
+body.admin-app .item-option-chip {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+  color: var(--admin-text);
+}
+
+body.admin-app .item-option-chip-remove {
+  background: var(--admin-surface2);
+  color: var(--admin-text-secondary);
+}
+
+body.admin-app .item-option-chip-remove:hover {
+  background: var(--admin-danger-soft);
+  color: var(--admin-danger);
+}
+
+body.admin-app .item-option-group-field > label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  margin-bottom: 0.45rem;
+  line-height: 1.35;
+}
+
+body.admin-app .item-option-tag-field {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-input-border);
+  box-shadow: inset 0 1px 2px rgba(45, 55, 72, 0.04);
+}
+
+body.admin-app .opt-group-tag-input {
+  background: var(--admin-surface2);
+  border-color: var(--admin-input-border);
+  color: var(--admin-text);
+}
+
+body.admin-app .opt-group-tag-input::placeholder {
+  color: #a0aec0;
+}
+
+body.admin-app .opt-group-tag-input:focus {
+  border-color: var(--admin-accent);
+  background: var(--admin-input-bg);
+  box-shadow: 0 0 0 3px var(--admin-input-focus-ring);
+}
+
+body.admin-app .item-option-tag-add-btn {
+  min-width: 48px;
+  padding: 0 0.75rem;
+  border-color: var(--admin-accent);
+  background: var(--admin-accent);
+  color: var(--admin-on-accent);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.32);
+}
+
+body.admin-app .item-option-tag-add-btn:hover {
+  background: var(--admin-accent-hover);
+  border-color: var(--admin-accent-hover);
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.38);
+}
+
+body.admin-app .item-option-tag-add-btn:focus-visible {
+  outline: 2px solid var(--admin-accent);
+  outline-offset: 2px;
+}
+
+body.admin-app .item-option-tag-add-btn__glyph {
+  display: block;
+  line-height: 1;
+  transform: translateY(-0.04em);
+}
+
+body.admin-app .settings-table-empty {
+  color: var(--admin-text-muted);
+}
+
+/* ——— تقارير / إغلاق ——— */
+body.admin-app .closing-card-row .stat-card.closing-till-card:hover {
+  background: var(--admin-accent-soft);
+}
+
+body.admin-app .closing-card-hint,
+body.admin-app .archive-closings-row .closing-card-hint {
+  border-top-color: var(--admin-border);
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .closing-detail-row {
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .closing-detail-row .label {
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .closing-detail-row .value {
+  color: var(--admin-text);
+}
+
+body.admin-app .closing-detail-row .value.accent {
+  color: var(--admin-accent);
+}
+
+body.admin-app .closing-detail-section {
+  border-top-color: var(--admin-border);
+}
+
+body.admin-app .closing-detail-section-title {
+  color: var(--admin-brand);
+}
+
+body.admin-app .closing-detail-list li {
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .closing-detail-list .item-name {
+  color: var(--admin-text);
+}
+
+body.admin-app .closing-detail-list .item-amount {
+  color: var(--admin-accent);
+}
+
+body.admin-app .date-time-block {
+  color: var(--admin-text);
+}
+
+body.admin-app .date-time-time {
+  color: var(--admin-accent);
+}
+
+body.admin-app .date-time-date {
+  color: var(--admin-text-muted);
+}
+
+/* ——— المنيو ——— */
+body.admin-app .btn-back-categories {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+  box-shadow: var(--admin-shadow);
+}
+
+body.admin-app .btn-back-categories:hover {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+  color: var(--admin-accent);
+}
+
+body.admin-app .btn-add-menu-item {
+  background: var(--admin-accent);
+  color: var(--admin-on-accent);
+  box-shadow: var(--admin-shadow-md);
+}
+
+body.admin-app .btn-add-menu-item:hover {
+  background: var(--admin-accent-hover);
+}
+
+body.admin-app .menu-category-card:hover {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-accent);
+}
+
+body.admin-app .menu-category-card .category-name {
+  color: var(--admin-text);
+}
+
+body.admin-app .menu-category-card__thumb {
+  background: var(--admin-surface2);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .menu-category-card-footer {
+  border-top-color: var(--admin-border);
+}
+
+body.admin-app .menu-category-card .btn-delete-category {
+  color: var(--admin-danger);
+}
+
+body.admin-app .menu-category-card .btn-delete-category:hover {
+  background: var(--admin-danger-soft);
+  color: var(--admin-danger);
+}
+
+body.admin-app .menu-category-detail-toolbar {
+  background: var(--admin-summary-bg);
+  border-color: var(--admin-summary-border);
+}
+
+body.admin-app .menu-category-detail-toolbar .btn-back-categories {
+  background: var(--admin-surface);
+  color: var(--admin-text);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .menu-category-detail-title {
+  color: var(--admin-text);
+}
+
+body.admin-app .btn-edit-category-name {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+  border-color: var(--admin-border-accent);
+}
+
+body.admin-app .btn-edit-category-name:hover {
+  background: var(--admin-accent-soft-strong);
+}
+
+body.admin-app .btn-delete-category-outside {
+  background: var(--admin-danger-soft);
+  color: var(--admin-danger);
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+body.admin-app .menu-category-cover {
+  background: linear-gradient(
+    165deg,
+    var(--admin-summary-bg) 0%,
+    var(--admin-surface) 45%,
+    var(--admin-surface2) 100%
+  );
+  border-color: var(--admin-summary-border);
+  box-shadow: var(--admin-shadow);
+}
+
+body.admin-app .menu-category-cover::before {
+  background: linear-gradient(
+    90deg,
+    rgba(37, 99, 235, 0.15),
+    rgba(37, 99, 235, 0.45),
+    rgba(37, 99, 235, 0.15)
+  );
+}
+
+body.admin-app .menu-category-cover__badge {
+  color: var(--admin-accent);
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+}
+
+body.admin-app .menu-category-cover__title {
+  color: var(--admin-text);
+}
+
+body.admin-app .menu-category-cover__hint {
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .menu-category-cover__frame,
+body.admin-app .menu-category-detail-preview-wrap {
+  background: var(--admin-surface2);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .menu-category-detail-no-img {
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .btn-category-image-pick {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+  border-color: var(--admin-border-accent);
+}
+
+body.admin-app .btn-category-image-remove {
+  color: var(--admin-text-muted);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .btn-category-image-remove:hover {
+  color: var(--admin-danger);
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+body.admin-app .category-image-title {
+  color: var(--admin-text);
+}
+
+body.admin-app .category-image-desc {
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .category-image-preview-box {
+  background: var(--admin-surface2);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .category-image-preview {
+  background: var(--admin-surface2);
+}
+
+body.admin-app .category-image-close-x {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+body.admin-app .category-image-close-x:hover {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+  color: var(--admin-accent);
+}
+
+body.admin-app .menu-card-admin img {
+  background: var(--admin-surface2);
+}
+
+/* ——— طلبات اليوم ——— */
+body.admin-app .today-table-card-head:hover {
+  background: var(--admin-accent-soft);
+}
+
+body.admin-app .today-table-card-head .table-meta-sep {
+  color: var(--admin-border);
+}
+
+body.admin-app .today-table-card-head .table-meta__part--pay {
+  color: var(--admin-text);
+}
+
+body.admin-app .today-table-card-detail {
+  border-top-color: var(--admin-border);
+}
+
+body.admin-app .today-detail-table th {
+  background: var(--admin-surface2);
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .today-detail-table td {
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .today-detail-table .payment-method-badge.payment-cash {
+  background: var(--admin-success-soft);
+  color: var(--admin-success);
+  border-color: rgba(22, 163, 74, 0.35);
+}
+
+body.admin-app .today-detail-table .payment-method-badge.payment-card {
+  background: var(--admin-accent-soft);
+  color: var(--admin-accent);
+  border-color: var(--admin-border-accent);
+}
+
+body.admin-app .today-session-receipt-modal {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+body.admin-app .today-session-receipt-modal__dialog {
+  background: var(--admin-surface);
+  border-color: var(--admin-border-accent);
+  box-shadow: var(--admin-shadow-md);
+}
+
+body.admin-app .today-session-receipt-modal__head {
+  background: var(--admin-surface2);
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .today-session-receipt-modal__close-x {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+  color: var(--admin-accent);
+}
+
+body.admin-app .today-session-receipt-modal__close-x:hover {
+  background: var(--admin-accent-soft-strong);
+  color: var(--admin-accent-hover);
+}
+
+body.admin-app .today-session-order-row {
+  background: var(--admin-surface2);
+  border-color: var(--admin-border);
+}
+
+body.admin-app .today-session-order-row .btn-today-order-detail {
+  background: var(--admin-accent);
+  border-color: var(--admin-accent);
+  color: var(--admin-on-accent);
+  box-shadow: var(--admin-shadow);
+}
+
+body.admin-app .today-session-order-row .btn-today-order-detail:hover {
+  background: var(--admin-accent-hover);
+  color: var(--admin-on-accent);
+}
+
+body.admin-app .today-session-receipt-modal__footer {
+  background: var(--admin-surface2);
+  border-top-color: var(--admin-border);
+}
+
+body.admin-app .cashier-table-order-modal {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+body.admin-app .cashier-table-order-modal__dialog {
+  border-color: var(--admin-border-accent);
+  box-shadow: var(--admin-shadow-md);
+}
+
+body.admin-app .cashier-table-order-modal__head {
+  background: var(--admin-surface2);
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .cashier-table-order-modal__title {
+  color: var(--admin-brand);
+}
+
+body.admin-app .cashier-table-order-modal__close-x {
+  background: var(--admin-accent-soft);
+  border-color: var(--admin-border-accent);
+  color: var(--admin-accent);
+}
+
+body.admin-app .cashier-table-order-modal__close-x:hover {
+  background: var(--admin-accent-soft-strong);
+  color: var(--admin-accent-hover);
+}
+
+body.admin-app .cashier-table-order-modal__table thead th {
+  color: var(--admin-brand);
+  border-bottom-color: var(--admin-border-accent);
+}
+
+body.admin-app .cashier-table-order-modal__table tbody td {
+  border-bottom-color: var(--admin-border);
+}
+
+body.admin-app .cashier-table-order-modal__footer {
+  background: var(--admin-surface2);
+  border-top-color: var(--admin-border);
+}
+
+@media (max-width: 768px) {
+  body.admin-app .orders-table tbody tr {
+    background: var(--admin-surface);
+    border-color: var(--admin-border);
+    box-shadow: var(--admin-shadow);
+  }
+
+  body.admin-app .orders-table tbody tr:hover {
+    border-color: var(--admin-border-accent);
+    box-shadow: var(--admin-shadow-md);
+  }
+
+  body.admin-app .orders-table td {
+    border-bottom-color: var(--admin-border);
+  }
+
+  body.admin-app .orders-table td::before {
+    color: var(--admin-text);
+    font-weight: 700;
+  }
+}
+
+body.admin-app .empty-state {
+  color: var(--admin-text-muted);
+}
+
+body.admin-app .toast {
+  background: var(--admin-surface);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+  box-shadow: var(--admin-shadow-md);
+}
+
+/* ——— وصل الأدمن ——— */
+body.admin-app .receipt-overlay.admin-receipt-overlay {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+body.admin-app .admin-receipt-overlay .receipt-box.receipt-box-card {
+  border-color: var(--admin-border);
+}
+
+body.admin-app .admin-receipt-overlay .receipt-card-header {
+  background: var(--admin-summary-bg);
+  border-bottom-color: var(--admin-summary-border);
+}
+
+body.admin-app .admin-receipt-overlay .receipt-items-table th {
+  background: var(--admin-surface2);
+  color: var(--admin-text);
+}
+
+body.admin-app .admin-receipt-overlay .receipt-items-table td {
+  border-bottom-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+body.admin-app .admin-receipt-overlay .receipt-card-total {
+  background: var(--admin-summary-bg);
+  border-top-color: var(--admin-summary-border);
+  color: var(--admin-accent);
+}
+
+body.admin-app .admin-receipt-overlay .receipt-box-actions {
+  background: var(--admin-surface2);
+  border-top-color: var(--admin-border);
+}

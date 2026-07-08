@@ -1,0 +1,3607 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="cashier-app-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#F5F7FA">
+  <title>واجهة الكاشير — نظام الكافيه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <style>
+    /* خط عربي أوضح لكل واجهة الكاشير */
+    .cashier-layout,
+    .cashier-layout button,
+    .cashier-layout input,
+    .cashier-layout select,
+    .cashier-layout textarea,
+    .cashier-sidebar,
+    .cashier-sidebar button {
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    .cashier-layout { padding: clamp(0.5rem, 2vw, 1rem); }
+    .cashier-view .view-tables {
+      max-width: 100%;
+      width: 100%;
+      margin: 0 auto;
+      padding: clamp(1rem, 4vw, 2rem) clamp(0.5rem, 2vw, 1rem);
+    }
+    .cashier-approval-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 320;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.72);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+    .cashier-approval-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cashier-approval-modal__dialog {
+      width: min(480px, 100%);
+      max-height: min(80vh, 560px);
+      padding: 1.25rem 1.15rem 1rem;
+      border-radius: 18px;
+      background: linear-gradient(165deg, #fff9f0 0%, #fff4e6 100%);
+      border: 1px solid rgba(180, 120, 60, 0.28);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .cashier-approval-modal__title {
+      margin: 0 0 0.85rem;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.5;
+      color: #7a4e12;
+    }
+    .cashier-approval-modal__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      overflow-y: auto;
+      text-align: right;
+    }
+    .cashier-approval-modal__item {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.55rem;
+      padding: 0.7rem 0.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(125, 90, 63, 0.16);
+      background: #fff;
+    }
+    .cashier-approval-modal__item-main {
+      flex: 1 1 160px;
+      min-width: 0;
+    }
+    .cashier-approval-modal__table {
+      display: block;
+      margin: 0 0 0.15rem;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .cashier-approval-modal__msg {
+      display: block;
+      margin: 0;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #9a5b14;
+      line-height: 1.4;
+    }
+    .cashier-approval-modal__row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .cashier-approval-modal__row-actions .btn {
+      min-width: 5.5rem;
+      padding: 0.4rem 0.65rem;
+      font-size: 0.82rem;
+    }
+    .cashier-view .view-tables .tables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+      gap: clamp(0.75rem, 2.5vw, 1.25rem);
+      justify-items: center;
+    }
+    .cashier-view .view-tables .table-card {
+      position: relative;
+      width: 100%;
+      max-width: 100px;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+      min-height: 72px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 2px solid transparent;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+    .cashier-view .view-tables .table-card:hover {
+      border-color: var(--accent);
+      background: var(--surface2);
+      box-shadow: var(--shadow-accent);
+    }
+    .cashier-view .view-tables .table-card:focus-visible {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .cashier-view .view-tables .table-card .num {
+      font-size: clamp(1.35rem, 4vw, 1.6rem);
+    }
+    .cashier-view .view-tables .table-card--awaiting-bill {
+      border-color: #16a34a;
+      background: rgba(22, 163, 74, 0.08);
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.18);
+    }
+    .cashier-view .view-tables .table-card__bill-badge {
+      position: absolute;
+      bottom: 0.35rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.58rem;
+      font-weight: 800;
+      color: #166534;
+      white-space: nowrap;
+      line-height: 1.1;
+      max-width: 92%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    /* عرض الوصل — وصولات أفقية واحترافية */
+    .cashier-view .view-bill {
+      display: none;
+      max-width: min(580px, 100%);
+      margin: 0 auto;
+      padding: 0.5rem 0.75rem 0.65rem;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
+    }
+    .view-bill .bill-consolidated--modal-cards,
+    .view-bill .bill-consolidated--modal-cards button {
+      font-family: inherit;
+    }
+    .cashier-view.view-bill-active .view-tables { display: none; }
+    .cashier-view.view-bill-active .view-bill { display: block; }
+    /* شريط ثابت أعلى المحتوى: عنوان يمين — رجوع يسار */
+    .cashier-bill-nav {
+      display: none;
+      flex-shrink: 0;
+      width: 100%;
+      box-sizing: border-box;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      min-height: 40px;
+      padding: 0.32rem clamp(0.6rem, 2vw, 1rem);
+      border-bottom: 1px solid rgba(var(--accent-rgb), 0.16);
+      background: linear-gradient(180deg, var(--surface2) 0%, var(--surface) 100%);
+    }
+    .cashier-view.view-bill-active .cashier-bill-nav {
+      display: flex;
+    }
+    .cashier-bill-nav__title {
+      margin: 0;
+      flex: 0 1 auto;
+      max-width: min(58vw, 28rem);
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      font-size: clamp(0.88rem, 2.2vw, 1rem);
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--text);
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cashier-bill-nav__back {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      min-height: 34px;
+      padding: 0.3rem 0.7rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+      cursor: pointer;
+      touch-action: manipulation;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.12s;
+    }
+    .cashier-bill-nav__back:hover {
+      background: var(--surface2);
+      border-color: var(--border-accent);
+      color: var(--accent);
+    }
+    .cashier-bill-nav__back:active {
+      transform: scale(0.98);
+    }
+    .view-bill .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      background: var(--surface2);
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .view-bill .btn-back:hover { background: var(--surface2); }
+    /* منطقة الفواتير — بطاقات احترافية */
+    .view-bill .orders-panel {
+      background: transparent;
+      border: none;
+      padding: 0;
+      min-height: 0;
+    }
+    .view-bill .bill-receipts-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+      align-items: stretch;
+    }
+    /* طلبات الطاولة — بطاقات مدمجة (ثيم الكاشير) */
+    .view-bill .bill-consolidated--modal-cards {
+      --cb-card-bg: var(--surface2);
+      --cb-card-border: var(--border-muted);
+      max-width: min(560px, 100%);
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .view-bill .bill-consolidated .bill-card-header.bill-receipt-header--compact {
+      padding: 0.48rem 0.75rem 0.5rem;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border-accent);
+      background: linear-gradient(180deg, var(--accent-soft) 0%, transparent 100%);
+    }
+    .view-bill .bill-receipt-header--compact .bill-header-row1 {
+      margin: 0 0 0.12rem 0;
+    }
+    .view-bill .bill-receipt-header--compact .bill-table-num {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 0;
+    }
+    .view-bill .bill-receipt-header--compact .bill-header-meta-line {
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.15rem;
+    }
+    .view-bill .bill-receipt-header--compact .bill-meta-line {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+    }
+    .view-bill .bill-orders-list--flat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      padding: 0.45rem 0.6rem 0.52rem;
+      overflow: visible;
+    }
+    .view-bill .cashier-order-card {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: center;
+      gap: 0.4rem 0.55rem;
+      min-height: 0;
+      padding: 0.5rem 0.65rem;
+      border-radius: 10px;
+      border: 1px solid var(--cb-card-border);
+      background: var(--cb-card-bg);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+    }
+    .view-bill .cashier-order-card__title {
+      flex: 1 1 auto;
+      min-width: 0;
+      text-align: right;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.01em;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .view-bill .cashier-order-card__total {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.28rem;
+      padding: 0;
+    }
+    .view-bill .cashier-order-card__total-label {
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .view-bill .cashier-order-card__total-value {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      line-height: 1.15;
+    }
+    .view-bill .btn-cashier-view-receipt {
+      flex: 0 0 auto;
+      padding: 0.38rem 0.72rem;
+      min-height: 2rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(var(--accent-rgb), 0.5);
+      background: linear-gradient(180deg, var(--accent-gradient-start) 0%, var(--accent) 100%);
+      color: var(--on-accent);
+      box-shadow: var(--shadow-accent);
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+      touch-action: manipulation;
+    }
+    @media (max-width: 380px) {
+      .view-bill .cashier-order-card {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
+      }
+      .view-bill .cashier-order-card__title {
+        grid-column: 1 / -1;
+      }
+      .view-bill .cashier-order-card__total {
+        justify-self: start;
+      }
+      .view-bill .btn-cashier-view-receipt {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: end;
+      }
+    }
+    .view-bill .btn-cashier-view-receipt:hover {
+      background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent-muted) 100%);
+      border-color: var(--accent-hover);
+    }
+    .view-bill .btn-cashier-view-receipt:focus,
+    .view-bill .btn-cashier-view-receipt:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px rgba(var(--accent-rgb), 0.45);
+    }
+    .view-bill .bill-consolidated-footer {
+      flex-shrink: 0;
+      position: sticky;
+      bottom: 0;
+      z-index: 2;
+      background: linear-gradient(180deg, transparent 0%, var(--bg) 24%);
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+      padding-top: 0.12rem;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--surface);
+      padding: 0.52rem 0.7rem;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .payment-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin: 0 0 0.4rem 0;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .payment-buttons {
+      gap: 0.45rem;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment {
+      min-width: 0;
+      padding: 0.44rem 0.55rem;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border-width: 1px;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-actions {
+      padding: 0.42rem 0.6rem 0.5rem;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment {
+      color: var(--text-secondary);
+      border-color: var(--border-muted);
+      background: var(--surface2);
+      box-shadow: none;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment:hover {
+      border-color: var(--border-accent);
+      background: var(--surface3);
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment.selected {
+      background: var(--accent-soft-strong);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: none;
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.35);
+    }
+    .view-bill .bill-consolidated-footer .bill-card-actions {
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-elevated);
+      padding: 0.45rem 0.7rem 0.55rem;
+    }
+    #cashierPageHeader.cashier-page-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 0.35rem 1rem;
+    }
+    #cashierPageHeader .cashier-header-start {
+      justify-self: start;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
+      flex-wrap: nowrap;
+    }
+    #cashierPageHeader .cashier-header-start h1 {
+      margin: 0;
+      white-space: nowrap;
+    }
+    #cashierPageHeader .cashier-header-cafe-name {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+      margin: 0;
+      padding: 0 0.5rem;
+      max-width: min(52vw, 22rem);
+      text-align: center;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      font-size: clamp(1.15rem, 3.2vw, 1.65rem);
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #cashierPageHeader .cashier-header-cafe-name:empty,
+    #cashierPageHeader .cashier-header-cafe-name[hidden] {
+      display: none;
+    }
+    .cashier-header-tools {
+      justify-self: end;
+      grid-column: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    @media (max-width: 720px) {
+      #cashierPageHeader.cashier-page-header {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+      #cashierPageHeader .cashier-header-cafe-name {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        max-width: 100%;
+        margin-top: 0.15rem;
+      }
+      #cashierPageHeader .cashier-header-tools {
+        grid-column: 2;
+        grid-row: 1;
+      }
+    }
+    .view-bill .bill-settle-hint {
+      margin: 0 0 0.4rem;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      line-height: 1.35;
+      text-align: center;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      border: 1px dashed var(--border-accent);
+    }
+    .view-bill .bill-settle-hint[hidden] {
+      display: none !important;
+    }
+    .view-bill .bill-consolidated-footer .bill-settle-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.4rem;
+      width: 100%;
+    }
+    .view-bill .bill-consolidated-footer .bill-settle-actions[hidden] {
+      display: none !important;
+    }
+    .view-bill .bill-consolidated-footer .bill-settle-actions .btn-close-bill {
+      flex: 1 1 auto;
+      width: 100%;
+      min-height: 2.35rem;
+      margin: 0;
+      padding: 0.5rem 0.8rem;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: 0.015em;
+      border-radius: 9px;
+      touch-action: manipulation;
+    }
+    .view-bill .bill-consolidated-footer .btn-close-print-settle.btn-primary {
+      background: linear-gradient(180deg, var(--accent-gradient-start) 0%, var(--accent) 100%);
+      border: 1px solid rgba(var(--accent-rgb), 0.5);
+      color: var(--on-accent);
+      font-weight: 800;
+      font-size: 0.92rem;
+      box-shadow: var(--shadow-accent);
+    }
+    .view-bill .bill-consolidated-footer .btn-close-print-settle.btn-primary:hover {
+      background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent-muted) 100%);
+      border-color: var(--accent-hover);
+      color: var(--on-accent);
+    }
+    .view-bill .bill-consolidated-footer .btn-close-print-settle.btn-primary:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px rgba(var(--accent-rgb), 0.45);
+    }
+    .view-bill .bill-consolidated-footer .btn-close-settle-only.btn-secondary {
+      background: var(--surface2);
+      border: 1px solid var(--border-muted);
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.84rem;
+      box-shadow: none;
+    }
+    .view-bill .bill-consolidated-footer .btn-close-settle-only.btn-secondary:hover {
+      background: var(--surface3);
+      border-color: var(--border-accent);
+      color: var(--text);
+    }
+    .view-bill .bill-consolidated-footer .btn-close-settle-only.btn-secondary:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+    }
+    .view-bill .bill-consolidated-footer .btn-print-invoice-only {
+      width: 100%;
+      min-height: 2.35rem;
+      margin: 0 0 0.4rem;
+      padding: 0.5rem 0.8rem;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      font-size: 0.86rem;
+      font-weight: 700;
+      line-height: 1.4;
+      border-radius: 9px;
+      background: var(--surface2);
+      border: 1px dashed var(--border-accent);
+      color: var(--text-secondary);
+      touch-action: manipulation;
+    }
+    .view-bill .bill-consolidated-footer .btn-print-invoice-only:hover {
+      background: var(--surface3);
+      border-color: var(--border-accent);
+      color: var(--text);
+    }
+    .view-bill .bill-consolidated-footer .btn-print-invoice-only:disabled {
+      opacity: 0.62;
+      cursor: wait;
+    }
+    .view-bill .bill-consolidated-footer .bill-settle-actions .btn-close-bill:disabled {
+      opacity: 0.62;
+      cursor: wait;
+    }
+    .view-bill .bill-grand-total {
+      margin: 0 0.5rem 0.4rem;
+      padding: 0.52rem 0.72rem;
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--accent-soft) 0%, var(--surface2) 100%);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-sm);
+      text-align: right;
+    }
+    .view-bill .bill-grand-total .bill-grand-label {
+      display: inline;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin: 0;
+      white-space: nowrap;
+    }
+    .view-bill .bill-grand-total .bill-grand-value {
+      font-size: clamp(1.08rem, 3vw, 1.35rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      text-shadow: none;
+      white-space: nowrap;
+    }
+    /* بطاقة الفاتورة — ثلاثة أقسام: هيدر، جدول الطلبات، المجموع + طريقة الدفع + إغلاق */
+    .view-bill .bill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      max-width: 420px;
+    }
+    .view-bill .bill-card.bill-consolidated--modal-cards {
+      max-width: min(560px, 100%);
+      border: 1px solid var(--border-accent);
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+    }
+    .view-bill .bill-consolidated-footer .bill-card-payment .payment-title {
+      color: var(--text);
+    }
+    .view-bill .bill-card:hover {
+      border-color: var(--border);
+      box-shadow: var(--shadow-md);
+    }
+    .view-bill .bill-card.bill-card-closing {
+      opacity: 0.72;
+      pointer-events: none;
+    }
+    /* القسم الأول: الهيدر */
+    .view-bill .bill-card-header {
+      padding: 1rem 1.25rem;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+    .view-bill .bill-card-header .bill-table-num {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 0.25rem 0;
+    }
+    .view-bill .bill-card-header .bill-date,
+    .view-bill .bill-card-header .bill-order-id {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    /* القسم الثاني: جدول الطلبات */
+    .view-bill .bill-card-body {
+      padding: 1rem 1.25rem;
+      flex: 1;
+    }
+    .view-bill .bill-card-body .bill-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .view-bill .bill-card-body .bill-items-table th {
+      text-align: right;
+      padding: 0.5rem 0.6rem;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .view-bill .bill-card-body .bill-items-table td {
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .view-bill .bill-card-body .bill-items-table .col-name { font-weight: 500; }
+    .view-bill .bill-card-body .bill-items-table .col-qty { text-align: center; }
+    .view-bill .bill-card-body .bill-items-table .col-price { color: var(--accent); font-weight: 600; }
+    /* القسم الثالث: المجموع */
+    .view-bill .bill-card-total {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    /* طريقة الدفع */
+    .view-bill .bill-card-payment {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .view-bill .bill-card-payment .payment-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 0.75rem 0;
+    }
+    .view-bill .bill-card-payment .payment-buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .view-bill .bill-card-payment .btn-payment {
+      flex: 1;
+      min-width: 140px;
+      padding: 0.65rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .view-bill .bill-card-payment .btn-payment:hover {
+      background: var(--surface2);
+      border-color: var(--border-accent);
+    }
+    .view-bill .bill-card-payment .btn-payment.selected {
+      background: rgba(var(--accent-rgb), 0.25);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .view-bill .bill-card-actions {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .view-bill .bill-card-actions .btn-close-bill {
+      width: 100%;
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .view-bill .bill-card-actions .btn-close-bill[hidden] {
+      display: none !important;
+    }
+    .view-bill .bill-card-actions .btn-close-bill:disabled {
+      cursor: wait;
+      opacity: 0.85;
+    }
+    .view-bill .bill-card-payment .btn-payment:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .view-bill .bill-total.grand-total {
+      margin: 0;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .realtime-status {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .realtime-status.connected {
+      color: var(--success);
+    }
+    /* هيكل الشريط الجانبي + المحتوى — بدون تغيير الهوية */
+    .cashier-body {
+      display: flex;
+      min-height: calc(100vh - 56px);
+      position: relative;
+    }
+    .cashier-sidebar-backdrop {
+      position: fixed;
+      top: 56px;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 105;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: rgba(45, 55, 72, 0.28);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+      cursor: pointer;
+    }
+    .cashier-body:not(.cashier-sidebar-hidden) .cashier-sidebar-backdrop {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cashier-sidebar {
+      position: fixed;
+      top: 56px;
+      right: 0;
+      left: auto;
+      width: min(220px, 78vw);
+      height: calc(100vh - 56px);
+      height: calc(100dvh - 56px);
+      flex-shrink: 0;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 110;
+      transform: translateX(0);
+      transition: transform 0.25s cubic-bezier(0.32, 0.72, 0, 1), box-shadow 0.25s ease;
+      box-shadow: -8px 0 24px rgba(45, 55, 72, 0.12);
+    }
+    .cashier-body.cashier-sidebar-hidden .cashier-sidebar {
+      transform: translateX(100%);
+      pointer-events: none;
+      box-shadow: none;
+    }
+    .cashier-sidebar-open-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      min-height: 40px;
+      padding: 0.35rem 0.55rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--accent);
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    .cashier-sidebar-open-btn:hover {
+      background: var(--accent-soft);
+      border-color: rgba(var(--accent-rgb), 0.35);
+    }
+    .cashier-sidebar-open-btn[hidden] {
+      display: none !important;
+    }
+    .cashier-sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0 0.5rem;
+      flex: 1;
+    }
+    .cashier-sidebar-footer {
+      margin-top: auto;
+      padding: 0.85rem 0.65rem 0.35rem;
+      border-top: 1px solid var(--border);
+    }
+    .cashier-auto-approval {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.45rem;
+    }
+    .cashier-auto-approval__label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #2D3748;
+      text-align: right;
+      line-height: 1.35;
+    }
+    .cashier-auto-approval__switch {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border-radius: 12px;
+      border: 2px solid rgba(220, 38, 38, 0.35);
+      background: linear-gradient(165deg, #fff5f5 0%, #ffe8e8 100%);
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .cashier-auto-approval__switch:hover {
+      border-color: rgba(220, 38, 38, 0.55);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.12);
+    }
+    .cashier-auto-approval__switch.is-on {
+      border-color: rgba(22, 163, 74, 0.45);
+      background: linear-gradient(165deg, #f0fdf4 0%, #dcfce7 100%);
+    }
+    .cashier-auto-approval__switch.is-on:hover {
+      border-color: rgba(22, 163, 74, 0.6);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.12);
+    }
+    .cashier-auto-approval__switch:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+    .cashier-auto-approval__track {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      background: #cbd5e1;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .cashier-auto-approval__switch.is-on .cashier-auto-approval__track {
+      background: #22c55e;
+    }
+    .cashier-auto-approval__thumb {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+    }
+    .cashier-auto-approval__switch.is-on .cashier-auto-approval__thumb {
+      transform: translateX(-20px);
+    }
+    .cashier-auto-approval__state {
+      font-size: 0.9rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      color: #b91c1c;
+      min-width: 2.2rem;
+      text-align: left;
+    }
+    .cashier-auto-approval__switch.is-on .cashier-auto-approval__state {
+      color: #15803d;
+    }
+    .cashier-auto-approval__hint {
+      margin: 0;
+      font-size: 0.72rem;
+      line-height: 1.4;
+      color: var(--text-muted, #6b7280);
+      text-align: right;
+    }
+    .cashier-sidebar-item {
+      display: block;
+      width: 100%;
+      padding: 0.6rem 1rem;
+      text-align: right;
+      font-family: inherit;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #2D3748;
+      letter-spacing: 0.01em;
+      line-height: 1.45;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, font-weight 0.15s;
+    }
+    .cashier-sidebar-item:hover {
+      background: var(--surface2);
+      color: #2D3748;
+      font-weight: 700;
+    }
+    .cashier-sidebar-item.active {
+      background: rgba(var(--accent-rgb), 0.2);
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .main-content.cashier-layout {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .cashier-panel {
+      display: none;
+      flex: 1;
+      min-width: 0;
+    }
+    .cashier-panel.active {
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-today-inner {
+      padding: clamp(0.5rem, 2vw, 1rem);
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+    .panel-cashbox-inner {
+      padding: clamp(0.5rem, 2vw, 1rem);
+      max-width: min(900px, 100%);
+      margin: 0 auto;
+      width: 100%;
+    }
+    /* طلبات اليوم — شريط ملخص + عرض مجمّع حسب الطاولة */
+    .today-summary-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .today-summary-item {
+      background: var(--summary-card-bg, #EFF6FF);
+      border-radius: var(--radius);
+      padding: 1rem;
+      border: 1px solid var(--summary-card-border, #BFDBFE);
+      box-shadow: var(--shadow);
+    }
+    .today-summary-item--type {
+      background: var(--summary-card-bg-alt, #FFF7ED);
+      border-color: var(--summary-card-border-alt, #FED7AA);
+    }
+    .today-summary-item .label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #2D3748;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+    }
+    .today-summary-item .value { font-size: 1.15rem; font-weight: 800; color: var(--accent); }
+
+    .today-grouped-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .today-table-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .today-table-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .today-table-card-head:hover { background: var(--surface2); }
+    .today-table-card-head__text {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.35rem 0.85rem;
+      min-width: 0;
+      flex: 1;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      line-height: 1.55;
+    }
+    .today-table-card-head .table-num {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+    }
+    .today-table-card-head .table-meta-sep {
+      color: var(--text-muted);
+      font-weight: 500;
+      padding: 0 0.15rem;
+    }
+    .today-table-card-head .table-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.55rem 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .today-table-card-head .table-meta__part {
+      white-space: nowrap;
+    }
+    .today-table-card-head .table-meta__part--pay {
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .today-table-card-head__aside {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    }
+    .today-table-card-head .table-total { font-size: 1.1rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+    .today-table-card-head .table-toggle { font-size: 0.9rem; color: var(--text-muted); }
+    .today-table-card-detail {
+      display: none;
+      padding: 0 1.25rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .today-table-card.expanded .today-table-card-detail { display: block; }
+    .today-table-card.expanded .table-toggle { transform: rotate(180deg); }
+    .today-detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .today-detail-table th {
+      text-align: right;
+      padding: 0.5rem 0.6rem;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .today-detail-table td { padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); }
+    .today-detail-table .col-amount { color: var(--accent); font-weight: 600; }
+    .today-detail-table .today-payment-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .today-detail-table .payment-method-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 5.5rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .today-detail-table .payment-method-badge.payment-cash {
+      background: var(--success-soft);
+      color: var(--success);
+      border: 1px solid rgba(22, 163, 74, 0.35);
+    }
+    .today-detail-table .payment-method-badge.payment-card {
+      background: rgba(var(--accent-rgb), 0.2);
+      color: var(--accent);
+      border: 1px solid rgba(var(--accent-rgb), 0.4);
+    }
+    .today-detail-table .payment-method-badge.payment-pending {
+      background: var(--accent-soft);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-accent);
+    }
+    .today-detail-table .btn-receipt,
+    .today-detail-table .btn-today-session-receipt { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
+    .today-detail-table .col-num { text-align: center; white-space: nowrap; }
+    .today-session-receipt-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(45, 55, 72, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+    .today-session-receipt-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .today-session-receipt-modal__dialog {
+      width: min(420px, 100%);
+      max-height: min(88vh, 640px);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid rgba(var(--accent-rgb), 0.18);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), 0 16px 48px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+      color: var(--text);
+    }
+    .today-session-receipt-modal__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.75rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .today-session-receipt-modal__title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .today-session-receipt-modal__close-x {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      margin: 0;
+      border: 1px solid rgba(var(--accent-rgb), 0.5);
+      border-radius: 8px;
+      background: rgba(var(--accent-rgb), 0.22);
+      color: var(--on-accent);
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .today-session-receipt-modal__close-x:hover {
+      background: rgba(var(--accent-rgb), 0.38);
+      color: var(--on-accent);
+      border-color: var(--accent-hover);
+    }
+    .today-session-receipt-modal__body {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 0.75rem 0.85rem;
+      background: var(--surface);
+    }
+    .today-session-order-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0.55rem 0.65rem;
+      margin-bottom: 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface2);
+    }
+    .today-session-order-row:last-child { margin-bottom: 0; }
+    .today-session-order-row__main {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+      flex: 1;
+      min-width: 0;
+    }
+    .today-session-order-row__title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .today-session-order-row__time {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .today-session-order-row__amount {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .today-session-order-row .btn-today-order-detail {
+      flex-shrink: 0;
+      min-height: 36px;
+      padding: 0.42rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 1px solid rgba(var(--accent-rgb), 0.6);
+      background: linear-gradient(180deg, var(--accent-gradient-start) 0%, var(--accent) 100%);
+      color: var(--on-accent);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+    }
+    .today-session-order-row .btn-today-order-detail:hover {
+      background: linear-gradient(180deg, var(--accent-hover) 0%, var(--accent-muted) 100%);
+      border-color: var(--accent-hover);
+      color: var(--on-accent);
+    }
+    .today-session-receipt-modal__footer {
+      padding: 0.65rem 0.85rem 0.8rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .today-session-receipt-modal__total {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .today-session-receipt-modal__payment {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .today-type-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.45rem;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .today-summary-bar { grid-template-columns: 1fr; }
+      .today-table-card-head { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* لوحة تفصيل الطاولة — Slide Panel */
+    .today-table-panel-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 150;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+    .today-table-panel-backdrop.open { opacity: 1; visibility: visible; }
+    .today-table-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 420px;
+      height: 100%;
+      background: var(--surface);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.3);
+      z-index: 151;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      padding-top: env(safe-area-inset-top);
+    }
+    .today-table-panel.open { transform: translateX(0); }
+    .today-table-panel-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .today-table-panel-header h2 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+    .today-table-panel-close {
+      padding: 0.4rem 0.75rem;
+      background: var(--surface2);
+      border: none;
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .today-table-panel-close:hover { background: var(--surface2); }
+    .today-table-panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.25rem;
+    }
+    .today-table-panel .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .today-table-panel .detail-table th {
+      text-align: right;
+      padding: 0.5rem 0.6rem;
+      background: rgba(0,0,0,0.2);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+    .today-table-panel .detail-table td {
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .today-table-panel .detail-table .col-item { font-weight: 500; }
+    .today-table-panel .detail-table .col-subtotal { color: var(--accent); font-weight: 600; }
+    .today-table-panel-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: rgba(0,0,0,0.1);
+    }
+    .today-table-panel-total { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+    .today-table-panel-status { font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .today-table-panel-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    .cashbox-page-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0 0 1.25rem 0;
+      color: var(--text);
+    }
+    .cashbox-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.25rem;
+    }
+    .cashbox-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cashbox-info-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .cashbox-info-row:last-child { margin-bottom: 0; }
+    .cashbox-info-label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #2D3748;
+      letter-spacing: 0.02em;
+      line-height: 1.45;
+      min-width: 120px;
+    }
+    .cashbox-info-value { font-size: 1rem; font-weight: 600; color: var(--accent); }
+    .cashbox-opening-row { flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+    .cashbox-opening-row .cashbox-info-label {
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+    .cashbox-input-currency-wrap {
+      display: inline-flex;
+      align-items: stretch;
+      min-height: 44px;
+      padding: 0 0 0 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface2);
+      box-shadow: inset 0 1px 2px rgba(45, 55, 72, 0.04);
+      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+      overflow: hidden;
+    }
+    .cashbox-input-currency-wrap:focus-within {
+      border-color: var(--accent);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
+    }
+    .cashbox-opening-row .cashbox-input-number {
+      width: 120px;
+      padding: 0.5rem 0.5rem 0.5rem 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: var(--text);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .cashbox-opening-row .cashbox-input-number::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+      opacity: 1;
+    }
+    .cashbox-opening-row .cashbox-input-number:focus {
+      outline: none;
+    }
+    .cashbox-opening-row .cashbox-input-spinner {
+      display: flex;
+      flex-direction: column;
+      width: 32px;
+      flex-shrink: 0;
+      margin-inline-start: 0.5rem;
+      padding-inline-start: 0.5rem;
+      background: transparent;
+    }
+    .cashbox-opening-row .cashbox-input-spinner button {
+      flex: 1;
+      min-height: 20px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, background 0.2s;
+      border-radius: 4px;
+      margin: 1px 2px;
+    }
+    .cashbox-opening-row .cashbox-input-spinner button:hover {
+      color: var(--accent);
+      background: rgba(var(--accent-rgb), 0.15);
+    }
+    .cashbox-opening-row .cashbox-input-spinner button:active {
+      background: rgba(var(--accent-rgb), 0.25);
+    }
+    .cashbox-currency-suffix {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      padding-left: 0.5rem;
+      align-self: center;
+    }
+    .cashbox-hint { font-size: 0.8rem; color: var(--text-muted); width: 100%; margin-top: 0.25rem; }
+    .cashbox-sales-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .cashbox-sales-item .label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #2D3748;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+    }
+    .cashbox-sales-item .value { font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+    .cashbox-sales-item.cashbox-sales-total .value { font-size: 1.25rem; }
+    .cashbox-add-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    /* نموذج إدخال مصروف / سحب — خلفية واضحة */
+    .cashbox-entry-form {
+      margin-bottom: 1rem;
+      padding: 0.85rem;
+      background: #EEF2FF;
+      border: 1px solid #C7D2FE;
+      border-radius: var(--radius);
+    }
+    .cashbox-entry-form--editing {
+      background: #ECFDF5;
+      border-color: #86EFAC;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.12);
+    }
+    .cashbox-entry-form__grid {
+      display: grid;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+    }
+    .cashbox-entry-form__grid--expense {
+      grid-template-columns: 1.2fr 6.5rem 1.3fr;
+    }
+    .cashbox-entry-form__grid--withdrawal {
+      grid-template-columns: 6.5rem 1fr;
+    }
+    @media (max-width: 640px) {
+      .cashbox-entry-form__grid--expense,
+      .cashbox-entry-form__grid--withdrawal { grid-template-columns: 1fr; }
+    }
+    .cashbox-entry-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      min-width: 0;
+    }
+    .cashbox-entry-field__label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #2D3748;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+    }
+    .cashbox-input-inline {
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
+      min-width: 0;
+      width: 100%;
+      min-height: 42px;
+      box-shadow: inset 0 1px 2px rgba(45, 55, 72, 0.05);
+    }
+    .cashbox-input-inline.cashbox-amount { max-width: none; }
+    .cashbox-input-inline:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
+    }
+    .cashbox-entry-form__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .btn-cashbox-submit {
+      min-height: 42px;
+      padding: 0.5rem 1.1rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .btn-cashbox-submit.btn-save-mode {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+    .btn-add-item { flex-shrink: 0; }
+    /* جدول عرض المصروفات والسحب */
+    .cashbox-entries-wrap {
+      margin-bottom: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .cashbox-entries-head {
+      display: grid;
+      gap: 0.35rem;
+      padding: 0.45rem 0.65rem;
+      background: #F1F5F9;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--brand-accent);
+      text-align: right;
+    }
+    .cashbox-entries-head--expense {
+      grid-template-columns: 1.2fr 5.5rem 1fr 6.5rem;
+    }
+    .cashbox-entries-head--withdrawal {
+      grid-template-columns: 5.5rem 1fr 6.5rem;
+    }
+    .cashbox-entries-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+    .cashbox-entries-row {
+      display: grid;
+      gap: 0.35rem;
+      align-items: center;
+      padding: 0.5rem 0.65rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+      background: var(--surface);
+    }
+    .cashbox-entries-row:last-child { border-bottom: none; }
+    .cashbox-entries-row--editing { background: rgba(var(--accent-rgb), 0.06); }
+    .cashbox-entries-row--expense {
+      grid-template-columns: 1.2fr 5.5rem 1fr 6.5rem;
+    }
+    .cashbox-entries-row--withdrawal {
+      grid-template-columns: 5.5rem 1fr 6.5rem;
+    }
+    .cashbox-entries-row .col-name,
+    .cashbox-entries-row .col-note {
+      color: var(--text);
+      font-weight: 600;
+      word-break: break-word;
+      line-height: 1.35;
+    }
+    .cashbox-entries-row .col-amount {
+      color: var(--accent);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .cashbox-entries-row .col-actions {
+      display: inline-flex;
+      gap: 0.3rem;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .cashbox-entries-row .btn-edit-entry {
+      padding: 0.3rem 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: inherit;
+      border-radius: 6px;
+      border: 1px solid rgba(var(--accent-rgb), 0.4);
+      background: var(--accent-soft);
+      color: var(--accent);
+      cursor: pointer;
+    }
+    .cashbox-entries-row .btn-edit-entry:hover {
+      background: var(--accent-soft-strong);
+    }
+    .cashbox-entries-row .btn-remove-item {
+      padding: 0.3rem 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: inherit;
+      border-radius: 6px;
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      background: var(--danger-soft);
+      color: var(--danger);
+      cursor: pointer;
+    }
+    .cashbox-entries-row .btn-remove-item:hover {
+      background: rgba(220, 38, 38, 0.18);
+    }
+    .cashbox-entries-empty {
+      padding: 0.75rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 0.88rem;
+    }
+    .cashbox-list-total {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      font-weight: 600;
+    }
+    .cashbox-list-total .label {
+      color: #2D3748;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .cashbox-list-total .value { color: var(--accent); }
+    .cashbox-net-formula {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4A5568;
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+      margin: 0 0 0.75rem 0;
+    }
+    .cashbox-net-value-wrap {
+      padding: 0.75rem 1rem;
+      background: rgba(var(--accent-rgb), 0.12);
+      border-radius: var(--radius);
+      border: 1px solid rgba(var(--accent-rgb), 0.25);
+    }
+    .cashbox-net-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    /* شاشة فتح القاصة أولاً */
+    .cashbox-open-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+    }
+    .cashbox-open-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .cashbox-open-card .cashbox-page-title {
+      margin-bottom: 0.75rem;
+    }
+    .cashbox-open-text {
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .cashbox-open-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      text-align: right;
+    }
+    .cashbox-open-field-row .cashbox-info-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .cashbox-open-input-wrap,
+    .cashbox-open-balance-row .cashbox-input-currency-wrap {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.55rem 0.75rem;
+      background: var(--surface2);
+      box-shadow: inset 0 1px 2px rgba(45, 55, 72, 0.04);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+    .cashbox-open-input-wrap:focus-within,
+    .cashbox-open-balance-row .cashbox-input-currency-wrap:focus-within {
+      border-color: var(--accent);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
+    }
+    .cashbox-open-input-wrap .cashbox-input-text,
+    .cashbox-open-balance-row .cashbox-input-number {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: right;
+      outline: none;
+      caret-color: var(--accent);
+    }
+    .cashbox-open-input-wrap .cashbox-input-text::placeholder,
+    .cashbox-open-balance-row .cashbox-input-number::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+      opacity: 1;
+    }
+    .cashbox-open-input-wrap .cashbox-input-text:-webkit-autofill,
+    .cashbox-open-balance-row .cashbox-input-number:-webkit-autofill,
+    .cashbox-open-input-wrap .cashbox-input-text:-webkit-autofill:hover,
+    .cashbox-open-balance-row .cashbox-input-number:-webkit-autofill:hover,
+    .cashbox-open-input-wrap .cashbox-input-text:-webkit-autofill:focus,
+    .cashbox-open-balance-row .cashbox-input-number:-webkit-autofill:focus {
+      -webkit-text-fill-color: var(--text);
+      -webkit-box-shadow: 0 0 0 1000px var(--surface2) inset;
+      box-shadow: 0 0 0 1000px var(--surface2) inset;
+      transition: background-color 9999s ease-out 0s;
+    }
+    .cashbox-open-balance-row .cashbox-input-number {
+      font-size: 1.1rem;
+    }
+    .cashbox-open-balance-row .cashbox-currency-suffix {
+      margin-right: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .cashbox-close-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 210;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.72);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+    .cashbox-close-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cashbox-close-modal__dialog {
+      max-width: 420px;
+      width: 100%;
+    }
+    .cashbox-close-modal__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      justify-content: center;
+      margin-top: 0.25rem;
+    }
+    .cashbox-close-modal__actions .btn {
+      min-width: 120px;
+    }
+    .cashbox-open-button {
+      min-width: 180px;
+      font-size: 0.98rem;
+    }
+    .cashbox-summary-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .cashbox-income-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .cashbox-income-card .label { font-size: 0.875rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem; }
+    .cashbox-income-card .value { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .cashbox-notes-box {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .cashbox-notes-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 0.75rem 0;
+    }
+    .cashbox-notes-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--surface2);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    .cashbox-notes-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .cashbox-section-title { font-size: 1rem; font-weight: 600; color: var(--text); margin: 0 0 1rem 0; }
+    .cashbox-form-row { margin-bottom: 1rem; }
+    .cashbox-field label { display: block; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.35rem; }
+    .cashbox-input {
+      width: 100%;
+      max-width: 200px;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--surface2);
+      border-radius: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .cashbox-notes-label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #2D3748;
+      letter-spacing: 0.02em;
+      line-height: 1.45;
+      margin-bottom: 0.4rem;
+    }
+    .cashbox-actions { margin-top: 1.25rem; }
+    .cashbox-actions .btn { min-height: 44px; padding: 0.65rem 1.25rem; }
+    .cashbox-actions .btn + .btn { margin-right: 0.5rem; }
+    .cashbox-already-closed { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem; }
+    .cashbox-yesterday-wrap { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .cashbox-yesterday-title { margin-bottom: 0.75rem; }
+    .cashbox-yesterday-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .cashbox-yesterday-card .row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+    .cashbox-yesterday-card .row:last-child { margin-bottom: 0; }
+    .cashbox-yesterday-card .label {
+      color: #2D3748;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.45;
+    }
+    .cashbox-yesterday-card .value { font-weight: 600; color: var(--accent); }
+
+    .receipt-overlay.cashier-receipt-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+    .receipt-overlay.cashier-receipt-overlay.open { opacity: 1; visibility: visible; }
+    .cashier-receipt-overlay .receipt-box.receipt-box-card {
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 420px;
+      width: 90%;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .cashier-receipt-overlay .receipt-card-header {
+      padding: 1rem 1.25rem;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+    .cashier-receipt-overlay .receipt-table-num {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 0.25rem 0;
+    }
+    .cashier-receipt-overlay .receipt-date,
+    .cashier-receipt-overlay .receipt-order-id {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .cashier-receipt-overlay .receipt-order-type {
+      font-size: 0.84rem;
+      color: var(--accent);
+      margin: 0.2rem 0 0;
+      font-weight: 700;
+    }
+    .cashier-receipt-overlay .receipt-delivery-meta {
+      margin: 0.25rem 0 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .cashier-receipt-overlay .receipt-card-body {
+      padding: 1rem 1.25rem;
+    }
+    .cashier-receipt-overlay .receipt-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .cashier-receipt-overlay .receipt-items-table th {
+      text-align: right;
+      padding: 0.5rem 0.6rem;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .cashier-receipt-overlay .receipt-items-table td {
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cashier-receipt-overlay .receipt-items-table .col-name { font-weight: 500; }
+    .cashier-receipt-overlay .receipt-items-table .col-qty { text-align: center; }
+    .cashier-receipt-overlay .receipt-items-table .col-price { color: var(--accent); font-weight: 600; }
+    .cashier-receipt-overlay .receipt-card-total {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .cashier-receipt-overlay .receipt-box-actions {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    /* مودال تفاصيل الطلب — ألوان متوافقة مع واجهة الكاشير */
+    .cashier-table-order-modal {
+      --cm-bg: var(--surface);
+      --cm-surface2: var(--surface2);
+      --cm-accent: var(--accent);
+      --cm-text: var(--text);
+      --cm-muted: var(--text-muted);
+      position: fixed;
+      inset: 0;
+      /* فوق وصل جلسة طلبات اليوم (1200) عند «عرض التفاصيل» */
+      z-index: 1250;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(45, 55, 72, 0.35);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.22s ease, visibility 0.22s ease;
+    }
+    .cashier-table-order-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cashier-table-order-modal__dialog {
+      background: var(--cm-bg);
+      color: var(--cm-text);
+      border-radius: var(--radius);
+      border: 1px solid rgba(var(--accent-rgb), 0.18);
+      max-width: 480px;
+      width: 100%;
+      max-height: min(88vh, 620px);
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow), 0 16px 48px rgba(0, 0, 0, 0.45);
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    }
+    .cashier-table-order-modal__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .cashier-table-order-modal__head-text {
+      flex: 1;
+      min-width: 0;
+      text-align: right;
+    }
+    .cashier-table-order-modal__title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--cm-accent);
+      line-height: 1.35;
+    }
+    .cashier-table-order-modal__subtitle {
+      margin: 0.2rem 0 0;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+    .cashier-modal-sub__row > span:first-child {
+      color: var(--brand-accent);
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+    .cashier-modal-sub__row {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.3rem 0.45rem;
+    }
+    .cashier-modal-sub__dot {
+      opacity: 0.5;
+      font-weight: 700;
+    }
+    .cashier-modal-sub__ref {
+      font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--cm-accent);
+      letter-spacing: 0.02em;
+    }
+    .cashier-table-order-modal__close-x {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0;
+      margin: 0;
+      border: 1px solid rgba(var(--accent-rgb), 0.5);
+      border-radius: 8px;
+      background: rgba(var(--accent-rgb), 0.22);
+      color: var(--on-accent);
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: none;
+    }
+    .cashier-table-order-modal__close-x:hover {
+      background: rgba(var(--accent-rgb), 0.38);
+      color: var(--on-accent);
+      border-color: var(--accent-hover);
+    }
+    .cashier-table-order-modal__close-x:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.4);
+    }
+    .cashier-table-order-modal__meta {
+      margin: 0;
+      padding: 0.65rem 0.85rem 0.5rem;
+    }
+    .cashier-receipt-info {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+    @media (max-width: 420px) {
+      .cashier-receipt-info {
+        grid-template-columns: 1fr;
+      }
+    }
+    .cashier-receipt-info__chip {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding: 0.5rem 0.55rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--cm-surface2);
+    }
+    .cashier-receipt-info__label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--cm-muted);
+      letter-spacing: 0.02em;
+    }
+    .cashier-receipt-info__value {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--cm-text);
+      line-height: 1.25;
+      word-break: break-word;
+    }
+    .cashier-receipt-info__chip--customer .cashier-receipt-info__value {
+      color: var(--cm-accent);
+    }
+    .cashier-receipt-info__sub {
+      display: block;
+      margin-top: 0.12rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: rgba(250, 250, 250, 0.55);
+      line-height: 1.2;
+    }
+    .cashier-table-order-modal__table .item-ordered-by {
+      display: inline-block;
+      margin-inline-start: 0.2rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(250, 250, 250, 0.5);
+    }
+    .cashier-table-order-modal__table-wrap {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 0.25rem 0.85rem 0.45rem;
+      -webkit-overflow-scrolling: touch;
+      background: var(--cm-bg);
+    }
+    .cashier-table-order-modal__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      color: var(--cm-text);
+    }
+    .cashier-table-order-modal__table thead th {
+      text-align: right;
+      padding: 0.3rem 0.3rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--cm-accent);
+      background: rgba(0, 0, 0, 0.12);
+      border-bottom: 2px solid rgba(var(--accent-rgb), 0.45);
+      line-height: 1.15;
+    }
+    .cashier-table-order-modal__table .th-num {
+      text-align: center;
+      white-space: nowrap;
+    }
+    .cashier-table-order-modal__table .th-sub {
+      text-align: end;
+    }
+    .cashier-table-order-modal__table tbody td {
+      padding: 0.24rem 0.3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      vertical-align: middle;
+      color: var(--cm-text);
+      line-height: 1.15;
+    }
+    .cashier-table-order-modal__table .col-name {
+      font-weight: 600;
+      color: var(--cm-text);
+      font-size: 13.5px;
+    }
+    .cashier-table-order-modal__table .col-qty {
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      color: rgba(250, 250, 250, 0.9);
+    }
+    .cashier-table-order-modal__table .col-unit-price,
+    .cashier-table-order-modal__table .col-line-sub {
+      text-align: end;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      color: rgba(250, 250, 250, 0.92);
+    }
+    .cashier-table-order-modal__table .col-line-sub {
+      font-weight: 700;
+      color: var(--cm-accent);
+    }
+    .cashier-table-order-modal__table .cashier-modal-empty {
+      text-align: center;
+      color: var(--cm-muted);
+      padding: 1rem !important;
+    }
+    .cashier-table-order-modal__footer {
+      flex-shrink: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding: 0.85rem 1rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .cashier-table-order-modal__total {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .cashier-modal-total__label {
+      color: var(--text);
+      font-weight: 700;
+    }
+    .cashier-modal-total__value {
+      color: var(--brand-accent);
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+    .cashier-table-order-modal__btn-print {
+      min-width: 7.5rem;
+      padding: 0.5rem 1.15rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 10px;
+      border: 1px solid rgba(var(--accent-rgb), 0.45);
+      background: linear-gradient(180deg, #9ec5fa 0%, var(--accent) 100%);
+      color: #1a1d23;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.18s, border-color 0.18s, transform 0.12s;
+      touch-action: manipulation;
+    }
+    .cashier-table-order-modal__btn-print:hover {
+      background: linear-gradient(180deg, var(--accent-gradient-start) 0%, var(--accent-hover) 100%);
+      border-color: var(--accent-hover);
+    }
+    .cashier-table-order-modal__btn-print:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--cm-bg), 0 0 0 4px rgba(var(--accent-rgb), 0.5);
+    }
+    .cashier-table-order-modal__btn-print:active {
+      transform: scale(0.98);
+    }
+    .cashier-new-order-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 260;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      background: rgba(0, 0, 0, 0.75);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+    .cashier-new-order-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cashier-new-order-dialog {
+      width: min(980px, 100%);
+      max-height: 92dvh;
+      background: #1a1d24;
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 14px;
+      box-shadow: 0 20px 44px rgba(0,0,0,0.42);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .cashier-new-order-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .cashier-new-order-head h3 { margin: 0; font-size: 1rem; color: var(--accent); }
+    .cashier-order-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .cashier-order-type-btn {
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      min-height: 46px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .cashier-order-type-btn.active {
+      border-color: var(--accent);
+      color: var(--text);
+      background: var(--accent-soft-strong);
+    }
+    .cashier-new-order-delivery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+      padding: 0 1rem 0.75rem;
+    }
+    .cashier-new-order-delivery input,
+    .cashier-new-order-delivery select {
+      width: 100%;
+      min-height: 42px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: var(--surface);
+      color: var(--on-accent);
+      padding: 0.45rem 0.65rem;
+      font-size: 0.9rem;
+    }
+    .cashier-new-order-body {
+      flex: 1;
+      min-height: 0;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 0.85rem;
+      padding: 0.8rem 1rem;
+      overflow: hidden;
+      align-items: stretch;
+    }
+    .cashier-new-order-products,
+    .cashier-new-order-cart {
+      min-height: 0;
+      height: 100%;
+      max-height: 100%;
+      border: 1px solid rgba(var(--accent-rgb), 0.15);
+      border-radius: 10px;
+      background: var(--surface2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .cashier-new-order-products-head,
+    .cashier-new-order-cart-head {
+      padding: 0.6rem;
+      border-bottom: 1px solid rgba(var(--accent-rgb), 0.18);
+      background: rgba(var(--accent-rgb), 0.08);
+    }
+    .cashier-new-order-products-head input {
+      width: 100%;
+      min-height: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: #262c35;
+      color: var(--on-accent);
+      padding: 0.4rem 0.65rem;
+      font-size: 0.9rem;
+    }
+    .cashier-new-order-categories {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: nowrap;
+      margin-top: 0.55rem;
+      padding-bottom: 0.3rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
+      cursor: grab;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(var(--accent-rgb), 0.45) transparent;
+    }
+    .cashier-new-order-categories.is-drag-scrolling {
+      cursor: grabbing;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .cashier-new-order-categories.is-drag-scrolling .cashier-cat-chip {
+      pointer-events: none;
+    }
+    .cashier-new-order-categories::-webkit-scrollbar {
+      height: 5px;
+    }
+    .cashier-new-order-categories::-webkit-scrollbar-thumb {
+      background: rgba(var(--accent-rgb), 0.42);
+      border-radius: 999px;
+    }
+    .cashier-cat-chip {
+      flex-shrink: 0;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      background: var(--surface2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: 0.01em;
+      padding: 0.42rem 0.95rem;
+      cursor: pointer;
+      transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+    }
+    .cashier-cat-chip:hover {
+      border-color: rgba(var(--accent-rgb), 0.45);
+      color: var(--on-accent);
+    }
+    .cashier-cat-chip.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 800;
+    }
+    .cashier-new-order-products-list {
+      flex: 1;
+      min-height: 0;
+      height: 100%;
+      overflow: auto;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-auto-rows: minmax(82px, auto);
+      align-content: start;
+      gap: 0.5rem;
+      padding: 0.50rem;
+    }
+    .cashier-new-order-product {
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 0.38rem 0.42rem;
+      background: var(--surface);
+      cursor: pointer;
+      min-height: 74px;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.12s ease;
+    }
+    .cashier-new-order-product:hover {
+      border-color: rgba(var(--accent-rgb), 0.42);
+      background: var(--accent-soft);
+      transform: translateY(-1px);
+    }
+    .cashier-new-order-product__name {
+      font-size: clamp(0.88rem, 2.4vw, 1rem);
+      font-weight: 800;
+      margin-bottom: 0.22rem;
+      color: var(--text);
+      line-height: 1.28;
+    }
+    .cashier-new-order-product__price {
+      font-size: clamp(0.82rem, 2.2vw, 0.94rem);
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+    }
+    .cashier-new-order-cart-list {
+      flex: 1;
+      min-height: 0;
+      max-height: 100%;
+      overflow: auto;
+      padding: 0.45rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .cashier-cart-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.4rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45rem;
+      background: var(--surface2);
+    }
+    .cashier-cart-row__name { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+    .cashier-cart-row__meta { font-size: 0.75rem; color: var(--text-muted); }
+    .cashier-cart-row__actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.35rem;
+      flex-shrink: 0;
+    }
+    .cashier-cart-row__qty {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .cashier-cart-row__qty-val {
+      min-width: 1.35rem;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .cashier-cart-row__btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 8px;
+      min-width: 36px;
+      min-height: 36px;
+      padding: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cashier-cart-row__btn[data-act="inc"],
+    .cashier-cart-row__btn[data-act="dec"] {
+      border-color: rgba(var(--accent-rgb), 0.45);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .cashier-cart-row__btn[data-act="inc"]:hover,
+    .cashier-cart-row__btn[data-act="dec"]:hover {
+      background: var(--accent-soft-strong);
+      border-color: var(--accent);
+      color: var(--accent-hover);
+    }
+    .cashier-cart-row__btn--remove,
+    .cashier-cart-row__btn[data-act="rm"] {
+      border-color: rgba(244, 67, 54, 0.55);
+      color: #ff6b63;
+      background: rgba(244, 67, 54, 0.12);
+      flex-shrink: 0;
+    }
+    .cashier-cart-row__btn--remove:hover,
+    .cashier-cart-row__btn[data-act="rm"]:hover {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+    .cashier-new-order-cart-foot {
+      border-top: 1px solid var(--border-subtle);
+      padding: 0.55rem 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      gap: 0.5rem;
+    }
+    .cashier-new-order-cart-foot > span:first-child {
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .cashier-new-order-cart-foot > span:last-child {
+      color: var(--brand-accent);
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+    .cashier-new-order-actions {
+      border-top: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      display: flex;
+      gap: 0.6rem;
+      justify-content: flex-end;
+      background: var(--surface2);
+    }
+    .cashier-new-order-actions--cart {
+      border-top: 1px solid rgba(var(--accent-rgb), 0.18);
+      padding: 0.55rem 0.65rem 0.65rem;
+      display: flex;
+      gap: 0.45rem;
+      justify-content: flex-start;
+      background: rgba(0,0,0,0.1);
+    }
+    .cashier-new-order-actions--cart .btn {
+      min-height: 38px;
+      padding: 0.45rem 0.8rem;
+    }
+    .cashier-new-order-actions--cart #btnCashierNewOrderSubmit {
+      width: 100%;
+      flex: 1 1 100%;
+    }
+    .cashier-panel-new-order {
+      padding: 0;
+      width: 100%;
+      min-width: 0;
+      min-height: 0;
+      flex: 1;
+    }
+    .cashier-panel-new-order.active {
+      display: flex;
+      flex-direction: column;
+    }
+    .cashier-panel-new-order .cashier-new-order-dialog {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      max-height: none;
+      height: 100%;
+      border-radius: 0;
+      border-inline: 0;
+      border-bottom: 0;
+      border-color: var(--border);
+      background: var(--surface);
+      box-shadow: none;
+    }
+    .cashier-panel-new-order .cashier-new-order-head {
+      background: rgba(255,255,255,0.03);
+    }
+    .cashier-panel-new-order .cashier-new-order-head h3 {
+      color: var(--accent);
+    }
+    .cashier-panel-new-order .cashier-new-order-head #btnCashierNewOrderClose {
+      display: none !important;
+    }
+    .cashier-order-type-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 310;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.76);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+    .cashier-order-type-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .cashier-order-type-dialog {
+      width: min(440px, 100%);
+      background: #1a1f28;
+      border: 1px solid rgba(var(--accent-rgb), 0.28);
+      border-radius: 18px;
+      box-shadow: 0 18px 36px rgba(0,0,0,0.45);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    }
+    .cashier-order-type-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 1rem 1.1rem 0.65rem;
+    }
+    .cashier-order-type-head h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #f4f7fc;
+      flex: 1;
+      text-align: right;
+    }
+    .cashier-order-type-close-x {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: var(--surface2);
+      color: var(--text);
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: manipulation;
+    }
+    .cashier-order-type-close-x:hover {
+      background: var(--surface3);
+      border-color: rgba(var(--accent-rgb), 0.4);
+    }
+    .cashier-order-type-dialog .cashier-order-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+      padding: 0 1.1rem 0.85rem;
+    }
+    .cashier-order-type-dialog .cashier-order-type-btn {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 56px;
+      padding: 0.5rem 0.35rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: #262c35;
+      color: #f2f4f8;
+      font-weight: 800;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+    .cashier-order-type-dialog .cashier-order-type-btn__icon {
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+    .cashier-order-type-dialog .cashier-order-type-btn__label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .cashier-order-type-dialog .cashier-order-type-btn.active {
+      border: 2px solid var(--accent);
+      color: var(--text);
+      background: var(--accent-soft-strong);
+      box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.28) inset;
+    }
+    .cashier-order-type-body {
+      padding: 0 1.1rem;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      border-top: 1px solid var(--border);
+      padding-top: 0.7rem;
+    }
+    .cashier-order-type-section[hidden] {
+      display: none !important;
+    }
+    .cashier-order-type-section__title {
+      margin: 0.45rem 0 0.7rem;
+      padding-top: 0.15rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #b8c0cc;
+      text-align: right;
+    }
+    .cashier-order-type-validation {
+      margin: 0 1.1rem 0.5rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #DC2626;
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.55;
+    }
+    .cashier-order-type-validation[hidden] {
+      display: none !important;
+    }
+    .cashier-dinein-table-picker.is-required-hint .cashier-table-pick-btn {
+      animation: cashierTablePickPulse 0.55s ease 2;
+    }
+    @keyframes cashierTablePickPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+      50% { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.45); }
+    }
+    .cashier-dinein-table-picker__grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.45rem;
+    }
+    .cashier-table-pick-btn {
+      aspect-ratio: 1;
+      min-height: 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: var(--surface2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .cashier-table-pick-btn.active {
+      border: 2px solid var(--accent);
+      background: var(--accent-soft-strong);
+      color: var(--text);
+    }
+    .cashier-order-type-field {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-height: 52px;
+      margin-bottom: 0.55rem;
+      padding: 0 0.85rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: var(--surface);
+    }
+    .cashier-order-type-field:last-child {
+      margin-bottom: 0;
+    }
+    .cashier-order-type-field__icon {
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      opacity: 0.85;
+    }
+    .cashier-order-type-field input {
+      flex: 1;
+      min-width: 0;
+      min-height: 48px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: right;
+      direction: rtl;
+      outline: none;
+    }
+    .cashier-order-type-field input::placeholder {
+      color: #8a939f;
+      font-weight: 500;
+    }
+    .cashier-order-type-cart {
+      margin: 0.75rem 0 0;
+      max-height: min(160px, 24vh);
+      overflow-y: auto;
+      border-top: 1px solid var(--border);
+      padding-top: 0.55rem;
+    }
+    .cashier-order-type-cart__table-head {
+      display: grid;
+      grid-template-columns: 1fr 3.25rem 5.5rem;
+      gap: 0.35rem 0.5rem;
+      padding: 0.25rem 0.35rem 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .cashier-order-type-cart__table-head span:first-child {
+      text-align: right;
+    }
+    .cashier-order-type-cart__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cashier-order-type-cart__row {
+      display: grid;
+      grid-template-columns: 1fr 3.25rem 5.5rem;
+      gap: 0.35rem 0.5rem;
+      align-items: center;
+      padding: 0.4rem 0.35rem;
+      font-size: 0.84rem;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .cashier-order-type-cart__row:last-child {
+      border-bottom: none;
+    }
+    .cashier-order-type-cart__name {
+      font-weight: 700;
+      text-align: right;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .cashier-order-type-cart__qty {
+      text-align: center;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .cashier-order-type-cart__price {
+      text-align: center;
+      font-weight: 800;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .cashier-order-type-cart__empty {
+      padding: 0.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .cashier-order-type-footer {
+      padding: 0.85rem 1.1rem 1.1rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .cashier-order-type-total-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+    .cashier-order-type-total-row__label {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .cashier-order-type-total-row__amount {
+      font-size: clamp(1.55rem, 5vw, 1.95rem);
+      font-weight: 800;
+      color: var(--brand-accent);
+      letter-spacing: 0.02em;
+    }
+    .cashier-order-type-actions {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0.55rem;
+    }
+    .cashier-order-type-dialog .btn-print-send {
+      flex: 1 1 auto;
+      min-height: 52px;
+      font-size: 1rem;
+      font-weight: 800;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+    .cashier-order-type-dialog .btn-send-only {
+      flex: 0 0 34%;
+      max-width: 130px;
+      min-height: 52px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      background: var(--surface);
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      box-shadow: var(--shadow);
+    }
+    .cashier-order-type-dialog .btn-send-only:hover {
+      background: var(--accent-soft);
+      color: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+    @media (max-width: 860px) {
+      .cashier-order-type-grid,
+      .cashier-new-order-delivery,
+      .cashier-new-order-body { grid-template-columns: 1fr; }
+      .cashier-new-order-products-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .cashier-new-order-products-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 460px) {
+      .cashier-new-order-products-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 768px) {
+      .cashier-body { flex-direction: column; }
+      .cashier-sidebar {
+        top: 56px;
+        right: 0;
+        left: auto;
+        width: min(280px, 88vw);
+        height: calc(100dvh - 56px);
+        transform: translateX(0);
+        border-left: 1px solid var(--border);
+        border-bottom: none;
+        padding: 1rem 0;
+        box-shadow: -8px 0 24px rgba(45, 55, 72, 0.14);
+      }
+      .cashier-body.cashier-sidebar-hidden .cashier-sidebar {
+        transform: translateX(100%);
+      }
+      .cashier-sidebar-nav { flex-direction: column; gap: 0.25rem; }
+      .cashier-sidebar-item { text-align: right; }
+      .cashier-sidebar-footer { width: 100%; margin-top: auto; }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/cashier-theme.css?v=20260609-cashbox-open-fields">
+</head>
+<body class="cashier-app">
+  <header class="page-header cashier-page-header" id="cashierPageHeader">
+    <div class="cashier-header-start">
+      <button type="button" class="cashier-sidebar-open-btn" id="btnCashierSidebarOpen" aria-label="فتح القائمة">☰</button>
+    <h1>واجهة الكاشير</h1>
+    </div>
+    <p class="cashier-header-cafe-name" id="cashierHeaderCafeName" hidden aria-live="polite"></p>
+    <div class="cashier-header-tools">
+      <span id="realtimeStatus" class="realtime-status" aria-live="polite">جاري الاتصال...</span>
+    </div>
+  </header>
+
+  <div class="cashier-body cashier-sidebar-hidden" id="cashierBody">
+    <button type="button" class="cashier-sidebar-backdrop" id="cashierSidebarBackdrop" aria-label="إغلاق القائمة" tabindex="-1"></button>
+    <aside class="cashier-sidebar" id="cashierSidebar" aria-label="قائمة الكاشير">
+      <nav class="cashier-sidebar-nav">
+        <button type="button" class="cashier-sidebar-item active" data-panel="tables" id="sidebarTables">الطاولات</button>
+        <button type="button" class="cashier-sidebar-item" data-panel="new-order" id="sidebarNewOrder">إنشاء الطلب</button>
+        <button type="button" class="cashier-sidebar-item" data-panel="today" id="sidebarToday">طلبات اليوم</button>
+        <button type="button" class="cashier-sidebar-item" data-panel="cashbox" id="sidebarCashbox">القاصة</button>
+      </nav>
+      <div class="cashier-sidebar-footer">
+        <div class="cashier-auto-approval" id="cashierAutoApprovalWrap">
+          <span class="cashier-auto-approval__label" id="cashierAutoApprovalLabel">موافقة تلقائية على الطلبات</span>
+          <button type="button" class="cashier-auto-approval__switch" id="cashierAutoApprovalToggle" role="switch" aria-checked="false" aria-labelledby="cashierAutoApprovalLabel">
+            <span class="cashier-auto-approval__state" id="cashierAutoApprovalState">OFF</span>
+            <span class="cashier-auto-approval__track" aria-hidden="true">
+              <span class="cashier-auto-approval__thumb"></span>
+            </span>
+          </button>
+          <p class="cashier-auto-approval__hint" id="cashierAutoApprovalHint">متوقف — تظهر رسالة الموافقة لكل طلب</p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-content cashier-layout cashier-view" id="cashierView">
+      <div class="cashier-bill-nav" id="cashierBillNav" aria-hidden="true">
+        <h2 class="cashier-bill-nav__title" id="billTitle">الفاتورة</h2>
+        <button type="button" class="cashier-bill-nav__back" id="btnBillBackToTables" aria-label="العودة إلى الطاولات">← العودة للطاولات</button>
+      </div>
+      <!-- لوحة الطاولات والفاتورة (الوضع الحالي) -->
+      <div class="cashier-panel cashier-panel-tables active" id="panelTables">
+        <div class="view-tables">
+          <div id="tablesGrid" class="tables-grid"></div>
+        </div>
+        <div class="view-bill">
+          <section class="orders-panel">
+            <div id="ordersContent"></div>
+          </section>
+        </div>
+      </div>
+
+      <div class="cashier-panel cashier-panel-new-order" id="panelNewOrder">
+        <div class="cashier-new-order-dialog" role="region" aria-labelledby="cashierNewOrderTitle">
+          <div class="cashier-new-order-head">
+            <h3 id="cashierNewOrderTitle">تسجيل طلب جديد</h3>
+            <button type="button" class="btn btn-secondary" id="btnCashierNewOrderClose">إغلاق</button>
+          </div>
+          <div class="cashier-new-order-body" id="cashierNewOrderBody">
+            <section class="cashier-new-order-products">
+              <div class="cashier-new-order-products-head">
+                <input type="search" id="cashierNewOrderSearch" placeholder="بحث عن منتج...">
+                <div class="cashier-new-order-categories" id="cashierNewOrderCategories"></div>
+              </div>
+              <div class="cashier-new-order-products-list" id="cashierNewOrderProducts"></div>
+            </section>
+            <aside class="cashier-new-order-cart">
+              <div class="cashier-new-order-cart-head">سلة الطلب</div>
+              <div class="cashier-new-order-cart-list" id="cashierNewOrderCart"></div>
+              <div class="cashier-new-order-cart-foot">
+                <span>الإجمالي</span>
+                <span id="cashierNewOrderTotal">0 IQD</span>
+              </div>
+              <div class="cashier-new-order-actions cashier-new-order-actions--cart">
+                <button type="button" class="btn btn-primary" id="btnCashierNewOrderSubmit">إرسال الطلب</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <!-- لوحة طلبات اليوم — مجمّع حسب الطاولة -->
+      <div class="cashier-panel cashier-panel-today" id="panelToday">
+        <div class="panel-today-inner">
+          <div class="today-summary-bar" id="todaySummaryBar">
+            <div class="today-summary-item"><span class="label">إيراد اليوم</span><span class="value" id="todaySummaryRevenue">0 IQD</span></div>
+            <div class="today-summary-item"><span class="label">عدد الطلبات</span><span class="value" id="todaySummaryOrders">0</span></div>
+            <div class="today-summary-item today-summary-item--type"><span class="label">طلبات داخل الصالة</span><span class="value" id="todaySummaryDineIn">0</span></div>
+            <div class="today-summary-item today-summary-item--type"><span class="label">طلبات سفري</span><span class="value" id="todaySummaryTakeaway">0</span></div>
+            <div class="today-summary-item today-summary-item--type"><span class="label">طلبات توصيل</span><span class="value" id="todaySummaryDelivery">0</span></div>
+          </div>
+          <div class="today-grouped-list" id="todayGroupedList"></div>
+          <p id="todayOrdersEmpty" class="empty-state" style="display: none;">لا توجد طلبات اليوم.</p>
+        </div>
+      </div>
+
+      <!-- لوحة القاصة -->
+      <div class="cashier-panel cashier-panel-cashbox" id="panelCashbox">
+        <div class="panel-cashbox-inner">
+          <!-- شاشة فتح القاصة أولاً: إدخال رصيد بداية اليوم ثم فتح -->
+          <div id="cashboxOpenScreen" class="cashbox-open-screen" style="display: none;">
+            <div class="cashbox-open-card">
+              <h2 class="cashbox-page-title">القاصة</h2>
+              <p class="cashbox-open-text">أدخل اسمك ورصيد بداية اليوم ثم اضغط لفتح القاصة وبدء الجلسة.</p>
+              <div class="cashbox-open-fields">
+                <div class="cashbox-open-field-row">
+                  <label for="cashboxOpenNameInput" class="cashbox-info-label">اسم المستخدم</label>
+                  <div class="cashbox-open-input-wrap">
+                    <input type="text" id="cashboxOpenNameInput" class="cashbox-input-text"  autocomplete="name" maxlength="80" aria-label="اسم المستخدم الذي يفتح القاصة">
+                  </div>
+                </div>
+                <div class="cashbox-open-field-row cashbox-open-balance-row">
+                <label for="cashboxOpenBalanceInput" class="cashbox-info-label">رصيد بداية اليوم</label>
+                <div class="cashbox-input-currency-wrap">
+                  <input type="text" inputmode="numeric" id="cashboxOpenBalanceInput" class="cashbox-input-number" placeholder="0" value="0" autocomplete="off" aria-label="رصيد بداية اليوم بالدينار العراقي">
+                  <span class="cashbox-currency-suffix">IQD</span>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary cashbox-open-button" id="btnOpenTill">فتح القاصة</button>
+            </div>
+          </div>
+
+          <div id="cashboxMain" class="cashbox-main">
+          <h2 class="cashbox-page-title">قاصة اليوم</h2>
+
+          <!-- معلومات القاصة -->
+          <section class="cashbox-card cashbox-info-card" aria-labelledby="cashboxInfoTitle">
+            <h3 id="cashboxInfoTitle" class="cashbox-card-title">معلومات القاصة</h3>
+            <div class="cashbox-info-row">
+              <span class="cashbox-info-label">التاريخ</span>
+              <span class="cashbox-info-value" id="cashboxDate">—</span>
+            </div>
+            <div class="cashbox-info-row">
+              <span class="cashbox-info-label">رصيد بداية اليوم</span>
+              <span class="cashbox-info-value" id="cashboxOpeningBalanceDisplay" aria-label="رصيد بداية اليوم للقراءة فقط">—</span>
+            </div>
+            <div class="cashbox-info-row" id="cashboxOpenedByRow" style="display: none;">
+              <span class="cashbox-info-label">فتح القاصة</span>
+              <span class="cashbox-info-value" id="cashboxOpenedByDisplay">—</span>
+            </div>
+          </section>
+
+          <!-- المبيعات -->
+          <section class="cashbox-card cashbox-sales-card" aria-labelledby="cashboxSalesTitle">
+            <h3 id="cashboxSalesTitle" class="cashbox-card-title">المبيعات</h3>
+            <div class="cashbox-sales-grid">
+              <div class="cashbox-sales-item">
+                <span class="label">مبيعات الكاش</span>
+                <span class="value" id="cashboxSalesCash">0 IQD</span>
+              </div>
+              <div class="cashbox-sales-item">
+                <span class="label">مبيعات البطاقة</span>
+                <span class="value" id="cashboxSalesCard">0 IQD</span>
+              </div>
+              <div class="cashbox-sales-item cashbox-sales-total">
+                <span class="label">إجمالي المبيعات</span>
+                <span class="value" id="cashboxSalesTotal">0 IQD</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- المصروفات -->
+          <section class="cashbox-card cashbox-expenses-card" aria-labelledby="cashboxExpensesTitle">
+            <h3 id="cashboxExpensesTitle" class="cashbox-card-title">المصروفات</h3>
+            <div class="cashbox-entry-form" id="cashboxExpenseForm">
+              <div class="cashbox-entry-form__grid cashbox-entry-form__grid--expense">
+                <div class="cashbox-entry-field">
+                  <span class="cashbox-entry-field__label">اسم المصروف</span>
+                  <input type="text" id="expenseName" class="cashbox-input-inline" placeholder="مثال: مياه" autocomplete="off">
+            </div>
+                <div class="cashbox-entry-field">
+                  <span class="cashbox-entry-field__label">المبلغ</span>
+                  <input type="number" id="expenseAmount" class="cashbox-input-inline cashbox-amount" min="0" step="1" placeholder="0" inputmode="numeric">
+                </div>
+                <div class="cashbox-entry-field">
+                  <span class="cashbox-entry-field__label">السبب أو الملاحظة</span>
+                  <input type="text" id="expenseNote" class="cashbox-input-inline" placeholder="اختياري" autocomplete="off">
+                </div>
+              </div>
+              <div class="cashbox-entry-form__actions">
+                <button type="button" class="btn btn-primary btn-cashbox-submit" id="btnAddExpense">إضافة مصروف</button>
+                <button type="button" class="btn btn-secondary" id="btnCancelExpenseEdit" hidden>إلغاء</button>
+              </div>
+            </div>
+            <div class="cashbox-entries-wrap" id="cashboxExpensesWrap">
+              <div class="cashbox-entries-head cashbox-entries-head--expense" aria-hidden="true">
+                <span>اسم المصروف</span>
+                <span>المبلغ</span>
+                <span>السبب أو الملاحظة</span>
+                <span>إجراءات</span>
+              </div>
+              <ul class="cashbox-entries-list" id="cashboxExpensesList" aria-label="قائمة المصروفات"></ul>
+            </div>
+            <div class="cashbox-list-total">
+              <span class="label">مجموع المصروفات</span>
+              <span class="value" id="cashboxExpensesTotal">0 IQD</span>
+            </div>
+          </section>
+
+          <!-- السحب من القاصة -->
+          <section class="cashbox-card cashbox-withdrawals-card" aria-labelledby="cashboxWithdrawalsTitle">
+            <h3 id="cashboxWithdrawalsTitle" class="cashbox-card-title">السحب من القاصة</h3>
+            <div class="cashbox-entry-form" id="cashboxWithdrawalForm">
+              <div class="cashbox-entry-form__grid cashbox-entry-form__grid--withdrawal">
+                <div class="cashbox-entry-field">
+                  <span class="cashbox-entry-field__label">المبلغ</span>
+                  <input type="number" id="withdrawalAmount" class="cashbox-input-inline cashbox-amount" min="0" step="1" placeholder="0" inputmode="numeric">
+            </div>
+                <div class="cashbox-entry-field">
+                  <span class="cashbox-entry-field__label">السبب أو الملاحظة</span>
+                  <input type="text" id="withdrawalNote" class="cashbox-input-inline" placeholder="اختياري" autocomplete="off">
+                </div>
+              </div>
+              <div class="cashbox-entry-form__actions">
+                <button type="button" class="btn btn-primary btn-cashbox-submit" id="btnAddWithdrawal">إضافة سحب</button>
+                <button type="button" class="btn btn-secondary" id="btnCancelWithdrawalEdit" hidden>إلغاء</button>
+              </div>
+            </div>
+            <div class="cashbox-entries-wrap" id="cashboxWithdrawalsWrap">
+              <div class="cashbox-entries-head cashbox-entries-head--withdrawal" aria-hidden="true">
+                <span>المبلغ</span>
+                <span>السبب أو الملاحظة</span>
+                <span>إجراءات</span>
+              </div>
+              <ul class="cashbox-entries-list" id="cashboxWithdrawalsList" aria-label="سجل السحب"></ul>
+            </div>
+            <div class="cashbox-list-total">
+              <span class="label">مجموع السحب</span>
+              <span class="value" id="cashboxWithdrawalsTotal">0 IQD</span>
+            </div>
+          </section>
+
+          <!-- الصافي النهائي -->
+          <section class="cashbox-card cashbox-net-card" aria-labelledby="cashboxNetTitle">
+            <h3 id="cashboxNetTitle" class="cashbox-card-title">صافي القاصة</h3>
+            <p class="cashbox-net-formula">رصيد بداية اليوم + إجمالي المبيعات − المصروفات − السحب</p>
+            <div class="cashbox-net-value-wrap">
+              <span class="cashbox-net-value" id="cashboxNetValue">0 IQD</span>
+            </div>
+          </section>
+
+          <!-- ملاحظة عامة + إغلاق القاصة -->
+          <section class="cashbox-card cashbox-actions-card">
+            <div class="cashbox-notes-box">
+              <label for="cashboxNotes" class="cashbox-notes-label">ملاحظة عامة (اختياري)</label>
+              <textarea id="cashboxNotes" class="cashbox-notes-input" placeholder="ملاحظات أو توضيح..."></textarea>
+            </div>
+            <div class="cashbox-actions">
+              <button type="button" class="btn btn-primary btn-close-till" id="btnCloseDay">إغلاق القاصة</button>
+            </div>
+            <p id="cashboxAlreadyClosed" class="cashbox-already-closed" style="display: none;">تم إغلاق قاصة اليوم مسبقاً.</p>
+          </section>
+
+          <!-- قاصة بارحة -->
+          <div id="cashboxYesterdayWrap" class="cashbox-yesterday-wrap" style="display: none;">
+            <h3 class="cashbox-section-title cashbox-yesterday-title">قاصة بارحة</h3>
+            <div class="cashbox-yesterday-card" id="cashboxYesterdayCard"></div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- لوحة تفصيل طاولة (طلبات اليوم) -->
+  <div class="today-table-panel-backdrop" id="todayTablePanelBackdrop"></div>
+  <div class="today-table-panel" id="todayTablePanel">
+    <div class="today-table-panel-header">
+      <h2 id="todayTablePanelTitle">طاولة</h2>
+      <button type="button" class="today-table-panel-close" id="todayTablePanelClose" aria-label="إغلاق">إغلاق</button>
+    </div>
+    <div class="today-table-panel-body">
+      <table class="detail-table" id="todayTableDetailTable">
+        <thead>
+          <tr>
+            <th>الصنف</th>
+            <th>الكمية</th>
+            <th>سعر الوحدة</th>
+            <th>المجموع</th>
+          </tr>
+        </thead>
+        <tbody id="todayTableDetailBody"></tbody>
+      </table>
+    </div>
+    <div class="today-table-panel-footer">
+      <div class="today-table-panel-total" id="todayTablePanelTotal">0 IQD</div>
+      <div class="today-table-panel-status" id="todayTablePanelStatus"></div>
+      <div class="today-table-panel-actions">
+        <button type="button" class="btn btn-primary" id="todayTablePanelConfirmPay">تأكيد الدفع</button>
+        <button type="button" class="btn btn-secondary" id="todayTablePanelPrint">طباعة الوصل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال وصل جلسة طلبات اليوم -->
+  <div class="today-session-receipt-modal" id="todaySessionReceiptOverlay" aria-hidden="true">
+    <div class="today-session-receipt-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="todaySessionReceiptTitle">
+      <div class="today-session-receipt-modal__head">
+        <h2 id="todaySessionReceiptTitle" class="today-session-receipt-modal__title"></h2>
+        <button type="button" class="today-session-receipt-modal__close-x" id="todaySessionReceiptCloseX" aria-label="إغلاق">×</button>
+      </div>
+      <div class="today-session-receipt-modal__body" id="todaySessionReceiptOrders"></div>
+      <div class="today-session-receipt-modal__footer">
+        <div class="today-session-receipt-modal__total" id="todaySessionReceiptTotal"></div>
+        <div class="today-session-receipt-modal__payment" id="todaySessionReceiptPayment"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال تفاصيل طلب واحد من شاشة الطاولة (عرض الوصل) -->
+  <div class="cashier-table-order-modal" id="cashierTableOrderDetailOverlay" aria-hidden="true">
+    <div class="cashier-table-order-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="cashierTableOrderDetailTitle">
+      <div class="cashier-table-order-modal__head">
+        <div class="cashier-table-order-modal__head-text">
+        <h2 id="cashierTableOrderDetailTitle" class="cashier-table-order-modal__title"></h2>
+          <p class="cashier-table-order-modal__subtitle" id="cashierTableOrderDetailSubtitle"></p>
+        </div>
+        <button type="button" class="cashier-table-order-modal__close-x" id="cashierTableOrderDetailCloseX" aria-label="إغلاق">×</button>
+      </div>
+      <div class="cashier-table-order-modal__meta" id="cashierTableOrderDetailMeta" role="group" aria-label="تفاصيل الطلب"></div>
+      <div class="cashier-table-order-modal__table-wrap">
+        <table class="cashier-table-order-modal__table">
+          <thead>
+            <tr>
+              <th scope="col">اسم المنتج</th>
+              <th class="th-num" scope="col">الكمية</th>
+              <th class="th-num" scope="col">السعر</th>
+              <th class="th-num th-sub" scope="col">المجموع</th>
+            </tr>
+          </thead>
+          <tbody id="cashierTableOrderDetailBody"></tbody>
+        </table>
+      </div>
+      <div class="cashier-table-order-modal__footer">
+        <div class="cashier-table-order-modal__total" id="cashierTableOrderDetailTotal"></div>
+        <button type="button" class="cashier-table-order-modal__btn-print" id="cashierTableOrderDetailBtnPrint">🖨 طباعة الوصل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال الوصل — تصميم مطابق لبطاقة الفاتورة -->
+  <div class="receipt-overlay cashier-receipt-overlay" id="cashierReceiptOverlay">
+    <div class="receipt-box receipt-box-card" id="cashierReceiptBox">
+      <div class="receipt-card-header" id="cashierReceiptHeader">
+        <p class="receipt-table-num" id="cashierReceiptTableNum">طاولة 1</p>
+        <p class="receipt-date" id="cashierReceiptDate"></p>
+        <p class="receipt-order-id" id="cashierReceiptOrderId"></p>
+        <p class="receipt-order-type" id="cashierReceiptOrderType"></p>
+        <p class="receipt-delivery-meta" id="cashierReceiptDeliveryMeta"></p>
+      </div>
+      <div class="receipt-card-body">
+        <table class="receipt-items-table" aria-label="قائمة الطلبات">
+          <thead><tr><th>اسم المنتج</th><th>الكمية</th><th>السعر</th></tr></thead>
+          <tbody id="cashierReceiptItems"></tbody>
+        </table>
+      </div>
+      <div class="receipt-card-total" id="cashierReceiptTotal">المجموع الكلي: 0 IQD</div>
+      <div class="receipt-box-actions">
+        <button type="button" class="btn btn-secondary" id="btnCloseCashierReceipt">إغلاق</button>
+        <button type="button" class="btn btn-primary" id="btnPrintCashierReceipt">طباعة</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cashier-approval-modal" id="cashierApprovalModal" aria-hidden="true">
+    <div class="cashier-approval-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="cashierApprovalModalTitle">
+      <p id="cashierApprovalModalTitle" class="cashier-approval-modal__title">طلبات بانتظار موافقتك لإرسالها إلى المطبخ</p>
+      <ul id="cashierApprovalList" class="cashier-approval-modal__list"></ul>
+    </div>
+  </div>
+
+  <!-- مودال إغلاق القاصة — اسم المستخدم -->
+  <div class="cashbox-close-modal" id="cashboxCloseModal" aria-hidden="true">
+    <div class="cashbox-close-modal__dialog cashbox-open-card" role="dialog" aria-modal="true" aria-labelledby="cashboxCloseModalTitle">
+      <h2 class="cashbox-page-title" id="cashboxCloseModalTitle">إغلاق القاصة</h2>
+      <p class="cashbox-open-text">أدخل اسمك لتسجيل من أغلق القاصة.</p>
+      <div class="cashbox-open-fields" style="margin-bottom: 1rem;">
+        <div class="cashbox-open-field-row">
+          <label for="cashboxCloseNameInput" class="cashbox-info-label">اسم المستخدم</label>
+          <div class="cashbox-open-input-wrap">
+            <input type="text" id="cashboxCloseNameInput" class="cashbox-input-text" placeholder="مثال: أحمد" autocomplete="name" maxlength="80" aria-label="اسم المستخدم الذي يغلق القاصة">
+          </div>
+        </div>
+      </div>
+      <div class="cashbox-close-modal__actions">
+        <button type="button" class="btn btn-secondary" id="btnCloseTillCancel">إلغاء</button>
+        <button type="button" class="btn btn-primary" id="btnCloseTillConfirm">تأكيد الإغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cashier-order-type-overlay" id="cashierOrderTypeOverlay" aria-hidden="true">
+    <div class="cashier-order-type-dialog" role="dialog" aria-modal="true" aria-labelledby="cashierOrderTypeTitle">
+      <header class="cashier-order-type-head">
+        <button type="button" class="cashier-order-type-close-x" id="btnCashierNewOrderTypeClose" aria-label="إغلاق">×</button>
+        <h3 id="cashierOrderTypeTitle">نوع الطلب</h3>
+      </header>
+      <div class="cashier-order-type-grid" id="cashierOrderTypeGrid">
+        <button type="button" class="cashier-order-type-btn active" data-order-type="DINE_IN">
+          <span class="cashier-order-type-btn__icon" aria-hidden="true">🍽️</span>
+          <span class="cashier-order-type-btn__label">داخل الصالة</span>
+        </button>
+        <button type="button" class="cashier-order-type-btn" data-order-type="TAKEAWAY">
+          <span class="cashier-order-type-btn__icon" aria-hidden="true">🥡</span>
+          <span class="cashier-order-type-btn__label">سفري</span>
+        </button>
+        <button type="button" class="cashier-order-type-btn" data-order-type="DELIVERY">
+          <span class="cashier-order-type-btn__icon" aria-hidden="true">🚚</span>
+          <span class="cashier-order-type-btn__label">توصيل</span>
+        </button>
+      </div>
+      <p class="cashier-order-type-validation" id="cashierOrderTypeValidation" role="alert" hidden></p>
+      <div class="cashier-order-type-body">
+        <div class="cashier-order-type-section" id="cashierSectionDineIn">
+          <p class="cashier-order-type-section__title">اختر رقم الطاولة</p>
+          <input type="hidden" id="cashierDineInTable" value="">
+          <div class="cashier-dinein-table-picker" id="cashierDineInTablePicker">
+            <div class="cashier-dinein-table-picker__grid" id="cashierDineInTableGrid"></div>
+          </div>
+        </div>
+        <div class="cashier-order-type-section" id="cashierSectionTakeaway" hidden>
+          <p class="cashier-order-type-section__title">معلومات الطلب (اختياري)</p>
+          <div class="cashier-order-type-field">
+            <span class="cashier-order-type-field__icon" aria-hidden="true">👤</span>
+            <input type="text" id="cashierTakeawayCashierName" placeholder="اسم الكاشير" autocomplete="name">
+          </div>
+        </div>
+        <div class="cashier-order-type-section" id="cashierSectionDelivery" hidden>
+          <p class="cashier-order-type-section__title">معلومات التوصيل</p>
+          <div class="cashier-order-type-field">
+            <span class="cashier-order-type-field__icon" aria-hidden="true">👤</span>
+            <input type="text" id="cashierDeliveryName" placeholder="اسم الزبون" value="مجهول" autocomplete="name">
+          </div>
+          <div class="cashier-order-type-field">
+            <span class="cashier-order-type-field__icon" aria-hidden="true">📞</span>
+            <input type="text" id="cashierDeliveryPhone" placeholder="رقم الهاتف" value="077" inputmode="tel" autocomplete="tel">
+          </div>
+          <div class="cashier-order-type-field">
+            <span class="cashier-order-type-field__icon" aria-hidden="true">📍</span>
+            <input type="text" id="cashierDeliveryAddress" placeholder="عنوان التوصيل" autocomplete="street-address">
+          </div>
+        </div>
+        <section class="cashier-order-type-cart" id="cashierOrderTypeCart" aria-label="ملخص المنتجات">
+          <div class="cashier-order-type-cart__table-head" aria-hidden="true">
+            <span>المنتج</span>
+            <span>الكمية</span>
+            <span>السعر</span>
+          </div>
+          <ul class="cashier-order-type-cart__list" id="cashierOrderTypeCartList"></ul>
+        </section>
+      </div>
+      <footer class="cashier-order-type-footer">
+        <div class="cashier-order-type-total-row">
+          <span class="cashier-order-type-total-row__label">الإجمالي</span>
+          <span class="cashier-order-type-total-row__amount" id="cashierOrderTypeCartTotal">0 IQD</span>
+        </div>
+        <div class="cashier-order-type-actions">
+          <button type="button" class="btn btn-primary btn-print-send" id="btnCashierOrderTypePrintSend">
+            <span aria-hidden="true">🖨</span>
+            <span>طباعة وإرسال</span>
+          </button>
+          <button type="button" class="btn btn-send-only" id="btnCashierOrderTypeSendOnly">
+            <span aria-hidden="true">✈</span>
+            <span>إرسال</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="../js/cafe-dialog.js?v=20260608-dialog-stack"></script>
+  <script src="../js/notification.js?v=20260610-bill-request"></script>
+  <script src="../js/voice-notify.js"></script>
+  <script src="../js/api.js?v=20260602-kitchen-approval"></script>
+  <script src="cashier.js?v=20260610-print-invoice-v2"></script>
+</body>
+</html>

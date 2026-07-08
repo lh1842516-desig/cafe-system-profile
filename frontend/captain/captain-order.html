@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="captain-app-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#F5F7FA">
+  <title>كابتن — نظام الكافيه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/captain-order.css?v=20260602-captain-approval">
+  <link rel="stylesheet" href="css/captain-theme.css?v=20260608-unified-bg">
+</head>
+<body class="captain-order-page">
+  <header class="co-header co-page-header" id="coHeader">
+    <div class="co-header-start">
+      <h1 class="co-title">كابتن</h1>
+      <span class="co-current-table" id="coCurrentTable" aria-live="polite"></span>
+    </div>
+    <p class="co-header-cafe-name" id="coHeaderCafeName" hidden aria-live="polite"></p>
+    <div class="co-header-end">
+      <span class="co-header-voice-host" id="coHeaderVoiceHost" aria-hidden="true"></span>
+      <button type="button" class="co-btn-back" id="coBtnBack" aria-label="رجوع إلى الطاولات">رجوع إلى الطاولات</button>
+    </div>
+  </header>
+
+  <main class="co-main" id="coMain" aria-hidden="true" style="display: none;">
+    <aside class="co-categories" aria-label="التصنيفات">
+      <h2 class="co-side-title">التصنيفات</h2>
+      <nav class="co-categories-list" id="coCategoriesList"></nav>
+    </aside>
+
+    <section class="co-center" aria-label="المنتجات">
+      <div class="co-search-wrap">
+        <input type="search" id="coSearch" class="co-search" placeholder="ابحث عن مشروب..." autocomplete="off" aria-label="بحث عن منتج">
+      </div>
+      <div class="co-products-wrap">
+        <div class="co-products-grid" id="coProductsGrid"></div>
+        <p class="co-products-empty" id="coProductsEmpty" style="display: none;">لا توجد منتجات في هذا التصنيف.</p>
+      </div>
+    </section>
+
+    <aside class="co-cart" id="coCart" aria-label="سلة الطلب">
+      <h2 class="co-side-title co-cart-title" id="coCartTitle" role="button" tabindex="0">سلة الطلب</h2>
+      <div class="co-cart-items" id="coCartItems"></div>
+      <div class="co-cart-footer">
+        <div class="co-cart-total">
+          <span class="co-cart-total-label">المجموع</span>
+          <span class="co-cart-total-value" id="coCartTotal">0 IQD</span>
+        </div>
+        <button type="button" class="co-btn-send" id="coBtnSend" disabled>إرسال الطلب</button>
+      </div>
+    </aside>
+  </main>
+
+  <div class="co-tables-screen" id="coTablesScreen">
+    <h2 class="co-tables-title">اختر الطاولة</h2>
+    <div class="co-tables-grid" id="coTablesGrid"></div>
+  </div>
+
+  <!-- مودال الوصل — نفس تصميم صفحة الكاشير والأدمن -->
+  <div class="receipt-overlay captain-receipt-overlay" id="coReceiptOverlay" aria-hidden="true">
+    <div class="receipt-box receipt-box-card" role="dialog" aria-labelledby="coReceiptTableNum" aria-modal="true">
+      <button type="button" class="receipt-close-x" id="coReceiptClose" aria-label="إغلاق">✕</button>
+      <div class="receipt-card-header">
+        <p class="receipt-confirm-title">تأكيد الطلب</p>
+        <p class="receipt-table-num" id="coReceiptTableNum">طاولة 1</p>
+        <p class="receipt-date" id="coReceiptDate"></p>
+        <p class="receipt-order-id" id="coReceiptOrderId"></p>
+      </div>
+      <div class="receipt-card-body">
+        <table class="receipt-items-table" aria-label="قائمة الطلبات">
+          <thead><tr><th>اسم المنتج</th><th>الكمية</th><th>السعر</th></tr></thead>
+          <tbody id="coReceiptItems"></tbody>
+        </table>
+      </div>
+      <div class="receipt-card-total" id="coReceiptTotal">المجموع الكلي: 0 IQD</div>
+      <div class="receipt-box-actions">
+        <button type="button" class="btn btn-primary receipt-send-full" id="coReceiptBtnSend" disabled>تأكيد الإرسال</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="co-approval-modal" id="coApprovalModal" aria-hidden="true">
+    <div class="co-approval-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="coApprovalModalTitle">
+      <p id="coApprovalModalTitle" class="co-approval-modal__title">طلبات بانتظار موافقتك لإرسالها إلى المطبخ</p>
+      <ul id="coApprovalList" class="co-approval-modal__list"></ul>
+    </div>
+  </div>
+
+  <!-- رسالة نجاح الإرسال — وسط الشاشة -->
+  <div class="co-success-overlay" id="coSuccessOverlay" aria-hidden="true">
+    <div class="co-success-dialog" role="dialog" aria-modal="true" aria-labelledby="coSuccessMessage">
+      <div class="co-success-icon" aria-hidden="true">✓</div>
+      <p class="co-success-message" id="coSuccessMessage">تم إرسال الطلب إلى المطبخ</p>
+      <button type="button" class="co-success-done" id="coSuccessDone">تم</button>
+    </div>
+  </div>
+
+  <script src="../js/cafe-dialog.js?v=20260607-dialog"></script>
+  <script src="../js/api.js?v=20260602-kitchen-approval"></script>
+  <script src="../js/cafe-header-branding.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="../js/notification.js?v=20260610-bill-request"></script>
+  <script src="../js/voice-notify.js"></script>
+  <script src="js/captain-order.js?v=20260602-captain-approval"></script>
+</body>
+</html>

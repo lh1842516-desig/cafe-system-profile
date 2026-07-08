@@ -1,0 +1,159 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 910;
+  background: rgba(44, 24, 16, 0.48);
+  animation: fadeIn 0.2s ease;
+}
+
+.dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 911;
+  width: min(92vw, 360px);
+  max-height: min(88vh, 520px);
+  background: var(--color-surface);
+  border-radius: 22px;
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+  box-shadow: 0 16px 48px rgba(44, 24, 16, 0.2);
+  animation: dialogIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.title {
+  flex: 1;
+  text-align: right;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.closeBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: var(--space-md);
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.userRow {
+  text-align: right;
+  padding: 8px 10px;
+  background: var(--color-bg);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.userName {
+  display: block;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--color-text-primary);
+}
+
+.userStatus {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.quickTitle {
+  text-align: right;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+  margin: 0 0 10px;
+}
+
+.emojiRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.emojiRow::-webkit-scrollbar {
+  display: none;
+}
+
+.emojiBtn {
+  flex: 0 0 auto;
+  min-width: 72px;
+  max-width: 88px;
+  padding: 10px 8px;
+  border-radius: 14px;
+  border: 1px solid var(--color-border);
+  background: #f5f0ea;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  touch-action: manipulation;
+}
+
+.emojiBtn:active {
+  transform: scale(0.96);
+}
+
+.emojiBtnLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-align: center;
+  line-height: 1.25;
+}
+
+.emojiBtnIcon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog {
+    animation: none;
+  }
+}

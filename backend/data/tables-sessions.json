@@ -1,0 +1,209 @@
+{
+  "tables": {
+    "1": {
+      "hostDeviceId": "cid_ph12qr_moeuuxy0",
+      "members": [
+        {
+          "deviceId": "cid_ph12qr_moeuuxy0",
+          "socketId": "rzduquQNP7cCnBUUAAAZ",
+          "label": "cid_ph12",
+          "joinedAt": "2026-04-25T21:36:58.300Z",
+          "lastSeenAt": "2026-04-25T21:36:58.300Z"
+        },
+        {
+          "deviceId": "cid_c8h2nx_mofhrnod",
+          "socketId": "R4L8zJhkP1FbKz8GAAA5",
+          "label": "cid_c8h2",
+          "joinedAt": "2026-04-26T09:01:27.790Z",
+          "lastSeenAt": "2026-04-26T09:01:27.790Z"
+        },
+        {
+          "deviceId": "uid_dyjht2jq_moktfsrs",
+          "socketId": "q8Q1hbC8PGvU7NJvAANb",
+          "label": "uid_dyjh",
+          "joinedAt": "2026-04-30T01:39:16.656Z",
+          "lastSeenAt": "2026-04-30T01:39:16.656Z"
+        },
+        {
+          "deviceId": "uid_6p5l1c1z_moktfxuc",
+          "socketId": "XOnTI1bhZrZ7DZAoAANr",
+          "label": "uid_6p5l",
+          "joinedAt": "2026-04-30T01:39:23.106Z",
+          "lastSeenAt": "2026-04-30T01:39:23.106Z"
+        },
+        {
+          "deviceId": "uid_2g7n8cu2_moktfzxk",
+          "socketId": "GJgowr5znRDgICuyAANx",
+          "label": "uid_2g7n",
+          "joinedAt": "2026-04-30T01:39:25.917Z",
+          "lastSeenAt": "2026-04-30T01:39:25.917Z"
+        },
+        {
+          "deviceId": "uid_rigi5d6v_moktgg4u",
+          "socketId": "uSwJRBk0XwxX6_OgAAOi",
+          "label": "uid_rigi",
+          "joinedAt": "2026-04-30T01:39:47.295Z",
+          "lastSeenAt": "2026-04-30T01:39:47.295Z"
+        },
+        {
+          "deviceId": "uid_keqs6jng_moktgs40",
+          "socketId": "DROgKkSVVhx2_qYcAAPL",
+          "label": "uid_keqs",
+          "joinedAt": "2026-04-30T01:40:02.335Z",
+          "lastSeenAt": "2026-04-30T01:40:02.335Z"
+        },
+        {
+          "deviceId": "uid_con8lavw_moktgtrd",
+          "socketId": "e-7iytNyLHTVxcEsAAPR",
+          "label": "uid_con8",
+          "joinedAt": "2026-04-30T01:40:04.484Z",
+          "lastSeenAt": "2026-04-30T01:40:04.484Z"
+        },
+        {
+          "deviceId": "uid_2f23oa5y_moktgyxe",
+          "socketId": "FETq9po10Sjc5cBRAAPl",
+          "label": "uid_2f23",
+          "joinedAt": "2026-04-30T01:40:11.146Z",
+          "lastSeenAt": "2026-04-30T01:40:11.146Z"
+        },
+        {
+          "deviceId": "uid_oipkyge2_mokthh5p",
+          "socketId": "gJ3ch5vhR1NAJISaAARM",
+          "label": "uid_oipk",
+          "joinedAt": "2026-04-30T01:40:34.847Z",
+          "lastSeenAt": "2026-04-30T01:40:34.847Z"
+        },
+        {
+          "deviceId": "uid_oipkyge2_mokthh5p",
+          "socketId": "1ui_YMmnO6QXQXidAARO",
+          "label": "uid_oipk",
+          "joinedAt": "2026-04-30T01:40:35.165Z",
+          "lastSeenAt": "2026-04-30T01:40:35.165Z"
+        },
+        {
+          "deviceId": "uid_kr2tf26v_mokthj9o",
+          "socketId": "_ay45OKbSt3OIaruAARS",
+          "label": "uid_kr2t",
+          "joinedAt": "2026-04-30T01:40:37.730Z",
+          "lastSeenAt": "2026-04-30T01:40:37.730Z"
+        }
+      ],
+      "updatedAt": "2026-05-03T00:03:42.510Z",
+      "sessionId": "ts_moid3icb_nq4me6dp",
+      "hostExcludedDeviceIds": [
+        "uid_x01cpzni_moozg708",
+        "uid_7kgyos1l_monhumv4",
+        "uid_ok03k24i_mop0bcpg"
+      ]
+    },
+    "2": {
+      "sessionId": "ts_mop0cv4z_jedvhxmr",
+      "hostDeviceId": "uid_7kgyos1l_monhumv4",
+      "members": [
+        {
+          "deviceId": "uid_ok03k24i_mop0bcpg",
+          "socketId": "",
+          "label": "uid_ok03",
+          "joinedAt": "2026-05-03T00:04:29.435Z",
+          "lastSeenAt": "2026-05-03T00:27:01.444Z",
+          "lastDisconnectedAt": "2026-05-03T00:27:01.444Z"
+        }
+      ],
+      "updatedAt": "2026-05-03T00:27:01.445Z",
+      "hostExcludedDeviceIds": [
+        "uid_ok03k24i_mop0bcpg",
+        "uid_7kgyos1l_monhumv4"
+      ]
+    },
+    "3": {
+      "hostDeviceId": "",
+      "members": [],
+      "updatedAt": "2026-05-01T22:08:06.821Z",
+      "sessionId": "ts_mongqsc8_ch0p0nip"
+    },
+    "4": {
+      "sessionId": "ts_moo42l72_pmt4dmgw",
+      "hostDeviceId": "uid_eyftdi0w_moo42kc0",
+      "members": [
+        {
+          "deviceId": "uid_eyftdi0w_moo42kc0",
+          "socketId": "G71cD1saYp29FbGDAAAh",
+          "label": "uid_eyft",
+          "joinedAt": "2026-05-02T09:05:08.131Z",
+          "lastSeenAt": "2026-05-02T09:05:08.131Z"
+        }
+      ],
+      "updatedAt": "2026-05-02T22:23:08.684Z"
+    },
+    "5": {
+      "hostDeviceId": "cid_i7nyh5_mohgvlih",
+      "members": [
+        {
+          "deviceId": "cid_i7nyh5_mohgvlih",
+          "socketId": "-037lSIMFMqjRwuiAAA5",
+          "label": "",
+          "joinedAt": "2026-04-27T17:41:15.397Z",
+          "lastSeenAt": "2026-04-27T17:41:15.397Z"
+        },
+        {
+          "deviceId": "uid_7dlwzo46_moiw2qz1",
+          "socketId": "-YUY-jEryDV8gE5-AAAn",
+          "label": "uid_7dlw",
+          "joinedAt": "2026-04-28T17:17:34.919Z",
+          "lastSeenAt": "2026-04-28T17:17:34.919Z"
+        },
+        {
+          "deviceId": "uid_k46yklcr_moivwq49",
+          "socketId": "BUsHIPFJPklz_X7tAAA1",
+          "label": "uid_k46y",
+          "joinedAt": "2026-04-30T01:04:20.573Z",
+          "lastSeenAt": "2026-04-30T01:04:20.573Z"
+        }
+      ],
+      "updatedAt": "2026-04-30T01:29:52.942Z",
+      "sessionId": "ts_moivwq58_1jrhju56"
+    },
+    "9": {
+      "sessionId": "ts_mooxos3h_m1tpv9vs",
+      "hostDeviceId": "",
+      "members": [],
+      "updatedAt": "2026-05-02T23:14:41.981Z"
+    },
+    "10": {
+      "hostDeviceId": "cid_posc2v_moc0m19k",
+      "members": [],
+      "updatedAt": "2026-04-25T21:32:25.863Z"
+    },
+    "12": {
+      "sessionId": "ts_moid66yt_didg3ets",
+      "hostDeviceId": "",
+      "members": [],
+      "updatedAt": "2026-04-28T09:29:34.602Z"
+    },
+    "14": {
+      "sessionId": "ts_mooylwe1_tm4gksmh",
+      "hostDeviceId": "uid_flw497gb_mooyocm4",
+      "members": [],
+      "updatedAt": "2026-05-02T23:38:04.526Z",
+      "hostExcludedDeviceIds": [
+        "uid_flw497gb_mooyocm4",
+        "uid_7kgyos1l_monhumv4"
+      ]
+    },
+    "19": {
+      "sessionId": "ts_mop0wihh_pchjc3gj",
+      "hostDeviceId": "uid_7kgyos1l_monhumv4",
+      "members": [],
+      "updatedAt": "2026-05-03T00:19:50.967Z",
+      "hostExcludedDeviceIds": [
+        "uid_7kgyos1l_monhumv4"
+      ]
+    },
+    "20": {
+      "sessionId": "ts_momwlplh_aso1ze9o",
+      "hostDeviceId": "",
+      "members": [],
+      "updatedAt": "2026-05-01T12:51:49.842Z"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="kitchen-app-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#F5F7FA">
+  <title>شاشة المطبخ — نظام الكافيه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="kitchen.css?v=20260609-kds-order-type">
+  <link rel="stylesheet" href="kitchen-theme.css?v=20260609-kds-order-type">
+</head>
+<body class="kitchen-page">
+  <div class="kitchen-wrap">
+    <header class="kitchen-header kitchen-page-header">
+      <div class="kitchen-header-start">
+        <h1 class="kitchen-header-title" id="kitchenHeaderTitle">شاشة المطبخ</h1>
+      </div>
+      <p class="kitchen-header-cafe-name" id="kitchenHeaderCafeName" hidden aria-live="polite"></p>
+      <div class="kitchen-header-actions">
+        <button type="button" class="btn btn-secondary kitchen-avail-open-btn" id="btnKitchenMenuAvailability">إدارة توفر المواد</button>
+      </div>
+    </header>
+
+    <main class="kitchen-main" id="kitchenMain" data-kitchen-view="queue">
+      <!-- تبويب الطابور: ملخص بعرض كامل ثم الطلبات -->
+      <section class="kitchen-queue-view" id="kitchenViewQueue" aria-label="ملخص المطبخ والطلبات الحالية">
+        <div class="kitchen-panel kitchen-panel--summary">
+          <div class="kitchen-panel-header">
+            <div>
+              <h2 class="kitchen-panel-title">ملخص سريع</h2>
+              <p class="kitchen-panel-subtitle" id="kitchenSummaryText">0 طلب نشط</p>
+            </div>
+          </div>
+          <div class="kitchen-panel-body" id="kitchenSummaryBody">
+            <p class="kitchen-empty">جاري التحميل…</p>
+          </div>
+        </div>
+
+        <div class="kitchen-panel kitchen-panel--orders">
+          <div class="kitchen-panel-header">
+            <div>
+              <h2 class="kitchen-panel-title">الطلبات الحالية</h2>
+              <p class="kitchen-panel-subtitle">جديدة وقيد التجهيز فقط — لن تظهر الطلبات المكتملة هنا</p>
+            </div>
+          </div>
+          <div class="kitchen-panel-body">
+            <div class="kitchen-workflow" id="kitchenWorkflow">
+              <div class="kitchen-workflow-col kitchen-workflow-col--new" aria-label="طلبات جديدة">
+                <div class="kitchen-workflow-zone-label kitchen-workflow-zone-label--new">جديدة</div>
+                <div class="kitchen-workflow-grid" id="kitchenNewGrid"></div>
+              </div>
+              <div class="kitchen-workflow-col kitchen-workflow-col--preparing" aria-label="قيد التجهيز">
+                <div class="kitchen-workflow-zone-label kitchen-workflow-zone-label--preparing">قيد التجهيز</div>
+                <div class="kitchen-workflow-grid" id="kitchenPrepGrid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- تم حذف صندوق طلبات اليوم: الآن الشاشة تعرض فقط الطلبات الحالية -->
+
+      <!-- صفحة إدارة توفر المواد -->
+      <section class="kitchen-avail-page" id="kitchenViewAvailability" hidden aria-label="إدارة توفر المواد">
+        <header class="kitchen-avail-page__header">
+          <div class="kitchen-avail-page__header-top">
+            <button type="button" class="btn btn-secondary kitchen-avail-page__back" id="btnKitchenAvailBack">← العودة للطلبات</button>
+          </div>
+          <h2 class="kitchen-avail-page__title">إدارة توفر المواد</h2>
+          <p class="kitchen-avail-page__desc">التحكم بتوفر المنتجات المعروضة للزبائن.</p>
+        </header>
+
+        <div class="kitchen-avail-stats" aria-label="ملخص التوفر">
+          <article class="kitchen-avail-stat-card">
+            <span class="kitchen-avail-stat-card__label">عدد المنتجات الكلي</span>
+            <strong class="kitchen-avail-stat-card__value" id="kitchenAvailStatTotal">0</strong>
+          </article>
+          <article class="kitchen-avail-stat-card kitchen-avail-stat-card--ok">
+            <span class="kitchen-avail-stat-card__label">عدد المنتجات المتوفرة</span>
+            <strong class="kitchen-avail-stat-card__value" id="kitchenAvailStatAvailable">0</strong>
+          </article>
+          <article class="kitchen-avail-stat-card kitchen-avail-stat-card--off">
+            <span class="kitchen-avail-stat-card__label">عدد المنتجات غير المتوفرة</span>
+            <strong class="kitchen-avail-stat-card__value" id="kitchenAvailStatUnavailable">0</strong>
+          </article>
+        </div>
+
+        <div class="kitchen-avail-toolbar">
+          <label class="kitchen-avail-search-wrap" for="kitchenAvailSearch">
+            <span class="kitchen-avail-search-icon" aria-hidden="true">🔍</span>
+            <input type="search" id="kitchenAvailSearch" class="kitchen-avail-search" placeholder="ابحث عن منتج أو تصنيف..." autocomplete="off" aria-label="بحث عن منتج أو تصنيف">
+          </label>
+          <div class="kitchen-avail-filters" id="kitchenAvailFilters" role="tablist" aria-label="تصفية المنتجات">
+            <button type="button" class="kitchen-avail-filter is-active" data-avail-filter="all" role="tab" aria-selected="true">الكل</button>
+            <button type="button" class="kitchen-avail-filter" data-avail-filter="available" role="tab" aria-selected="false">المتوفر</button>
+            <button type="button" class="kitchen-avail-filter" data-avail-filter="unavailable" role="tab" aria-selected="false">غير المتوفر</button>
+          </div>
+        </div>
+
+        <p class="kitchen-empty kitchen-avail-loading" id="kitchenAvailLoading" hidden>جاري التحميل…</p>
+        <p class="kitchen-empty kitchen-avail-empty" id="kitchenAvailEmpty" hidden>لا توجد نتائج.</p>
+        <div class="kitchen-avail-categories" id="kitchenAvailCategories"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="../js/cafe-dialog.js?v=20260607-dialog"></script>
+  <script src="../js/notification.js?v=20260607-notif-light"></script>
+  <script src="../js/voice-notify.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/cafe-header-branding.js"></script>
+  <script src="kitchen.js?v=20260609-kds-order-type"></script>
+  <script src="kitchen-menu-availability-ui.js?v=20260530-search-mode"></script>
+  <script src="kitchen-menu-availability.js?v=20260530-search-mode"></script>
+</body>
+</html>

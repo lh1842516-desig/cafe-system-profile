@@ -1,0 +1,3934 @@
+{
+  "byCustomerId": {
+    "cust_28a20e6e0112": {
+      "customerId": "cust_28a20e6e0112",
+      "peerSessionId": "cf_sess_1779142048357_p8hrxsk8",
+      "customerName": "علي جان",
+      "tableId": "2",
+      "activeOrderId": "T2-034",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:08:19.676Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_mpbrb92iqbf0vy": {
+      "customerId": "cust_mpbrb92iqbf0vy",
+      "peerSessionId": "cf_sess_1779142126593_ecfcjgk5",
+      "customerName": "علي",
+      "tableId": "2",
+      "activeOrderId": "T2-035",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:09:31.209Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_4cbf4820d927": {
+      "customerId": "cust_4cbf4820d927",
+      "peerSessionId": "cf_sess_1779142033292_3u4diaql",
+      "customerName": "هيفاء حسين",
+      "tableId": "2",
+      "activeOrderId": "T2-036",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:12:22.103Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_mpbs0y01liuvtl": {
+      "customerId": "cust_mpbs0y01liuvtl",
+      "peerSessionId": "cf_sess_1779143272972_j75pa260",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-037",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:29:29.112Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_mpbs4oishptovu": {
+      "customerId": "cust_mpbs4oishptovu",
+      "peerSessionId": "cf_sess_1779142203600_rgmqsi15",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-038",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:32:24.366Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_010309c12890": {
+      "customerId": "cust_010309c12890",
+      "peerSessionId": "cf_sess_1779142033292_3u4diaql",
+      "customerName": "هيفاء حسين",
+      "tableId": "2",
+      "activeOrderId": "T2-039",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:32:24.376Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_8d627e77f9d8": {
+      "customerId": "cust_8d627e77f9d8",
+      "peerSessionId": "cf_sess_1779143272972_j75pa260",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-040",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:32:24.388Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_mpbsf64xywfgjz": {
+      "customerId": "cust_mpbsf64xywfgjz",
+      "peerSessionId": "cf_sess_1779143710411_gibnxeoz",
+      "customerName": "س",
+      "tableId": "2",
+      "activeOrderId": "T2-041",
+      "status": "closed",
+      "createdAt": "2026-05-18T22:40:33.793Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_mpbtiyo0st5wgq": {
+      "customerId": "cust_mpbtiyo0st5wgq",
+      "peerSessionId": "cf_sess_1779145272616_idlq8otz",
+      "customerName": "F",
+      "tableId": "2",
+      "activeOrderId": "T2-042",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:11:30.526Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_mpbtxr78b0u3uy": {
+      "customerId": "cust_mpbtxr78b0u3uy",
+      "peerSessionId": "cf_sess_1779145915251_i8r57xg9",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-043",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:23:00.728Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_mpbu07qtwdazpx": {
+      "customerId": "cust_mpbu07qtwdazpx",
+      "peerSessionId": "cf_sess_1779146683047_7ms8bax3",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-044",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:24:55.471Z",
+      "lastSeen": "2026-05-18T23:46:24.151Z"
+    },
+    "cust_mpbua8signihcq": {
+      "customerId": "cust_mpbua8signihcq",
+      "peerSessionId": "cf_sess_1779146787357_l71wd5br",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-045",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:32:43.380Z",
+      "lastSeen": "2026-05-18T23:46:24.151Z"
+    },
+    "cust_7ea08db01005": {
+      "customerId": "cust_7ea08db01005",
+      "peerSessionId": "cf_sess_1779145915251_i8r57xg9",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-043",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:39:35.991Z",
+      "lastSeen": "2026-05-18T23:46:15.193Z"
+    },
+    "cust_281607bfe811": {
+      "customerId": "cust_281607bfe811",
+      "peerSessionId": "cf_sess_1779146787357_l71wd5br",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-045",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:43:24.427Z",
+      "lastSeen": "2026-05-18T23:46:24.151Z"
+    },
+    "cust_ee52d164e020": {
+      "customerId": "cust_ee52d164e020",
+      "peerSessionId": "cf_sess_1779146787357_l71wd5br",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-045",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:43:36.706Z",
+      "lastSeen": "2026-05-18T23:46:24.151Z"
+    },
+    "cust_a7dea8662175": {
+      "customerId": "cust_a7dea8662175",
+      "peerSessionId": "cf_sess_1779146787357_l71wd5br",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-045",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:43:51.280Z",
+      "lastSeen": "2026-05-18T23:46:24.151Z"
+    },
+    "cust_mpbuqbq2y3tadd": {
+      "customerId": "cust_mpbuqbq2y3tadd",
+      "peerSessionId": "cf_sess_1779147893640_4h0lphow",
+      "customerName": "علي جان",
+      "tableId": "11",
+      "activeOrderId": "T11-046",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:45:13.690Z",
+      "lastSeen": "2026-05-18T23:45:51.497Z"
+    },
+    "cust_1eefe2014b40": {
+      "customerId": "cust_1eefe2014b40",
+      "peerSessionId": "cf_sess_1779147893640_4h0lphow",
+      "customerName": "علي جان",
+      "tableId": "11",
+      "activeOrderId": "T11-046",
+      "status": "closed",
+      "createdAt": "2026-05-18T23:45:33.954Z",
+      "lastSeen": "2026-05-18T23:45:51.497Z"
+    },
+    "cust_mpdkzblgcufaxj": {
+      "customerId": "cust_mpdkzblgcufaxj",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "علي د",
+      "tableId": "3",
+      "activeOrderId": "T3-001",
+      "status": "closed",
+      "createdAt": "2026-05-20T04:47:49.792Z",
+      "lastSeen": "2026-05-20T05:14:13.805Z"
+    },
+    "cust_f87cb901829e": {
+      "customerId": "cust_f87cb901829e",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "علي د",
+      "tableId": "3",
+      "activeOrderId": "T3-001",
+      "status": "closed",
+      "createdAt": "2026-05-20T04:48:15.188Z",
+      "lastSeen": "2026-05-20T05:14:13.805Z"
+    },
+    "cust_59a9a5d3e2bd": {
+      "customerId": "cust_59a9a5d3e2bd",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "علي د",
+      "tableId": "3",
+      "activeOrderId": "T3-001",
+      "status": "closed",
+      "createdAt": "2026-05-20T04:56:33.775Z",
+      "lastSeen": "2026-05-20T05:14:13.805Z"
+    },
+    "cust_b6e393468a77": {
+      "customerId": "cust_b6e393468a77",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "علي د",
+      "tableId": "3",
+      "activeOrderId": "T3-001",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:06:19.680Z",
+      "lastSeen": "2026-05-20T05:14:13.805Z"
+    },
+    "cust_mpdlzpup0owb9f": {
+      "customerId": "cust_mpdlzpup0owb9f",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "4",
+      "activeOrderId": "T4-007",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:16:07.194Z",
+      "lastSeen": "2026-05-20T05:22:53.471Z"
+    },
+    "cust_mpdm3kzl1g09dm": {
+      "customerId": "cust_mpdm3kzl1g09dm",
+      "peerSessionId": "cf_sess_1779254227843_9djd0dut",
+      "customerName": "بل",
+      "tableId": "3",
+      "activeOrderId": "T3-008",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:19:08.449Z",
+      "lastSeen": "2026-05-22T23:57:59.661Z"
+    },
+    "cust_4a1eaf32eef5": {
+      "customerId": "cust_4a1eaf32eef5",
+      "peerSessionId": "cf_sess_1779254227843_9djd0dut",
+      "customerName": "بل",
+      "tableId": "3",
+      "activeOrderId": "T3-008",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:19:47.539Z",
+      "lastSeen": "2026-05-22T23:57:59.661Z"
+    },
+    "cust_7a2cf5df112a": {
+      "customerId": "cust_7a2cf5df112a",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "4",
+      "activeOrderId": "T4-007",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:21:48.339Z",
+      "lastSeen": "2026-05-20T05:22:53.471Z"
+    },
+    "cust_6472b5a26c01": {
+      "customerId": "cust_6472b5a26c01",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "4",
+      "activeOrderId": "T4-007",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:22:28.101Z",
+      "lastSeen": "2026-05-20T05:22:53.471Z"
+    },
+    "cust_mpdm8zphlggm9k": {
+      "customerId": "cust_mpdm8zphlggm9k",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "4",
+      "activeOrderId": "T4-009",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:23:19.850Z",
+      "lastSeen": "2026-05-22T23:58:05.189Z"
+    },
+    "cust_1c2e5599522d": {
+      "customerId": "cust_1c2e5599522d",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "4",
+      "activeOrderId": "T4-009",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:23:41.247Z",
+      "lastSeen": "2026-05-22T23:58:05.189Z"
+    },
+    "cust_mpdmhhsezbkr6h": {
+      "customerId": "cust_mpdmhhsezbkr6h",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "14",
+      "activeOrderId": "T14-010",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:29:56.553Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_c4f648e72b6f": {
+      "customerId": "cust_c4f648e72b6f",
+      "peerSessionId": "cf_sess_1779252400074_xl9l596p",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "14",
+      "activeOrderId": "T14-011",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:30:12.624Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_mpdn18ml7njfgj": {
+      "customerId": "cust_mpdn18ml7njfgj",
+      "peerSessionId": "cf_sess_1779255883430_pnsnuu7r",
+      "customerName": "ا",
+      "tableId": "14",
+      "activeOrderId": "T14-013",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:45:18.097Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_mpdnjkjkkpcfro": {
+      "customerId": "cust_mpdnjkjkkpcfro",
+      "peerSessionId": "cf_sess_1779256078015_g0x02qkw",
+      "customerName": "ا",
+      "tableId": "14",
+      "activeOrderId": "T14-014",
+      "status": "closed",
+      "createdAt": "2026-05-20T05:59:33.348Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_mpdpldnkv4w35y": {
+      "customerId": "cust_mpdpldnkv4w35y",
+      "peerSessionId": "cf_sess_1779260190640_unbdbnfl",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-015",
+      "status": "closed",
+      "createdAt": "2026-05-20T06:56:56.869Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_mpdrhtc7ten3e5": {
+      "customerId": "cust_mpdrhtc7ten3e5",
+      "peerSessionId": "cf_sess_1779261678815_9vueyoo6",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-016",
+      "status": "closed",
+      "createdAt": "2026-05-20T07:50:09.585Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_mpdroz3m19lxrc": {
+      "customerId": "cust_mpdroz3m19lxrc",
+      "peerSessionId": "cf_sess_1779263707226_gbwq0d8p",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-017",
+      "status": "closed",
+      "createdAt": "2026-05-20T07:55:43.638Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_mpdrrudbgo4i0p": {
+      "customerId": "cust_mpdrrudbgo4i0p",
+      "peerSessionId": "cf_sess_1779263832629_ye9q0g1u",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-018",
+      "status": "closed",
+      "createdAt": "2026-05-20T07:57:57.485Z",
+      "lastSeen": "2026-05-20T07:58:36.783Z"
+    },
+    "cust_mpdu2au4oyxwgy": {
+      "customerId": "cust_mpdu2au4oyxwgy",
+      "peerSessionId": "cf_sess_1779267713374_brh9u63u",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-019",
+      "status": "closed",
+      "createdAt": "2026-05-20T09:02:04.832Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mpdu4jhyc825op": {
+      "customerId": "cust_mpdu4jhyc825op",
+      "peerSessionId": "cf_sess_1779267816038_g3klzw5o",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-020",
+      "status": "closed",
+      "createdAt": "2026-05-20T09:03:49.374Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mpgx55cwiyfb8t": {
+      "customerId": "cust_mpgx55cwiyfb8t",
+      "peerSessionId": "cf_sess_1779454264171_e1hdeupc",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-021",
+      "status": "closed",
+      "createdAt": "2026-05-22T12:51:34.979Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mpgxaez480pz7l": {
+      "customerId": "cust_mpgxaez480pz7l",
+      "peerSessionId": "cf_sess_1779454349246_y4rxjo09",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-022",
+      "status": "closed",
+      "createdAt": "2026-05-22T12:55:40.728Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mpgy8ilo40lw8x": {
+      "customerId": "cust_mpgy8ilo40lw8x",
+      "peerSessionId": "cf_sess_1779456112062_6325zp1x",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-023",
+      "status": "closed",
+      "createdAt": "2026-05-22T13:22:11.705Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mpgz7vvwf5gscg": {
+      "customerId": "cust_mpgz7vvwf5gscg",
+      "peerSessionId": "cf_sess_1779457709161_qrpc9zkj",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-024",
+      "status": "closed",
+      "createdAt": "2026-05-22T13:49:42.102Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mpgz7vvzkuuaje": {
+      "customerId": "cust_mpgz7vvzkuuaje",
+      "peerSessionId": "cf_sess_1779457709161_qrpc9zkj",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-027",
+      "status": "closed",
+      "createdAt": "2026-05-22T13:49:42.132Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mpgzfj9eagmmv8": {
+      "customerId": "cust_mpgzfj9eagmmv8",
+      "peerSessionId": "cf_sess_1779458010344_q4805pmn",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-028",
+      "status": "closed",
+      "createdAt": "2026-05-22T13:55:38.857Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphhxgyro9k2u3": {
+      "customerId": "cust_mphhxgyro9k2u3",
+      "peerSessionId": "cf_sess_1779263917033_gayi37ki",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "14",
+      "activeOrderId": "T14-029",
+      "status": "closed",
+      "createdAt": "2026-05-22T22:33:28.288Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphhzdtltqnr16": {
+      "customerId": "cust_mphhzdtltqnr16",
+      "peerSessionId": "cf_sess_1779489196652_aw8r2iic",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-030",
+      "status": "closed",
+      "createdAt": "2026-05-22T22:34:58.283Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphin5hpcxx3rk": {
+      "customerId": "cust_mphin5hpcxx3rk",
+      "peerSessionId": "cf_sess_1779489444063_wtr6uv3i",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-031",
+      "status": "closed",
+      "createdAt": "2026-05-22T22:53:27.212Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphizzmauhwg4l": {
+      "customerId": "cust_mphizzmauhwg4l",
+      "peerSessionId": "cf_sess_1779490977785_ryfczu71",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-032",
+      "status": "closed",
+      "createdAt": "2026-05-22T23:03:26.110Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphjafp7ykgk6h": {
+      "customerId": "cust_mphjafp7ykgk6h",
+      "peerSessionId": "cf_sess_1779491171543_v0lbsnhy",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-033",
+      "status": "closed",
+      "createdAt": "2026-05-22T23:11:33.554Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphjz43un9w55i": {
+      "customerId": "cust_mphjz43un9w55i",
+      "peerSessionId": "cf_sess_1779492625893_2tqgi2hj",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-034",
+      "status": "closed",
+      "createdAt": "2026-05-22T23:30:44.911Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphkoyi7n02u0o": {
+      "customerId": "cust_mphkoyi7n02u0o",
+      "peerSessionId": "cf_sess_1779493838367_e5oc10r2",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-035",
+      "status": "closed",
+      "createdAt": "2026-05-22T23:50:50.721Z",
+      "lastSeen": "2026-05-22T23:53:28.578Z"
+    },
+    "cust_mphkuf1ciu119x": {
+      "customerId": "cust_mphkuf1ciu119x",
+      "peerSessionId": "cf_sess_1779494085995_68xjyru5",
+      "customerName": "ا",
+      "tableId": "14",
+      "activeOrderId": "T14-036",
+      "status": "closed",
+      "createdAt": "2026-05-22T23:55:05.452Z",
+      "lastSeen": "2026-05-22T23:57:34.579Z"
+    },
+    "cust_mpi2llmko26lps": {
+      "customerId": "cust_mpi2llmko26lps",
+      "peerSessionId": "cf_sess_1779523902630_faawnnpe",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-001",
+      "status": "closed",
+      "createdAt": "2026-05-23T08:12:07.185Z",
+      "lastSeen": "2026-05-23T08:17:06.557Z"
+    },
+    "cust_mpi3qvqpiucvlg": {
+      "customerId": "cust_mpi3qvqpiucvlg",
+      "peerSessionId": "cf_sess_1779525831205_65dj7m3u",
+      "customerName": "Ali Hussein",
+      "tableId": "12",
+      "activeOrderId": "T12-002",
+      "status": "closed",
+      "createdAt": "2026-05-23T08:44:13.297Z",
+      "lastSeen": "2026-05-23T08:49:05.219Z"
+    },
+    "cust_mpittm2kpqlchj": {
+      "customerId": "cust_mpittm2kpqlchj",
+      "peerSessionId": "cf_sess_1779526146493_k4k0sxcy",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-006",
+      "status": "closed",
+      "createdAt": "2026-05-23T20:54:09.401Z",
+      "lastSeen": "2026-05-23T21:15:02.319Z"
+    },
+    "cust_9022a9c233f8": {
+      "customerId": "cust_9022a9c233f8",
+      "peerSessionId": "cf_sess_1779142033292_3u4diaql",
+      "customerName": "لات",
+      "tableId": "11",
+      "activeOrderId": "T11-007",
+      "status": "closed",
+      "createdAt": "2026-05-23T20:58:39.743Z",
+      "lastSeen": "2026-05-23T21:15:02.319Z"
+    },
+    "cust_mpiu3jmlp41od3": {
+      "customerId": "cust_mpiu3jmlp41od3",
+      "peerSessionId": "cf_sess_1779570095307_sf9ekllz",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-008",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:01:54.040Z",
+      "lastSeen": "2026-05-23T21:15:02.319Z"
+    },
+    "cust_mpiuputoh4gfqd": {
+      "customerId": "cust_mpiuputoh4gfqd",
+      "peerSessionId": "cf_sess_1779142033292_3u4diaql",
+      "customerName": "هيفاء حسين",
+      "tableId": "11",
+      "activeOrderId": "T11-009",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:19:30.182Z",
+      "lastSeen": "2026-05-23T21:27:30.434Z"
+    },
+    "cust_mpiutrzh1churs": {
+      "customerId": "cust_mpiutrzh1churs",
+      "peerSessionId": "cf_sess_1779570903227_1mlgh1ai",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-010",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:22:16.711Z",
+      "lastSeen": "2026-05-23T21:27:30.434Z"
+    },
+    "cust_f86ff8d1076a": {
+      "customerId": "cust_f86ff8d1076a",
+      "peerSessionId": "cf_sess_1779142033292_3u4diaql",
+      "customerName": "هيفاء حسين",
+      "tableId": "11",
+      "activeOrderId": "T11-011",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:22:51.610Z",
+      "lastSeen": "2026-05-23T21:27:30.434Z"
+    },
+    "cust_6fdeb38ba820": {
+      "customerId": "cust_6fdeb38ba820",
+      "peerSessionId": "cf_sess_1779570903227_1mlgh1ai",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-012",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:22:51.625Z",
+      "lastSeen": "2026-05-23T21:27:30.434Z"
+    },
+    "cust_1a9f09bea2f7": {
+      "customerId": "cust_1a9f09bea2f7",
+      "peerSessionId": "cf_sess_1779570903227_1mlgh1ai",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-013",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:23:28.060Z",
+      "lastSeen": "2026-05-23T21:27:30.434Z"
+    },
+    "cust_5a9baae645ed": {
+      "customerId": "cust_5a9baae645ed",
+      "peerSessionId": "cf_sess_1779571381631_wxqpl58r",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-014",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:23:28.075Z",
+      "lastSeen": "2026-05-23T21:27:30.434Z"
+    },
+    "cust_mpivn09q3ptsvb": {
+      "customerId": "cust_mpivn09q3ptsvb",
+      "peerSessionId": "cf_sess_1779571634857_ncspi0mh",
+      "customerName": "هيفاء حسين",
+      "tableId": "11",
+      "activeOrderId": "T11-015",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:45:16.910Z",
+      "lastSeen": "2026-05-23T21:45:54.625Z"
+    },
+    "cust_mpivofwy1feewy": {
+      "customerId": "cust_mpivofwy1feewy",
+      "peerSessionId": "cf_sess_1779572739062_f0zxobka",
+      "customerName": "هيفاء حسين",
+      "tableId": "11",
+      "activeOrderId": "T11-016",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:46:23.826Z",
+      "lastSeen": "2026-05-23T21:47:04.715Z"
+    },
+    "cust_mpivpph8s4gyzy": {
+      "customerId": "cust_mpivpph8s4gyzy",
+      "peerSessionId": "cf_sess_1779572809205_9vi9lgx8",
+      "customerName": "هيفاء حسين",
+      "tableId": "11",
+      "activeOrderId": "T11-017",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:47:22.887Z",
+      "lastSeen": "2026-05-23T21:47:47.679Z"
+    },
+    "cust_mpivqqn6nzoaeq": {
+      "customerId": "cust_mpivqqn6nzoaeq",
+      "peerSessionId": "cf_sess_1779572852108_2vdkosmf",
+      "customerName": "هيفاء حسين",
+      "tableId": "11",
+      "activeOrderId": "T11-018",
+      "status": "closed",
+      "createdAt": "2026-05-23T21:48:11.052Z",
+      "lastSeen": "2026-05-23T22:01:23.293Z"
+    },
+    "cust_mpiwauqnj7f3ik": {
+      "customerId": "cust_mpiwauqnj7f3ik",
+      "peerSessionId": "cf_sess_1779573801071_09y436h3",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-019",
+      "status": "closed",
+      "createdAt": "2026-05-23T22:03:34.448Z",
+      "lastSeen": "2026-05-23T22:28:11.747Z"
+    },
+    "cust_mpix5h6et7vy8u": {
+      "customerId": "cust_mpix5h6et7vy8u",
+      "peerSessionId": "cf_sess_1779573684709_qcq8yanw",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-020",
+      "status": "closed",
+      "createdAt": "2026-05-23T22:27:21.790Z",
+      "lastSeen": "2026-05-23T22:28:11.747Z"
+    },
+    "cust_mpkyg4djcvih4f": {
+      "customerId": "cust_mpkyg4djcvih4f",
+      "peerSessionId": "cf_sess_1779698317478_u3pnbj9b",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-001",
+      "status": "closed",
+      "createdAt": "2026-05-25T08:39:11.250Z",
+      "lastSeen": "2026-05-25T09:03:47.676Z"
+    },
+    "cust_mpkz5psfeisfg7": {
+      "customerId": "cust_mpkz5psfeisfg7",
+      "peerSessionId": "cf_sess_1779699531510_0ttpjmxk",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-002",
+      "status": "closed",
+      "createdAt": "2026-05-25T08:59:05.307Z",
+      "lastSeen": "2026-05-25T09:03:47.676Z"
+    },
+    "cust_mprfbrz80bhmoq": {
+      "customerId": "cust_mprfbrz80bhmoq",
+      "peerSessionId": "cf_sess_1780089466260_mqa0x624",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-003",
+      "status": "closed",
+      "createdAt": "2026-05-29T21:18:19.358Z",
+      "lastSeen": "2026-05-29T21:19:05.846Z"
+    },
+    "cust_mpsc4vo7hzdu8h": {
+      "customerId": "cust_mpsc4vo7hzdu8h",
+      "peerSessionId": "cf_sess_1780143137470_62m1b43p",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-002",
+      "status": "closed",
+      "createdAt": "2026-05-30T12:36:44.955Z",
+      "lastSeen": "2026-05-30T12:40:56.387Z"
+    },
+    "cust_mpu3app29brsyk": {
+      "customerId": "cust_mpu3app29brsyk",
+      "peerSessionId": "cf_sess_1780250565589_s41szhbc",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-003",
+      "status": "closed",
+      "createdAt": "2026-05-31T18:04:52.785Z",
+      "lastSeen": "2026-05-31T18:06:03.128Z"
+    },
+    "cust_mpwts8ogs1qy8p": {
+      "customerId": "cust_mpwts8ogs1qy8p",
+      "peerSessionId": "cf_sess_1780416100455_0b9t778n",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-015",
+      "status": "closed",
+      "createdAt": "2026-06-02T16:01:52.455Z",
+      "lastSeen": "2026-06-02T16:03:01.755Z"
+    },
+    "cust_mpyafhzgggy8hj": {
+      "customerId": "cust_mpyafhzgggy8hj",
+      "peerSessionId": "cf_sess_1780504513242_rpa4g8xt",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-021",
+      "status": "closed",
+      "createdAt": "2026-06-03T16:35:37.225Z",
+      "lastSeen": "2026-06-03T17:30:08.301Z"
+    },
+    "cust_mpyceg8e17kubt": {
+      "customerId": "cust_mpyceg8e17kubt",
+      "peerSessionId": "cf_sess_1780507835423_lbif7rm2",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-023",
+      "status": "closed",
+      "createdAt": "2026-06-03T17:30:47.525Z",
+      "lastSeen": "2026-06-03T18:13:48.762Z"
+    },
+    "cust_mpylt8kcp26uu8": {
+      "customerId": "cust_mpylt8kcp26uu8",
+      "peerSessionId": "cf_sess_1780523641127_81saya5a",
+      "customerName": "علي جان",
+      "tableId": "14",
+      "activeOrderId": "T14-026",
+      "status": "closed",
+      "createdAt": "2026-06-03T21:54:13.715Z",
+      "lastSeen": "2026-06-03T22:20:28.967Z"
+    },
+    "cust_mpymrtiwy5q7jy": {
+      "customerId": "cust_mpymrtiwy5q7jy",
+      "peerSessionId": "cf_sess_1780525256799_vgj0nc4d",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-030",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:21:07.180Z",
+      "lastSeen": "2026-06-03T22:22:14.102Z"
+    },
+    "cust_mpymy07dnkn6ht": {
+      "customerId": "cust_mpymy07dnkn6ht",
+      "peerSessionId": "cf_sess_1780525335070_fewa5kt6",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-031",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:25:55.787Z",
+      "lastSeen": "2026-06-03T22:26:35.236Z"
+    },
+    "cust_mpymzm05hxbasi": {
+      "customerId": "cust_mpymzm05hxbasi",
+      "peerSessionId": "cf_sess_1780525596182_tztfv1sn",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-032",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:27:10.684Z",
+      "lastSeen": "2026-06-03T22:27:29.255Z"
+    },
+    "cust_mpyn0xkvwfyjn2": {
+      "customerId": "cust_mpyn0xkvwfyjn2",
+      "peerSessionId": "cf_sess_1780525650257_usee88v1",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-033",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:28:12.362Z",
+      "lastSeen": "2026-06-03T22:28:53.131Z"
+    },
+    "cust_mpyn3vileybroq": {
+      "customerId": "cust_mpyn3vileybroq",
+      "peerSessionId": "cf_sess_1780525816720_0ba4g7uf",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-034",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:30:29.675Z",
+      "lastSeen": "2026-06-03T22:31:06.133Z"
+    },
+    "cust_mpyn6k7dsngfoe": {
+      "customerId": "cust_mpyn6k7dsngfoe",
+      "peerSessionId": "cf_sess_1780525942378_qsizawie",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-035",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:32:34.996Z",
+      "lastSeen": "2026-06-03T22:32:59.570Z"
+    },
+    "cust_mpynu80y8i47pl": {
+      "customerId": "cust_mpynu80y8i47pl",
+      "peerSessionId": "cf_sess_1780527045500_dcpkins7",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-036",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:50:58.995Z",
+      "lastSeen": "2026-06-03T22:51:20.248Z"
+    },
+    "cust_mpynv3pekb497l": {
+      "customerId": "cust_mpynv3pekb497l",
+      "peerSessionId": "cf_sess_1780527081117_alry4z7h",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-037",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:51:40.054Z",
+      "lastSeen": "2026-06-03T22:52:04.286Z"
+    },
+    "cust_mpynw8msrkyxcb": {
+      "customerId": "cust_mpynw8msrkyxcb",
+      "peerSessionId": "cf_sess_1780527142432_52ttlrj4",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-038",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:52:33.093Z",
+      "lastSeen": "2026-06-03T22:52:51.129Z"
+    },
+    "cust_mpyo1tk6t7176m": {
+      "customerId": "cust_mpyo1tk6t7176m",
+      "peerSessionId": "cf_sess_1780527392031_cte36glm",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-041",
+      "status": "closed",
+      "createdAt": "2026-06-03T22:56:53.511Z",
+      "lastSeen": "2026-06-03T23:42:31.988Z"
+    },
+    "cust_mpypoxyhghdzmz": {
+      "customerId": "cust_mpypoxyhghdzmz",
+      "peerSessionId": "cf_sess_1780530153582_3g0jzq17",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-044",
+      "status": "closed",
+      "createdAt": "2026-06-03T23:42:51.493Z",
+      "lastSeen": "2026-06-03T23:44:06.074Z"
+    },
+    "cust_mpyq8p4zyl4eav": {
+      "customerId": "cust_mpyq8p4zyl4eav",
+      "peerSessionId": "cf_sess_1780530247378_yma0dl7m",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-003",
+      "status": "closed",
+      "createdAt": "2026-06-03T23:58:13.198Z",
+      "lastSeen": "2026-06-03T23:59:31.820Z"
+    },
+    "cust_mpyqfn33i1q34k": {
+      "customerId": "cust_mpyqfn33i1q34k",
+      "peerSessionId": "cf_sess_1780531390560_mhs0s7b0",
+      "customerName": "يوسف",
+      "tableId": "9",
+      "activeOrderId": "T9-005",
+      "status": "closed",
+      "createdAt": "2026-06-04T00:03:37.097Z",
+      "lastSeen": "2026-06-04T00:04:14.745Z"
+    },
+    "cust_mq0zu1kcejft8c": {
+      "customerId": "cust_mq0zu1kcejft8c",
+      "peerSessionId": "cf_sess_1780668125147_5j3acwps",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-019",
+      "status": "closed",
+      "createdAt": "2026-06-05T14:02:19.047Z",
+      "lastSeen": "2026-06-05T22:09:48.433Z"
+    },
+    "cust_mq1j6ijby5jc0h": {
+      "customerId": "cust_mq1j6ijby5jc0h",
+      "peerSessionId": "cf_sess_1780700576078_d3y1rhlv",
+      "customerName": "علي",
+      "tableId": "14",
+      "activeOrderId": "T14-029",
+      "status": "closed",
+      "createdAt": "2026-06-05T23:03:54.713Z",
+      "lastSeen": "2026-06-06T00:07:45.075Z"
+    },
+    "cust_mq1m3cv8ldx7dm": {
+      "customerId": "cust_mq1m3cv8ldx7dm",
+      "peerSessionId": "cf_sess_1780705474683_hdqk8sss",
+      "customerName": "Ali Hussein",
+      "tableId": "14",
+      "activeOrderId": "T14-031",
+      "status": "closed",
+      "createdAt": "2026-06-06T00:25:26.468Z",
+      "lastSeen": "2026-06-06T00:44:55.533Z"
+    },
+    "cust_mq2e584xklg22p": {
+      "customerId": "cust_mq2e584xklg22p",
+      "peerSessionId": "cf_sess_1780752618668_9hdpwxhi",
+      "customerName": "علي",
+      "tableId": "14",
+      "activeOrderId": "T14-040",
+      "status": "closed",
+      "createdAt": "2026-06-06T13:30:43.843Z",
+      "lastSeen": "2026-06-06T15:33:50.797Z"
+    },
+    "cust_mq2h0st2nomgd7": {
+      "customerId": "cust_mq2h0st2nomgd7",
+      "peerSessionId": "cf_sess_1780757424398_uld5bqt7",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-045",
+      "status": "closed",
+      "createdAt": "2026-06-06T14:51:16.066Z",
+      "lastSeen": "2026-06-06T15:33:41.775Z"
+    },
+    "cust_mq3hnx98fv76te": {
+      "customerId": "cust_mq3hnx98fv76te",
+      "peerSessionId": "cf_sess_1780815932002_ikvc06yl",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-003",
+      "status": "closed",
+      "createdAt": "2026-06-07T07:56:59.199Z",
+      "lastSeen": "2026-06-07T08:57:17.384Z"
+    },
+    "cust_mq42xan2l81rj7": {
+      "customerId": "cust_mq42xan2l81rj7",
+      "peerSessionId": "cf_sess_1780854713779_paizht78",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-013",
+      "status": "closed",
+      "createdAt": "2026-06-07T17:52:08.710Z",
+      "lastSeen": "2026-06-07T18:05:56.463Z"
+    },
+    "cust_mq43gfupvocsy9": {
+      "customerId": "cust_mq43gfupvocsy9",
+      "peerSessionId": "cf_sess_1780855591639_ev4hb331",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-026",
+      "status": "closed",
+      "createdAt": "2026-06-07T18:07:01.927Z",
+      "lastSeen": "2026-06-07T18:17:42.439Z"
+    },
+    "cust_mq442dj2pkep0t": {
+      "customerId": "cust_mq442dj2pkep0t",
+      "peerSessionId": "cf_sess_1780856595199_1e56zr90",
+      "customerName": "علي جان",
+      "tableId": "3",
+      "activeOrderId": "T3-027",
+      "status": "closed",
+      "createdAt": "2026-06-07T18:24:05.216Z",
+      "lastSeen": "2026-06-07T18:24:35.566Z"
+    },
+    "cust_mq446bru0jy8p8": {
+      "customerId": "cust_mq446bru0jy8p8",
+      "peerSessionId": "cf_sess_1780856675354_h0rqvvki",
+      "customerName": "من",
+      "tableId": "3",
+      "activeOrderId": "T3-028",
+      "status": "closed",
+      "createdAt": "2026-06-07T18:27:09.575Z",
+      "lastSeen": "2026-06-07T18:27:19.954Z"
+    },
+    "cust_mq44aa4us6acti": {
+      "customerId": "cust_mq44aa4us6acti",
+      "peerSessionId": "cf_sess_1780856999944_bum3mbya",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-029",
+      "status": "closed",
+      "createdAt": "2026-06-07T18:30:14.063Z",
+      "lastSeen": "2026-06-07T18:30:29.513Z"
+    },
+    "cust_mq4am65ani08hc": {
+      "customerId": "cust_mq4am65ani08hc",
+      "peerSessionId": "cf_sess_1780867294480_pok7ispz",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-030",
+      "status": "closed",
+      "createdAt": "2026-06-07T21:27:26.197Z",
+      "lastSeen": "2026-06-07T21:28:25.028Z"
+    },
+    "cust_1e0a22e4c23f": {
+      "customerId": "cust_1e0a22e4c23f",
+      "peerSessionId": "cf_sess_1780866742607_xo6x0k9b",
+      "customerName": "هيفاء حسين",
+      "tableId": "3",
+      "activeOrderId": "T3-031",
+      "status": "closed",
+      "createdAt": "2026-06-07T21:27:26.246Z",
+      "lastSeen": "2026-06-07T21:28:25.028Z"
+    },
+    "cust_mq4bdp0l4ilc8n": {
+      "customerId": "cust_mq4bdp0l4ilc8n",
+      "peerSessionId": "cf_sess_1780867701108_1tu3ptd3",
+      "customerName": "هيفاء حسين",
+      "tableId": "3",
+      "activeOrderId": "T3-032",
+      "status": "closed",
+      "createdAt": "2026-06-07T21:49:05.325Z",
+      "lastSeen": "2026-06-07T22:26:11.310Z"
+    },
+    "cust_af0a5a290b0e": {
+      "customerId": "cust_af0a5a290b0e",
+      "peerSessionId": "cf_sess_1780868457458_q8slvklx",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-034",
+      "status": "closed",
+      "createdAt": "2026-06-07T21:49:05.362Z",
+      "lastSeen": "2026-06-07T22:26:11.310Z"
+    },
+    "cust_mq4c95fe28d6xv": {
+      "customerId": "cust_mq4c95fe28d6xv",
+      "peerSessionId": "cf_sess_1780870372460_h7sta11j",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-035",
+      "status": "closed",
+      "createdAt": "2026-06-07T22:13:18.062Z",
+      "lastSeen": "2026-06-07T22:26:11.310Z"
+    },
+    "cust_mq574jpivw8ftt": {
+      "customerId": "cust_mq574jpivw8ftt",
+      "peerSessionId": "cf_sess_1780920653446_9ngl31ue",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-005",
+      "status": "closed",
+      "createdAt": "2026-06-08T12:37:32.045Z",
+      "lastSeen": "2026-06-08T13:42:04.501Z"
+    },
+    "cust_mq6kypkgvpsjjb": {
+      "customerId": "cust_mq6kypkgvpsjjb",
+      "peerSessionId": "cf_sess_1781003988123_37ikcf2b",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-007",
+      "status": "closed",
+      "createdAt": "2026-06-09T11:52:40.254Z",
+      "lastSeen": "2026-06-09T12:08:56.954Z"
+    },
+    "cust_mq6lko4bhpgkil": {
+      "customerId": "cust_mq6lko4bhpgkil",
+      "peerSessionId": "cf_sess_1781006936553_0fri6id4",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-008",
+      "status": "closed",
+      "createdAt": "2026-06-09T12:09:44.711Z",
+      "lastSeen": "2026-06-09T12:23:13.971Z"
+    },
+    "cust_mq6m3la8aee8kk": {
+      "customerId": "cust_mq6m3la8aee8kk",
+      "peerSessionId": "cf_sess_1780867701108_1tu3ptd3",
+      "customerName": "هيفاء حسين",
+      "tableId": "3",
+      "activeOrderId": "T3-010",
+      "status": "closed",
+      "createdAt": "2026-06-09T12:24:42.036Z",
+      "lastSeen": "2026-06-09T12:52:02.926Z"
+    },
+    "cust_de7bb0e7f3a9": {
+      "customerId": "cust_de7bb0e7f3a9",
+      "peerSessionId": "cf_sess_1781007793882_nqx4qr7w",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-011",
+      "status": "closed",
+      "createdAt": "2026-06-09T12:24:42.057Z",
+      "lastSeen": "2026-06-09T12:52:02.926Z"
+    },
+    "cust_mq70germ2h36l4": {
+      "customerId": "cust_mq70germ2h36l4",
+      "peerSessionId": "cf_sess_1781031940817_4nirzpaf",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-013",
+      "status": "closed",
+      "createdAt": "2026-06-09T19:06:19.522Z",
+      "lastSeen": "2026-06-09T19:13:43.827Z"
+    },
+    "cust_mq70ji1iv80lmq": {
+      "customerId": "cust_mq70ji1iv80lmq",
+      "peerSessionId": "cf_sess_1781032105296_99mkxr9v",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-014",
+      "status": "closed",
+      "createdAt": "2026-06-09T19:08:43.182Z",
+      "lastSeen": "2026-06-09T19:31:47.694Z"
+    },
+    "cust_mq70q9lb4xnxgs": {
+      "customerId": "cust_mq70q9lb4xnxgs",
+      "peerSessionId": "cf_sess_1781032424042_5s7voc11",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-016",
+      "status": "closed",
+      "createdAt": "2026-06-09T19:13:59.459Z",
+      "lastSeen": "2026-06-09T19:34:29.435Z"
+    },
+    "cust_mq72auzz4n3hij": {
+      "customerId": "cust_mq72auzz4n3hij",
+      "peerSessionId": "cf_sess_1781035060159_tyt2ecdc",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-018",
+      "status": "closed",
+      "createdAt": "2026-06-09T19:58:00.161Z",
+      "lastSeen": "2026-06-09T20:01:36.267Z"
+    },
+    "cust_mq72k0fe7wirdx": {
+      "customerId": "cust_mq72k0fe7wirdx",
+      "peerSessionId": "cf_sess_1781033508620_q2qm1u1i",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "3",
+      "activeOrderId": "T3-019",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:05:06.242Z",
+      "lastSeen": "2026-06-09T20:06:52.289Z"
+    },
+    "cust_120ff340c00e": {
+      "customerId": "cust_120ff340c00e",
+      "peerSessionId": "cf_sess_1781035296369_ugjqwd2k",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-020",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:05:06.260Z",
+      "lastSeen": "2026-06-09T20:06:52.289Z"
+    },
+    "cust_mq72nxu2rhffii": {
+      "customerId": "cust_mq72nxu2rhffii",
+      "peerSessionId": "cf_sess_1781035613123_zy8bos83",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "3",
+      "activeOrderId": "T3-021",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:08:09.532Z",
+      "lastSeen": "2026-06-09T20:12:43.969Z"
+    },
+    "cust_9935d9138ded": {
+      "customerId": "cust_9935d9138ded",
+      "peerSessionId": "cf_sess_1781035612351_3wjo3yj5",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-022",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:08:09.550Z",
+      "lastSeen": "2026-06-09T20:12:43.969Z"
+    },
+    "cust_mq730dvhh5osw6": {
+      "customerId": "cust_mq730dvhh5osw6",
+      "peerSessionId": "cf_sess_1781035964893_u2vsk7d4",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "3",
+      "activeOrderId": "T3-023",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:17:50.169Z",
+      "lastSeen": "2026-06-09T20:31:51.691Z"
+    },
+    "cust_mq73joqajuxz28": {
+      "customerId": "cust_mq73joqajuxz28",
+      "peerSessionId": "cf_sess_1781037007265_v7ounlfa",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-024",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:32:51.514Z",
+      "lastSeen": "2026-06-09T20:50:24.783Z"
+    },
+    "cust_mq746ilre3g02y": {
+      "customerId": "cust_mq746ilre3g02y",
+      "peerSessionId": "cf_sess_1781035964893_u2vsk7d4",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "3",
+      "activeOrderId": "T3-025",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:50:35.846Z",
+      "lastSeen": "2026-06-09T20:51:07.786Z"
+    },
+    "cust_mq747desk3h433": {
+      "customerId": "cust_mq747desk3h433",
+      "peerSessionId": "cf_sess_1781038224793_rnjhpffs",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-026",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:51:16.602Z",
+      "lastSeen": "2026-06-09T20:52:23.047Z"
+    },
+    "cust_mq74963ok72mhc": {
+      "customerId": "cust_mq74963ok72mhc",
+      "peerSessionId": "cf_sess_1781038268699_m0d4i8mm",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "3",
+      "activeOrderId": "T3-027",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:52:39.608Z",
+      "lastSeen": "2026-06-09T20:53:48.958Z"
+    },
+    "cust_mq749xgq6c8ry0": {
+      "customerId": "cust_mq749xgq6c8ry0",
+      "peerSessionId": "cf_sess_1781038379529_kgbsyyse",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-028",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:53:15.896Z",
+      "lastSeen": "2026-06-09T20:53:48.958Z"
+    },
+    "cust_mq74hrlj5aj446": {
+      "customerId": "cust_mq74hrlj5aj446",
+      "peerSessionId": "cf_sess_1781038748984_6fp97jjb",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-029",
+      "status": "closed",
+      "createdAt": "2026-06-09T20:59:21.613Z",
+      "lastSeen": "2026-06-09T21:06:31.459Z"
+    },
+    "cust_mq80e0ovzud0fq": {
+      "customerId": "cust_mq80e0ovzud0fq",
+      "peerSessionId": "cf_sess_1781092316568_2hls4ftj",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-032",
+      "status": "closed",
+      "createdAt": "2026-06-10T11:52:15.103Z",
+      "lastSeen": "2026-06-10T11:54:24.936Z"
+    },
+    "cust_mq81bcoxjqdjeq": {
+      "customerId": "cust_mq81bcoxjqdjeq",
+      "peerSessionId": "cf_sess_1781093878250_8igmn4mr",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-033",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:18:10.305Z",
+      "lastSeen": "2026-06-10T12:18:33.684Z"
+    },
+    "cust_mq81ccfjorg22l": {
+      "customerId": "cust_mq81ccfjorg22l",
+      "peerSessionId": "cf_sess_1781093913010_bwjq543r",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-034",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:18:56.626Z",
+      "lastSeen": "2026-06-10T12:27:21.108Z"
+    },
+    "cust_mq81g2sxbsvp6u": {
+      "customerId": "cust_mq81g2sxbsvp6u",
+      "peerSessionId": "cf_sess_1781094056216_s6pj9xcm",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-035",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:21:50.775Z",
+      "lastSeen": "2026-06-10T12:27:21.108Z"
+    },
+    "cust_mq82i28dobykqw": {
+      "customerId": "cust_mq82i28dobykqw",
+      "peerSessionId": "cf_sess_1781038429883_8ikudouy",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "5",
+      "activeOrderId": "T5-037",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:51:22.038Z",
+      "lastSeen": "2026-06-10T12:54:15.308Z"
+    },
+    "cust_c98e63613a60": {
+      "customerId": "cust_c98e63613a60",
+      "peerSessionId": "cf_sess_1781095852378_6k2cpmeo",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-039",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:51:22.057Z",
+      "lastSeen": "2026-06-10T12:54:15.308Z"
+    },
+    "cust_mq82k6het99y7e": {
+      "customerId": "cust_mq82k6het99y7e",
+      "peerSessionId": "cf_sess_1781095969673_fnr97qxt",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-044",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:53:01.910Z",
+      "lastSeen": "2026-06-10T12:54:15.308Z"
+    },
+    "cust_mq82m2z4pnfa5s": {
+      "customerId": "cust_mq82m2z4pnfa5s",
+      "peerSessionId": "cf_sess_1781096054488_r0zp57zf",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-045",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:54:30.699Z",
+      "lastSeen": "2026-06-10T12:55:06.173Z"
+    },
+    "cust_mq82qaap87gva3": {
+      "customerId": "cust_mq82qaap87gva3",
+      "peerSessionId": "cf_sess_1781096105322_lejzyvaa",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-046",
+      "status": "closed",
+      "createdAt": "2026-06-10T12:57:46.803Z",
+      "lastSeen": "2026-06-10T13:14:55.087Z"
+    },
+    "cust_mq83cyqe9w2ldx": {
+      "customerId": "cust_mq83cyqe9w2ldx",
+      "peerSessionId": "cf_sess_1781097294165_8uuazri9",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-047",
+      "status": "closed",
+      "createdAt": "2026-06-10T13:15:24.997Z",
+      "lastSeen": "2026-06-10T13:17:26.582Z"
+    },
+    "cust_mq83fxipjk9lgb": {
+      "customerId": "cust_mq83fxipjk9lgb",
+      "peerSessionId": "cf_sess_1781097441016_0yfnu303",
+      "customerName": "Ali Hussein",
+      "tableId": "6",
+      "activeOrderId": "T6-049",
+      "status": "closed",
+      "createdAt": "2026-06-10T13:17:43.395Z",
+      "lastSeen": "2026-06-10T13:40:09.468Z"
+    },
+    "cust_mq83uk86u7ipa0": {
+      "customerId": "cust_mq83uk86u7ipa0",
+      "peerSessionId": "cf_sess_1781096055585_2jcln8qi",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "5",
+      "activeOrderId": "T5-050",
+      "status": "closed",
+      "createdAt": "2026-06-10T13:29:04.837Z",
+      "lastSeen": "2026-06-10T13:40:20.186Z"
+    },
+    "cust_mq84a1fuhlvvmj": {
+      "customerId": "cust_mq84a1fuhlvvmj",
+      "peerSessionId": "cf_sess_1781098853022_7r6oherj",
+      "customerName": "Ali Hussein",
+      "tableId": "6",
+      "activeOrderId": "T6-051",
+      "status": "closed",
+      "createdAt": "2026-06-10T13:41:08.251Z",
+      "lastSeen": "2026-06-11T21:05:11.227Z"
+    },
+    "cust_mq84ba2kk2oapr": {
+      "customerId": "cust_mq84ba2kk2oapr",
+      "peerSessionId": "cf_sess_1781096055585_2jcln8qi",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "5",
+      "activeOrderId": "T5-052",
+      "status": "closed",
+      "createdAt": "2026-06-10T13:42:04.844Z",
+      "lastSeen": "2026-06-10T14:41:02.140Z"
+    },
+    "cust_mq84z9yxt7pe6r": {
+      "customerId": "cust_mq84z9yxt7pe6r",
+      "peerSessionId": "cf_sess_1781100033190_wklkeqp8",
+      "customerName": "Ali Hussein",
+      "tableId": "7",
+      "activeOrderId": "T7-053",
+      "status": "closed",
+      "createdAt": "2026-06-10T14:00:45.663Z",
+      "lastSeen": "2026-06-10T14:40:26.891Z"
+    },
+    "cust_mq86fgrssiyhma": {
+      "customerId": "cust_mq86fgrssiyhma",
+      "peerSessionId": "cf_sess_1781102462388_81fh36rf",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "5",
+      "activeOrderId": "T5-054",
+      "status": "closed",
+      "createdAt": "2026-06-10T14:41:19.380Z",
+      "lastSeen": "2026-06-10T15:39:07.666Z"
+    },
+    "cust_mq86g76gtyzcrm": {
+      "customerId": "cust_mq86g76gtyzcrm",
+      "peerSessionId": "cf_sess_1781102425812_mn20quk9",
+      "customerName": "Ali Hussein",
+      "tableId": "7",
+      "activeOrderId": "T7-055",
+      "status": "closed",
+      "createdAt": "2026-06-10T14:41:54.816Z",
+      "lastSeen": "2026-06-10T15:39:22.697Z"
+    },
+    "cust_mq8dpbbz6ukxbt": {
+      "customerId": "cust_mq8dpbbz6ukxbt",
+      "peerSessionId": "cf_sess_1781114685091_m2fzx0rn",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-056",
+      "status": "closed",
+      "createdAt": "2026-06-10T18:04:57.075Z",
+      "lastSeen": "2026-06-10T18:12:16.487Z"
+    },
+    "cust_mq8n8jj9z81gm4": {
+      "customerId": "cust_mq8n8jj9z81gm4",
+      "peerSessionId": "cf_sess_1781130692693_f3qswsst",
+      "customerName": "علي",
+      "tableId": "11",
+      "activeOrderId": "T11-057",
+      "status": "closed",
+      "createdAt": "2026-06-10T22:31:49.922Z",
+      "lastSeen": "2026-06-10T22:34:55.883Z"
+    },
+    "cust_mq8nh7i5mxvsdq": {
+      "customerId": "cust_mq8nh7i5mxvsdq",
+      "peerSessionId": "cf_sess_1781131088274_f4b80dqf",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-058",
+      "status": "closed",
+      "createdAt": "2026-06-10T22:38:34.261Z",
+      "lastSeen": "2026-06-10T22:39:21.361Z"
+    },
+    "cust_c0951c803da7": {
+      "customerId": "cust_c0951c803da7",
+      "peerSessionId": "cf_sess_1781130692693_f3qswsst",
+      "customerName": "علي",
+      "tableId": "11",
+      "activeOrderId": "T11-059",
+      "status": "closed",
+      "createdAt": "2026-06-10T22:38:34.342Z",
+      "lastSeen": "2026-06-10T22:39:21.361Z"
+    },
+    "cust_mq8onfzmbclmon": {
+      "customerId": "cust_mq8onfzmbclmon",
+      "peerSessionId": "cf_sess_1781133069624_y480xj2n",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-060",
+      "status": "closed",
+      "createdAt": "2026-06-10T23:11:24.865Z",
+      "lastSeen": "2026-06-10T23:11:56.948Z"
+    },
+    "cust_mq8p7imn48u254": {
+      "customerId": "cust_mq8p7imn48u254",
+      "peerSessionId": "cf_sess_1781133986490_olb2akgl",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-061",
+      "status": "closed",
+      "createdAt": "2026-06-10T23:27:01.454Z",
+      "lastSeen": "2026-06-10T23:35:39.614Z"
+    },
+    "cust_mq8psb3yc9n29w": {
+      "customerId": "cust_mq8psb3yc9n29w",
+      "peerSessionId": "cf_sess_1781134982400_pqkovzw7",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-062",
+      "status": "closed",
+      "createdAt": "2026-06-10T23:43:11.511Z",
+      "lastSeen": "2026-06-10T23:44:22.532Z"
+    },
+    "cust_mq9fb8hbhn1erm": {
+      "customerId": "cust_mq9fb8hbhn1erm",
+      "peerSessionId": "cf_sess_1781177827015_nwgwcqi2",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-063",
+      "status": "closed",
+      "createdAt": "2026-06-11T11:37:44.825Z",
+      "lastSeen": "2026-06-11T11:40:26.455Z"
+    },
+    "cust_mq9fzx8jwhbq6o": {
+      "customerId": "cust_mq9fzx8jwhbq6o",
+      "peerSessionId": "cf_sess_1781178026715_k72f76k5",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-064",
+      "status": "closed",
+      "createdAt": "2026-06-11T11:56:56.589Z",
+      "lastSeen": "2026-06-11T12:02:54.221Z"
+    },
+    "cust_mq9hwk9ow800rv": {
+      "customerId": "cust_mq9hwk9ow800rv",
+      "peerSessionId": "cf_sess_1781182168297_smz1rcqi",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-065",
+      "status": "closed",
+      "createdAt": "2026-06-11T12:50:19.030Z",
+      "lastSeen": "2026-06-11T12:54:06.209Z"
+    },
+    "cust_mq9i7ulhtkjt1q": {
+      "customerId": "cust_mq9i7ulhtkjt1q",
+      "peerSessionId": "cf_sess_1781182446378_2o3sqpzq",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-066",
+      "status": "closed",
+      "createdAt": "2026-06-11T12:59:05.640Z",
+      "lastSeen": "2026-06-11T13:14:44.514Z"
+    },
+    "cust_mq9j9p0z59r1iu": {
+      "customerId": "cust_mq9j9p0z59r1iu",
+      "peerSessionId": "cf_sess_1781105947922_i64kumx6",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-067",
+      "status": "closed",
+      "createdAt": "2026-06-11T13:28:31.290Z",
+      "lastSeen": "2026-06-11T13:30:49.714Z"
+    },
+    "cust_mq9jpvmlndh84u": {
+      "customerId": "cust_mq9jpvmlndh84u",
+      "peerSessionId": "cf_sess_1781184650002_00canmzb",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-068",
+      "status": "closed",
+      "createdAt": "2026-06-11T13:41:06.319Z",
+      "lastSeen": "2026-06-11T13:48:41.234Z"
+    },
+    "cust_mq9k5us8z219uk": {
+      "customerId": "cust_mq9k5us8z219uk",
+      "peerSessionId": "cf_sess_1781185985072_gqgnkzrr",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-069",
+      "status": "closed",
+      "createdAt": "2026-06-11T13:53:32.003Z",
+      "lastSeen": "2026-06-11T13:54:52.962Z"
+    },
+    "cust_mq9k888t13k72i": {
+      "customerId": "cust_mq9k888t13k72i",
+      "peerSessionId": "cf_sess_1781186093212_hdpvxsqn",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-073",
+      "status": "closed",
+      "createdAt": "2026-06-11T13:55:22.555Z",
+      "lastSeen": "2026-06-11T14:12:13.040Z"
+    },
+    "cust_7c39313ceae0": {
+      "customerId": "cust_7c39313ceae0",
+      "peerSessionId": "cf_sess_1781186702759_e7kxpk8k",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-072",
+      "status": "closed",
+      "createdAt": "2026-06-11T14:10:13.463Z",
+      "lastSeen": "2026-06-11T14:12:13.040Z"
+    },
+    "cust_2db7b8e6742a": {
+      "customerId": "cust_2db7b8e6742a",
+      "peerSessionId": "cf_sess_1781187056675_2bjecuc7",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-074",
+      "status": "closed",
+      "createdAt": "2026-06-11T14:11:30.089Z",
+      "lastSeen": "2026-06-11T14:12:13.040Z"
+    },
+    "cust_mq9kugq6vsv35h": {
+      "customerId": "cust_mq9kugq6vsv35h",
+      "peerSessionId": "cf_sess_1781187117851_bjtkle6d",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-076",
+      "status": "closed",
+      "createdAt": "2026-06-11T14:12:40.203Z",
+      "lastSeen": "2026-06-11T15:01:36.589Z"
+    },
+    "cust_mq9m43zddvvrgj": {
+      "customerId": "cust_mq9m43zddvvrgj",
+      "peerSessionId": "cf_sess_1781187133333_3z1xppzh",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-077",
+      "status": "closed",
+      "createdAt": "2026-06-11T14:48:09.617Z",
+      "lastSeen": "2026-06-11T15:01:36.589Z"
+    },
+    "cust_mq9mr199m3ma7b": {
+      "customerId": "cust_mq9mr199m3ma7b",
+      "peerSessionId": "cf_sess_1781190096630_28je3apw",
+      "customerName": "ع",
+      "tableId": "2",
+      "activeOrderId": "T2-078",
+      "status": "closed",
+      "createdAt": "2026-06-11T15:05:59.453Z",
+      "lastSeen": "2026-06-11T15:17:12.817Z"
+    },
+    "cust_9ef233f6b809": {
+      "customerId": "cust_9ef233f6b809",
+      "peerSessionId": "cf_sess_1781187133333_3z1xppzh",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-079",
+      "status": "closed",
+      "createdAt": "2026-06-11T15:05:59.485Z",
+      "lastSeen": "2026-06-11T15:17:12.817Z"
+    },
+    "cust_mq9y84zyirodco": {
+      "customerId": "cust_mq9y84zyirodco",
+      "peerSessionId": "cf_sess_1781191033233_iui1fbdw",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-080",
+      "status": "closed",
+      "createdAt": "2026-06-11T20:27:12.783Z",
+      "lastSeen": "2026-06-11T20:46:19.047Z"
+    },
+    "cust_mq9y95jroku88p": {
+      "customerId": "cust_mq9y95jroku88p",
+      "peerSessionId": "cf_sess_1781209524558_xtwe1b5k",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-081",
+      "status": "closed",
+      "createdAt": "2026-06-11T20:28:00.214Z",
+      "lastSeen": "2026-06-11T20:46:19.047Z"
+    },
+    "cust_3b66a55fe786": {
+      "customerId": "cust_3b66a55fe786",
+      "peerSessionId": "cf_sess_1781191033233_iui1fbdw",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-082",
+      "status": "closed",
+      "createdAt": "2026-06-11T20:28:00.238Z",
+      "lastSeen": "2026-06-11T20:46:19.047Z"
+    },
+    "cust_mq9yx950syi3hw": {
+      "customerId": "cust_mq9yx950syi3hw",
+      "peerSessionId": "cf_sess_1781210779553_9vdjbh9w",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-083",
+      "status": "closed",
+      "createdAt": "2026-06-11T20:46:44.525Z",
+      "lastSeen": "2026-06-11T20:47:05.672Z"
+    },
+    "cust_mq9z7bn1byppnj": {
+      "customerId": "cust_mq9z7bn1byppnj",
+      "peerSessionId": "cf_sess_1781210826061_mat3yqzg",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-084",
+      "status": "closed",
+      "createdAt": "2026-06-11T20:54:34.321Z",
+      "lastSeen": "2026-06-11T20:55:10.630Z"
+    },
+    "cust_mq9zie6w9x31xc": {
+      "customerId": "cust_mq9zie6w9x31xc",
+      "peerSessionId": "cf_sess_1781211629760_k3rxbf7i",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-088",
+      "status": "closed",
+      "createdAt": "2026-06-11T21:03:11.010Z",
+      "lastSeen": "2026-06-11T21:10:04.790Z"
+    },
+    "cust_0d9a0503a477": {
+      "customerId": "cust_0d9a0503a477",
+      "peerSessionId": "cf_sess_1781211311020_3tmzqola",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-087",
+      "status": "closed",
+      "createdAt": "2026-06-11T21:06:16.724Z",
+      "lastSeen": "2026-06-11T21:10:04.790Z"
+    },
+    "cust_49399f821905": {
+      "customerId": "cust_49399f821905",
+      "peerSessionId": "cf_sess_1781211311020_3tmzqola",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-089",
+      "status": "closed",
+      "createdAt": "2026-06-11T21:07:18.289Z",
+      "lastSeen": "2026-06-11T21:10:04.790Z"
+    },
+    "cust_mq9zx5aocljit2": {
+      "customerId": "cust_mq9zx5aocljit2",
+      "peerSessionId": "cf_sess_1781212205140_zj1zp60m",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-097",
+      "status": "closed",
+      "createdAt": "2026-06-11T21:14:39.451Z",
+      "lastSeen": "2026-06-11T22:00:43.136Z"
+    },
+    "cust_mqa0se7wmgiqw2": {
+      "customerId": "cust_mqa0se7wmgiqw2",
+      "peerSessionId": "cf_sess_1781212205345_xs564jsq",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-098",
+      "status": "closed",
+      "createdAt": "2026-06-11T21:38:57.086Z",
+      "lastSeen": "2026-06-11T22:00:43.136Z"
+    },
+    "cust_mqa1ldpfzevqgm": {
+      "customerId": "cust_mqa1ldpfzevqgm",
+      "peerSessionId": "cf_sess_1781212205345_xs564jsq",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-099",
+      "status": "closed",
+      "createdAt": "2026-06-11T22:01:29.472Z",
+      "lastSeen": "2026-06-11T22:03:34.033Z"
+    },
+    "cust_66d784a329be": {
+      "customerId": "cust_66d784a329be",
+      "peerSessionId": "cf_sess_1781212205140_zj1zp60m",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-100",
+      "status": "closed",
+      "createdAt": "2026-06-11T22:01:29.495Z",
+      "lastSeen": "2026-06-11T22:03:34.033Z"
+    },
+    "cust_mqa1vvxw366ijb": {
+      "customerId": "cust_mqa1vvxw366ijb",
+      "peerSessionId": "cf_sess_1781215720997_1qkpe19q",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-101",
+      "status": "closed",
+      "createdAt": "2026-06-11T22:09:39.891Z",
+      "lastSeen": "2026-06-11T22:11:06.597Z"
+    },
+    "cust_b4146a269d6c": {
+      "customerId": "cust_b4146a269d6c",
+      "peerSessionId": "cf_sess_1781215414481_j0nvzhen",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "1",
+      "activeOrderId": "T1-102",
+      "status": "closed",
+      "createdAt": "2026-06-11T22:09:39.916Z",
+      "lastSeen": "2026-06-11T22:11:06.597Z"
+    },
+    "cust_mqas15bqocq9n3": {
+      "customerId": "cust_mqas15bqocq9n3",
+      "peerSessionId": "cf_sess_1781259685222_09t3sldo",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-005",
+      "status": "closed",
+      "createdAt": "2026-06-12T10:21:35.267Z",
+      "lastSeen": "2026-06-12T10:24:08.913Z"
+    },
+    "cust_mqazk76j4uphl4": {
+      "customerId": "cust_mqazk76j4uphl4",
+      "peerSessionId": "cf_sess_1781272331222_zh0k49bn",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-006",
+      "status": "closed",
+      "createdAt": "2026-06-12T13:52:21.749Z",
+      "lastSeen": "2026-06-12T13:56:49.043Z"
+    },
+    "cust_mqazs9nqjuqs9j": {
+      "customerId": "cust_mqazs9nqjuqs9j",
+      "peerSessionId": "cf_sess_1781272608927_j22fc9fl",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-028",
+      "status": "closed",
+      "createdAt": "2026-06-12T13:58:38.252Z",
+      "lastSeen": "2026-06-12T22:51:22.859Z"
+    },
+    "cust_mqbitzrtmaevwh": {
+      "customerId": "cust_mqbitzrtmaevwh",
+      "peerSessionId": "cf_sess_1781304682736_s9oidcu1",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-029",
+      "status": "closed",
+      "createdAt": "2026-06-12T22:51:51.561Z",
+      "lastSeen": "2026-06-12T22:52:24.248Z"
+    },
+    "cust_mqc7tmba43325o": {
+      "customerId": "cust_mqc7tmba43325o",
+      "peerSessionId": "cf_sess_1781346673271_8vqysba3",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-037",
+      "status": "closed",
+      "createdAt": "2026-06-13T10:31:23.379Z",
+      "lastSeen": "2026-06-13T11:51:49.942Z"
+    },
+    "cust_mqcaq1h1xny6fk": {
+      "customerId": "cust_mqcaq1h1xny6fk",
+      "peerSessionId": "cf_sess_1781351510991_qk5kvozg",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-038",
+      "status": "closed",
+      "createdAt": "2026-06-13T11:52:35.125Z",
+      "lastSeen": "2026-06-13T11:52:52.928Z"
+    },
+    "cust_mqcljkijej5ixk": {
+      "customerId": "cust_mqcljkijej5ixk",
+      "peerSessionId": "cf_sess_1781369708483_rkde9e3y",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-044",
+      "status": "closed",
+      "createdAt": "2026-06-13T16:55:28.759Z",
+      "lastSeen": "2026-06-13T17:16:44.418Z"
+    },
+    "cust_mqcmbggcrivxek": {
+      "customerId": "cust_mqcmbggcrivxek",
+      "peerSessionId": "cf_sess_1781371005493_v5t62qwj",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-048",
+      "status": "closed",
+      "createdAt": "2026-06-13T17:17:10.175Z",
+      "lastSeen": "2026-06-13T17:28:04.740Z"
+    },
+    "cust_mqcntkr90eoahi": {
+      "customerId": "cust_mqcntkr90eoahi",
+      "peerSessionId": "cf_sess_1781373540007_o5836vbj",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-050",
+      "status": "closed",
+      "createdAt": "2026-06-13T17:59:15.166Z",
+      "lastSeen": "2026-06-13T18:07:57.544Z"
+    },
+    "cust_mqcog9dudkw09d": {
+      "customerId": "cust_mqcog9dudkw09d",
+      "peerSessionId": "cf_sess_1781374597783_e2w2ugdh",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-051",
+      "status": "closed",
+      "createdAt": "2026-06-13T18:16:53.576Z",
+      "lastSeen": "2026-06-13T18:18:25.240Z"
+    },
+    "cust_mqcot4d4ifewca": {
+      "customerId": "cust_mqcot4d4ifewca",
+      "peerSessionId": "cf_sess_1781374597783_e2w2ugdh",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-052",
+      "status": "closed",
+      "createdAt": "2026-06-13T18:26:53.573Z",
+      "lastSeen": "2026-06-13T18:28:24.962Z"
+    },
+    "cust_mqdov92ywurqde": {
+      "customerId": "cust_mqdov92ywurqde",
+      "peerSessionId": "cf_sess_1781435722276_8kjmq8uv",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-054",
+      "status": "closed",
+      "createdAt": "2026-06-14T11:16:19.385Z",
+      "lastSeen": "2026-06-14T11:21:29.370Z"
+    },
+    "cust_mqdp2juj77wx41": {
+      "customerId": "cust_mqdp2juj77wx41",
+      "peerSessionId": "cf_sess_1781436090008_z3n0d28n",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-055",
+      "status": "closed",
+      "createdAt": "2026-06-14T11:21:59.980Z",
+      "lastSeen": "2026-06-14T11:25:46.358Z"
+    },
+    "cust_mqf2vbtf6rfnav": {
+      "customerId": "cust_mqf2vbtf6rfnav",
+      "peerSessionId": "cf_sess_1781438865331_5rtg5ymf",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-058",
+      "status": "closed",
+      "createdAt": "2026-06-15T10:36:03.011Z",
+      "lastSeen": "2026-06-15T10:44:03.609Z"
+    },
+    "cust_mqf32ci9z24ycj": {
+      "customerId": "cust_mqf32ci9z24ycj",
+      "peerSessionId": "cf_sess_1781520037422_da3tbyxw",
+      "customerName": "Ali Hussein",
+      "tableId": "1",
+      "activeOrderId": "T1-079",
+      "status": "closed",
+      "createdAt": "2026-06-15T10:41:31.230Z",
+      "lastSeen": "2026-06-15T22:12:50.248Z"
+    },
+    "cust_mqf3swlb8rmpfq": {
+      "customerId": "cust_mqf3swlb8rmpfq",
+      "peerSessionId": "cf_sess_1781520245036_zhga6qum",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-061",
+      "status": "closed",
+      "createdAt": "2026-06-15T11:02:09.587Z",
+      "lastSeen": "2026-06-15T11:03:39.105Z"
+    },
+    "cust_mqf3v8g33mx9s7": {
+      "customerId": "cust_mqf3v8g33mx9s7",
+      "peerSessionId": "cf_sess_1781521420513_dvp7jwfv",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-065",
+      "status": "closed",
+      "createdAt": "2026-06-15T11:03:58.251Z",
+      "lastSeen": "2026-06-15T11:37:12.813Z"
+    },
+    "cust_mqf52qog326f1y": {
+      "customerId": "cust_mqf52qog326f1y",
+      "peerSessionId": "cf_sess_1781523434386_bie3bdua",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-067",
+      "status": "closed",
+      "createdAt": "2026-06-15T11:37:48.090Z",
+      "lastSeen": "2026-06-15T11:53:55.293Z"
+    },
+    "cust_mqf5rjr9peg1xa": {
+      "customerId": "cust_mqf5rjr9peg1xa",
+      "peerSessionId": "cf_sess_1781524436711_fvclc9z5",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-069",
+      "status": "closed",
+      "createdAt": "2026-06-15T11:57:05.527Z",
+      "lastSeen": "2026-06-15T11:58:33.959Z"
+    },
+    "cust_mqf643lr2lkfds": {
+      "customerId": "cust_mqf643lr2lkfds",
+      "peerSessionId": "cf_sess_1781524715383_0r4yzdz8",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-070",
+      "status": "closed",
+      "createdAt": "2026-06-15T12:06:51.157Z",
+      "lastSeen": "2026-06-15T12:07:38.055Z"
+    },
+    "cust_mqfq2ogmzmn7uf": {
+      "customerId": "cust_mqfq2ogmzmn7uf",
+      "peerSessionId": "cf_sess_1781558676334_2r8p4i3m",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-073",
+      "status": "closed",
+      "createdAt": "2026-06-15T21:25:36.560Z",
+      "lastSeen": "2026-06-15T21:28:24.066Z"
+    },
+    "cust_mqfrbrzg5hqq4r": {
+      "customerId": "cust_mqfrbrzg5hqq4r",
+      "peerSessionId": "cf_sess_1781558906090_zd81hd9q",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-074",
+      "status": "closed",
+      "createdAt": "2026-06-15T22:00:40.635Z",
+      "lastSeen": "2026-06-15T22:06:24.749Z"
+    },
+    "cust_mqfrjgbgopxqck": {
+      "customerId": "cust_mqfrjgbgopxqck",
+      "peerSessionId": "cf_sess_1781561186778_dmlht9s1",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-078",
+      "status": "closed",
+      "createdAt": "2026-06-15T22:06:38.820Z",
+      "lastSeen": "2026-06-15T22:12:15.122Z"
+    },
+    "cust_mqfrvr3kmxrecb": {
+      "customerId": "cust_mqfrvr3kmxrecb",
+      "peerSessionId": "cf_sess_1781561693571_sul8nh4j",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-080",
+      "status": "closed",
+      "createdAt": "2026-06-15T22:16:13.447Z",
+      "lastSeen": "2026-06-21T13:31:31.373Z"
+    },
+    "cust_mqgikfg11dkzra": {
+      "customerId": "cust_mqgikfg11dkzra",
+      "peerSessionId": "cf_sess_1781561537173_nibt8yzi",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-008",
+      "status": "closed",
+      "createdAt": "2026-06-16T10:43:14.235Z",
+      "lastSeen": "2026-06-16T10:46:21.639Z"
+    },
+    "cust_mqgiptq5c3xi3n": {
+      "customerId": "cust_mqgiptq5c3xi3n",
+      "peerSessionId": "cf_sess_1781606811039_2rnl9ssd",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-009",
+      "status": "closed",
+      "createdAt": "2026-06-16T10:47:28.147Z",
+      "lastSeen": "2026-06-16T12:17:53.170Z"
+    },
+    "cust_mqgm0uc2pd1vrd": {
+      "customerId": "cust_mqgm0uc2pd1vrd",
+      "peerSessionId": "cf_sess_1781612325730_rzqa4y9a",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-016",
+      "status": "closed",
+      "createdAt": "2026-06-16T12:20:00.199Z",
+      "lastSeen": "2026-06-16T12:40:02.839Z"
+    },
+    "cust_mqgm0vnmdbxt7c": {
+      "customerId": "cust_mqgm0vnmdbxt7c",
+      "peerSessionId": "cf_sess_1781561537173_nibt8yzi",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "3",
+      "activeOrderId": "T3-015",
+      "status": "closed",
+      "createdAt": "2026-06-16T12:20:00.641Z",
+      "lastSeen": "2026-06-16T12:40:37.323Z"
+    },
+    "cust_mqgmt8a7lq70h1": {
+      "customerId": "cust_mqgmt8a7lq70h1",
+      "peerSessionId": "cf_sess_1781561537173_nibt8yzi",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "3",
+      "activeOrderId": "T3-018",
+      "status": "closed",
+      "createdAt": "2026-06-16T12:42:03.325Z",
+      "lastSeen": "2026-06-16T12:50:27.914Z"
+    },
+    "cust_fb52f026b6fe": {
+      "customerId": "cust_fb52f026b6fe",
+      "peerSessionId": "cf_sess_1781613686166_4tp6710e",
+      "customerName": "Ali Hussein",
+      "tableId": "3",
+      "activeOrderId": "T3-019",
+      "status": "closed",
+      "createdAt": "2026-06-16T12:42:03.345Z",
+      "lastSeen": "2026-06-16T12:50:27.914Z"
+    },
+    "cust_mqhzauz6uhjg1a": {
+      "customerId": "cust_mqhzauz6uhjg1a",
+      "peerSessionId": "cf_sess_1781695098700_zycbod24",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-023",
+      "status": "closed",
+      "createdAt": "2026-06-17T11:19:29.634Z",
+      "lastSeen": "2026-06-17T11:34:43.349Z"
+    },
+    "cust_mqi04doeyzmjwn": {
+      "customerId": "cust_mqi04doeyzmjwn",
+      "peerSessionId": "cf_sess_1781696082899_8e58yzmc",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-024",
+      "status": "closed",
+      "createdAt": "2026-06-17T11:42:26.598Z",
+      "lastSeen": "2026-06-17T11:47:30.944Z"
+    },
+    "cust_mqi06pnqkv6tt5": {
+      "customerId": "cust_mqi06pnqkv6tt5",
+      "peerSessionId": "cf_sess_1781614229707_6ucsljqn",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-027",
+      "status": "closed",
+      "createdAt": "2026-06-17T11:44:14.786Z",
+      "lastSeen": "2026-06-17T11:55:34.947Z"
+    },
+    "cust_mqi1jaam95go2x": {
+      "customerId": "cust_mqi1jaam95go2x",
+      "peerSessionId": "cf_sess_1781698912597_g3ockqya",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-030",
+      "status": "closed",
+      "createdAt": "2026-06-17T12:22:01.628Z",
+      "lastSeen": "2026-06-17T12:23:20.580Z"
+    },
+    "cust_mqi2kiy701q7xw": {
+      "customerId": "cust_mqi2kiy701q7xw",
+      "peerSessionId": "cf_sess_1781614229707_6ucsljqn",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-031",
+      "status": "closed",
+      "createdAt": "2026-06-17T12:50:58.503Z",
+      "lastSeen": "2026-06-17T12:56:22.062Z"
+    },
+    "cust_mqi3c9jez1cqel": {
+      "customerId": "cust_mqi3c9jez1cqel",
+      "peerSessionId": "cf_sess_1781700982530_ijx1v1st",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-032",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:12:32.673Z",
+      "lastSeen": "2026-06-17T13:12:50.050Z"
+    },
+    "cust_mqi3dm8l793rp8": {
+      "customerId": "cust_mqi3dm8l793rp8",
+      "peerSessionId": "cf_sess_1781702006069_9gueqoch",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-033",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:13:36.264Z",
+      "lastSeen": "2026-06-17T13:14:03.048Z"
+    },
+    "cust_mqi3iccyasupck": {
+      "customerId": "cust_mqi3iccyasupck",
+      "peerSessionId": "cf_sess_1781701970536_ndq9bnfj",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-036",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:17:16.260Z",
+      "lastSeen": "2026-06-17T13:19:40.646Z"
+    },
+    "cust_a1acb1eaef59": {
+      "customerId": "cust_a1acb1eaef59",
+      "peerSessionId": "cf_sess_1781702204881_f0gsfgd3",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-035",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:17:16.283Z",
+      "lastSeen": "2026-06-17T13:19:40.646Z"
+    },
+    "cust_50a17fcbb726": {
+      "customerId": "cust_50a17fcbb726",
+      "peerSessionId": "cf_sess_1781702204881_f0gsfgd3",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-038",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:18:26.598Z",
+      "lastSeen": "2026-06-17T13:19:40.646Z"
+    },
+    "cust_f7da8d5b0ed7": {
+      "customerId": "cust_f7da8d5b0ed7",
+      "peerSessionId": "cf_sess_1781701970536_ndq9bnfj",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-039",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:19:04.209Z",
+      "lastSeen": "2026-06-17T13:19:40.646Z"
+    },
+    "cust_mqi3lqk2lsfo7c": {
+      "customerId": "cust_mqi3lqk2lsfo7c",
+      "peerSessionId": "cf_sess_1781702384854_cik6rvsz",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-040",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:19:55.378Z",
+      "lastSeen": "2026-06-17T13:20:14.281Z"
+    },
+    "cust_mqi405at1mkprk": {
+      "customerId": "cust_mqi405at1mkprk",
+      "peerSessionId": "cf_sess_1781702381114_puye4ei0",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-041",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:31:06.930Z",
+      "lastSeen": "2026-06-17T13:31:31.227Z"
+    },
+    "cust_6456dece16eb": {
+      "customerId": "cust_6456dece16eb",
+      "peerSessionId": "cf_sess_1781703027530_x4s9aokw",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-042",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:31:06.954Z",
+      "lastSeen": "2026-06-17T13:31:31.227Z"
+    },
+    "cust_mqi41yfrexdtcl": {
+      "customerId": "cust_mqi41yfrexdtcl",
+      "peerSessionId": "cf_sess_1781703104685_b8i2gl9a",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-043",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:32:31.842Z",
+      "lastSeen": "2026-06-17T13:32:50.890Z"
+    },
+    "cust_ea7e381e5a87": {
+      "customerId": "cust_ea7e381e5a87",
+      "peerSessionId": "cf_sess_1781703091703_rl0l3fad",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-044",
+      "status": "closed",
+      "createdAt": "2026-06-17T13:32:31.862Z",
+      "lastSeen": "2026-06-17T13:32:50.890Z"
+    },
+    "cust_mqi5740s84cqfo": {
+      "customerId": "cust_mqi5740s84cqfo",
+      "peerSessionId": "cf_sess_1781703171678_0wyu3ml5",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-047",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:04:31.484Z",
+      "lastSeen": "2026-06-17T14:09:41.973Z"
+    },
+    "cust_07d0bb3b0f90": {
+      "customerId": "cust_07d0bb3b0f90",
+      "peerSessionId": "cf_sess_1781705295433_1vf6ugxl",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-048",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:09:04.970Z",
+      "lastSeen": "2026-06-17T14:09:41.973Z"
+    },
+    "cust_mqi5j5tzag4yle": {
+      "customerId": "cust_mqi5j5tzag4yle",
+      "peerSessionId": "cf_sess_1781705382452_hi5tor7h",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-049",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:13:53.706Z",
+      "lastSeen": "2026-06-17T14:14:31.730Z"
+    },
+    "cust_8e9748e92e6d": {
+      "customerId": "cust_8e9748e92e6d",
+      "peerSessionId": "cf_sess_1781705559231_sdtvh7ly",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-050",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:13:53.743Z",
+      "lastSeen": "2026-06-17T14:14:31.730Z"
+    },
+    "cust_mqi5twb1l6hruw": {
+      "customerId": "cust_mqi5twb1l6hruw",
+      "peerSessionId": "cf_sess_1781705672224_32lp3zgh",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-055",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:22:14.607Z",
+      "lastSeen": "2026-06-17T14:28:39.346Z"
+    },
+    "cust_ce1464aa0988": {
+      "customerId": "cust_ce1464aa0988",
+      "peerSessionId": "cf_sess_1781706114671_kuxsxvu0",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-052",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:22:14.655Z",
+      "lastSeen": "2026-06-17T14:28:39.346Z"
+    },
+    "cust_008860048857": {
+      "customerId": "cust_008860048857",
+      "peerSessionId": "cf_sess_1781706114671_kuxsxvu0",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-054",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:24:19.538Z",
+      "lastSeen": "2026-06-17T14:28:39.346Z"
+    },
+    "cust_ee74f8f21d44": {
+      "customerId": "cust_ee74f8f21d44",
+      "peerSessionId": "cf_sess_1781706331162_2cvsdxcf",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-056",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:26:52.601Z",
+      "lastSeen": "2026-06-17T14:28:39.346Z"
+    },
+    "cust_mqi63pb4wekzc7": {
+      "customerId": "cust_mqi63pb4wekzc7",
+      "peerSessionId": "cf_sess_1781706583210_c94x3cgw",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-057",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:29:52.500Z",
+      "lastSeen": "2026-06-17T14:38:09.301Z"
+    },
+    "cust_mqi6pzg05pc922": {
+      "customerId": "cust_mqi6pzg05pc922",
+      "peerSessionId": "cf_sess_1781707610526_j5fdd1nb",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-058",
+      "status": "closed",
+      "createdAt": "2026-06-17T14:47:12.102Z",
+      "lastSeen": "2026-06-17T14:49:27.280Z"
+    },
+    "cust_mqjj8n9xe6m2ls": {
+      "customerId": "cust_mqjj8n9xe6m2ls",
+      "peerSessionId": "cf_sess_1781707089774_j5nrx1at",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-059",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:25:23.544Z",
+      "lastSeen": "2026-06-18T13:28:40.495Z"
+    },
+    "cust_mqjje495iapfdy": {
+      "customerId": "cust_mqjje495iapfdy",
+      "peerSessionId": "cf_sess_1781789351157_amxin9ot",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-060",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:29:39.856Z",
+      "lastSeen": "2026-06-18T13:31:52.061Z"
+    },
+    "cust_mqjji5c457vuze": {
+      "customerId": "cust_mqjji5c457vuze",
+      "peerSessionId": "cf_sess_1781789321347_udw5m0gz",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-061",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:32:46.895Z",
+      "lastSeen": "2026-06-18T13:37:47.482Z"
+    },
+    "cust_1b7c06180c65": {
+      "customerId": "cust_1b7c06180c65",
+      "peerSessionId": "cf_sess_1781789523836_83vq9pcv",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-062",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:32:46.918Z",
+      "lastSeen": "2026-06-18T13:37:47.482Z"
+    },
+    "cust_mqjjkehdh05f2x": {
+      "customerId": "cust_mqjjkehdh05f2x",
+      "peerSessionId": "cf_sess_1781789645558_putzvdl5",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-063",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:34:33.088Z",
+      "lastSeen": "2026-06-18T13:37:47.482Z"
+    },
+    "cust_mqjjlu399sa7sc": {
+      "customerId": "cust_mqjjlu399sa7sc",
+      "peerSessionId": "cf_sess_1781789727989_tg1lqk3x",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-064",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:35:39.944Z",
+      "lastSeen": "2026-06-18T13:36:41.186Z"
+    },
+    "cust_mqjjpg7fb41pow": {
+      "customerId": "cust_mqjjpg7fb41pow",
+      "peerSessionId": "cf_sess_1781789885577_hyb08nsu",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-065",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:38:28.700Z",
+      "lastSeen": "2026-06-18T13:55:58.551Z"
+    },
+    "cust_793eacb64f9d": {
+      "customerId": "cust_793eacb64f9d",
+      "peerSessionId": "cf_sess_1781789868347_450cv2df",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-067",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:38:28.721Z",
+      "lastSeen": "2026-06-18T13:55:58.551Z"
+    },
+    "cust_mqjkfermqwps1y": {
+      "customerId": "cust_mqjkfermqwps1y",
+      "peerSessionId": "cf_sess_1781789868347_450cv2df",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-068",
+      "status": "closed",
+      "createdAt": "2026-06-18T13:58:38.746Z",
+      "lastSeen": "2026-06-18T14:07:25.957Z"
+    },
+    "cust_mqjlal08bbzwe4": {
+      "customerId": "cust_mqjlal08bbzwe4",
+      "peerSessionId": "cf_sess_1781791646771_tdrcnq0j",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-070",
+      "status": "closed",
+      "createdAt": "2026-06-18T14:22:53.144Z",
+      "lastSeen": "2026-06-18T14:37:08.493Z"
+    },
+    "cust_mqjlt396r7pif8": {
+      "customerId": "cust_mqjlt396r7pif8",
+      "peerSessionId": "cf_sess_1781793392382_dfolt5t6",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-071",
+      "status": "closed",
+      "createdAt": "2026-06-18T14:37:17.601Z",
+      "lastSeen": "2026-06-18T14:46:34.229Z"
+    },
+    "cust_mqjmgxdddtmdrs": {
+      "customerId": "cust_mqjmgxdddtmdrs",
+      "peerSessionId": "cf_sess_1781793429579_hnhqxrnn",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-073",
+      "status": "closed",
+      "createdAt": "2026-06-18T14:55:48.733Z",
+      "lastSeen": "2026-06-18T14:58:54.952Z"
+    },
+    "cust_mqjml721u44g5c": {
+      "customerId": "cust_mqjml721u44g5c",
+      "peerSessionId": "cf_sess_1781794735788_azzfafcr",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-074",
+      "status": "closed",
+      "createdAt": "2026-06-18T14:59:08.059Z",
+      "lastSeen": "2026-06-18T15:13:35.564Z"
+    },
+    "cust_mqjn47f81krr68": {
+      "customerId": "cust_mqjn47f81krr68",
+      "peerSessionId": "cf_sess_1781795616754_31xlsyuz",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-075",
+      "status": "closed",
+      "createdAt": "2026-06-18T15:13:54.844Z",
+      "lastSeen": "2026-06-18T15:15:39.511Z"
+    },
+    "cust_mqjn6sg5hfzh4y": {
+      "customerId": "cust_mqjn6sg5hfzh4y",
+      "peerSessionId": "cf_sess_1781795740350_0iis0xyx",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-077",
+      "status": "closed",
+      "createdAt": "2026-06-18T15:15:55.410Z",
+      "lastSeen": "2026-06-18T15:31:34.022Z"
+    },
+    "cust_mqjnv10hhwio4z": {
+      "customerId": "cust_mqjnv10hhwio4z",
+      "peerSessionId": "cf_sess_1781796694960_rfv1bbqf",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-079",
+      "status": "closed",
+      "createdAt": "2026-06-18T15:34:46.249Z",
+      "lastSeen": "2026-06-18T15:39:23.577Z"
+    },
+    "cust_mqjo1j1k10dsap": {
+      "customerId": "cust_mqjo1j1k10dsap",
+      "peerSessionId": "cf_sess_1781797164485_kayww4ai",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "6",
+      "activeOrderId": "T6-081",
+      "status": "closed",
+      "createdAt": "2026-06-18T15:39:49.558Z",
+      "lastSeen": "2026-06-18T15:43:36.661Z"
+    },
+    "cust_mqjo4hhmkobvtz": {
+      "customerId": "cust_mqjo4hhmkobvtz",
+      "peerSessionId": "cf_sess_1781797317139_s12buei1",
+      "customerName": "Ali Hussein",
+      "tableId": "6",
+      "activeOrderId": "T6-083",
+      "status": "closed",
+      "createdAt": "2026-06-18T15:42:08.576Z",
+      "lastSeen": "2026-06-18T15:43:36.661Z"
+    },
+    "cust_mqkwe1cyvia9wq": {
+      "customerId": "cust_mqkwe1cyvia9wq",
+      "peerSessionId": "cf_sess_1781797417972_kft5xck8",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-084",
+      "status": "closed",
+      "createdAt": "2026-06-19T12:21:17.449Z",
+      "lastSeen": "2026-06-19T12:24:09.173Z"
+    },
+    "cust_mqkwglv8a7i0ci": {
+      "customerId": "cust_mqkwglv8a7i0ci",
+      "peerSessionId": "cf_sess_1781797417972_kft5xck8",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-085",
+      "status": "closed",
+      "createdAt": "2026-06-19T12:23:17.327Z",
+      "lastSeen": "2026-06-19T12:24:09.173Z"
+    },
+    "cust_mqkwilb4uwuxbh": {
+      "customerId": "cust_mqkwilb4uwuxbh",
+      "peerSessionId": "cf_sess_1781871848870_xk19j2r3",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-087",
+      "status": "closed",
+      "createdAt": "2026-06-19T12:24:49.926Z",
+      "lastSeen": "2026-06-19T12:35:48.145Z"
+    },
+    "cust_mql7pij33fm2il": {
+      "customerId": "cust_mql7pij33fm2il",
+      "peerSessionId": "cf_sess_1781872547795_d6b7jx6h",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-088",
+      "status": "closed",
+      "createdAt": "2026-06-19T17:38:08.255Z",
+      "lastSeen": "2026-06-19T17:39:35.665Z"
+    },
+    "cust_mql7zpmbqlebyi": {
+      "customerId": "cust_mql7zpmbqlebyi",
+      "peerSessionId": "cf_sess_1781891155943_fdmuphxi",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-089",
+      "status": "closed",
+      "createdAt": "2026-06-19T17:46:04.053Z",
+      "lastSeen": "2026-06-19T17:48:39.441Z"
+    },
+    "cust_mqm2obxlshvrkb": {
+      "customerId": "cust_mqm2obxlshvrkb",
+      "peerSessionId": "cf_sess_1781890775769_00d9cpta",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-090",
+      "status": "closed",
+      "createdAt": "2026-06-20T08:05:00.975Z",
+      "lastSeen": "2026-06-20T08:27:15.638Z"
+    },
+    "cust_mqm3hoyl8zaog1": {
+      "customerId": "cust_mqm3hoyl8zaog1",
+      "peerSessionId": "cf_sess_1781944035878_lw9pfs6v",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-091",
+      "status": "closed",
+      "createdAt": "2026-06-20T08:27:50.996Z",
+      "lastSeen": "2026-06-20T08:32:29.243Z"
+    },
+    "cust_mqm3pjhltjdgy3": {
+      "customerId": "cust_mqm3pjhltjdgy3",
+      "peerSessionId": "cf_sess_1781944349485_gexbrdqj",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-095",
+      "status": "closed",
+      "createdAt": "2026-06-20T08:33:57.039Z",
+      "lastSeen": "2026-06-20T09:42:45.786Z"
+    },
+    "cust_mqm66gh94inbvw": {
+      "customerId": "cust_mqm66gh94inbvw",
+      "peerSessionId": "cf_sess_1781948566647_43utgxpv",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-096",
+      "status": "closed",
+      "createdAt": "2026-06-20T09:43:05.921Z",
+      "lastSeen": "2026-06-20T09:44:21.205Z"
+    },
+    "cust_mqm68uoiri316i": {
+      "customerId": "cust_mqm68uoiri316i",
+      "peerSessionId": "cf_sess_1781948661459_7cavlvt3",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-100",
+      "status": "closed",
+      "createdAt": "2026-06-20T09:44:57.261Z",
+      "lastSeen": "2026-06-20T10:20:04.085Z"
+    },
+    "cust_mqm7iqunp1lgdq": {
+      "customerId": "cust_mqm7iqunp1lgdq",
+      "peerSessionId": "cf_sess_1781950804679_3vpgky1s",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-102",
+      "status": "closed",
+      "createdAt": "2026-06-20T10:20:38.481Z",
+      "lastSeen": "2026-06-20T10:53:22.070Z"
+    },
+    "cust_mqm8naqs5kanpc": {
+      "customerId": "cust_mqm8naqs5kanpc",
+      "peerSessionId": "cf_sess_1781952715742_yhkj318x",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-103",
+      "status": "closed",
+      "createdAt": "2026-06-20T10:52:11.425Z",
+      "lastSeen": "2026-06-20T10:53:22.070Z"
+    },
+    "cust_mqm954dyiha6nx": {
+      "customerId": "cust_mqm954dyiha6nx",
+      "peerSessionId": "cf_sess_1781952802358_ufakfkag",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-104",
+      "status": "closed",
+      "createdAt": "2026-06-20T11:06:02.369Z",
+      "lastSeen": "2026-06-20T11:07:49.919Z"
+    },
+    "cust_mqm9kkevbmcdd0": {
+      "customerId": "cust_mqm9kkevbmcdd0",
+      "peerSessionId": "cf_sess_1781954271878_br2vo2co",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-108",
+      "status": "closed",
+      "createdAt": "2026-06-20T11:18:02.989Z",
+      "lastSeen": "2026-06-20T11:36:31.609Z"
+    },
+    "cust_mqma8n20zghdw4": {
+      "customerId": "cust_mqma8n20zghdw4",
+      "peerSessionId": "cf_sess_1781955392005_v6j0mf5j",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-112",
+      "status": "closed",
+      "createdAt": "2026-06-20T11:36:46.154Z",
+      "lastSeen": "2026-06-20T11:48:59.291Z"
+    },
+    "cust_mqmh0rhj2i5dtd": {
+      "customerId": "cust_mqmh0rhj2i5dtd",
+      "peerSessionId": "cf_sess_1781956139655_c6fciky5",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-114",
+      "status": "closed",
+      "createdAt": "2026-06-20T14:46:35.074Z",
+      "lastSeen": "2026-06-20T15:09:08.462Z"
+    },
+    "cust_mqmhuan3mplkos": {
+      "customerId": "cust_mqmhuan3mplkos",
+      "peerSessionId": "cf_sess_1781968149344_pqmh9ych",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-117",
+      "status": "closed",
+      "createdAt": "2026-06-20T15:09:32.914Z",
+      "lastSeen": "2026-06-20T15:22:11.599Z"
+    },
+    "cust_mqmhy0dqo0qbkz": {
+      "customerId": "cust_mqmhy0dqo0qbkz",
+      "peerSessionId": "cf_sess_1780927566872_em00wbkj",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-116",
+      "status": "closed",
+      "createdAt": "2026-06-20T15:12:27.033Z",
+      "lastSeen": "2026-06-20T15:22:27.219Z"
+    },
+    "cust_mqmxl1tcdltqya": {
+      "customerId": "cust_mqmxl1tcdltqya",
+      "peerSessionId": "cf_sess_1781968932503_r7jum1yd",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-118",
+      "status": "closed",
+      "createdAt": "2026-06-20T22:30:15.379Z",
+      "lastSeen": "2026-06-20T22:32:45.280Z"
+    },
+    "cust_mqmxohnncrkxry": {
+      "customerId": "cust_mqmxohnncrkxry",
+      "peerSessionId": "cf_sess_1781994766152_z50t764h",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-119",
+      "status": "closed",
+      "createdAt": "2026-06-20T22:32:55.864Z",
+      "lastSeen": "2026-06-20T22:34:54.890Z"
+    },
+    "cust_mqnozmsq98wx6z": {
+      "customerId": "cust_mqnozmsq98wx6z",
+      "peerSessionId": "cf_sess_1781968947253_f9tdcrfs",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-120",
+      "status": "closed",
+      "createdAt": "2026-06-21T11:17:26.235Z",
+      "lastSeen": "2026-06-21T11:19:06.549Z"
+    },
+    "cust_mqnp5stemd9ogi": {
+      "customerId": "cust_mqnp5stemd9ogi",
+      "peerSessionId": "cf_sess_1782040923210_e78ffs9b",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-121",
+      "status": "closed",
+      "createdAt": "2026-06-21T11:22:13.964Z",
+      "lastSeen": "2026-06-21T11:23:17.490Z"
+    },
+    "cust_mqnpay8kbrjha4": {
+      "customerId": "cust_mqnpay8kbrjha4",
+      "peerSessionId": "cf_sess_1781994895780_7wtq1s0h",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-126",
+      "status": "closed",
+      "createdAt": "2026-06-21T11:26:13.474Z",
+      "lastSeen": "2026-06-21T12:16:32.590Z"
+    },
+    "cust_mqnpd8o5wmnwrx": {
+      "customerId": "cust_mqnpd8o5wmnwrx",
+      "peerSessionId": "cf_sess_1782041269946_l83g7kgs",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-123",
+      "status": "closed",
+      "createdAt": "2026-06-21T11:28:01.343Z",
+      "lastSeen": "2026-06-21T12:16:32.590Z"
+    },
+    "cust_mqnr4mz5d1kyqh": {
+      "customerId": "cust_mqnr4mz5d1kyqh",
+      "peerSessionId": "cf_sess_1782044193636_h5btqvky",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-130",
+      "status": "closed",
+      "createdAt": "2026-06-21T12:17:18.178Z",
+      "lastSeen": "2026-06-21T13:02:55.623Z"
+    },
+    "cust_mqnsrogtxst32c": {
+      "customerId": "cust_mqnsrogtxst32c",
+      "peerSessionId": "cf_sess_1782044193636_h5btqvky",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "2",
+      "activeOrderId": "T2-133",
+      "status": "closed",
+      "createdAt": "2026-06-21T13:03:12.828Z",
+      "lastSeen": "2026-06-21T13:27:53.616Z"
+    },
+    "cust_mqntpa45e4phve": {
+      "customerId": "cust_mqntpa45e4phve",
+      "peerSessionId": "cf_sess_1782048474661_q6sew7in",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-001",
+      "status": "closed",
+      "createdAt": "2026-06-21T13:29:20.530Z",
+      "lastSeen": "2026-06-21T13:31:31.373Z"
+    },
+    "cust_mqntquusnfwev8": {
+      "customerId": "cust_mqntquusnfwev8",
+      "peerSessionId": "cf_sess_1782048624217_vevzdje1",
+      "customerName": "Ali Hussein",
+      "tableId": "2",
+      "activeOrderId": "T2-004",
+      "status": "closed",
+      "createdAt": "2026-06-21T13:30:35.176Z",
+      "lastSeen": "2026-06-21T13:31:16.419Z"
+    },
+    "cust_mqntsxdcniyhhc": {
+      "customerId": "cust_mqntsxdcniyhhc",
+      "peerSessionId": "cf_sess_1782048708006_0ysvjlgl",
+      "customerName": "Ali Hussein",
+      "tableId": "11",
+      "activeOrderId": "T11-005",
+      "status": "closed",
+      "createdAt": "2026-06-21T13:32:11.760Z",
+      "lastSeen": "2026-06-21T14:20:12.371Z"
+    },
+    "cust_774403a7eca3": {
+      "customerId": "cust_774403a7eca3",
+      "peerSessionId": "cf_sess_1782048692195_wmuoi3uw",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-006",
+      "status": "closed",
+      "createdAt": "2026-06-21T13:32:11.807Z",
+      "lastSeen": "2026-06-21T14:20:12.371Z"
+    },
+    "cust_mqo3tijkcuhj71": {
+      "customerId": "cust_mqo3tijkcuhj71",
+      "peerSessionId": "cf_sess_1782065505219_6llev0e1",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-007",
+      "status": "closed",
+      "createdAt": "2026-06-21T18:12:34.210Z",
+      "lastSeen": "2026-06-21T18:27:24.745Z"
+    },
+    "cust_mqo3vg9yellxrq": {
+      "customerId": "cust_mqo3vg9yellxrq",
+      "peerSessionId": "cf_sess_1782051613694_u6girxcg",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "10",
+      "activeOrderId": "T10-010",
+      "status": "closed",
+      "createdAt": "2026-06-21T18:14:03.791Z",
+      "lastSeen": "2026-06-21T21:28:35.810Z"
+    },
+    "cust_mqo4dmi5ke0isd": {
+      "customerId": "cust_mqo4dmi5ke0isd",
+      "peerSessionId": "cf_sess_1782066482440_hvgkg0ea",
+      "customerName": "Ali Hussein",
+      "tableId": "10",
+      "activeOrderId": "T10-011",
+      "status": "closed",
+      "createdAt": "2026-06-21T18:28:12.428Z",
+      "lastSeen": "2026-06-21T21:28:35.810Z"
+    },
+    "cust_mqoatwwi0fyj87": {
+      "customerId": "cust_mqoatwwi0fyj87",
+      "peerSessionId": "cf_sess_1782077322103_ae2z7a0e",
+      "customerName": "Ali Hussein",
+      "tableId": "10",
+      "activeOrderId": "T10-012",
+      "status": "closed",
+      "createdAt": "2026-06-21T21:28:50.670Z",
+      "lastSeen": "2026-06-22T13:58:25.795Z"
+    },
+    "cust_mqob3wloyaobwq": {
+      "customerId": "cust_mqob3wloyaobwq",
+      "peerSessionId": "cf_sess_1782077781377_5ltotsdf",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-014",
+      "status": "closed",
+      "createdAt": "2026-06-21T21:36:36.771Z",
+      "lastSeen": "2026-06-21T21:58:08.919Z"
+    },
+    "cust_mqobu6vch62r3y": {
+      "customerId": "cust_mqobu6vch62r3y",
+      "peerSessionId": "cf_sess_1782051613694_u6girxcg",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-015",
+      "status": "closed",
+      "createdAt": "2026-06-21T21:57:02.344Z",
+      "lastSeen": "2026-06-21T21:57:50.009Z"
+    },
+    "cust_mqp9sdodmc0dcz": {
+      "customerId": "cust_mqp9sdodmc0dcz",
+      "peerSessionId": "cf_sess_1782135093279_vccbf5v0",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "10",
+      "activeOrderId": "T10-018",
+      "status": "closed",
+      "createdAt": "2026-06-22T13:47:24.403Z",
+      "lastSeen": "2026-06-22T13:58:25.795Z"
+    },
+    "cust_mqpa34097ff2l5": {
+      "customerId": "cust_mqpa34097ff2l5",
+      "peerSessionId": "cf_sess_1782136536848_gb9y8vkc",
+      "customerName": "Ali Hussein",
+      "tableId": "10",
+      "activeOrderId": "T10-017",
+      "status": "closed",
+      "createdAt": "2026-06-22T13:55:46.656Z",
+      "lastSeen": "2026-06-22T13:58:25.795Z"
+    },
+    "cust_207ba13c74c3": {
+      "customerId": "cust_207ba13c74c3",
+      "peerSessionId": "cf_sess_1782136536848_gb9y8vkc",
+      "customerName": "Ali Hussein",
+      "tableId": "10",
+      "activeOrderId": "T10-019",
+      "status": "closed",
+      "createdAt": "2026-06-22T13:56:01.239Z",
+      "lastSeen": "2026-06-22T13:58:25.795Z"
+    },
+    "cust_mqql2zoshcdyf2": {
+      "customerId": "cust_mqql2zoshcdyf2",
+      "peerSessionId": "cf_sess_1782215462023_irttov98",
+      "customerName": "Ali Hussein",
+      "tableId": "10",
+      "activeOrderId": "T10-020",
+      "status": "closed",
+      "createdAt": "2026-06-23T11:51:23.547Z",
+      "lastSeen": "2026-06-23T11:53:47.888Z"
+    },
+    "cust_mqqln417wk6l2v": {
+      "customerId": "cust_mqqln417wk6l2v",
+      "peerSessionId": "cf_sess_1782136707452_f5wmacet",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "9",
+      "activeOrderId": "T9-021",
+      "status": "closed",
+      "createdAt": "2026-06-23T12:07:01.760Z",
+      "lastSeen": "2026-06-23T12:47:54.113Z"
+    },
+    "cust_mqqmx5m43hiwr3": {
+      "customerId": "cust_mqqmx5m43hiwr3",
+      "peerSessionId": "cf_sess_1782218559748_a463l7rk",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-023",
+      "status": "closed",
+      "createdAt": "2026-06-23T12:42:50.328Z",
+      "lastSeen": "2026-06-23T12:47:54.113Z"
+    },
+    "cust_310d8bfd1022": {
+      "customerId": "cust_310d8bfd1022",
+      "peerSessionId": "cf_sess_1782136707452_f5wmacet",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "9",
+      "activeOrderId": "T9-024",
+      "status": "closed",
+      "createdAt": "2026-06-23T12:45:23.764Z",
+      "lastSeen": "2026-06-23T12:47:54.113Z"
+    },
+    "cust_mqqn4667fr0ncy": {
+      "customerId": "cust_mqqn4667fr0ncy",
+      "peerSessionId": "cf_sess_1782218885636_bk204c9h",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-025",
+      "status": "closed",
+      "createdAt": "2026-06-23T12:48:18.013Z",
+      "lastSeen": "2026-06-23T12:49:27.857Z"
+    },
+    "cust_mqrmek7rw6e4pi": {
+      "customerId": "cust_mqrmek7rw6e4pi",
+      "peerSessionId": "cf_sess_1782278125391_eye5txpu",
+      "customerName": "Ali Hussein",
+      "tableId": "10",
+      "activeOrderId": "T10-027",
+      "status": "closed",
+      "createdAt": "2026-06-24T05:16:08.529Z",
+      "lastSeen": "2026-06-24T05:25:09.834Z"
+    },
+    "cust_mqrmk7r8lyvfnp": {
+      "customerId": "cust_mqrmk7r8lyvfnp",
+      "peerSessionId": "cf_sess_1782218874486_ineyywtn",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "11",
+      "activeOrderId": "T11-032",
+      "status": "closed",
+      "createdAt": "2026-06-24T05:20:32.239Z",
+      "lastSeen": "2026-06-24T05:25:14.348Z"
+    },
+    "cust_mqrmrnoj75jm14": {
+      "customerId": "cust_mqrmrnoj75jm14",
+      "peerSessionId": "cf_sess_1782278714710_4qzvhggh",
+      "customerName": "MUSTAFA AIIS",
+      "tableId": "12",
+      "activeOrderId": "T12-035",
+      "status": "closed",
+      "createdAt": "2026-06-24T05:26:19.330Z",
+      "lastSeen": "2026-06-24T05:33:58.218Z"
+    },
+    "cust_70f973edac8a": {
+      "customerId": "cust_70f973edac8a",
+      "peerSessionId": "cf_sess_1782278741880_dly1q0p7",
+      "customerName": "Ali Hussein",
+      "tableId": "12",
+      "activeOrderId": "T12-036",
+      "status": "closed",
+      "createdAt": "2026-06-24T05:26:19.359Z",
+      "lastSeen": "2026-06-24T05:33:58.218Z"
+    },
+    "cust_mqrnon4te29686": {
+      "customerId": "cust_mqrnon4te29686",
+      "peerSessionId": "cf_sess_1782280293762_zs7bxodw",
+      "customerName": "Ali Hussein",
+      "tableId": "12",
+      "activeOrderId": "T12-037",
+      "status": "closed",
+      "createdAt": "2026-06-24T05:51:58.548Z",
+      "lastSeen": "2026-06-24T05:52:29.165Z"
+    },
+    "cust_mqs6q4w47ezjm0": {
+      "customerId": "cust_mqs6q4w47ezjm0",
+      "peerSessionId": "cf_sess_1782312282439_bxgxx5xs",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-038",
+      "status": "closed",
+      "createdAt": "2026-06-24T14:45:00.199Z",
+      "lastSeen": "2026-06-24T14:47:13.554Z"
+    },
+    "cust_mqs6vs8n12sqqr": {
+      "customerId": "cust_mqs6vs8n12sqqr",
+      "peerSessionId": "cf_sess_1782312545755_a8txtpc3",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-039",
+      "status": "closed",
+      "createdAt": "2026-06-24T14:49:23.765Z",
+      "lastSeen": "2026-06-24T14:53:29.844Z"
+    },
+    "cust_mqs793q4fkux18": {
+      "customerId": "cust_mqs793q4fkux18",
+      "peerSessionId": "cf_sess_1782313073011_zu11na2i",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-040",
+      "status": "closed",
+      "createdAt": "2026-06-24T14:59:45.193Z",
+      "lastSeen": "2026-06-24T15:03:22.934Z"
+    },
+    "cust_mqs7e0qrinuu5z": {
+      "customerId": "cust_mqs7e0qrinuu5z",
+      "peerSessionId": "cf_sess_1782313405557_pohd9pm7",
+      "customerName": "Ali Hussein",
+      "tableId": "9",
+      "activeOrderId": "T9-041",
+      "status": "closed",
+      "createdAt": "2026-06-24T15:03:34.840Z",
+      "lastSeen": "2026-06-24T15:07:02.854Z"
+    },
+    "cust_9d20c43b4443": {
+      "customerId": "cust_9d20c43b4443",
+      "peerSessionId": "1d146142-bb14-4043-9f70-9270f7e34023",
+      "customerName": "a",
+      "tableId": "5",
+      "activeOrderId": "T5-043",
+      "status": "active",
+      "createdAt": "2026-06-27T11:14:50.325Z",
+      "lastSeen": "2026-06-27T14:47:27.569Z"
+    },
+    "cust_39de073838eb": {
+      "customerId": "cust_39de073838eb",
+      "peerSessionId": "cf_sess_1782563084204_7beyqxvq",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-044",
+      "status": "active",
+      "createdAt": "2026-06-27T12:24:59.872Z",
+      "lastSeen": "2026-06-27T12:24:59.872Z"
+    },
+    "cust_3d7cac373159": {
+      "customerId": "cust_3d7cac373159",
+      "peerSessionId": "cf_sess_1782572120235_tlhi2bz6",
+      "customerName": "Ali Hussein",
+      "tableId": "5",
+      "activeOrderId": "T5-045",
+      "status": "active",
+      "createdAt": "2026-06-27T14:55:48.164Z",
+      "lastSeen": "2026-06-27T14:55:48.164Z"
+    },
+    "cust_5cd9c06d9606": {
+      "customerId": "cust_5cd9c06d9606",
+      "peerSessionId": "sess_1782911825482_clgyiab",
+      "customerName": "ل",
+      "tableId": "4",
+      "activeOrderId": "T4-046",
+      "status": "closed",
+      "createdAt": "2026-07-01T13:17:39.853Z",
+      "lastSeen": "2026-07-01T13:49:32.949Z"
+    },
+    "cust_af9b9043b465": {
+      "customerId": "cust_af9b9043b465",
+      "peerSessionId": "sess_1782912483228_rtfc35z",
+      "customerName": "aa",
+      "tableId": "4",
+      "activeOrderId": "T4-047",
+      "status": "closed",
+      "createdAt": "2026-07-01T13:29:39.690Z",
+      "lastSeen": "2026-07-01T13:49:32.949Z"
+    },
+    "cust_f95a946e8110": {
+      "customerId": "cust_f95a946e8110",
+      "peerSessionId": "sess_1782912512946_lbyds6n",
+      "customerName": "علي",
+      "tableId": "4",
+      "activeOrderId": "T4-048",
+      "status": "closed",
+      "createdAt": "2026-07-01T13:30:24.982Z",
+      "lastSeen": "2026-07-01T13:49:32.949Z"
+    },
+    "cust_e84d75c6d05c": {
+      "customerId": "cust_e84d75c6d05c",
+      "peerSessionId": "sess_1782913607098_9bweb2h",
+      "customerName": "تعتبر",
+      "tableId": "4",
+      "activeOrderId": "T4-049",
+      "status": "closed",
+      "createdAt": "2026-07-01T13:47:08.743Z",
+      "lastSeen": "2026-07-01T13:49:32.949Z"
+    },
+    "cust_7184f0a98b7c": {
+      "customerId": "cust_7184f0a98b7c",
+      "peerSessionId": "sess_1782913607098_9bweb2h",
+      "customerName": "تعتبر",
+      "tableId": "4",
+      "activeOrderId": "T4-050",
+      "status": "closed",
+      "createdAt": "2026-07-01T13:47:56.643Z",
+      "lastSeen": "2026-07-01T13:49:32.949Z"
+    },
+    "cust_04d4084b473f": {
+      "customerId": "cust_04d4084b473f",
+      "peerSessionId": "sess_1782912483228_rtfc35z",
+      "customerName": "aa",
+      "tableId": "4",
+      "activeOrderId": "T4-051",
+      "status": "closed",
+      "createdAt": "2026-07-01T13:47:56.670Z",
+      "lastSeen": "2026-07-01T13:49:32.949Z"
+    },
+    "cust_c22973343737": {
+      "customerId": "cust_c22973343737",
+      "peerSessionId": "sess_1782914547357_rxe4r18",
+      "customerName": "تر",
+      "tableId": "3",
+      "activeOrderId": "T3-052",
+      "status": "closed",
+      "createdAt": "2026-07-01T14:02:35.624Z",
+      "lastSeen": "2026-07-02T11:45:11.595Z"
+    },
+    "cust_c9ba817c5c71": {
+      "customerId": "cust_c9ba817c5c71",
+      "peerSessionId": "sess_1782914617339_qffggwz",
+      "customerName": "اف",
+      "tableId": "4",
+      "activeOrderId": "T4-054",
+      "status": "active",
+      "createdAt": "2026-07-01T14:03:44.238Z",
+      "lastSeen": "2026-07-01T14:04:27.154Z"
+    },
+    "cust_39cbd6cf45cc": {
+      "customerId": "cust_39cbd6cf45cc",
+      "peerSessionId": "sess_1782915117362_qvexxmd",
+      "customerName": "الع",
+      "tableId": "4",
+      "activeOrderId": "T4-055",
+      "status": "active",
+      "createdAt": "2026-07-01T14:12:04.034Z",
+      "lastSeen": "2026-07-01T14:12:04.034Z"
+    },
+    "cust_76ee1943118b": {
+      "customerId": "cust_76ee1943118b",
+      "peerSessionId": "sess_1782915871030_4dvpd1j",
+      "customerName": "ار",
+      "tableId": "2",
+      "activeOrderId": "T2-056",
+      "status": "closed",
+      "createdAt": "2026-07-01T14:24:42.461Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_53c14cbaecd0": {
+      "customerId": "cust_53c14cbaecd0",
+      "peerSessionId": "sess_1782989379364_tueolgc",
+      "customerName": "G",
+      "tableId": "2",
+      "activeOrderId": "T2-057",
+      "status": "closed",
+      "createdAt": "2026-07-02T10:49:56.331Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_3c9df580bc01": {
+      "customerId": "cust_3c9df580bc01",
+      "peerSessionId": "sess_1782990470284_j5or0js",
+      "customerName": "Eggs",
+      "tableId": "2",
+      "activeOrderId": "T2-058",
+      "status": "closed",
+      "createdAt": "2026-07-02T11:07:56.937Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_9f3b9e62b9f4": {
+      "customerId": "cust_9f3b9e62b9f4",
+      "peerSessionId": "sess_1782991957155_8zazcqu",
+      "customerName": "Ali",
+      "tableId": "2",
+      "activeOrderId": "T2-059",
+      "status": "closed",
+      "createdAt": "2026-07-02T11:33:28.499Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_34b26e53e058": {
+      "customerId": "cust_34b26e53e058",
+      "peerSessionId": "sess_1782992629012_q9e4mjj",
+      "customerName": "Gh",
+      "tableId": "3",
+      "activeOrderId": "T3-060",
+      "status": "closed",
+      "createdAt": "2026-07-02T11:43:58.225Z",
+      "lastSeen": "2026-07-02T11:45:11.595Z"
+    },
+    "cust_334bf4d99bbd": {
+      "customerId": "cust_334bf4d99bbd",
+      "peerSessionId": "sess_1782992702210_dm8fpbo",
+      "customerName": "Hvhv",
+      "tableId": "3",
+      "activeOrderId": "T3-061",
+      "status": "closed",
+      "createdAt": "2026-07-02T11:45:29.630Z",
+      "lastSeen": "2026-07-02T11:59:27.576Z"
+    },
+    "cust_7008e7430318": {
+      "customerId": "cust_7008e7430318",
+      "peerSessionId": "sess_1782993473756_tn2cmvi",
+      "customerName": "ق",
+      "tableId": "3",
+      "activeOrderId": "T3-062",
+      "status": "closed",
+      "createdAt": "2026-07-02T11:57:59.065Z",
+      "lastSeen": "2026-07-02T11:59:27.576Z"
+    },
+    "cust_d9d2a13cb986": {
+      "customerId": "cust_d9d2a13cb986",
+      "peerSessionId": "sess_1782993570614_ywezrds",
+      "customerName": "ي",
+      "tableId": "3",
+      "activeOrderId": "T3-063",
+      "status": "active",
+      "createdAt": "2026-07-02T11:59:35.630Z",
+      "lastSeen": "2026-07-02T11:59:35.630Z"
+    },
+    "cust_84320e165281": {
+      "customerId": "cust_84320e165281",
+      "peerSessionId": "sess_1782994989936_kjf73wr",
+      "customerName": "تسوق",
+      "tableId": "3",
+      "activeOrderId": "T3-064",
+      "status": "active",
+      "createdAt": "2026-07-02T12:23:28.377Z",
+      "lastSeen": "2026-07-02T12:23:28.377Z"
+    },
+    "cust_3bcf72062e8e": {
+      "customerId": "cust_3bcf72062e8e",
+      "peerSessionId": "sess_1782995044399_xvzij2f",
+      "customerName": "الإبلاغ",
+      "tableId": "3",
+      "activeOrderId": "T3-065",
+      "status": "active",
+      "createdAt": "2026-07-02T12:24:13.014Z",
+      "lastSeen": "2026-07-02T12:57:57.414Z"
+    },
+    "cust_4a41c0496d13": {
+      "customerId": "cust_4a41c0496d13",
+      "peerSessionId": "sess_1782997290681_6hkaqqc",
+      "customerName": "لت",
+      "tableId": "3",
+      "activeOrderId": "T3-066",
+      "status": "active",
+      "createdAt": "2026-07-02T13:01:36.162Z",
+      "lastSeen": "2026-07-02T13:01:36.162Z"
+    },
+    "cust_4288e4795c1c": {
+      "customerId": "cust_4288e4795c1c",
+      "peerSessionId": "sess_1782997395541_ouha8l0",
+      "customerName": "اد",
+      "tableId": "3",
+      "activeOrderId": "T3-067",
+      "status": "active",
+      "createdAt": "2026-07-02T13:03:22.758Z",
+      "lastSeen": "2026-07-02T13:03:22.758Z"
+    },
+    "cust_823699ca3e16": {
+      "customerId": "cust_823699ca3e16",
+      "peerSessionId": "sess_1782997894327_pbivvcg",
+      "customerName": "لا",
+      "tableId": "3",
+      "activeOrderId": "T3-068",
+      "status": "active",
+      "createdAt": "2026-07-02T13:11:40.940Z",
+      "lastSeen": "2026-07-02T13:11:40.940Z"
+    },
+    "cust_e3e273cf0a1e": {
+      "customerId": "cust_e3e273cf0a1e",
+      "peerSessionId": "sess_1782998975754_7q31cfw",
+      "customerName": "تت",
+      "tableId": "3",
+      "activeOrderId": "T3-069",
+      "status": "active",
+      "createdAt": "2026-07-02T13:29:48.104Z",
+      "lastSeen": "2026-07-02T13:29:48.104Z"
+    },
+    "cust_37dd7cf74856": {
+      "customerId": "cust_37dd7cf74856",
+      "peerSessionId": "sess_1782999102549_q2zcedw",
+      "customerName": "عع",
+      "tableId": "2",
+      "activeOrderId": "T2-070",
+      "status": "closed",
+      "createdAt": "2026-07-02T13:31:57.217Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_6bbfcbea1df0": {
+      "customerId": "cust_6bbfcbea1df0",
+      "peerSessionId": "sess_1782999244641_lqcuieq",
+      "customerName": "د",
+      "tableId": "2",
+      "activeOrderId": "T2-071",
+      "status": "closed",
+      "createdAt": "2026-07-02T13:34:14.307Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_64f3f23a5708": {
+      "customerId": "cust_64f3f23a5708",
+      "peerSessionId": "sess_1782999613377_hp10lvh",
+      "customerName": "زتت",
+      "tableId": "2",
+      "activeOrderId": "T2-072",
+      "status": "closed",
+      "createdAt": "2026-07-02T13:40:20.887Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_c764e2640d2c": {
+      "customerId": "cust_c764e2640d2c",
+      "peerSessionId": "sess_1783000019067_ls2zmdc",
+      "customerName": "تا",
+      "tableId": "2",
+      "activeOrderId": "T2-073",
+      "status": "closed",
+      "createdAt": "2026-07-02T13:47:08.888Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_119eb635d9ee": {
+      "customerId": "cust_119eb635d9ee",
+      "peerSessionId": "sess_1783000100310_zldofn6",
+      "customerName": "عال",
+      "tableId": "2",
+      "activeOrderId": "T2-074",
+      "status": "closed",
+      "createdAt": "2026-07-02T13:48:28.348Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_6cd37f41b1d4": {
+      "customerId": "cust_6cd37f41b1d4",
+      "peerSessionId": "sess_1783000144809_4e3i39f",
+      "customerName": "تل",
+      "tableId": "2",
+      "activeOrderId": "T2-075",
+      "status": "closed",
+      "createdAt": "2026-07-02T13:49:10.921Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_6df2acb2fb10": {
+      "customerId": "cust_6df2acb2fb10",
+      "peerSessionId": "sess_1783001314869_2qqt3ov",
+      "customerName": "أتت",
+      "tableId": "2",
+      "activeOrderId": "T2-076",
+      "status": "closed",
+      "createdAt": "2026-07-02T14:08:43.246Z",
+      "lastSeen": "2026-07-02T14:10:13.975Z"
+    },
+    "cust_e411af9d4d94": {
+      "customerId": "cust_e411af9d4d94",
+      "peerSessionId": "sess_1783068247852_f73ekrf",
+      "customerName": "Fagk",
+      "tableId": "10",
+      "activeOrderId": "T10-077",
+      "status": "closed",
+      "createdAt": "2026-07-03T08:44:40.141Z",
+      "lastSeen": "2026-07-03T08:46:27.785Z"
+    },
+    "cust_20d7628ab8ee": {
+      "customerId": "cust_20d7628ab8ee",
+      "peerSessionId": "sess_1783068394344_bbp4axi",
+      "customerName": "Gch",
+      "tableId": "10",
+      "activeOrderId": "T10-001",
+      "status": "closed",
+      "createdAt": "2026-07-03T08:46:42.149Z",
+      "lastSeen": "2026-07-03T08:56:02.665Z"
+    },
+    "cust_a155ff3ba4c0": {
+      "customerId": "cust_a155ff3ba4c0",
+      "peerSessionId": "sess_1783077682161_pt7w6mn",
+      "customerName": "بيي",
+      "tableId": "10",
+      "activeOrderId": "T10-003",
+      "status": "closed",
+      "createdAt": "2026-07-03T11:21:58.898Z",
+      "lastSeen": "2026-07-03T11:25:37.823Z"
+    },
+    "cust_94880f106463": {
+      "customerId": "cust_94880f106463",
+      "peerSessionId": "sess_1783077786420_y9qek9t",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-004",
+      "status": "closed",
+      "createdAt": "2026-07-03T11:23:31.523Z",
+      "lastSeen": "2026-07-03T11:25:37.823Z"
+    },
+    "cust_ebe184ea4e9b": {
+      "customerId": "cust_ebe184ea4e9b",
+      "peerSessionId": "sess_1783078996733_6kjae4u",
+      "customerName": "ف",
+      "tableId": "10",
+      "activeOrderId": "T10-005",
+      "status": "closed",
+      "createdAt": "2026-07-03T11:43:46.758Z",
+      "lastSeen": "2026-07-03T12:10:51.318Z"
+    },
+    "cust_4c93b882f86e": {
+      "customerId": "cust_4c93b882f86e",
+      "peerSessionId": "sess_1783080238326_m0p03hs",
+      "customerName": "شش",
+      "tableId": "3",
+      "activeOrderId": "T3-006",
+      "status": "active",
+      "createdAt": "2026-07-03T12:04:18.275Z",
+      "lastSeen": "2026-07-03T12:10:01.366Z"
+    },
+    "cust_ddadba8b5b3f": {
+      "customerId": "cust_ddadba8b5b3f",
+      "peerSessionId": "sess_1783080614231_nr5ewpn",
+      "customerName": "سس",
+      "tableId": "3",
+      "activeOrderId": "T3-007",
+      "status": "active",
+      "createdAt": "2026-07-03T12:10:22.084Z",
+      "lastSeen": "2026-07-03T12:10:22.084Z"
+    },
+    "cust_9606ccb8e8fc": {
+      "customerId": "cust_9606ccb8e8fc",
+      "peerSessionId": "sess_1783080657720_qmpon3j",
+      "customerName": "ببق",
+      "tableId": "10",
+      "activeOrderId": "T10-008",
+      "status": "closed",
+      "createdAt": "2026-07-03T12:11:04.151Z",
+      "lastSeen": "2026-07-03T12:26:50.785Z"
+    },
+    "cust_41235d32c807": {
+      "customerId": "cust_41235d32c807",
+      "peerSessionId": "sess_1783080678886_hk6p2n9",
+      "customerName": "ببب",
+      "tableId": "10",
+      "activeOrderId": "T10-009",
+      "status": "closed",
+      "createdAt": "2026-07-03T12:11:24.931Z",
+      "lastSeen": "2026-07-03T12:26:50.785Z"
+    },
+    "cust_489eee76a2b6": {
+      "customerId": "cust_489eee76a2b6",
+      "peerSessionId": "sess_1783081492705_92o1ao3",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-012",
+      "status": "closed",
+      "createdAt": "2026-07-03T12:25:11.882Z",
+      "lastSeen": "2026-07-03T12:26:50.785Z"
+    },
+    "cust_b2751abf8476": {
+      "customerId": "cust_b2751abf8476",
+      "peerSessionId": "sess_1783081732082_01ouih7",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-014",
+      "status": "closed",
+      "createdAt": "2026-07-03T12:29:03.702Z",
+      "lastSeen": "2026-07-03T12:54:05.938Z"
+    },
+    "cust_dcadd39ecd57": {
+      "customerId": "cust_dcadd39ecd57",
+      "peerSessionId": "sess_1783082335942_vdjdqxo",
+      "customerName": "اذر",
+      "tableId": "10",
+      "activeOrderId": "T10-015",
+      "status": "closed",
+      "createdAt": "2026-07-03T12:39:21.627Z",
+      "lastSeen": "2026-07-03T12:54:05.938Z"
+    },
+    "cust_4640e7cc5e17": {
+      "customerId": "cust_4640e7cc5e17",
+      "peerSessionId": "sess_1783083255028_0vyc048",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-018",
+      "status": "closed",
+      "createdAt": "2026-07-03T12:54:21.359Z",
+      "lastSeen": "2026-07-03T13:14:12.557Z"
+    },
+    "cust_de78621b034e": {
+      "customerId": "cust_de78621b034e",
+      "peerSessionId": "sess_1783153418996_3eu82z1",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-021",
+      "status": "closed",
+      "createdAt": "2026-07-04T08:24:30.261Z",
+      "lastSeen": "2026-07-04T08:25:56.842Z"
+    },
+    "cust_41af9a87bf25": {
+      "customerId": "cust_41af9a87bf25",
+      "peerSessionId": "sess_1783154790839_3pwtopq",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-022",
+      "status": "closed",
+      "createdAt": "2026-07-04T08:46:40.708Z",
+      "lastSeen": "2026-07-04T10:09:20.382Z"
+    },
+    "cust_a7189e4081a3": {
+      "customerId": "cust_a7189e4081a3",
+      "peerSessionId": "sess_1783155409883_gz2cp6j",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-026",
+      "status": "closed",
+      "createdAt": "2026-07-04T08:57:29.756Z",
+      "lastSeen": "2026-07-04T10:09:20.382Z"
+    },
+    "cust_1c48e09729ca": {
+      "customerId": "cust_1c48e09729ca",
+      "peerSessionId": "sess_1783158165144_hgvg4kc",
+      "customerName": "علي",
+      "tableId": "10",
+      "activeOrderId": "T10-028",
+      "status": "closed",
+      "createdAt": "2026-07-04T09:43:13.365Z",
+      "lastSeen": "2026-07-04T10:09:20.382Z"
+    },
+    "cust_4f3bb4afd504": {
+      "customerId": "cust_4f3bb4afd504",
+      "peerSessionId": "sess_1783239314864_x95khc7",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-029",
+      "status": "closed",
+      "createdAt": "2026-07-05T08:17:40.328Z",
+      "lastSeen": "2026-07-05T09:48:53.563Z"
+    },
+    "cust_7ab363c38691": {
+      "customerId": "cust_7ab363c38691",
+      "peerSessionId": "sess_1783239336422_6n500z5",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-030",
+      "status": "closed",
+      "createdAt": "2026-07-05T08:17:40.359Z",
+      "lastSeen": "2026-07-05T09:48:53.563Z"
+    },
+    "cust_f4b09a7aae2a": {
+      "customerId": "cust_f4b09a7aae2a",
+      "peerSessionId": "sess_1783245947300_obmyfp1",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-031",
+      "status": "closed",
+      "createdAt": "2026-07-05T10:07:24.848Z",
+      "lastSeen": "2026-07-05T11:16:20.670Z"
+    },
+    "cust_83be1b24dbea": {
+      "customerId": "cust_83be1b24dbea",
+      "peerSessionId": "sess_1783245962002_1x7uf34",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-032",
+      "status": "closed",
+      "createdAt": "2026-07-05T10:07:24.881Z",
+      "lastSeen": "2026-07-05T11:16:20.670Z"
+    },
+    "cust_838dcb348565": {
+      "customerId": "cust_838dcb348565",
+      "peerSessionId": "sess_1783250185725_yhkz598",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-033",
+      "status": "closed",
+      "createdAt": "2026-07-05T11:18:37.458Z",
+      "lastSeen": "2026-07-05T11:53:13.207Z"
+    },
+    "cust_8273b5261cf3": {
+      "customerId": "cust_8273b5261cf3",
+      "peerSessionId": "sess_1783252000785_9ejw35i",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-034",
+      "status": "closed",
+      "createdAt": "2026-07-05T11:47:18.889Z",
+      "lastSeen": "2026-07-05T11:53:13.207Z"
+    },
+    "cust_b5090ec45ef7": {
+      "customerId": "cust_b5090ec45ef7",
+      "peerSessionId": "sess_1783252011484_4gi6e6m",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-040",
+      "status": "closed",
+      "createdAt": "2026-07-05T11:47:19.006Z",
+      "lastSeen": "2026-07-05T11:53:13.207Z"
+    },
+    "cust_a74c4e059633": {
+      "customerId": "cust_a74c4e059633",
+      "peerSessionId": "sess_1783252124543_r1xuxo0",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-037",
+      "status": "closed",
+      "createdAt": "2026-07-05T11:49:54.724Z",
+      "lastSeen": "2026-07-05T11:53:13.207Z"
+    },
+    "cust_9ffa9ac0f2ad": {
+      "customerId": "cust_9ffa9ac0f2ad",
+      "peerSessionId": "sess_1783252319975_9qsfoe1",
+      "customerName": "غب",
+      "tableId": "1",
+      "activeOrderId": "T1-039",
+      "status": "closed",
+      "createdAt": "2026-07-05T11:52:15.614Z",
+      "lastSeen": "2026-07-05T11:53:13.207Z"
+    },
+    "cust_d74de9c22c02": {
+      "customerId": "cust_d74de9c22c02",
+      "peerSessionId": "sess_1783252410886_fadfegq",
+      "customerName": "عادي",
+      "tableId": "1",
+      "activeOrderId": "T1-041",
+      "status": "closed",
+      "createdAt": "2026-07-05T11:54:21.251Z",
+      "lastSeen": "2026-07-05T12:00:28.889Z"
+    },
+    "cust_36adbd50e0e3": {
+      "customerId": "cust_36adbd50e0e3",
+      "peerSessionId": "sess_1783252416248_rlkj5fz",
+      "customerName": "عليك",
+      "tableId": "1",
+      "activeOrderId": "T1-042",
+      "status": "closed",
+      "createdAt": "2026-07-05T11:54:21.324Z",
+      "lastSeen": "2026-07-05T12:00:28.889Z"
+    },
+    "cust_df31bbc57f03": {
+      "customerId": "cust_df31bbc57f03",
+      "peerSessionId": "sess_1783252815968_mnjbggj",
+      "customerName": "خ",
+      "tableId": "1",
+      "activeOrderId": "T1-043",
+      "status": "closed",
+      "createdAt": "2026-07-05T12:01:17.619Z",
+      "lastSeen": "2026-07-05T12:02:31.108Z"
+    },
+    "cust_cbf88a4e9a9e": {
+      "customerId": "cust_cbf88a4e9a9e",
+      "peerSessionId": "sess_1783252841987_jgupfka",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-044",
+      "status": "closed",
+      "createdAt": "2026-07-05T12:01:17.738Z",
+      "lastSeen": "2026-07-05T12:02:31.108Z"
+    },
+    "cust_a082e41f60f7": {
+      "customerId": "cust_a082e41f60f7",
+      "peerSessionId": "sess_1783252962970_egdca1y",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-045",
+      "status": "closed",
+      "createdAt": "2026-07-05T12:03:31.774Z",
+      "lastSeen": "2026-07-05T12:04:40.499Z"
+    },
+    "cust_7dccb350c059": {
+      "customerId": "cust_7dccb350c059",
+      "peerSessionId": "sess_1783252966568_xtzda68",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-046",
+      "status": "closed",
+      "createdAt": "2026-07-05T12:03:31.890Z",
+      "lastSeen": "2026-07-05T12:04:40.499Z"
+    },
+    "cust_619f24ebce7d": {
+      "customerId": "cust_619f24ebce7d",
+      "peerSessionId": "sess_1783253120934_jpa5g8m",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-049",
+      "status": "closed",
+      "createdAt": "2026-07-05T12:05:30.131Z",
+      "lastSeen": "2026-07-05T12:07:44.880Z"
+    },
+    "cust_5a8a7587f509": {
+      "customerId": "cust_5a8a7587f509",
+      "peerSessionId": "sess_1783253114553_reek7px",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-048",
+      "status": "closed",
+      "createdAt": "2026-07-05T12:05:41.926Z",
+      "lastSeen": "2026-07-05T12:07:44.880Z"
+    },
+    "cust_fd2499b6a854": {
+      "customerId": "cust_fd2499b6a854",
+      "peerSessionId": "sess_1783258829097_q1wjkdf",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-050",
+      "status": "closed",
+      "createdAt": "2026-07-05T13:41:07.766Z",
+      "lastSeen": "2026-07-05T14:04:11.130Z"
+    },
+    "cust_8a4afe3a4f82": {
+      "customerId": "cust_8a4afe3a4f82",
+      "peerSessionId": "sess_1783259985457_pxphvtf",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-051",
+      "status": "closed",
+      "createdAt": "2026-07-05T14:02:21.603Z",
+      "lastSeen": "2026-07-05T14:04:11.130Z"
+    },
+    "cust_28895f56b703": {
+      "customerId": "cust_28895f56b703",
+      "peerSessionId": "sess_1783261123506_99ssnui",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-053",
+      "status": "closed",
+      "createdAt": "2026-07-05T14:37:56.481Z",
+      "lastSeen": "2026-07-05T14:49:29.369Z"
+    },
+    "cust_ecfeddc31ccd": {
+      "customerId": "cust_ecfeddc31ccd",
+      "peerSessionId": "sess_1783261366952_mcjmn34",
+      "customerName": "مصطفى",
+      "tableId": "1",
+      "activeOrderId": "T1-056",
+      "status": "closed",
+      "createdAt": "2026-07-05T14:51:29.998Z",
+      "lastSeen": "2026-07-05T15:09:53.791Z"
+    },
+    "cust_b22d32a1927e": {
+      "customerId": "cust_b22d32a1927e",
+      "peerSessionId": "sess_1783263128416_p6eibel",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-055",
+      "status": "closed",
+      "createdAt": "2026-07-05T14:52:51.331Z",
+      "lastSeen": "2026-07-05T15:09:53.791Z"
+    },
+    "cust_9ed78114b8b1": {
+      "customerId": "cust_9ed78114b8b1",
+      "peerSessionId": "sess_1783263128416_p6eibel",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-057",
+      "status": "closed",
+      "createdAt": "2026-07-05T14:54:23.149Z",
+      "lastSeen": "2026-07-05T15:09:53.791Z"
+    },
+    "cust_7cc2daa03b6f": {
+      "customerId": "cust_7cc2daa03b6f",
+      "peerSessionId": "sess_1783291413611_dfn595a",
+      "customerName": "Ali",
+      "tableId": "1",
+      "activeOrderId": "T1-059",
+      "status": "closed",
+      "createdAt": "2026-07-05T22:46:15.468Z",
+      "lastSeen": "2026-07-05T22:57:08.338Z"
+    },
+    "cust_5c0f32e62202": {
+      "customerId": "cust_5c0f32e62202",
+      "peerSessionId": "sess_1783292237742_4yvilz1",
+      "customerName": "Ali jan",
+      "tableId": "1",
+      "activeOrderId": "T1-062",
+      "status": "closed",
+      "createdAt": "2026-07-05T22:57:25.637Z",
+      "lastSeen": "2026-07-05T23:24:23.000Z"
+    },
+    "cust_c78c8c4036ea": {
+      "customerId": "cust_c78c8c4036ea",
+      "peerSessionId": "sess_1783420924761_g5bjwhz",
+      "customerName": "Ali",
+      "tableId": "1",
+      "activeOrderId": "T1-063",
+      "status": "closed",
+      "createdAt": "2026-07-07T10:42:17.662Z",
+      "lastSeen": "2026-07-07T10:44:09.672Z"
+    },
+    "cust_dbe7080a58da": {
+      "customerId": "cust_dbe7080a58da",
+      "peerSessionId": "sess_1783421121454_pot8892",
+      "customerName": "Ali",
+      "tableId": "1",
+      "activeOrderId": "T1-065",
+      "status": "closed",
+      "createdAt": "2026-07-07T10:45:57.136Z",
+      "lastSeen": "2026-07-07T11:09:29.964Z"
+    },
+    "cust_47925f0be96e": {
+      "customerId": "cust_47925f0be96e",
+      "peerSessionId": "sess_1783456497838_6l7p590",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-066",
+      "status": "closed",
+      "createdAt": "2026-07-07T20:35:19.029Z",
+      "lastSeen": "2026-07-07T20:52:13.979Z"
+    },
+    "cust_76c98a9d2df4": {
+      "customerId": "cust_76c98a9d2df4",
+      "peerSessionId": "sess_1783456497838_6l7p590",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-066",
+      "status": "closed",
+      "createdAt": "2026-07-07T20:50:46.888Z",
+      "lastSeen": "2026-07-07T20:52:13.979Z"
+    },
+    "cust_4e729f6240cd": {
+      "customerId": "cust_4e729f6240cd",
+      "peerSessionId": "sess_1783456497838_6l7p590",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-066",
+      "status": "closed",
+      "createdAt": "2026-07-07T20:51:38.861Z",
+      "lastSeen": "2026-07-07T20:52:13.979Z"
+    },
+    "cust_066328acfb45": {
+      "customerId": "cust_066328acfb45",
+      "peerSessionId": "sess_1783457546324_ciugnxb",
+      "customerName": "jj",
+      "tableId": "1",
+      "activeOrderId": "T1-067",
+      "status": "closed",
+      "createdAt": "2026-07-07T20:53:08.550Z",
+      "lastSeen": "2026-07-08T09:24:55.051Z"
+    },
+    "cust_d17d219b38c6": {
+      "customerId": "cust_d17d219b38c6",
+      "peerSessionId": "sess_1783457546324_ciugnxb",
+      "customerName": "jj",
+      "tableId": "1",
+      "activeOrderId": "T1-067",
+      "status": "closed",
+      "createdAt": "2026-07-07T20:53:26.727Z",
+      "lastSeen": "2026-07-07T20:53:38.725Z"
+    },
+    "cust_136c7567b0ed": {
+      "customerId": "cust_136c7567b0ed",
+      "peerSessionId": "sess_1783501955777_xj4si9i",
+      "customerName": "aa",
+      "tableId": "1",
+      "activeOrderId": "T1-068",
+      "status": "closed",
+      "createdAt": "2026-07-08T09:12:49.526Z",
+      "lastSeen": "2026-07-08T09:24:55.051Z"
+    },
+    "cust_99f35c5aa0d3": {
+      "customerId": "cust_99f35c5aa0d3",
+      "peerSessionId": "sess_1783502036748_1qjvarx",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-069",
+      "status": "closed",
+      "createdAt": "2026-07-08T09:23:12.770Z",
+      "lastSeen": "2026-07-08T09:24:55.051Z"
+    },
+    "cust_d3d7ff8d7b86": {
+      "customerId": "cust_d3d7ff8d7b86",
+      "peerSessionId": "sess_1783501955777_xj4si9i",
+      "customerName": "aa",
+      "tableId": "1",
+      "activeOrderId": "T1-070",
+      "status": "closed",
+      "createdAt": "2026-07-08T09:23:12.804Z",
+      "lastSeen": "2026-07-08T09:24:55.051Z"
+    },
+    "cust_6824ab502ea1": {
+      "customerId": "cust_6824ab502ea1",
+      "peerSessionId": "sess_1783502782931_ohqhwin",
+      "customerName": "علي",
+      "tableId": "1",
+      "activeOrderId": "T1-071",
+      "status": "closed",
+      "createdAt": "2026-07-08T09:26:45.139Z",
+      "lastSeen": "2026-07-08T09:37:39.236Z"
+    }
+  }
+}

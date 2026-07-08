@@ -1,0 +1,829 @@
+/**
+ * ثيم الكاشير — Light POS (ألوان فقط)
+ * خلفية فاتحة مريحة للاستخدام اليومي الطويل
+ */
+body.cashier-app {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #F5F7FA;
+  --bg-elevated: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface2: #EFF2F6;
+  --surface3: #E8ECF2;
+
+  /* Typography */
+  --text: #2D3748;
+  --text-secondary: #718096;
+  --text-muted: #718096;
+
+  /* Borders */
+  --border: #E2E8F0;
+  --border-subtle: #E2E8F0;
+  --border-muted: #E2E8F0;
+  --border-accent: rgba(37, 99, 235, 0.35);
+
+  /* Primary actions */
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --accent-muted: #1D4ED8;
+  --accent-rgb: 37, 99, 235;
+  --accent-soft: rgba(37, 99, 235, 0.08);
+  --accent-soft-strong: rgba(37, 99, 235, 0.12);
+  --accent-gradient-start: #2563EB;
+  --accent-gradient-end: #1D4ED8;
+  --on-accent: #FFFFFF;
+
+  /* Brand (عناوين أقسام — استخدام خفيف) */
+  --brand-accent: #92400E;
+  --brand-accent-soft: rgba(146, 64, 14, 0.08);
+
+  /* States */
+  --success: #16A34A;
+  --success-soft: rgba(22, 163, 74, 0.12);
+  --warning: #EA580C;
+  --warning-soft: rgba(234, 88, 12, 0.12);
+  --danger: #DC2626;
+  --danger-soft: rgba(220, 38, 38, 0.12);
+
+  /* بطاقات ملخص طلبات اليوم */
+  --summary-card-bg: #EFF6FF;
+  --summary-card-border: #BFDBFE;
+  --summary-card-bg-alt: #FFF7ED;
+  --summary-card-border-alt: #FED7AA;
+
+  /* Shadows (خفيفة للوضع الفاتح) */
+  --shadow: 0 1px 3px rgba(45, 55, 72, 0.08);
+  --shadow-md: 0 4px 12px rgba(45, 55, 72, 0.1);
+  --shadow-accent: 0 2px 8px rgba(37, 99, 235, 0.18);
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 14px;
+  --font: 'Cairo', 'Segoe UI', Tahoma, system-ui, sans-serif;
+
+  /* تسميات ونصوص القراءة اليومية — أوضح للكاشير */
+  --cashier-label-color: #2D3748;
+  --cashier-label-muted: #4A5568;
+  --cashier-label-size: 0.92rem;
+  --cashier-label-weight: 700;
+}
+
+html.cashier-app-root,
+body.cashier-app {
+  background-color: #F5F7FA !important;
+  color: var(--text);
+}
+
+body.cashier-app .cashier-body,
+body.cashier-app .main-content.cashier-layout,
+body.cashier-app .cashier-view,
+body.cashier-app .cashier-panel,
+body.cashier-app .cashier-panel.active,
+body.cashier-app .view-tables,
+body.cashier-app .panel-today-inner,
+body.cashier-app .panel-cashbox-inner {
+  background-color: #F5F7FA;
+}
+
+/* ——— ترويسة ——— */
+body.cashier-app .page-header.cashier-page-header {
+  background: #F5F7FA;
+  border-bottom: 1px solid var(--border);
+  box-shadow: none;
+}
+
+body.cashier-app #cashierPageHeader .cashier-header-start h1 {
+  color: var(--text);
+}
+
+body.cashier-app #cashierPageHeader .cashier-header-cafe-name {
+  color: var(--brand-accent);
+}
+
+body.cashier-app .realtime-status {
+  color: var(--text-muted);
+}
+
+body.cashier-app .realtime-status.connected {
+  color: var(--success);
+}
+
+/* ——— شريط جانبي ——— */
+body.cashier-app .cashier-sidebar {
+  background: #EFF2F6;
+  border-left-color: var(--border);
+}
+
+body.cashier-app .cashier-sidebar-item {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--cashier-label-color);
+  letter-spacing: 0.01em;
+  line-height: 1.45;
+}
+
+body.cashier-app .cashier-sidebar-item:hover {
+  background: var(--surface2);
+  color: var(--cashier-label-color);
+  font-weight: 700;
+}
+
+body.cashier-app .cashier-sidebar-item.active {
+  background: var(--accent-soft-strong);
+  color: var(--accent);
+  font-weight: 800;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+/* القاصة — خط أوضح وقراءة مريحة */
+body.cashier-app .panel-cashbox-inner,
+body.cashier-app .cashbox-open-card,
+body.cashier-app .cashbox-income-card,
+body.cashier-app .cashbox-notes-box,
+body.cashier-app .cashbox-yesterday-card,
+body.cashier-app .cashbox-card {
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.cashier-app .cashbox-page-title {
+  color: var(--cashier-label-color);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+}
+
+body.cashier-app .cashbox-section-title,
+body.cashier-app .cashbox-card-title,
+body.cashier-app .cashbox-yesterday-title {
+  color: var(--brand-accent);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+/* تسميات الحقول والجداول — المُشار إليها في القاصة وطلبات اليوم */
+body.cashier-app .cashbox-info-label,
+body.cashier-app .cashbox-sales-item .label,
+body.cashier-app .cashbox-list-total .label,
+body.cashier-app .cashbox-notes-label,
+body.cashier-app .cashbox-yesterday-card .label,
+body.cashier-app .today-summary-item .label,
+body.cashier-app .cashbox-entry-field__label {
+  color: var(--cashier-label-color) !important;
+  font-weight: var(--cashier-label-weight) !important;
+  font-size: var(--cashier-label-size) !important;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+}
+
+body.cashier-app .today-summary-item .label {
+  font-size: 0.84rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.4rem !important;
+}
+
+body.cashier-app .cashbox-list-total .label {
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+}
+
+body.cashier-app .cashbox-sales-item .label {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.4rem !important;
+}
+
+body.cashier-app .cashbox-net-formula {
+  color: var(--cashier-label-muted) !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+body.cashier-app .cashbox-entries-head span {
+  color: var(--brand-accent) !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.03em;
+}
+
+body.cashier-app .cashbox-hint {
+  color: var(--cashier-label-muted);
+  font-weight: 500;
+  font-size: 0.82rem;
+}
+
+body.cashier-app .cashbox-list li .item-text,
+body.cashier-app .cashbox-entries-row .col-name,
+body.cashier-app .cashbox-entries-row .col-note {
+  color: var(--cashier-label-color);
+  font-weight: 600;
+}
+
+body.cashier-app .cashbox-info-value,
+body.cashier-app .cashbox-net-value,
+body.cashier-app .cashbox-list li .item-amount {
+  color: var(--accent);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+body.cashier-app .cashier-table-order-modal__total {
+  color: var(--text);
+  font-weight: 700;
+}
+
+body.cashier-app .cashier-order-type-dialog .btn-send-only {
+  background: var(--surface);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+body.cashier-app .cashier-new-order-product__name {
+  color: var(--text);
+}
+
+body.cashier-app .cashier-cart-row__btn[data-act="inc"],
+body.cashier-app .cashier-cart-row__btn[data-act="dec"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: rgba(var(--accent-rgb), 0.45);
+}
+
+/* ——— طاولات ——— */
+body.cashier-app .cashier-view .view-tables .table-card {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.cashier-app .cashier-view .view-tables .table-card:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: var(--shadow-accent);
+}
+
+body.cashier-app .cashier-view .view-tables .table-card .num {
+  color: var(--accent);
+}
+
+body.cashier-app .cashier-view .view-tables .table-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+body.cashier-app .tables-grid .table-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.cashier-app .tables-grid .table-card:hover {
+  background: var(--surface2);
+}
+
+/* ——— أزرار عامة (common.css) ——— */
+body.cashier-app .btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 1px solid var(--accent);
+}
+
+body.cashier-app .btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--on-accent);
+}
+
+body.cashier-app .btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+body.cashier-app .btn-secondary:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+body.cashier-app .btn-danger {
+  background: var(--danger);
+  color: var(--on-accent);
+}
+
+/* ——— شريط الفاتورة ——— */
+body.cashier-app .cashier-bill-nav {
+  background: var(--surface);
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .cashier-bill-nav__title {
+  color: var(--text);
+}
+
+body.cashier-app .cashier-bill-nav__back {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+body.cashier-app .cashier-bill-nav__back:hover {
+  background: var(--surface2);
+  border-color: var(--border-accent);
+  color: var(--accent);
+}
+
+/* ——— وصل الطاولة ——— */
+body.cashier-app .view-bill .bill-card,
+body.cashier-app .view-bill .bill-card.bill-consolidated--modal-cards {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+body.cashier-app .view-bill .bill-receipt-header--compact .bill-table-num,
+body.cashier-app .view-bill .bill-card-header .bill-table-num {
+  color: var(--brand-accent);
+}
+
+body.cashier-app .view-bill .bill-receipt-header--compact .bill-meta-line,
+body.cashier-app .view-bill .bill-card-header .bill-date,
+body.cashier-app .view-bill .bill-card-header .bill-order-id {
+  color: var(--text-muted);
+}
+
+body.cashier-app .view-bill .bill-consolidated .bill-card-header.bill-receipt-header--compact {
+  background: var(--brand-accent-soft);
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .view-bill .cashier-order-card {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.cashier-app .view-bill .cashier-order-card__title {
+  color: var(--text);
+}
+
+body.cashier-app .view-bill .cashier-order-card__total-value,
+body.cashier-app .view-bill .bill-grand-total .bill-grand-value,
+body.cashier-app .view-bill .bill-card-total,
+body.cashier-app .view-bill .bill-card-body .bill-items-table .col-price {
+  color: var(--accent);
+}
+
+body.cashier-app .view-bill .btn-cashier-view-receipt,
+body.cashier-app .view-bill .bill-consolidated-footer .btn-close-print-settle.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-accent);
+}
+
+body.cashier-app .view-bill .btn-cashier-view-receipt:hover,
+body.cashier-app .view-bill .bill-consolidated-footer .btn-close-print-settle.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--on-accent);
+}
+
+body.cashier-app .view-bill .bill-consolidated-footer {
+  background: var(--bg);
+  box-shadow: 0 -4px 12px rgba(45, 55, 72, 0.06);
+}
+
+body.cashier-app .view-bill .bill-consolidated-footer .bill-card-payment,
+body.cashier-app .view-bill .bill-consolidated-footer .bill-card-actions {
+  background: var(--surface);
+  border-top-color: var(--border);
+}
+
+body.cashier-app .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body.cashier-app .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment:hover {
+  background: var(--surface2);
+  border-color: var(--border-accent);
+}
+
+body.cashier-app .view-bill .bill-consolidated-footer .bill-card-payment .btn-payment.selected {
+  background: var(--accent-soft-strong);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+body.cashier-app .view-bill .bill-grand-total {
+  background: var(--accent-soft);
+  border-color: var(--border-accent);
+}
+
+body.cashier-app .view-bill .bill-grand-total .bill-grand-label {
+  color: var(--text-muted);
+}
+
+body.cashier-app .view-bill .bill-settle-hint {
+  color: var(--text-muted);
+  background: var(--warning-soft);
+  border-color: var(--warning);
+}
+
+body.cashier-app .view-bill .bill-card-payment .btn-payment {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body.cashier-app .view-bill .bill-card-payment .btn-payment.selected {
+  background: var(--accent-soft-strong);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+body.cashier-app .view-bill .bill-card-header {
+  background: var(--surface2);
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .view-bill .bill-card-body .bill-items-table th {
+  background: var(--surface2);
+  color: var(--text-muted);
+}
+
+body.cashier-app .view-bill .bill-card-body .bill-items-table td {
+  border-bottom-color: var(--border);
+}
+
+/* ——— طلبات اليوم ——— */
+body.cashier-app .today-summary-item {
+  background: var(--summary-card-bg);
+  border-color: var(--summary-card-border);
+}
+
+body.cashier-app .today-summary-item--type {
+  background: var(--summary-card-bg-alt);
+  border-color: var(--summary-card-border-alt);
+}
+
+body.cashier-app .today-summary-item .value {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+body.cashier-app .today-table-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.cashier-app .today-table-card-head {
+  color: var(--text);
+}
+
+body.cashier-app .today-table-card-head:hover {
+  background: var(--surface2);
+}
+
+body.cashier-app .today-table-card-head .table-name {
+  color: var(--brand-accent);
+}
+
+body.cashier-app .today-table-card-head .table-total {
+  color: var(--accent);
+}
+
+body.cashier-app .today-detail-table th {
+  color: var(--brand-accent);
+}
+
+body.cashier-app .today-detail-table .payment-method-badge.payment-cash {
+  background: var(--success-soft);
+  color: var(--success);
+  border-color: rgba(22, 163, 74, 0.35);
+}
+
+body.cashier-app .today-detail-table .payment-method-badge.payment-card {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--border-accent);
+}
+
+body.cashier-app .today-detail-table .payment-method-badge.payment-pending {
+  background: var(--warning-soft);
+  color: var(--warning);
+  border-color: rgba(234, 88, 12, 0.35);
+}
+
+body.cashier-app .today-type-badge {
+  background: var(--brand-accent-soft);
+  color: var(--brand-accent);
+  border-color: rgba(146, 64, 14, 0.25);
+}
+
+/* ——— مودالات ——— */
+body.cashier-app .today-session-receipt-modal,
+body.cashier-app .cashier-table-order-modal,
+body.cashier-app .receipt-overlay.cashier-receipt-overlay,
+body.cashier-app .cashbox-close-modal,
+body.cashier-app .today-table-panel-backdrop {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+body.cashier-app .today-session-receipt-modal__dialog,
+body.cashier-app .cashier-table-order-modal__dialog,
+body.cashier-app .cashier-receipt-overlay .receipt-box.receipt-box-card {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+}
+
+body.cashier-app .today-session-receipt-modal__head,
+body.cashier-app .cashier-table-order-modal__head,
+body.cashier-app .cashier-receipt-overlay .receipt-card-header {
+  background: var(--surface2);
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .today-session-receipt-modal__title,
+body.cashier-app .cashier-table-order-modal__title {
+  color: var(--brand-accent);
+}
+
+body.cashier-app .today-session-receipt-modal__close-x,
+body.cashier-app .cashier-table-order-modal__close-x {
+  background: var(--accent-soft);
+  border-color: var(--border-accent);
+  color: var(--accent);
+}
+
+body.cashier-app .today-session-receipt-modal__close-x:hover,
+body.cashier-app .cashier-table-order-modal__close-x:hover {
+  background: var(--accent-soft-strong);
+  color: var(--accent-hover);
+}
+
+body.cashier-app .today-session-order-row {
+  background: var(--surface2);
+  border-color: var(--border);
+}
+
+body.cashier-app .today-session-order-row__amount,
+body.cashier-app .today-session-receipt-modal__total,
+body.cashier-app .cashier-table-order-modal__total,
+body.cashier-app .cashier-table-order-modal__table .col-line-sub {
+  color: var(--accent);
+}
+
+body.cashier-app .today-session-order-row .btn-today-order-detail,
+body.cashier-app .cashier-table-order-modal__btn-print {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+body.cashier-app .today-session-order-row .btn-today-order-detail:hover,
+body.cashier-app .cashier-table-order-modal__btn-print:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--on-accent);
+}
+
+body.cashier-app .today-session-receipt-modal__footer,
+body.cashier-app .cashier-table-order-modal__footer {
+  background: var(--surface2);
+  border-top-color: var(--border);
+}
+
+body.cashier-app .cashier-table-order-modal__table thead th {
+  color: var(--brand-accent);
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .cashier-table-order-modal__table tbody td {
+  border-bottom-color: var(--border);
+  color: var(--text);
+}
+
+body.cashier-app .cashier-table-order-modal__meta-chip {
+  background: var(--surface2);
+  border-color: var(--border);
+}
+
+body.cashier-app .cashier-table-order-modal__meta-chip .label {
+  color: var(--text-muted);
+}
+
+body.cashier-app .cashier-table-order-modal__meta-chip .value {
+  color: var(--text);
+}
+
+/* ——— إنشاء طلب ——— */
+body.cashier-app .cashier-new-order-dialog,
+body.cashier-app .cashier-order-type-dialog {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.cashier-app .cashier-new-order-head h3,
+body.cashier-app .cashier-order-type-dialog h3,
+body.cashier-app .cashier-order-type-section__title {
+  color: var(--brand-accent);
+}
+
+body.cashier-app .cashier-new-order-products,
+body.cashier-app .cashier-new-order-cart {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.cashier-app .cashier-new-order-products-head,
+body.cashier-app .cashier-new-order-cart-head {
+  background: var(--surface2);
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .cashier-new-order-product {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.cashier-app .cashier-new-order-product:hover {
+  border-color: var(--border-accent);
+  background: var(--accent-soft);
+}
+
+body.cashier-app .cashier-new-order-product__price,
+body.cashier-app .cashier-order-type-cart__price,
+body.cashier-app .cashier-order-type-total-row__amount,
+body.cashier-app .cashier-new-order-cart-foot {
+  color: var(--accent);
+}
+
+body.cashier-app .cashier-order-type-btn,
+body.cashier-app .cashier-cat-chip,
+body.cashier-app .cashier-table-pick-btn,
+body.cashier-app .cashier-order-type-field {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body.cashier-app .cashier-order-type-btn.active,
+body.cashier-app .cashier-cat-chip.active,
+body.cashier-app .cashier-table-pick-btn.active,
+body.cashier-app .cashier-order-type-dialog .cashier-order-type-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-soft-strong);
+  color: var(--accent);
+}
+
+body.cashier-app .cashier-new-order-products-head input,
+body.cashier-app .cashier-new-order-delivery input,
+body.cashier-app .cashier-new-order-delivery select,
+body.cashier-app .cashier-order-type-field input {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+body.cashier-app .cashier-order-type-validation {
+  background: transparent;
+  border: 0;
+  color: var(--danger);
+}
+
+body.cashier-app .cashier-cart-row {
+  border-color: var(--border);
+  background: var(--surface2);
+}
+
+body.cashier-app .cashier-cart-row__btn[data-act="rm"] {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* ——— القاصة ——— */
+body.cashier-app .cashbox-open-card,
+body.cashier-app .cashbox-income-card,
+body.cashier-app .cashbox-notes-box,
+body.cashier-app .cashbox-yesterday-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.cashier-app .cashbox-page-title,
+body.cashier-app .cashbox-section-title {
+  color: var(--brand-accent);
+}
+
+body.cashier-app .cashbox-info-value,
+body.cashier-app .cashbox-sales-item .value,
+body.cashier-app .cashbox-net-value,
+body.cashier-app .cashbox-income-card .value {
+  color: var(--accent);
+}
+
+body.cashier-app .cashbox-input,
+body.cashier-app .cashbox-input-inline,
+body.cashier-app .cashbox-notes-input {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* شاشة فتح القاصة — نفس أسلوب حقول القاصة الأخرى */
+body.cashier-app .cashbox-open-input-wrap,
+body.cashier-app .cashbox-open-balance-row .cashbox-input-currency-wrap {
+  background: var(--surface2);
+  border-color: var(--border);
+}
+
+body.cashier-app .cashbox-open-input-wrap:focus-within,
+body.cashier-app .cashbox-open-balance-row .cashbox-input-currency-wrap:focus-within {
+  background: var(--surface);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
+}
+
+body.cashier-app .cashbox-open-input-wrap .cashbox-input-text,
+body.cashier-app .cashbox-open-balance-row .cashbox-input-number {
+  color: var(--text);
+  caret-color: var(--accent);
+}
+
+body.cashier-app .cashbox-open-input-wrap .cashbox-input-text::placeholder,
+body.cashier-app .cashbox-open-balance-row .cashbox-input-number::placeholder {
+  color: var(--text-muted);
+}
+
+body.cashier-app .cashbox-open-balance-row .cashbox-currency-suffix {
+  color: var(--text-secondary);
+}
+
+body.cashier-app .cashbox-net-value-wrap {
+  background: var(--accent-soft);
+  border-color: var(--border-accent);
+}
+
+body.cashier-app .cashbox-list li {
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .cashbox-list li .btn-remove-item {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* ——— لوحة تفصيل اليوم ——— */
+body.cashier-app .today-table-panel {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+body.cashier-app .today-table-panel-header {
+  border-bottom-color: var(--border);
+}
+
+body.cashier-app .today-table-panel-close:hover {
+  background: var(--surface2);
+}
+
+/* ——— تركيز ——— */
+body.cashier-app button:focus-visible,
+body.cashier-app .cashier-sidebar-item:focus-visible {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px rgba(var(--accent-rgb), 0.4);
+}
+
+/* ——— تجاوز ألوان داكنة متبقية في index (قيم فقط) ——— */
+body.cashier-app .view-bill .btn-back:hover {
+  background: var(--surface2);
+}
+
+body.cashier-app .cashier-bill-nav__back {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+body.cashier-app .orders-table tbody tr {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+body.cashier-app .alert-success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+body.cashier-app .alert-error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}

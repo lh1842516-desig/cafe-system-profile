@@ -1,0 +1,399 @@
+/**
+ * ثيم الكابتن — نفس ألوان الكاشير ولوحة التحكم (Light POS)
+ * متغيرات --co-* خاصة بواجهة الكابتن — ألوان ووضوح نصوص فقط
+ */
+body.captain-order-page {
+  color-scheme: light;
+
+  --co-bg: #F5F7FA;
+  --co-surface: #FFFFFF;
+  --co-surface2: #EFF2F6;
+  --co-surface3: #E8ECF2;
+  --co-text: #2D3748;
+  --co-muted: #718096;
+  --co-accent: #2563EB;
+  --co-accent-hover: #1D4ED8;
+  --co-accent-soft: rgba(37, 99, 235, 0.08);
+  --co-accent-soft-strong: rgba(37, 99, 235, 0.12);
+  --co-accent-border: rgba(37, 99, 235, 0.35);
+  --co-on-accent: #FFFFFF;
+  --co-brand: #92400E;
+  --co-success: #16A34A;
+  --co-success-hover: #15803C;
+  --co-danger: #DC2626;
+  --co-danger-soft: rgba(220, 38, 38, 0.12);
+  --co-border: #E2E8F0;
+  --co-input-border: #CBD5E0;
+  --co-shadow: 0 1px 3px rgba(45, 55, 72, 0.08);
+  --co-shadow-md: 0 4px 12px rgba(45, 55, 72, 0.1);
+  --co-summary-bg: #EFF6FF;
+  --co-summary-border: #BFDBFE;
+
+  /* تسميات الكابتن — أوضح للقراءة */
+  --co-label-color: #2D3748;
+  --co-label-weight: 700;
+}
+
+html.captain-app-root,
+body.captain-order-page {
+  background-color: #F5F7FA !important;
+  color: var(--co-text);
+}
+
+body.captain-order-page .co-main,
+body.captain-order-page .co-tables-screen,
+body.captain-order-page .co-center {
+  background-color: #F5F7FA;
+}
+
+/* ——— ترويسة ——— */
+body.captain-order-page .co-header.co-page-header {
+  background: #F5F7FA;
+  border-bottom-color: var(--co-border);
+  box-shadow: none;
+}
+
+body.captain-order-page .co-title {
+  color: var(--co-label-color);
+  font-weight: 800;
+}
+
+body.captain-order-page .co-current-table {
+  color: var(--co-accent);
+  font-weight: 700;
+}
+
+body.captain-order-page .co-header-cafe-name {
+  color: var(--co-brand);
+}
+
+body.captain-order-page .co-btn-back {
+  background: var(--co-surface);
+  color: var(--co-text);
+  border-color: var(--co-border);
+  box-shadow: var(--co-shadow);
+}
+
+body.captain-order-page .co-btn-back:hover {
+  background: var(--co-accent-soft);
+  border-color: var(--co-accent-border);
+  color: var(--co-accent);
+  box-shadow: var(--co-shadow-md);
+}
+
+/* زر كتم الصوت — خلفية خفيفة واضحة */
+body.captain-order-page .co-header-end .cafe-voice-mute-btn {
+  background: var(--co-surface2);
+  border: 1px solid var(--co-border);
+  color: var(--co-text);
+  box-shadow: var(--co-shadow);
+}
+
+body.captain-order-page .co-header-end .cafe-voice-mute-btn:hover {
+  background: var(--co-accent-soft);
+  border-color: var(--co-accent-border);
+  color: var(--co-accent);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-confirm-title {
+  color: var(--co-brand);
+}
+
+/* ——— عناوين جانبية (التصنيفات / سلة الطلب) ——— */
+body.captain-order-page .co-side-title {
+  color: var(--co-label-color);
+  font-weight: var(--co-label-weight);
+  letter-spacing: 0.02em;
+}
+
+body.captain-order-page .co-tables-title {
+  color: var(--co-brand);
+  font-weight: 800;
+}
+
+/* ——— التصنيفات ——— */
+body.captain-order-page .co-categories {
+  background: #EFF2F6;
+  border-left-color: var(--co-border);
+}
+
+body.captain-order-page .co-category-btn {
+  background: var(--co-surface2);
+  color: var(--co-text);
+  border: 1px solid var(--co-border);
+  font-weight: 600;
+}
+
+body.captain-order-page .co-category-btn:hover {
+  background: var(--co-accent-soft);
+  border-color: var(--co-accent-border);
+  color: var(--co-text);
+}
+
+body.captain-order-page .co-category-btn.active {
+  background: var(--co-accent);
+  color: var(--co-on-accent);
+  border-color: var(--co-accent);
+  font-weight: 700;
+}
+
+/* ——— بحث ومنتجات ——— */
+body.captain-order-page .co-center {
+  background: var(--co-bg);
+}
+
+body.captain-order-page .co-search {
+  background: var(--co-surface);
+  border-color: var(--co-input-border);
+  color: var(--co-text);
+  box-shadow: inset 0 1px 2px rgba(45, 55, 72, 0.04);
+}
+
+body.captain-order-page .co-search::placeholder {
+  color: #A0AEC0;
+}
+
+body.captain-order-page .co-search:focus {
+  border-color: var(--co-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+body.captain-order-page .co-product-card {
+  background: var(--co-surface);
+  border-color: transparent;
+  box-shadow: var(--co-shadow);
+}
+
+body.captain-order-page .co-product-card:hover {
+  background: var(--co-surface);
+  border-color: var(--co-accent-border);
+  box-shadow: var(--co-shadow-md);
+}
+
+body.captain-order-page .co-product-card .name {
+  color: var(--co-text);
+  font-weight: 700;
+}
+
+body.captain-order-page .co-product-card .price {
+  color: var(--co-accent);
+}
+
+body.captain-order-page .co-products-empty {
+  color: var(--co-muted);
+  font-weight: 600;
+}
+
+/* ——— السلة ——— */
+body.captain-order-page .co-cart {
+  background: var(--co-surface);
+  border-right-color: var(--co-border);
+  box-shadow: var(--co-shadow);
+}
+
+body.captain-order-page .co-cart-title:hover {
+  color: var(--co-accent);
+}
+
+body.captain-order-page .co-cart-item {
+  border-bottom-color: var(--co-border);
+}
+
+body.captain-order-page .co-cart-item-name {
+  color: var(--co-text);
+  font-weight: 600;
+}
+
+body.captain-order-page .co-cart-item-qty {
+  color: var(--co-text);
+}
+
+body.captain-order-page .co-cart-item-btn {
+  background: var(--co-surface2);
+  border: 1px solid var(--co-border);
+  color: var(--co-text);
+  font-weight: 700;
+}
+
+body.captain-order-page .co-cart-item-btn:hover {
+  background: var(--co-accent-soft);
+  border-color: var(--co-accent-border);
+  color: var(--co-accent);
+}
+
+body.captain-order-page .co-cart-item-btn.remove {
+  color: var(--co-danger);
+}
+
+body.captain-order-page .co-cart-item-btn.remove:hover {
+  background: var(--co-danger-soft);
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+body.captain-order-page .co-cart-empty {
+  color: var(--co-muted);
+  font-weight: 600;
+}
+
+body.captain-order-page .co-cart-footer {
+  border-top-color: var(--co-border);
+  background: var(--co-surface2);
+}
+
+body.captain-order-page .co-cart-total-label {
+  color: var(--co-label-color);
+  font-weight: var(--co-label-weight);
+}
+
+body.captain-order-page .co-cart-total-value {
+  color: var(--co-accent);
+  font-weight: 800;
+}
+
+body.captain-order-page .co-btn-send {
+  background: var(--co-success);
+  color: var(--co-on-accent);
+  box-shadow: var(--co-shadow);
+}
+
+body.captain-order-page .co-btn-send:hover:not(:disabled) {
+  background: var(--co-success-hover);
+}
+
+/* ——— الطاولات ——— */
+body.captain-order-page .co-table-card {
+  background: var(--co-surface);
+  border-color: var(--co-border);
+  color: var(--co-text);
+  box-shadow: var(--co-shadow);
+}
+
+body.captain-order-page .co-table-card:hover {
+  background: var(--co-accent-soft);
+  border-color: var(--co-accent);
+  color: var(--co-accent);
+}
+
+/* ——— مودال الوصل ——— */
+body.captain-order-page .receipt-overlay.captain-receipt-overlay {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-box.receipt-box-card {
+  background: var(--co-surface);
+  border-color: var(--co-border);
+  box-shadow: var(--co-shadow-md);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-close-x {
+  background: var(--co-surface2);
+  border: 1px solid var(--co-border);
+  color: var(--co-text);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-close-x:hover {
+  background: var(--co-accent-soft);
+  border-color: var(--co-accent-border);
+  color: var(--co-accent);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-card-header {
+  background: var(--co-summary-bg);
+  border-bottom-color: var(--co-summary-border);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-table-num {
+  color: var(--co-brand);
+  font-weight: 800;
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-date,
+body.captain-order-page .captain-receipt-overlay .receipt-order-id {
+  color: var(--co-muted);
+  font-weight: 600;
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-items-table th {
+  background: var(--co-surface2);
+  color: var(--co-label-color);
+  font-weight: 700;
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-items-table td {
+  border-bottom-color: var(--co-border);
+  color: var(--co-text);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-items-table .col-name {
+  font-weight: 600;
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-items-table .col-price {
+  color: var(--co-accent);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-card-total {
+  background: var(--co-summary-bg);
+  border-top-color: var(--co-summary-border);
+  color: var(--co-accent);
+  font-weight: 800;
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-box-actions {
+  background: var(--co-surface2);
+  border-top-color: var(--co-border);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-box-actions .btn-primary {
+  background: var(--co-success);
+  color: var(--co-on-accent);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-box-actions .btn-primary:hover:not(:disabled) {
+  background: var(--co-success-hover);
+}
+
+body.captain-order-page .captain-receipt-overlay .receipt-empty-cell {
+  color: var(--co-muted);
+  font-weight: 600;
+}
+
+body.captain-order-page .co-success-overlay {
+  background: rgba(45, 55, 72, 0.35);
+}
+
+body.captain-order-page .co-success-dialog {
+  background: var(--co-surface);
+  border-color: var(--co-border);
+  box-shadow: var(--co-shadow-md);
+}
+
+body.captain-order-page .co-success-message {
+  color: var(--co-text);
+}
+
+body.captain-order-page .co-success-icon {
+  background: var(--co-success-soft);
+  border-color: rgba(22, 163, 74, 0.35);
+  color: var(--co-success);
+}
+
+body.captain-order-page .co-success-done {
+  background: var(--co-success);
+  color: var(--co-on-accent);
+}
+
+body.captain-order-page .co-success-done:hover {
+  background: var(--co-success-hover);
+}
+
+/* ——— موبايل ——— */
+@media (max-width: 700px) {
+  body.captain-order-page .co-categories {
+    border-bottom-color: var(--co-border);
+  }
+
+  body.captain-order-page .co-cart {
+    border-top-color: var(--co-border);
+  }
+}

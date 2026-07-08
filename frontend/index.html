@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>نظام إدارة الكافيه</title>
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1rem, 4vw, 2rem);
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      color: var(--text-muted);
+      margin-bottom: clamp(1rem, 4vw, 2rem);
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+    }
+    .roles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+      gap: clamp(0.75rem, 2vw, 1rem);
+      max-width: min(700px, 100%);
+      width: 100%;
+    }
+    .role-link {
+      display: block;
+      background: var(--surface);
+      padding: clamp(1rem, 3vw, 1.5rem);
+      border-radius: var(--radius);
+      color: var(--text);
+      border: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.1s;
+      min-height: 44px;
+    }
+    .role-link:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .role-link h2 {
+      font-size: clamp(1rem, 3vw, 1.1rem);
+      margin-bottom: 0.35rem;
+    }
+    .role-link span {
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>نظام إدارة الكافيه</h1>
+    <p>اختر الواجهة المناسبة لدورك</p>
+    <div class="roles">
+      <a href="admin/" class="role-link">
+        <h2>لوحة الأدمن</h2>
+        <span>إدارة المنيو (إضافة / تعديل / حذف)</span>
+      </a>
+      <a href="customer/" class="role-link">
+        <h2>واجهة الزبائن</h2>
+        <span>منيو الطاولة والطلب من الجوال</span>
+      </a>
+      <a href="cashier/" class="role-link">
+        <h2>واجهة الكاشير</h2>
+        <span>الطاولات والفوترات والدفع</span>
+      </a>
+      <a href="captain/" class="role-link">
+        <h2>واجهة الكابتن</h2>
+        <span>أخذ الطلبات وإرسالها للكاشير والمطبخ</span>
+      </a>
+      <a href="kitchen/" class="role-link">
+        <h2>شاشة المطبخ</h2>
+        <span>عرض وتجهيز طلبات الكابتن</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

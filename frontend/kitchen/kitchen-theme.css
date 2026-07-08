@@ -1,0 +1,583 @@
+/**
+ * ثيم المطبخ — نفس ألوان الكاشير / الأدمن / الكابتن (Light POS)
+ * متغيرات --kitchen-* — ألوان ووضوح نصوص فقط
+ */
+body.kitchen-page {
+  color-scheme: light;
+
+  --kitchen-bg: #F5F7FA;
+  --kitchen-surface: #FFFFFF;
+  --kitchen-surface2: #EFF2F6;
+  --kitchen-surface3: #E8ECF2;
+  --kitchen-text: #2D3748;
+  --kitchen-text-muted: #718096;
+  --kitchen-border: #E2E8F0;
+  --kitchen-accent: #2563EB;
+  --kitchen-accent-hover: #1D4ED8;
+  --kitchen-accent-soft: rgba(37, 99, 235, 0.08);
+  --kitchen-accent-soft-strong: rgba(37, 99, 235, 0.12);
+  --kitchen-accent-border: rgba(37, 99, 235, 0.35);
+  --kitchen-on-accent: #FFFFFF;
+  --kitchen-brand: #92400E;
+  --kitchen-success: #16A34A;
+  --kitchen-success-soft: rgba(22, 163, 74, 0.12);
+  --kitchen-warning: #EA580C;
+  --kitchen-warning-soft: rgba(234, 88, 12, 0.12);
+  --kitchen-danger: #DC2626;
+  --kitchen-danger-soft: rgba(220, 38, 38, 0.12);
+  --kitchen-shadow: 0 1px 3px rgba(45, 55, 72, 0.08);
+  --kitchen-shadow-md: 0 4px 12px rgba(45, 55, 72, 0.1);
+  --kitchen-input-border: #CBD5E0;
+  --kitchen-label-weight: 700;
+
+  --bg: var(--kitchen-bg);
+  --surface: var(--kitchen-surface);
+  --surface2: var(--kitchen-surface2);
+  --text: var(--kitchen-text);
+  --text-muted: var(--kitchen-text-muted);
+  --accent: var(--kitchen-accent);
+  --accent-hover: var(--kitchen-accent-hover);
+  --success: var(--kitchen-success);
+  --danger: var(--kitchen-danger);
+  --radius: 12px;
+  --shadow: var(--kitchen-shadow);
+}
+
+html.kitchen-app-root,
+body.kitchen-page {
+  background-color: #F5F7FA !important;
+  color: var(--kitchen-text);
+}
+
+body.kitchen-page .kitchen-wrap,
+body.kitchen-page .kitchen-main,
+body.kitchen-page .kitchen-queue-view,
+body.kitchen-page .kitchen-avail-page {
+  background-color: #F5F7FA;
+}
+
+/* ——— ترويسة ——— */
+body.kitchen-page .kitchen-header.kitchen-page-header {
+  background: #F5F7FA;
+  border-bottom-color: var(--kitchen-border);
+  box-shadow: none;
+}
+
+body.kitchen-page .kitchen-header-title {
+  color: var(--kitchen-text);
+  font-weight: 800;
+}
+
+body.kitchen-page .kitchen-header-cafe-name {
+  color: var(--kitchen-brand);
+}
+
+body.kitchen-page .btn-secondary {
+  background: var(--kitchen-surface);
+  border: 1px solid var(--kitchen-border);
+  color: var(--kitchen-text);
+  font-weight: 600;
+  box-shadow: var(--kitchen-shadow);
+}
+
+body.kitchen-page .btn-secondary:hover {
+  background: var(--kitchen-accent-soft);
+  border-color: var(--kitchen-accent-border);
+  color: var(--kitchen-accent);
+}
+
+/* زر العودة للطلبات — واضح على صفحة توفر المواد */
+body.kitchen-page .kitchen-avail-page__back {
+  background: var(--kitchen-surface);
+  border: 1px solid var(--kitchen-accent-border);
+  color: var(--kitchen-accent);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.55rem 1.1rem;
+  box-shadow: var(--kitchen-shadow);
+}
+
+body.kitchen-page .kitchen-avail-page__back:hover {
+  background: var(--kitchen-accent-soft-strong);
+  border-color: var(--kitchen-accent);
+  color: var(--kitchen-accent-hover);
+}
+
+body.kitchen-page .kitchen-header-actions .cafe-voice-mute-btn {
+  background: var(--kitchen-surface2);
+  border: 1px solid var(--kitchen-border);
+  color: var(--kitchen-text);
+  box-shadow: var(--kitchen-shadow);
+}
+
+body.kitchen-page .kitchen-header-actions .cafe-voice-mute-btn:hover {
+  background: var(--kitchen-accent-soft);
+  border-color: var(--kitchen-accent-border);
+  color: var(--kitchen-accent);
+}
+
+/* ——— لوحات وعناوين ——— */
+body.kitchen-page .kitchen-main {
+  background: var(--kitchen-bg);
+}
+
+body.kitchen-page .kitchen-panel {
+  background: var(--kitchen-surface);
+  border-color: var(--kitchen-border);
+  box-shadow: var(--kitchen-shadow);
+}
+
+body.kitchen-page .kitchen-panel-title {
+  color: var(--kitchen-text);
+  font-weight: var(--kitchen-label-weight);
+}
+
+body.kitchen-page .kitchen-panel-subtitle,
+body.kitchen-page .kitchen-empty {
+  color: var(--kitchen-text-muted);
+  font-weight: 600;
+}
+
+/* ——— ملخص سريع ——— */
+body.kitchen-page .kitchen-summary-card {
+  color: var(--kitchen-text);
+}
+
+body.kitchen-page .kitchen-summary-card .label {
+  color: var(--kitchen-text);
+  opacity: 1;
+  font-weight: 600;
+}
+
+body.kitchen-page .kitchen-summary-card .value {
+  color: var(--kitchen-text);
+  font-weight: 800;
+}
+
+body.kitchen-page .kitchen-summary-card--new {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+}
+
+body.kitchen-page .kitchen-summary-card--new .value {
+  color: var(--kitchen-accent);
+}
+
+body.kitchen-page .kitchen-summary-card--inprogress {
+  background: #FFF7ED;
+  border-color: #FED7AA;
+}
+
+body.kitchen-page .kitchen-summary-card--inprogress .value {
+  color: var(--kitchen-warning);
+}
+
+body.kitchen-page .kitchen-summary-card--prepared {
+  background: #F0FDF4;
+  border-color: #86EFAC;
+}
+
+body.kitchen-page .kitchen-summary-card--prepared .value {
+  color: var(--kitchen-success);
+}
+
+body.kitchen-page .kitchen-summary-card--oldest {
+  background: #FFFBEB;
+  border-color: #FDE68A;
+}
+
+body.kitchen-page .kitchen-summary-card--oldest .value {
+  color: #B45309;
+}
+
+/* ——— مناطق سير العمل ——— */
+body.kitchen-page .kitchen-workflow-zone-label--new {
+  color: #B45309;
+  background: #FFF7ED;
+  border-color: #FED7AA;
+}
+
+body.kitchen-page .kitchen-workflow-zone-label--preparing {
+  color: #C2410C;
+  background: #FFF7ED;
+  border-color: #FDBA74;
+  box-shadow: none;
+}
+
+body.kitchen-page .kitchen-workflow-col--new {
+  background: #FFFBEB;
+  border-color: #FDE68A;
+}
+
+body.kitchen-page .kitchen-workflow-col--preparing {
+  background: #FFF7ED;
+  border-color: #FED7AA;
+  box-shadow: none;
+}
+
+/* ——— تذاكر الطلب ——— */
+body.kitchen-page .kitchen-ticket {
+  background: var(--kitchen-surface);
+  border-color: var(--kitchen-border);
+  box-shadow: var(--kitchen-shadow-md);
+  color: var(--kitchen-text);
+}
+
+body.kitchen-page .kitchen-ticket-header {
+  border-bottom-color: var(--kitchen-border);
+}
+
+body.kitchen-page .kitchen-ticket-header__table {
+  color: #0a0a0a;
+  font-weight: 900;
+  font-size: 1.22rem;
+  letter-spacing: -0.01em;
+}
+
+body.kitchen-page .kitchen-ticket-header__table--service {
+  font-size: 1.38rem;
+  font-weight: 900;
+  color: #0a0a0a;
+  letter-spacing: 0.01em;
+}
+
+body.kitchen-page .kitchen-workflow-grid .kitchen-ticket-header__table {
+  font-size: 1.18rem;
+}
+
+body.kitchen-page .kitchen-workflow-grid .kitchen-ticket-header__table--service {
+  font-size: 1.32rem;
+}
+
+body.kitchen-page .kitchen-ticket-header__type {
+  color: #1e293b;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: #eef2f6;
+  border-color: #cbd5e1;
+}
+
+body.kitchen-page .kitchen-ticket-header__time {
+  color: var(--kitchen-text-muted);
+}
+
+body.kitchen-page .kitchen-item-modifier--option {
+  color: #4b5563;
+}
+
+body.kitchen-page .kitchen-item-modifier--option .kitchen-item-modifier__key {
+  color: #374151;
+}
+
+body.kitchen-page .kitchen-item-modifier--option .kitchen-item-modifier__val {
+  color: #1f2937;
+}
+
+body.kitchen-page .kitchen-item-modifier--note .kitchen-item-modifier__key {
+  color: #9a3412;
+}
+
+body.kitchen-page .kitchen-item-modifier--note .kitchen-item-modifier__val {
+  color: #c2410c;
+  background: rgba(251, 146, 60, 0.18);
+}
+
+body.kitchen-page .kitchen-ticket-item {
+  border-bottom-color: var(--kitchen-border);
+}
+
+body.kitchen-page .kitchen-ticket-item__qty {
+  color: var(--kitchen-accent);
+  font-size: 1.5rem;
+}
+
+body.kitchen-page .kitchen-ticket-item__sep {
+  color: #1e40af;
+  opacity: 0.45;
+}
+
+body.kitchen-page .kitchen-ticket-item__name {
+  color: #0a0a0a;
+  font-weight: 900;
+  font-size: 0.75;
+  line-height: 1.2;
+}
+
+body.kitchen-page .kitchen-workflow-grid .kitchen-ticket-item__qty {
+  font-size: 1.35rem;
+}
+
+body.kitchen-page .kitchen-workflow-grid .kitchen-ticket-item__name {
+  font-size: 1.3rem;
+}
+
+body.kitchen-page .kitchen-ticket-customer__text {
+  color: var(--kitchen-text-muted);
+}
+
+body.kitchen-page .kitchen-item-by {
+  color: var(--kitchen-accent);
+}
+
+/* جديد */
+body.kitchen-page .kitchen-ticket--status-new {
+  border-color: #FCD34D;
+  background: #FFFBEB;
+  box-shadow: var(--kitchen-shadow-md);
+}
+
+body.kitchen-page .kitchen-ticket-badge--new {
+  color: #92400E;
+  background: #FDE68A;
+}
+
+/* قيد التجهيز */
+body.kitchen-page .kitchen-ticket--status-preparing {
+  border-color: #FB923C;
+  border-inline-start-color: var(--kitchen-warning);
+  background: #FFF7ED;
+  box-shadow: var(--kitchen-shadow-md);
+}
+
+body.kitchen-page .kitchen-ticket-badge--preparing {
+  color: #9A3412;
+  background: #FDBA74;
+  box-shadow: none;
+}
+
+/* تعديل */
+body.kitchen-page .kitchen-ticket--status-editing {
+  border-color: var(--kitchen-warning);
+  background: #FFF7ED;
+  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.15);
+}
+
+@keyframes kitchen-ticket-editing-glow-light {
+  0%,
+  100% {
+    box-shadow: 0 4px 16px rgba(234, 88, 12, 0.12);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(234, 88, 12, 0.22);
+  }
+}
+
+body.kitchen-page .kitchen-ticket--status-editing {
+  animation: kitchen-ticket-editing-glow-light 2.4s ease-in-out infinite;
+}
+
+body.kitchen-page .kitchen-ticket-editing-banner {
+  background: #FFF7ED;
+  border-color: #FDBA74;
+  box-shadow: var(--kitchen-shadow);
+}
+
+body.kitchen-page .kitchen-ticket-editing-banner__icon {
+  background: var(--kitchen-warning-soft);
+  border-color: #FDBA74;
+  color: var(--kitchen-warning);
+}
+
+body.kitchen-page .kitchen-ticket-editing-banner__title {
+  color: #9A3412;
+}
+
+body.kitchen-page .kitchen-ticket-badge--editing {
+  color: #7C2D12;
+  background: #FDBA74;
+  box-shadow: none;
+}
+
+body.kitchen-page .kitchen-ticket-badge--batch {
+  color: var(--kitchen-on-accent);
+  background: var(--kitchen-accent);
+}
+
+body.kitchen-page .kitchen-ticket--status-completed {
+  border-color: #86EFAC;
+  background: #F0FDF4;
+}
+
+body.kitchen-page .kitchen-ticket--delayed {
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.45);
+}
+
+/* أزرار التذكرة */
+body.kitchen-page .btn-kitchen-primary {
+  background: var(--kitchen-success);
+  color: var(--kitchen-on-accent);
+}
+
+body.kitchen-page .btn-kitchen-primary:hover {
+  background: #15803C;
+}
+
+body.kitchen-page .btn-kitchen-prep-done {
+  background: var(--kitchen-warning);
+  color: var(--kitchen-on-accent);
+}
+
+body.kitchen-page .btn-kitchen-prep-done:hover {
+  background: #C2410C;
+}
+
+body.kitchen-page .btn-kitchen-secondary {
+  background: var(--kitchen-surface2);
+  color: var(--kitchen-text);
+  border-color: var(--kitchen-border);
+}
+
+body.kitchen-page .btn-kitchen-secondary:hover {
+  background: var(--kitchen-accent-soft);
+  border-color: var(--kitchen-accent-border);
+}
+
+body.kitchen-page .btn-kitchen--disabled.btn-kitchen-primary {
+  background: var(--kitchen-surface3) !important;
+  color: var(--kitchen-text-muted) !important;
+  border-color: var(--kitchen-border) !important;
+}
+
+/* ——— صفحة توفر المواد ——— */
+body.kitchen-page .kitchen-avail-page__title {
+  color: var(--kitchen-brand);
+  font-weight: 800;
+}
+
+body.kitchen-page .kitchen-avail-page__desc {
+  color: var(--kitchen-text-muted);
+}
+
+body.kitchen-page .kitchen-avail-stat-card {
+  background: var(--kitchen-surface);
+  border-color: var(--kitchen-border);
+  box-shadow: var(--kitchen-shadow);
+}
+
+body.kitchen-page .kitchen-avail-stat-card__label {
+  color: var(--kitchen-text);
+  font-weight: 600;
+}
+
+body.kitchen-page .kitchen-avail-stat-card__value {
+  color: var(--kitchen-text);
+}
+
+body.kitchen-page .kitchen-avail-stat-card--ok {
+  border-color: #86EFAC;
+  background: #F0FDF4;
+}
+
+body.kitchen-page .kitchen-avail-stat-card--ok .kitchen-avail-stat-card__value {
+  color: var(--kitchen-success);
+}
+
+body.kitchen-page .kitchen-avail-stat-card--off {
+  border-color: #FECACA;
+  background: #FEF2F2;
+}
+
+body.kitchen-page .kitchen-avail-stat-card--off .kitchen-avail-stat-card__value {
+  color: var(--kitchen-danger);
+}
+
+body.kitchen-page .kitchen-avail-search-wrap {
+  background: var(--kitchen-surface);
+  border-color: var(--kitchen-input-border);
+}
+
+body.kitchen-page .kitchen-avail-search-wrap:focus-within {
+  border-color: var(--kitchen-accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+body.kitchen-page .kitchen-avail-search {
+  color: var(--kitchen-text);
+}
+
+body.kitchen-page .kitchen-avail-search::placeholder {
+  color: #A0AEC0;
+}
+
+body.kitchen-page .kitchen-avail-filter {
+  background: var(--kitchen-surface);
+  border-color: var(--kitchen-border);
+  color: var(--kitchen-text-muted);
+}
+
+body.kitchen-page .kitchen-avail-filter:hover {
+  background: var(--kitchen-accent-soft);
+  color: var(--kitchen-text);
+}
+
+body.kitchen-page .kitchen-avail-filter.is-active {
+  background: var(--kitchen-accent);
+  border-color: var(--kitchen-accent);
+  color: var(--kitchen-on-accent);
+}
+
+body.kitchen-page .kitchen-avail-cat {
+  background: var(--kitchen-surface);
+  border-color: var(--kitchen-border);
+}
+
+body.kitchen-page .kitchen-avail-cat.is-expanded {
+  border-color: var(--kitchen-accent-border);
+  box-shadow: var(--kitchen-shadow-md);
+}
+
+body.kitchen-page .kitchen-avail-cat__head:hover {
+  background: var(--kitchen-accent-soft);
+}
+
+body.kitchen-page .kitchen-avail-cat__title {
+  color: var(--kitchen-text);
+  font-weight: 700;
+}
+
+body.kitchen-page .kitchen-avail-cat__counts {
+  color: var(--kitchen-text-muted);
+}
+
+body.kitchen-page .kitchen-avail-cat__off {
+  color: var(--kitchen-danger);
+}
+
+body.kitchen-page .kitchen-avail-cat__products {
+  border-top-color: var(--kitchen-border);
+}
+
+body.kitchen-page .kitchen-avail-product {
+  background: var(--kitchen-surface2);
+  border-color: var(--kitchen-border);
+}
+
+body.kitchen-page .kitchen-avail-product__name {
+  color: var(--kitchen-text);
+}
+
+body.kitchen-page .kitchen-avail-product__price {
+  color: var(--kitchen-accent);
+}
+
+body.kitchen-page .kitchen-avail-product__badge {
+  color: var(--kitchen-danger);
+  background: var(--kitchen-danger-soft);
+  border-color: rgba(220, 38, 38, 0.35);
+}
+
+body.kitchen-page .kitchen-avail-switch__track {
+  background: #CBD5E0;
+}
+
+body.kitchen-page .kitchen-avail-switch__input:checked + .kitchen-avail-switch__track::after {
+  background: var(--kitchen-on-accent);
+}
+
+body.kitchen-page .kitchen-avail-switch__input:checked + .kitchen-avail-switch__track {
+  background: var(--kitchen-accent);
+}
+
+body.kitchen-page .kitchen-avail-switch__input:focus-visible + .kitchen-avail-switch__track {
+  outline-color: rgba(37, 99, 235, 0.35);
+}
