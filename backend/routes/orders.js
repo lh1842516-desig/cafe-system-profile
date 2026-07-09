@@ -203,7 +203,7 @@ function createOrdersRouter(io) {
     }
   });
 
-  router.post('/', (req, res) => {
+  router.post('/', async (req, res) => {
     try {
       const { tableId, items, customerName, customerSessionId, orderType: rawOrderType, serviceMeta } = req.body;
       const orderType = normalizeOrderType(rawOrderType);
@@ -246,14 +246,14 @@ function createOrdersRouter(io) {
       const tableIdStr = needsTable ? String(tableId) : orderType;
       const openDate = session.openDate;
       const orders = getOrders();
-      let seq = getNextOrderSequence(openDate);
+      let seq = await getNextOrderSequence(openDate);
       const idPrefix = orderType === ORDER_TYPE.DELIVERY ? 'D' : orderType === ORDER_TYPE.TAKEAWAY ? 'K' : 'T' + tableIdStr;
       let orderId = idPrefix + '-' + String(seq).padStart(3, '0');
       while (orders.some((o) => o.id === orderId)) {
         seq += 1;
         orderId = idPrefix + '-' + String(seq).padStart(3, '0');
       }
-      ensureOrderSequenceAtLeast(openDate, seq);
+      await ensureOrderSequenceAtLeast(openDate, seq);
 
       const nameTrim =
         customerName != null ? String(customerName).trim().slice(0, 30) : '';
@@ -292,7 +292,7 @@ function createOrdersRouter(io) {
       }
 
       orders.push(newOrder);
-      saveOrders(orders);
+      await saveOrders(orders);
 
       const csid = customerSessionId != null ? String(customerSessionId).trim() : '';
       if (csid && needsTable) {
@@ -329,7 +329,7 @@ function createOrdersRouter(io) {
 
       if (io) {
         if (kitchenCashierApproval.shouldHoldCustomerOrder(newOrder)) {
-          kitchenCashierApproval.holdCustomerOrderForCashier(io, newOrder, 'pending-cashier-approval');
+          await kitchenCashierApproval.holdCustomerOrderForCashier(io, newOrder, 'pending-cashier-approval');
         } else {
           if (needsTable) io.to('table-' + tableId).emit('new-order', newOrder);
           kitchenCashierApproval.emitFullKitchenRelease(io, newOrder, 'new-order');
@@ -400,7 +400,7 @@ function createOrdersRouter(io) {
   }
 
   /** استبدال كل أصناف الطلب — يُستدعى من POST .../items (body.replace) أو مسارات replace-items / PUT */
-  function replaceOrderItemsFull(req, res) {
+  async function replaceOrderItemsFull(req, res) {
     try {
       const orderId = String(req.params.orderId || '').trim();
       const { tableId, items } = req.body || {};
@@ -445,10 +445,10 @@ function createOrdersRouter(io) {
         return res.status(400).json({ error: 'لا توجد أصناف صالحة بعد الدمج.' });
       }
       order.items = merged;
-      saveOrders(orders);
+      await saveOrders(orders);
       const heldReplace = kitchenCashierApproval.isOrderHeld(order.id);
       if (!heldReplace) {
-        setKitchenStatus(order.id, 'new');
+        await setKitchenStatus(order.id, 'new');
       }
       if (io) {
         io.emit('orders-updated', {
@@ -501,7 +501,7 @@ function createOrdersRouter(io) {
   router.get('/order/:orderId', getSingleOrderForCustomer);
   router.get('/:orderId', getSingleOrderForCustomer);
 
-  router.post('/:orderId/close', (req, res) => {
+  router.post('/:orderId/close', async (req, res) => {
     try {
       const orders = getOrders();
       const paramId = req.params.orderId != null ? String(req.params.orderId) : '';
@@ -532,7 +532,7 @@ function createOrdersRouter(io) {
         order.cash_session_id = session.sessionId;
         addOrderToArchive(order);
       });
-      saveOrders(orders);
+      await saveOrders(orders);
       const primary = toClose[toClose.length - 1];
       const closedTableId = String(primary.tableId);
       const primaryType = normalizeOrderType(primary.orderType);
@@ -576,7 +576,7 @@ function createOrdersRouter(io) {
   });
 
   /** موافقة الكاشير — إرسال الطلب إلى المطبخ */
-  router.post('/:orderId/approve-kitchen', (req, res) => {
+  router.post('/:orderId/approve-kitchen', async (req, res) => {
     try {
       const orderId = String(req.params.orderId || '').trim();
       const session = till.getActiveSessionMeta();
@@ -593,7 +593,7 @@ function createOrdersRouter(io) {
       if (!kitchenCashierApproval.isOrderHeld(order.id)) {
         return res.status(400).json({ error: 'الطلب ليس بانتظار موافقة الكاشير.' });
       }
-      const approvedIds = kitchenCashierApproval.approveOrdersForCashier(io, order);
+      const approvedIds = await kitchenCashierApproval.approveOrdersForCashier(io, order);
       if (!approvedIds.length) {
         return res.status(400).json({ error: 'تعذّر إرسال الطلب إلى المطبخ.' });
       }
@@ -610,7 +610,7 @@ function createOrdersRouter(io) {
   });
 
   /** رفض الكاشير — إلغاء الطلب وإبلاغ الزبون */
-  router.post('/:orderId/reject-kitchen', (req, res) => {
+  router.post('/:orderId/reject-kitchen', async (req, res) => {
     try {
       const orderId = String(req.params.orderId || '').trim();
       const session = till.getActiveSessionMeta();
@@ -627,7 +627,7 @@ function createOrdersRouter(io) {
       if (!kitchenCashierApproval.isOrderHeld(order.id)) {
         return res.status(400).json({ error: 'الطلب ليس بانتظار موافقة الكاشير.' });
       }
-      const rejectedIds = kitchenCashierApproval.rejectOrdersForCashier(io, order, session);
+      const rejectedIds = await kitchenCashierApproval.rejectOrdersForCashier(io, order, session);
       if (!rejectedIds.length) {
         return res.status(400).json({ error: 'تعذّر رفض الطلب.' });
       }
@@ -683,7 +683,7 @@ function createOrdersRouter(io) {
   });
 
   /** قفل تعديل الزبون — kitchen.json = editing (يمنع المطبخ من «بدء التجهيز» حتى الحفظ أو الإلغاء) */
-  router.post('/:orderId/begin-edit', (req, res) => {
+  router.post('/:orderId/begin-edit', async (req, res) => {
     try {
       const orderId = String(req.params.orderId || '').trim();
       const tableId = String((req.body && req.body.tableId) || '').trim();
@@ -713,7 +713,7 @@ function createOrdersRouter(io) {
       if (raw === 'completed') {
         return res.status(400).json({ error: 'الطلب مكتمل في المطبخ.' });
       }
-      setKitchenStatus(orderId, 'editing');
+      await setKitchenStatus(orderId, 'editing');
       if (io) {
         io.emit('kitchen-updated', { orderId, status: 'editing', reason: 'begin-edit' });
         io.emit('orders-updated', { tableId: String(order.tableId), orderId, reason: 'begin-edit' });
@@ -725,7 +725,7 @@ function createOrdersRouter(io) {
   });
 
   /** إلغاء وضع التعديل عند إغلاق السلة دون حفظ — يعيد الطلب لـ new */
-  router.post('/:orderId/cancel-edit', (req, res) => {
+  router.post('/:orderId/cancel-edit', async (req, res) => {
     try {
       const orderId = String(req.params.orderId || '').trim();
       const tableId = String((req.body && req.body.tableId) || '').trim();
@@ -746,7 +746,7 @@ function createOrdersRouter(io) {
       const ks = getKitchenStatus(orderId);
       const raw = ks && ks.status != null ? String(ks.status).toLowerCase() : '';
       if (raw === 'editing') {
-        setKitchenStatus(orderId, 'new');
+        await setKitchenStatus(orderId, 'new');
         if (io) {
           io.emit('kitchen-updated', { orderId, status: 'new', reason: 'cancel-edit' });
           io.emit('orders-updated', { tableId: String(order.tableId), orderId, reason: 'cancel-edit' });
@@ -762,7 +762,7 @@ function createOrdersRouter(io) {
    * إلغاء الطلب من الزبون — فقط قبل بدء التجهيز (حالة مطبخ new أو editing).
    * يُغلق الطلب ويُزال من شاشة المطبخ والقوائم المفتوحة.
    */
-  router.post('/:orderId/cancel-by-customer', (req, res) => {
+  router.post('/:orderId/cancel-by-customer', async (req, res) => {
     try {
       const orderId = String(req.params.orderId || '').trim();
       const tableId = String((req.body && req.body.tableId) || '').trim();
@@ -800,8 +800,8 @@ function createOrdersRouter(io) {
       if (!order.open_date) order.open_date = session.openDate;
       order.close_open_date = session.openDate;
       order.cash_session_id = session.sessionId;
-      removeKitchenEntry(orderId);
-      saveOrders(orders);
+      await removeKitchenEntry(orderId);
+      await saveOrders(orders);
       const closedTableId = String(order.tableId);
       /** إن لم يبقَ أي طلب مفتوح على الطاولة: جلسة جديدة «قيد الاستخدام»؛ وإلا تبقى مشغولة */
       const remainingOpen = getOrdersBlockingTableClaim(closedTableId);
@@ -837,7 +837,7 @@ function createOrdersRouter(io) {
   });
 
   /** إضافة أصناف لطلب مفتوح — أو استبدال كامل عند body.replace / replaceMode (حفظ تعديلات الزبون) */
-  router.post('/:orderId/items', (req, res) => {
+  router.post('/:orderId/items', async (req, res) => {
     try {
       if (shouldReplaceFullOrder(req.body)) {
         return replaceOrderItemsFull(req, res);
@@ -883,7 +883,7 @@ function createOrdersRouter(io) {
         };
       });
       order.items = (order.items || []).concat(orderItems);
-      saveOrders(orders);
+      await saveOrders(orders);
       const heldAppend = kitchenCashierApproval.isOrderHeld(order.id);
       if (io) {
         io.emit('orders-updated', {

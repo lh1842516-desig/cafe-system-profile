@@ -1,6 +1,6 @@
 /**
  * خادم تطبيق إدارة الكافيه
- * Express + Socket.io + تخزين محلي — يعمل على الشبكة المحلية (LAN)
+ * Express + Socket.io + Supabase — يعمل على الشبكة المحلية (LAN)
  */
 const express = require('express');
 const http = require('http');
@@ -30,6 +30,12 @@ const createSettingsRouter = require('./routes/settings');
 const createAdminAuthRouter = require('./routes/adminAuth');
 const todaySessionHistoryRoutes = require('./routes/todaySessionHistory');
 
+// Supabase-backed init
+const { initCafeContext, getDefaultCafeId } = require('./lib/cafeContext');
+const { initStore } = require('./data/store');
+const { initTill } = require('./data/till');
+const { initKitchenState } = require('./data/kitchen');
+
 const app = express();
 const server = http.createServer(app);
 
@@ -51,7 +57,7 @@ io.on('connection', (socket) => {
 
 app.use(cors());
 app.use(express.json());
-/* sendBeacon + URLSearchParams (application/x-www-form-urlencoded) من بعض المتصفحات لا يُعبَّأ req.body من JSON */
+/* sendBeacon + URLSearchParams (application/x-www-form-urlencoded) من بعض المتصفحات لا يُعبَّأ req.body من JSON */
 app.use(express.urlencoded({ extended: true }));
 
 // رفع الصور للمنيو
@@ -137,7 +143,7 @@ app.use(
   })
 );
 
-// روابط الصفحات: بعد static حتى يُمرَّر /captain/ عند عدم وجود captain/index.html
+// روابط الصفحات: بعد static حتى يُمرَّر /captain/ عند عدم وجود captain/index.html
 app.get('/', (req, res) => res.sendFile(path.join(frontendPath, 'index.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(frontendPath, 'admin', 'index.html')));
 app.get('/cashier', (req, res) => res.sendFile(path.join(frontendPath, 'cashier', 'index.html')));
@@ -228,19 +234,43 @@ function printStartupBanner() {
   console.log('');
 }
 
-server.listen(config.PORT, config.HOST, () => {
+async function startServer() {
+  console.log('  Connecting to Supabase...');
   try {
-    syncClosedOrdersToArchive(getOrders);
-  } catch (_) {}
-  printStartupBanner();
-  tableQrService
-    .regenerateAllTableQrs(getTables(), null)
-    .then(function (results) {
-      if (results && results.length) {
-        console.log('  [QR] تم تحديث ' + results.length + ' بطاقة طاولة (تخطيط Wi-Fi)');
-      }
-    })
-    .catch(function (err) {
-      console.warn('[QR] تعذّر تحديث بطاقات الطاولات عند الإقلاع:', err && err.message ? err.message : err);
-    });
+    await initCafeContext();
+    const cafeId = getDefaultCafeId();
+    console.log(`  Cafe ID: ${cafeId}`);
+    await Promise.all([
+      initStore(cafeId),
+      initTill(cafeId),
+      initKitchenState(cafeId),
+    ]);
+    console.log('  Supabase ready.\n');
+  } catch (err) {
+    console.error('  Supabase initialization failed:', err.message);
+    console.error('  Make sure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.');
+    process.exit(1);
+  }
+
+  server.listen(config.PORT, config.HOST, () => {
+    try {
+      syncClosedOrdersToArchive(getOrders);
+    } catch (_) {}
+    printStartupBanner();
+    tableQrService
+      .regenerateAllTableQrs(getTables(), null)
+      .then(function (results) {
+        if (results && results.length) {
+          console.log('  [QR] تم تحديث ' + results.length + ' بطاقة طاولة (تخطيط Wi-Fi)');
+        }
+      })
+      .catch(function (err) {
+        console.warn('[QR] تعذّر تحديث بطاقات الطاولات عند الإقلاع:', err && err.message ? err.message : err);
+      });
+  });
+}
+
+startServer().catch((err) => {
+  console.error('[startup] Fatal error:', err);
+  process.exit(1);
 });

@@ -28,7 +28,7 @@ async function addTable(req) {
   const newId = getNextTableId();
   const entry = { id: newId, label: newId };
   const next = tables.concat([entry]);
-  saveTables(next);
+  await saveTables(next);
   const qr = await tableQrService.generateTableQr(newId, req);
   return {
     table: entry,
@@ -74,7 +74,7 @@ async function deleteTable(tableId, req) {
     err.status = 404;
     throw err;
   }
-  saveTables(next);
+  await saveTables(next);
   return {
     deletedId: tid,
     tables: listTablesWithQrStatus(),

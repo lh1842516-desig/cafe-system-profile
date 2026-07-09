@@ -81,7 +81,7 @@ function createSettingsRouter(io) {
     res.json(cafeSettingsStore.getCafeSettings());
   });
 
-  function handleKitchenApprovalUpdate(req, res) {
+  async function handleKitchenApprovalUpdate(req, res) {
     try {
       const body = req.body && typeof req.body === 'object' ? req.body : {};
       if (body.requireCashierKitchenApproval === undefined) {
@@ -92,7 +92,7 @@ function createSettingsRouter(io) {
       });
       let approvedOrderIds = [];
       if (!saved.requireCashierKitchenApproval) {
-        approvedOrderIds = kitchenCashierApproval.approveAllHeldOrdersForCashier(io);
+        approvedOrderIds = await kitchenCashierApproval.approveAllHeldOrdersForCashier(io);
       }
       emitSettingsUpdated(io, saved);
       res.json({

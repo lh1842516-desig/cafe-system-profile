@@ -1,0 +1,21 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "نظام إدارة محلي لكافيه واحد، يعمل على الشبكة الداخلية بدون الحاجة لسيرفر خارجي أو قواعد بيانات سحابية.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.110.1",
+    "pg": "^8.22.0",
+    "sharp": "^0.35.3"
+  }
+}

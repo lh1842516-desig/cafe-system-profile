@@ -11,7 +11,6 @@ const {
 } = require('../services/menuAvailability');
 const { emitMenuUpdated } = require('../services/menuRealtime');
 
-/** @returns {{ title: string, type: 'single'|'multi', values: string[] }[]} */
 function normalizeMenuOptions(raw) {
   if (raw == null) return [];
   if (!Array.isArray(raw)) return [];
@@ -19,9 +18,7 @@ function normalizeMenuOptions(raw) {
     .map((g) => {
       const title = g && g.title != null ? String(g.title).trim() : '';
       const vals = g && Array.isArray(g.values) ? g.values : [];
-      const values = vals
-        .map((v) => String(v == null ? '' : v).trim())
-        .filter(Boolean);
+      const values = vals.map((v) => String(v == null ? '' : v).trim()).filter(Boolean);
       const type = g && g.type === 'multi' ? 'multi' : 'single';
       return { title, type, values };
     })
@@ -61,7 +58,7 @@ function createMenuRouter(io) {
     res.json(withMenuAvailability(item));
   });
 
-  router.post('/', (req, res) => {
+  router.post('/', async (req, res) => {
     try {
       const menu = getMenu();
       const { name, price, category, imageUrl, ingredients, options } = req.body || {};
@@ -81,7 +78,7 @@ function createMenuRouter(io) {
         isAvailable: availability !== undefined ? availability : true,
       });
       menu.push(newItem);
-      saveMenu(menu);
+      await saveMenu(menu);
       broadcastMenuChange(io, 'created', newItem);
       res.status(201).json(newItem);
     } catch (err) {
@@ -89,21 +86,18 @@ function createMenuRouter(io) {
     }
   });
 
-  router.patch('/:id/availability', (req, res) => {
+  router.patch('/:id/availability', async (req, res) => {
     try {
       const menu = getMenu();
       const idx = menu.findIndex((i) => i.id === req.params.id);
       if (idx === -1) return res.status(404).json({ error: 'Not found' });
-
       const availability = readAvailabilityFromBody(req.body);
       if (availability === undefined) {
         return res.status(400).json({ error: 'isAvailable مطلوب (true أو false)' });
       }
-
       menu[idx].isAvailable = availability;
       delete menu[idx].is_available;
-      saveMenu(menu);
-
+      await saveMenu(menu);
       const item = withMenuAvailability(menu[idx]);
       broadcastMenuChange(io, 'availability', item);
       res.json(item);
@@ -112,12 +106,11 @@ function createMenuRouter(io) {
     }
   });
 
-  router.put('/:id', (req, res) => {
+  router.put('/:id', async (req, res) => {
     try {
       const menu = getMenu();
       const idx = menu.findIndex((i) => i.id === req.params.id);
       if (idx === -1) return res.status(404).json({ error: 'Not found' });
-
       const { name, price, category, imageUrl, ingredients, options } = req.body || {};
       if (name !== undefined) menu[idx].name = String(name).trim();
       if (price !== undefined) menu[idx].price = Number(price);
@@ -125,14 +118,12 @@ function createMenuRouter(io) {
       if (imageUrl !== undefined) menu[idx].imageUrl = imageUrl;
       if (ingredients !== undefined) menu[idx].ingredients = ingredients;
       if (options !== undefined) menu[idx].options = normalizeMenuOptions(options);
-
       const availability = readAvailabilityFromBody(req.body);
       if (availability !== undefined) {
         menu[idx].isAvailable = availability;
         delete menu[idx].is_available;
       }
-
-      saveMenu(menu);
+      await saveMenu(menu);
       const item = withMenuAvailability(menu[idx]);
       broadcastMenuChange(io, 'updated', item);
       res.json(item);
@@ -141,7 +132,7 @@ function createMenuRouter(io) {
     }
   });
 
-  router.delete('/:id', (req, res) => {
+  router.delete('/:id', async (req, res) => {
     try {
       const menu = getMenu();
       const removed = menu.find((i) => i.id === req.params.id);
@@ -149,7 +140,7 @@ function createMenuRouter(io) {
       if (filtered.length === menu.length) {
         return res.status(404).json({ error: 'Not found' });
       }
-      saveMenu(filtered);
+      await saveMenu(filtered);
       if (removed) {
         emitMenuUpdated(io, { reason: 'deleted', id: removed.id, item: null });
       }

@@ -69,7 +69,7 @@ function saveCategories(arr) {
 
 const router = express.Router();
 
-function doDeleteCategory(name) {
+async function doDeleteCategory(name) {
   const list = readCategories();
   const isUncategorized = name === '';
   if (isUncategorized) {
@@ -78,7 +78,7 @@ function doDeleteCategory(name) {
       const cat = item.category != null ? String(item.category).trim() : '';
       return cat !== '';
     });
-    if (filtered.length !== menu.length) saveMenu(filtered);
+    if (filtered.length !== menu.length) await saveMenu(filtered);
     return { list };
   }
   const normalized = name.toLowerCase();
@@ -91,11 +91,11 @@ function doDeleteCategory(name) {
     const cat = item.category != null ? String(item.category).trim() : '';
     return cat.toLowerCase() !== normalized;
   });
-  if (filtered.length !== menu.length) saveMenu(filtered);
+  if (filtered.length !== menu.length) await saveMenu(filtered);
   return { list };
 }
 
-function applyCategoryRename(oldName, newName) {
+async function applyCategoryRename(oldName, newName) {
   const newNorm = newName.toLowerCase();
   const oldNorm = oldName.toLowerCase();
   if (!newName) return { error: 'الاسم الجديد مطلوب', status: 400 };
@@ -126,15 +126,15 @@ function applyCategoryRename(oldName, newName) {
       changed = true;
     }
   });
-  if (changed) saveMenu(menu);
+  if (changed) await saveMenu(menu);
   return { list: readCategories() };
 }
 
-// مسار الحذف أولاً (قبل '/' لئلا يُفسَّر "delete" كجزء من مسار آخر). name فارغ = حذف منتجات «بدون تصنيف» فقط
-router.post('/delete', (req, res) => {
+// مسار الحذف أولاً (قبل '/' لئلا يُفسَّر "delete" كجزء من مسار آخر). name فارغ = حذف منتجات «بدون تصنيف» فقط
+router.post('/delete', async (req, res) => {
   try {
     const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
-    const result = doDeleteCategory(name);
+    const result = await doDeleteCategory(name);
     if (result.error) return res.status(result.status || 400).json({ error: result.error });
     res.json(result.list);
   } catch (err) {
@@ -143,11 +143,11 @@ router.post('/delete', (req, res) => {
 });
 
 /** POST /api/categories/rename — تغيير اسم تصنيف (oldName → newName) في القائمة وفي كل المنتجات */
-router.post('/rename', (req, res) => {
+router.post('/rename', async (req, res) => {
   try {
     const oldName = req.body && req.body.oldName != null ? String(req.body.oldName).trim() : '';
     const newName = req.body && req.body.newName != null ? String(req.body.newName).trim() : '';
-    const result = applyCategoryRename(oldName, newName);
+    const result = await applyCategoryRename(oldName, newName);
     if (result.error) return res.status(result.status || 400).json({ error: result.error });
     res.json(result.list);
   } catch (err) {
@@ -207,11 +207,11 @@ router.post('/', (req, res) => {
 });
 
 /** DELETE /api/categories?name=... — حذف تصنيف وجميع منتجاته */
-router.delete('/', (req, res) => {
+router.delete('/', async (req, res) => {
   try {
     const name = (req.query.name != null ? String(req.query.name) : (req.body && req.body.name != null ? String(req.body.name) : '')).trim();
     if (!name) return res.status(400).json({ error: 'اسم التصنيف مطلوب' });
-    const result = doDeleteCategory(name);
+    const result = await doDeleteCategory(name);
     if (result.error) return res.status(result.status || 400).json({ error: result.error });
     res.json(result.list);
   } catch (err) {
@@ -220,10 +220,10 @@ router.delete('/', (req, res) => {
 });
 
 /** معالج حذف التصنيف — للتسجيل المباشر في server.js وتفادي 404 */
-function deleteCategoryHandler(req, res) {
+async function deleteCategoryHandler(req, res) {
   try {
     const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
-    const result = doDeleteCategory(name);
+    const result = await doDeleteCategory(name);
     if (result.error) return res.status(result.status || 400).json({ error: result.error });
     res.json(result.list);
   } catch (err) {
@@ -232,11 +232,11 @@ function deleteCategoryHandler(req, res) {
 }
 
 /** معالج تغيير اسم التصنيف — للتسجيل المباشر في server.js وتفادي 404 */
-function renameCategoryHandler(req, res) {
+async function renameCategoryHandler(req, res) {
   try {
     const oldName = req.body && req.body.oldName != null ? String(req.body.oldName).trim() : '';
     const newName = req.body && req.body.newName != null ? String(req.body.newName).trim() : '';
-    const result = applyCategoryRename(oldName, newName);
+    const result = await applyCategoryRename(oldName, newName);
     if (result.error) return res.status(result.status || 400).json({ error: result.error });
     res.json(result.list);
   } catch (err) {
