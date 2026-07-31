@@ -1,0 +1,5 @@
+[phases.install]
+cmds = ["npm ci", "cd backend && npm install"]
+
+[start]
+cmd = "cd backend && node server.js"
