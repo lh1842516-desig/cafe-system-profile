@@ -66,7 +66,7 @@
     }
     try {
       alert(String(message || ''));
-    } catch (_) {}
+    } catch (_) { }
   }
 
   function dedupeCaptainApprovalRows(rows) {
@@ -165,7 +165,7 @@
       .then(function (data) {
         coAutoApprovalEnabled = !!(data && data.requireCashierKitchenApproval === false);
       })
-      .catch(function () {});
+      .catch(function () { });
   }
 
   function loadCaptainPendingApprovals() {
@@ -263,14 +263,17 @@
     if (joinedTableId != null && String(joinedTableId) === sid) return;
     try {
       joinedTableId = sid;
-    } catch (_) {}
+    } catch (_) { }
   }
 
   function ensureSocket() {
     if (socket) return;
     try {
       if (typeof io !== 'function') return;
-      socket = io(window.location.origin);
+      var token = sessionStorage.getItem('cafezip_saas_token') || '';
+      socket = io(window.location.origin, {
+        query: { token: token }
+      });
 
       socket.on('connect', function () {
         if (selectedTableId) joinTableRoom(selectedTableId);
@@ -279,6 +282,16 @@
       if (window.CafeHeaderBranding && coHeaderCafeName) {
         CafeHeaderBranding.bindSocket(socket, coHeaderCafeName, 'كابتن');
       }
+
+      socket.on('menu-updated', function () {
+        reloadCaptainCategoriesAndMenu();
+      });
+      socket.on('menu_updated', function () {
+        reloadCaptainCategoriesAndMenu();
+      });
+      socket.on('categories-updated', function () {
+        reloadCaptainCategoriesAndMenu();
+      });
 
       // حدث من المطبخ للكابتن
       socket.on('order_ready', function (payload) {
@@ -346,7 +359,34 @@
           loadCaptainPendingApprovals();
         }
       });
-    } catch (_) {}
+
+      // ── طلبات الزبون من واجهة الطلب الذاتي ──────────────────
+      // يُطلق الزبون هذا الحدث من خلال واجهة الطلب بالـ QR
+      socket.on('customer_call_waiter', function (payload) {
+        if (!payload) return;
+        var tbl = String(payload.tableLabel || ('طاولة ' + (payload.tableId || '')));
+        var name = payload.customerName ? ' — ' + payload.customerName : '';
+        var msg = tbl + name + ' طلب الكابتن  ';
+        if (Notifications && typeof Notifications.notifyCaptain === 'function') {
+          Notifications.notifyCaptain({ title: 'طلب كابتن', message: msg, ttlMs: 8000 });
+        } else if (Notifications && typeof Notifications.notifyReady === 'function') {
+          Notifications.notifyReady({ title: 'طلب كابتن', message: msg, ttlMs: 8000 });
+        }
+      });
+
+      socket.on('customer_request_bill', function (payload) {
+        if (!payload) return;
+        var tbl = String(payload.tableLabel || ('طاولة ' + (payload.tableId || '')));
+        var name = payload.customerName ? ' — ' + payload.customerName : '';
+        var msg = tbl + name + ' تطلب الفاتورة';
+        if (Notifications && typeof Notifications.notifyBill === 'function') {
+          Notifications.notifyBill({ title: '🧾 طلب فاتورة', message: msg, ttlMs: 8000 });
+        } else if (Notifications && typeof Notifications.notifyReady === 'function') {
+          Notifications.notifyReady({ title: '🧾 طلب فاتورة', message: msg, ttlMs: 8000 });
+        }
+      });
+
+    } catch (_) { }
   }
 
   function escapeHtml(s) {
@@ -413,8 +453,69 @@
     });
   }
 
+  function extractCaptainCategoriesList(apiCats, menuList) {
+    var seen = {};
+    seen['الكل'] = true;
+    var result = ['الكل'];
+
+    if (Array.isArray(apiCats)) {
+      apiCats.forEach(function (c) {
+        if (!c) return;
+        var name = typeof c === 'object' && c.name != null ? String(c.name).trim() : String(c).trim();
+        if (name && !seen[name]) {
+          seen[name] = true;
+          result.push(name);
+        }
+      });
+    }
+
+    if (Array.isArray(menuList)) {
+      menuList.forEach(function (item) {
+        if (!item || item.category == null) return;
+        var cat = String(item.category).trim();
+        if (cat && !seen[cat]) {
+          seen[cat] = true;
+          result.push(cat);
+        }
+      });
+    }
+
+    return result;
+  }
+
+  function reloadCaptainCategoriesAndMenu() {
+    var api = window.api || window.Api;
+    if (!api) return;
+
+    var categoriesPromise = (api.categories && api.categories.list)
+      ? api.categories.list().then(function (list) { return Array.isArray(list) ? list : []; })
+      : Promise.resolve([]);
+
+    Promise.all([
+      api.menu.list().catch(function () { return []; }),
+      categoriesPromise.catch(function () { return []; })
+    ]).then(function (results) {
+      menu = results[0] || [];
+      var apiCats = results[1];
+
+      categoriesList = extractCaptainCategoriesList(apiCats, menu);
+
+      if (categoriesList.indexOf(selectedCategoryId) === -1) {
+        selectedCategoryId = 'الكل';
+      }
+
+      renderCategories();
+      renderProducts();
+    }).catch(function (err) {
+      console.error('[Captain] Error reloading categories/menu:', err);
+    });
+  }
+
   function selectTable(tableId) {
     selectedTableId = tableId;
+    try {
+      history.pushState({ page: 'captain-order', tableId: tableId }, '', '#table-' + tableId);
+    } catch (_) { }
     ensureSocket();
     joinTableRoom(tableId);
     if (coCurrentTable) {
@@ -424,6 +525,8 @@
       coCurrentTable.textContent = t ? 'طاولة ' + (t.label || t.id) : '';
     }
     if (coHeader) coHeader.classList.add('co-header--has-table');
+    var btnSaasLogout = document.getElementById('btnSaasLogout');
+    if (btnSaasLogout) btnSaasLogout.style.display = 'none';
     if (coTablesScreen) coTablesScreen.style.display = 'none';
     if (coMain) {
       coMain.style.display = 'grid';
@@ -432,11 +535,28 @@
     renderProducts();
   }
 
-  function goBackToTables() {
+  function goBackToTables(fromPopState) {
     selectedTableId = null;
     cart = [];
     joinedTableId = null;
+    if (!fromPopState) {
+      try {
+        if (window.location.hash) {
+          history.pushState({ page: 'captain-tables' }, '', window.location.pathname);
+        }
+      } catch (_) { }
+    }
     if (coHeader) coHeader.classList.remove('co-header--has-table');
+    var btnSaasLogout = document.getElementById('btnSaasLogout');
+    if (btnSaasLogout) {
+      if (typeof SaasAuth !== 'undefined' && SaasAuth.checkStatus) {
+        SaasAuth.checkStatus().then(function (enabled) {
+          if (enabled) btnSaasLogout.style.display = 'inline-flex';
+        });
+      } else {
+        btnSaasLogout.style.display = 'inline-flex';
+      }
+    }
     if (coCurrentTable) coCurrentTable.textContent = '';
     if (coMain) {
       coMain.style.display = 'none';
@@ -671,27 +791,21 @@
     var api = window.api || window.Api;
     var btn = coReceiptOverlay && coReceiptOverlay.classList.contains('open') ? coReceiptBtnSend : coBtnSend;
     if (btn) btn.disabled = true;
+
+    var cartSnapshot = cart.slice();
+    cart = [];
+    updateCartUI();
+    closeReceiptModal();
+    openSendSuccessModal();
+
     api
-      .till.current()
-      .then(function (r) {
-        if (!r || !r.till || r.till.status !== 'open') {
-          alert(TILL_CLOSED_MSG);
-          return Promise.reject(new Error('till_closed'));
-        }
-        return api.orders.create(selectedTableId, items);
-      })
-      .then(function (newOrder) {
-        if (newOrder) {
-          cart = [];
-          updateCartUI();
-          closeReceiptModal();
-          openSendSuccessModal();
-        }
-      })
+      .orders.create(selectedTableId, items)
       .catch(function (err) {
-        if (err.message !== 'till_closed') {
-          alert(err.json && err.json.error ? err.json.error : err.message || 'فشل إرسال الطلب');
-        }
+        cart = cartSnapshot;
+        updateCartUI();
+        closeSendSuccessModal();
+        openReceiptModal();
+        alert(err.json && err.json.error ? err.json.error : err.message || 'فشل إرسال الطلب');
       })
       .finally(function () {
         if (coBtnSend) coBtnSend.disabled = cart.length === 0;
@@ -709,13 +823,23 @@
     // اتصال Socket مرة واحدة لالتقاط إشعارات تجهيز الطلبات
     ensureSocket();
 
+    try {
+      history.replaceState({ page: 'captain-tables' }, '', window.location.pathname);
+    } catch (_) { }
+
+    window.addEventListener('popstate', function (e) {
+      if (selectedTableId != null) {
+        goBackToTables(true);
+      } else {
+        try {
+          history.pushState({ page: 'captain-tables' }, '', window.location.pathname);
+        } catch (_) { }
+      }
+    });
+
     if (window.CafeHeaderBranding && coHeaderCafeName) {
       CafeHeaderBranding.load(coHeaderCafeName, 'كابتن');
     }
-
-    loadCaptainAutoApprovalSetting().then(function () {
-      loadCaptainPendingApprovals();
-    });
 
     var categoriesPromise = (api.categories && api.categories.list)
       ? api.categories.list().then(function (list) { return Array.isArray(list) ? list : []; })
@@ -725,22 +849,14 @@
       api.orders.tables(),
       api.menu.list(),
       categoriesPromise.catch(function () { return []; }),
+      loadCaptainAutoApprovalSetting().catch(function () { }),
     ])
       .then(function (results) {
         tables = results[0] || [];
         menu = results[1] || [];
         var apiCats = results[2];
-        if (apiCats && Array.isArray(apiCats) && apiCats.length > 0) {
-          var names = apiCats
-            .filter(function (c) { return c != null; })
-            .map(function (c) {
-              return typeof c === 'object' && c && c.name != null ? String(c.name).trim() : String(c).trim();
-            })
-            .filter(function (n) { return n !== ''; });
-          if (names.length > 0) {
-            categoriesList = ['الكل'].concat(names);
-          }
-        }
+        loadCaptainPendingApprovals();
+        categoriesList = extractCaptainCategoriesList(apiCats, menu);
         renderTables();
         renderCategories();
 

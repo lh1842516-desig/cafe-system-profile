@@ -2,7 +2,8 @@
  * طبقة موحّدة لربط الطلبات والإحصائيات بجلسة القاصة (cash session)
  * وليس بتاريخ التقويم الحالي.
  */
-const { getOrders } = require('../data/store');
+const orderRepo = require('../repository/orderRepository');
+const tillRepo = require('../repository/tillRepository');
 
 /**
  * هل ينتمي الطلب إلى جلسة القاصة المعطاة؟
@@ -31,15 +32,16 @@ function orderBelongsToSession(order, session) {
   return false;
 }
 
-function getClosedOrdersForSession(session) {
+async function getClosedOrdersForSession(cafeId, session) {
   if (!session) return [];
-  return getOrders().filter((o) => o && o.closed === true && orderBelongsToSession(o, session));
+  const orders = await orderRepo.getOrders(cafeId);
+  return orders.filter((o) => o && o.closed === true && orderBelongsToSession(o, session));
 }
 
-function aggregateSalesForSession(session) {
+async function aggregateSalesForSession(cafeId, session) {
   let salesCash = 0;
   let salesCard = 0;
-  const orders = getClosedOrdersForSession(session);
+  const orders = await getClosedOrdersForSession(cafeId, session);
   for (const o of orders) {
     const total = o.total != null
       ? o.total
@@ -51,13 +53,13 @@ function aggregateSalesForSession(session) {
   return { salesCash, salesCard, total: salesCash + salesCard };
 }
 
-/** الجلسة المفتوحة حالياً (إن وُجدت) — lazy لتجنّب تعارض استيراد مع till.js */
-function getCurrentSession() {
-  return require('../data/till').getActiveSessionMeta();
+/** الجلسة المفتوحة حالياً (إن وُجدت) */
+function getCurrentSession(cafeId) {
+  return tillRepo.getActiveSessionMeta(cafeId);
 }
 
-function getSessionId() {
-  const s = getCurrentSession();
+function getSessionId(cafeId) {
+  const s = getCurrentSession(cafeId);
   return s && s.sessionId ? s.sessionId : null;
 }
 

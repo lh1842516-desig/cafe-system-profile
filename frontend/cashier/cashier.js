@@ -538,7 +538,10 @@
 
   function connectSocket() {
     try {
-      socket = io(window.location.origin);
+      var token = sessionStorage.getItem('cafezip_saas_token') || '';
+      socket = io(window.location.origin, {
+        query: { token: token }
+      });
       socket.on('connect', () => updateConnectionStatus(true));
       socket.on('disconnect', () => updateConnectionStatus(false));
       socket.on('new-order', (order) => {
@@ -560,6 +563,18 @@
           });
         }
       });
+      socket.on('customer_call_waiter', function (payload) {
+        if (!payload) return;
+        var nameStr = payload.customerName ? ' (' + payload.customerName + ')' : '';
+        var msg = 'طاولة ' + String(payload.tableLabel || payload.tableId || '') + nameStr + ' تطلب حضور الكابتن';
+        if (window.NotificationCenter && typeof NotificationCenter.notifyCaptain === 'function') {
+          NotificationCenter.notifyCaptain({
+            title: 'طلب كابتن',
+            message: msg,
+            ttlMs: 6000,
+          });
+        }
+      });
       socket.on('bill-request', function (payload) {
         if (!payload) return;
         var tid = payload.tableId != null ? String(payload.tableId) : '';
@@ -574,6 +589,20 @@
         if (window.NotificationCenter && typeof NotificationCenter.notifyBill === 'function') {
           NotificationCenter.notifyBill({
             title: payload.isReminder ? 'إعادة طلب حساب' : 'طلب حساب',
+            message: msg,
+            ttlMs: 6000,
+          });
+        }
+      });
+      socket.on('customer_request_bill', function (payload) {
+        if (!payload) return;
+        var tid = payload.tableId != null ? String(payload.tableId) : '';
+        if (tid) setTableAwaitingBill(tid, true);
+        var nameStr = payload.customerName ? ' (' + payload.customerName + ')' : '';
+        var msg = 'طاولة رقم ' + String(payload.tableLabel || payload.tableId || '') + nameStr + ' تطلب الحساب';
+        if (window.NotificationCenter && typeof NotificationCenter.notifyBill === 'function') {
+          NotificationCenter.notifyBill({
+            title: 'طلب حساب',
             message: msg,
             ttlMs: 6000,
           });
@@ -1080,7 +1109,11 @@
     return (
       '@page{size:80mm auto;margin:3mm}' +
       'html,body{width:76mm;max-width:76mm;margin:0 auto}' +
-      '@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap");' +
+      '@font-face{font-family:Cairo;font-weight:400;font-display:swap;src:url("/fonts/Cairo-400.ttf") format("truetype")}' +
+      '@font-face{font-family:Cairo;font-weight:600;font-display:swap;src:url("/fonts/Cairo-600.ttf") format("truetype")}' +
+      '@font-face{font-family:Cairo;font-weight:700;font-display:swap;src:url("/fonts/Cairo-700.ttf") format("truetype")}' +
+      '@font-face{font-family:Cairo;font-weight:800;font-display:swap;src:url("/fonts/Cairo-800.ttf") format("truetype")}' +
+
       'body{font-family:Cairo,Tahoma,"Segoe UI",Arial,sans-serif;background:#fff;color:#111;padding:3mm 2mm;line-height:1.42;font-size:10px}' +
       '.brand{text-align:center;padding:0 0 8px;margin:0 0 8px;border-bottom:2px solid #1a1a1a}' +
       '.brand-logo{max-width:52mm;max-height:18mm;width:auto;height:auto;margin:0 auto 6px;display:block;object-fit:contain}' +
@@ -1594,24 +1627,32 @@
     }
     if (btnCashierOrderTypeSendOnly) btnCashierOrderTypeSendOnly.disabled = true;
     if (btnCashierOrderTypePrintSend) btnCashierOrderTypePrintSend.disabled = true;
+
+    var cartSnapshot = newOrderCart.slice();
+    var searchSnapshot = newOrderSearch;
+
+    closeAllCashierOrderModals();
+    newOrderCart = [];
+    newOrderSearch = '';
+    if (cashierNewOrderSearch) cashierNewOrderSearch.value = '';
+    renderNewOrderUi();
+    selectedTableId = null;
+    cashierView.classList.remove('view-bill-active');
+    tablesGrid.querySelectorAll('.table-card').forEach(function (el) {
+      el.classList.remove('selected');
+    });
+    if (ordersContent) ordersContent.innerHTML = '';
+    if (window.showToast) window.showToast('تم إرسال الطلب إلى المطبخ وإضافته لطلبات اليوم.');
+
     try {
       var created = await api.orders.create(tableIdForSend, payloadItems, opts);
       var printOrder = buildPrintOrderFromSubmit(created, orderType, opts.serviceMeta);
-      closeAllCashierOrderModals();
       if (shouldPrint) await printSingleCashierOrderAsync(printOrder);
-      newOrderCart = [];
-      newOrderSearch = '';
-      if (cashierNewOrderSearch) cashierNewOrderSearch.value = '';
-      renderNewOrderUi();
-      selectedTableId = null;
-      cashierView.classList.remove('view-bill-active');
-      tablesGrid.querySelectorAll('.table-card').forEach(function (el) {
-        el.classList.remove('selected');
-      });
-      if (ordersContent) ordersContent.innerHTML = '';
-      setActiveSidebarItem('new-order');
-      if (window.showToast) window.showToast('تم إرسال الطلب إلى المطبخ وإضافته لطلبات اليوم.');
     } catch (err) {
+      newOrderCart = cartSnapshot;
+      newOrderSearch = searchSnapshot;
+      if (cashierNewOrderSearch) cashierNewOrderSearch.value = searchSnapshot;
+      renderNewOrderUi();
       alert(err && err.json && err.json.error ? err.json.error : err.message || 'تعذّر إرسال الطلب.');
     } finally {
       if (btnCashierOrderTypeSendOnly) btnCashierOrderTypeSendOnly.disabled = false;
@@ -1681,7 +1722,6 @@
 
   async function loadTableOrders(tableId) {
     try {
-      await refreshCashierNameFromTill();
       const raw = await api.orders.byTable(tableId);
       const orders = (raw || []).filter(function (o) {
         return o && o.closed !== true;
@@ -1927,9 +1967,11 @@
     paymentMethod = paymentMethod === 'card' ? 'card' : 'cash';
     var pending = (orderIds || []).filter(function (id) { return !!id; });
     if (!pending.length) return;
-    for (var i = 0; i < pending.length; i++) {
-      await api.orders.close(pending[i], { paymentMethod: paymentMethod });
-    }
+    await Promise.all(
+      pending.map(function (id) {
+        return api.orders.close(id, { paymentMethod: paymentMethod });
+      })
+    );
   }
 
   var btnBillBackToTables = document.getElementById('btnBillBackToTables');

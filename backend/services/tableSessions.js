@@ -232,6 +232,27 @@ function removeSessionsForTable(tableId) {
   return true;
 }
 
+const billRequestedMap = new Map();
+
+function setTableBillRequested(cafeId, tableId, isRequested) {
+  const cid = String(cafeId || '').trim();
+  const tid = String(tableId || '').trim();
+  if (!tid) return;
+  const key = cid + ':' + tid;
+  if (isRequested) {
+    billRequestedMap.set(key, true);
+  } else {
+    billRequestedMap.delete(key);
+  }
+}
+
+function isTableBillRequested(cafeId, tableId) {
+  const cid = String(cafeId || '').trim();
+  const tid = String(tableId || '').trim();
+  if (!tid) return false;
+  return billRequestedMap.get(cid + ':' + tid) === true;
+}
+
 module.exports = {
   getSessions,
   getSessionById,
@@ -243,4 +264,6 @@ module.exports = {
   createSessionAfterCancel,
   resetTableAccess,
   removeSessionsForTable,
+  setTableBillRequested,
+  isTableBillRequested,
 };

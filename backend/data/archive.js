@@ -15,14 +15,16 @@ function ensureDir(dir) {
   }
 }
 
-function getYearFilePath(year) {
-  ensureDir(ARCHIVE_DIR);
-  return path.join(ARCHIVE_DIR, String(year) + '.json');
+function getYearFilePath(cafeId, year) {
+  const cid = String(cafeId || '').trim();
+  const dir = cid ? path.join(ARCHIVE_DIR, cid) : ARCHIVE_DIR;
+  ensureDir(dir);
+  return path.join(dir, String(year) + '.json');
 }
 
-/** قراءة ملف السنة. إذا لم يوجد يُرجع هيكل فارغ. */
-function readYearFile(year) {
-  const filePath = getYearFilePath(year);
+/** قراءة ملف السنة لكافيه معين. إذا لم يوجد يُرجع هيكل فارغ. */
+function readYearFile(cafeId, year) {
+  const filePath = getYearFilePath(cafeId, year);
   if (!fs.existsSync(filePath)) {
     return { year: Number(year), months: {} };
   }
@@ -37,9 +39,9 @@ function readYearFile(year) {
   }
 }
 
-/** كتابة ملف السنة. */
-function writeYearFile(year, data) {
-  const filePath = getYearFilePath(year);
+/** كتابة ملف السنة لكافيه معين. */
+function writeYearFile(cafeId, year, data) {
+  const filePath = getYearFilePath(cafeId, year);
   ensureDir(path.dirname(filePath));
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
 }
@@ -104,9 +106,12 @@ function updateDayStats(dayData) {
   dayData.topProductCount = top ? top[1] : 0;
 }
 
-/** إضافة طلب مغلق إلى أرشيف السنة → الشهر → اليوم. */
+/** إضافة طلب مغلق إلى أرشيف الكافيه (السنة → الشهر → اليوم). */
 function addOrderToArchive(order) {
-  if (!order.closed || !order.closedAt) return;
+  if (!order || !order.closed || !order.closedAt) return;
+  const cafeId = String(order.cafeId || order.cafe_id || '').trim();
+  if (!cafeId) return;
+
   let year;
   let monthKey;
   let dayKey;
@@ -122,7 +127,7 @@ function addOrderToArchive(order) {
     dayKey = pad2(d.getDate());
   }
 
-  const data = readYearFile(year);
+  const data = readYearFile(cafeId, year);
   if (!data.months[monthKey]) data.months[monthKey] = { days: {} };
   const month = data.months[monthKey];
   if (!month.days[dayKey]) {
@@ -133,7 +138,7 @@ function addOrderToArchive(order) {
 
   dayData.orders.push(orderToArchiveRecord(order));
   updateDayStats(dayData);
-  writeYearFile(year, data);
+  writeYearFile(cafeId, year, data);
 }
 
 /** تجميع إحصائيات وأوامر من خريطة أيام (يوم أو شهر أو سنة). */
@@ -179,19 +184,53 @@ function aggregateDays(daysMap) {
   };
 }
 
+function syncSessionsWithArchive(cafeId) {
+  try {
+    const historyStore = require('./todaySessionHistory');
+    const cid = String(cafeId || '').trim();
+    if (!cid) return;
+    const sessions = historyStore.readAll().filter((s) => s && String(s.cafeId) === cid);
+    sessions.forEach((s) => {
+      (s.orders || []).forEach((o) => {
+        const orderId = o.orderId || o.displayOrderId || s.displayId;
+        const closedAt = o.closedAt || s.paymentAt || s.createdAt || new Date().toISOString();
+        const openDate = s.openDate || (closedAt ? closedAt.split('T')[0] : null);
+        addOrderToArchive({
+          id: orderId,
+          cafeId: cid,
+          tableId: s.tableId,
+          orderType: s.orderType,
+          closed: true,
+          closedAt: closedAt,
+          open_date: openDate,
+          items: (o.items || []).map((it) => ({
+            name: it.name,
+            quantity: it.quantity || 1,
+            price: it.price || 0,
+          })),
+        }, cid);
+      });
+    });
+  } catch (_) {}
+}
+
 /**
- * جلب تقرير حسب الفترة — يقرأ فقط ملف السنة المعنية.
+ * جلب تقرير لكافيه معني حسب الفترة — يقرأ فقط ملف سنة الكافيه ذاته.
+ * cafeId: string
  * type: 'day' | 'month' | 'year'
  * dateStr: YYYY-MM-DD | YYYY-MM | YYYY
  */
-function getReport(type, dateStr) {
-  if (!dateStr || !type) return aggregateDays({});
+function getReport(cafeId, type, dateStr) {
+  const cid = String(cafeId || '').trim();
+  if (!cid || !dateStr || !type) return aggregateDays({});
+
+  syncSessionsWithArchive(cid);
 
   const parts = dateStr.trim().split('-');
   const year = parts[0];
   if (!year) return aggregateDays({});
 
-  const data = readYearFile(year);
+  const data = readYearFile(cid, year);
   const months = data.months || {};
 
   if (type === 'day' && parts.length >= 3) {
@@ -227,50 +266,10 @@ function getReport(type, dateStr) {
 }
 
 /**
- * بيانات تجريبية للعرض فقط — لا تُحفظ.
+ * دالة ملغاة — تُرجع تقريراً فارغاً دائماً لمنع تسرب أي بيانات وهمية.
  */
 function getSampleReport(type, dateStr) {
-  const [y, m] = (dateStr || '').split('-');
-  const year = y || '2026';
-  const month = (m || '01').padStart(2, '0');
-  const baseDate = year + '-' + month + '-';
-  const sampleOrders = [
-    { id: 'sample-1', table: '1', total: 15000, items: [{ name: 'لاتيه', qty: 2, price: 5000 }, { name: 'إسبريسو', qty: 1, price: 5000 }], closedAt: baseDate + '05T10:30:00.000Z' },
-    { id: 'sample-2', table: '3', total: 7500, items: [{ name: 'قهوة تركية', qty: 1, price: 2500 }, { name: 'كيك', qty: 1, price: 5000 }], closedAt: baseDate + '05T12:15:00.000Z' },
-    { id: 'sample-3', table: '2', total: 5000, items: [{ name: 'إسبريسو', qty: 1, price: 5000 }], closedAt: baseDate + '06T09:00:00.000Z' },
-    { id: 'sample-4', table: '5', total: 25000, items: [{ name: 'لاتيه', qty: 3, price: 5000 }, { name: 'عصير برتقال', qty: 2, price: 5000 }], closedAt: baseDate + '07T14:45:00.000Z' },
-    { id: 'sample-5', table: '1', total: 10000, items: [{ name: 'كابتشينو', qty: 2, price: 5000 }], closedAt: baseDate + '08T11:20:00.000Z' },
-  ];
-  const totalProfit = sampleOrders.reduce((s, o) => s + (o.total || 0), 0);
-  const productCount = {};
-  sampleOrders.forEach((o) => {
-    (o.items || []).forEach((it) => {
-      const name = it.name || '';
-      productCount[name] = (productCount[name] || 0) + (it.qty || 1);
-    });
-  });
-  const top = Object.entries(productCount).sort((a, b) => b[1] - a[1])[0];
-  const itemsSold = Object.values(productCount).reduce((s, n) => s + n, 0);
-  let dineInOrders = 0;
-  let takeawayOrders = 0;
-  let deliveryOrders = 0;
-  sampleOrders.forEach((o) => {
-    const type = inferArchiveOrderType(o);
-    if (type === 'TAKEAWAY') takeawayOrders += 1;
-    else if (type === 'DELIVERY') deliveryOrders += 1;
-    else dineInOrders += 1;
-  });
-  return {
-    totalProfit,
-    totalOrders: sampleOrders.length,
-    dineInOrders,
-    takeawayOrders,
-    deliveryOrders,
-    itemsSold,
-    topProduct: top ? top[0] : 'لاتيه',
-    topProductCount: top ? top[1] : 5,
-    orders: sampleOrders,
-  };
+  return aggregateDays({});
 }
 
 /** مزامنة الطلبات المغلقة الحالية إلى الأرشيف. */

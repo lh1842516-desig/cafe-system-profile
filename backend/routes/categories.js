@@ -6,9 +6,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const { DATA_DIR } = require('../config');
-const { getMenu, saveMenu } = require('../data/store');
+const { optionalToken } = require('./authMiddleware');
+const menuRepo = require('../repository/menuRepository');
+const categoryRepo = require('../repository/categoryRepository');
 
 const CATEGORIES_FILE = path.join(DATA_DIR, 'categories.json');
+const router = express.Router();
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -46,77 +49,103 @@ function normalizeCategoryList(arr) {
   return out;
 }
 
-function readCategories() {
-  ensureDir(path.dirname(CATEGORIES_FILE));
-  if (!fs.existsSync(CATEGORIES_FILE)) return [];
+function getCategoriesFilePath(cafeId) {
+  const cid = String(cafeId || '').trim();
+  if (cid) {
+    return path.join(DATA_DIR, `categories_${cid}.json`);
+  }
+  return path.join(DATA_DIR, 'categories.json');
+}
+
+function readCategories(cafeId) {
+  const cid = String(cafeId || '').trim();
+  if (!cid) {
+    const defaultFile = path.join(DATA_DIR, 'categories.json');
+    ensureDir(path.dirname(defaultFile));
+    if (!fs.existsSync(defaultFile)) return [];
+    try {
+      const data = fs.readFileSync(defaultFile, 'utf8');
+      return normalizeCategoryList(JSON.parse(data));
+    } catch { return []; }
+  }
+  const filePath = path.join(DATA_DIR, `categories_${cid}.json`);
+  ensureDir(path.dirname(filePath));
+  if (!fs.existsSync(filePath)) {
+    return [];
+  }
   try {
-    const data = fs.readFileSync(CATEGORIES_FILE, 'utf8');
+    const data = fs.readFileSync(filePath, 'utf8');
     const arr = JSON.parse(data);
     if (!Array.isArray(arr)) return [];
-    const needsMigrate = arr.some((x) => typeof x === 'string');
-    const list = normalizeCategoryList(arr);
-    if (needsMigrate) saveCategories(list);
-    return list;
+    return normalizeCategoryList(arr);
   } catch {
     return [];
   }
 }
 
-function saveCategories(arr) {
-  ensureDir(path.dirname(CATEGORIES_FILE));
-  fs.writeFileSync(CATEGORIES_FILE, JSON.stringify(arr, null, 2), 'utf8');
+function saveCategories(arr, cafeId) {
+  const filePath = getCategoriesFilePath(cafeId);
+  ensureDir(path.dirname(filePath));
+  fs.writeFileSync(filePath, JSON.stringify(arr, null, 2), 'utf8');
 }
 
-const router = express.Router();
+router.use(optionalToken);
 
-async function doDeleteCategory(name) {
-  const list = readCategories();
+async function doDeleteCategory(cafeId, name) {
+  const list = await categoryRepo.getCategories(cafeId);
   const isUncategorized = name === '';
   if (isUncategorized) {
-    const menu = getMenu();
+    const menu = await menuRepo.getMenu(cafeId);
     const filtered = menu.filter((item) => {
       const cat = item.category != null ? String(item.category).trim() : '';
       return cat !== '';
     });
-    if (filtered.length !== menu.length) await saveMenu(filtered);
+    if (filtered.length !== menu.length) await menuRepo.saveMenu(cafeId, filtered);
     return { list };
   }
   const normalized = name.toLowerCase();
   const idx = list.findIndex((c) => categoryName(c).toLowerCase() === normalized);
-  if (idx === -1) return { error: 'التصنيف غير موجود', status: 404 };
-  list.splice(idx, 1);
-  saveCategories(list);
-  const menu = getMenu();
+  if (idx !== -1) {
+    list.splice(idx, 1);
+    saveCategories(list, cafeId);
+  }
+  const menu = await menuRepo.getMenu(cafeId);
   const filtered = menu.filter((item) => {
     const cat = item.category != null ? String(item.category).trim() : '';
     return cat.toLowerCase() !== normalized;
   });
-  if (filtered.length !== menu.length) await saveMenu(filtered);
-  return { list };
+  if (filtered.length !== menu.length) {
+    await menuRepo.saveMenu(cafeId, filtered);
+  }
+  const updatedList = await categoryRepo.getCategories(cafeId);
+  return { list: updatedList };
 }
 
-async function applyCategoryRename(oldName, newName) {
+async function applyCategoryRename(cafeId, oldName, newName) {
   const newNorm = newName.toLowerCase();
   const oldNorm = oldName.toLowerCase();
   if (!newName) return { error: 'الاسم الجديد مطلوب', status: 400 };
   if (oldNorm === newNorm) return { error: 'الاسم الجديد مطابق للقديم', status: 400 };
-  const list = readCategories();
+  const list = await categoryRepo.getCategories(cafeId);
   if (list.some((c) => categoryName(c).toLowerCase() === newNorm)) {
     return { error: 'اسم تصنيف بهذا الاسم موجود مسبقاً', status: 400 };
   }
-  const menu = getMenu();
+  const menu = await menuRepo.getMenu(cafeId);
   if (oldName === '') {
     list.push({ name: newName, imageUrl: null });
     list.sort((a, b) => categoryName(a).localeCompare(categoryName(b), 'ar'));
-    saveCategories(list);
+    saveCategories(list, cafeId);
   } else {
     const idx = list.findIndex((c) => categoryName(c).toLowerCase() === oldNorm);
-    if (idx === -1) return { error: 'التصنيف غير موجود', status: 404 };
-    const prev = list[idx];
-    const prevImage = typeof prev === 'object' && prev && prev.imageUrl ? prev.imageUrl : null;
-    list[idx] = { name: newName, imageUrl: prevImage };
+    if (idx === -1) {
+      list.push({ name: newName, imageUrl: null });
+    } else {
+      const prev = list[idx];
+      const prevImage = typeof prev === 'object' && prev && prev.imageUrl ? prev.imageUrl : null;
+      list[idx] = { name: newName, imageUrl: prevImage };
+    }
     list.sort((a, b) => categoryName(a).localeCompare(categoryName(b), 'ar'));
-    saveCategories(list);
+    saveCategories(list, cafeId);
   }
   let changed = false;
   menu.forEach((item) => {
@@ -126,125 +155,115 @@ async function applyCategoryRename(oldName, newName) {
       changed = true;
     }
   });
-  if (changed) await saveMenu(menu);
-  return { list: readCategories() };
+  if (changed) await menuRepo.saveMenu(cafeId, menu);
+  return { list: await categoryRepo.getCategories(cafeId) };
 }
 
-// مسار الحذف أولاً (قبل '/' لئلا يُفسَّر "delete" كجزء من مسار آخر). name فارغ = حذف منتجات «بدون تصنيف» فقط
-router.post('/delete', async (req, res) => {
-  try {
-    const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
-    const result = await doDeleteCategory(name);
-    if (result.error) return res.status(result.status || 400).json({ error: result.error });
-    res.json(result.list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+const { emitMenuUpdated } = require('../services/menuRealtime');
 
-/** POST /api/categories/rename — تغيير اسم تصنيف (oldName → newName) في القائمة وفي كل المنتجات */
-router.post('/rename', async (req, res) => {
-  try {
-    const oldName = req.body && req.body.oldName != null ? String(req.body.oldName).trim() : '';
-    const newName = req.body && req.body.newName != null ? String(req.body.newName).trim() : '';
-    const result = await applyCategoryRename(oldName, newName);
-    if (result.error) return res.status(result.status || 400).json({ error: result.error });
-    res.json(result.list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+function createCategoryRouter(io) {
+  const r = express.Router();
+  r.use(optionalToken);
 
-/** POST /api/categories/image — تعيين أو إزالة صورة التصنيف */
-function setCategoryImageHandler(req, res) {
-  try {
-    const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
-    const rawUrl = req.body && Object.prototype.hasOwnProperty.call(req.body, 'imageUrl') ? req.body.imageUrl : undefined;
-    if (!name) return res.status(400).json({ error: 'اسم التصنيف مطلوب' });
-    const list = readCategories();
-    const idx = list.findIndex((c) => categoryName(c).toLowerCase() === name.toLowerCase());
-    if (idx === -1) return res.status(404).json({ error: 'التصنيف غير موجود' });
-    const imageUrl =
-      rawUrl === null || rawUrl === undefined || rawUrl === ''
-        ? null
-        : String(rawUrl).trim() || null;
-    list[idx] = { name: categoryName(list[idx]), imageUrl };
-    saveCategories(list);
-    res.json(list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
-router.post('/image', setCategoryImageHandler);
-
-/** GET /api/categories — قائمة التصنيفات */
-router.get('/', (req, res) => {
-  try {
-    const list = readCategories();
-    res.json(list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-/** POST /api/categories — إضافة تصنيف جديد (بدون تكرار) */
-router.post('/', (req, res) => {
-  try {
-    const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
-    if (!name) return res.status(400).json({ error: 'اسم التصنيف مطلوب' });
-    const list = readCategories();
-    const normalized = name.toLowerCase();
-    if (list.some((c) => categoryName(c).toLowerCase() === normalized)) {
-      return res.status(400).json({ error: 'هذا التصنيف موجود مسبقاً' });
+  // مسار الحذف أولاً
+  r.post('/delete', async (req, res) => {
+    try {
+      const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
+      const result = await doDeleteCategory(req.cafeId, name);
+      if (result.error) return res.status(result.status || 400).json({ error: result.error });
+      if (io) emitMenuUpdated(io, { reason: 'category-deleted', name }, req.cafeId);
+      res.json(result.list);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
     }
-    list.push({ name, imageUrl: null });
-    list.sort((a, b) => categoryName(a).localeCompare(categoryName(b), 'ar'));
-    saveCategories(list);
-    res.status(201).json(list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+  });
 
-/** DELETE /api/categories?name=... — حذف تصنيف وجميع منتجاته */
-router.delete('/', async (req, res) => {
-  try {
-    const name = (req.query.name != null ? String(req.query.name) : (req.body && req.body.name != null ? String(req.body.name) : '')).trim();
-    if (!name) return res.status(400).json({ error: 'اسم التصنيف مطلوب' });
-    const result = await doDeleteCategory(name);
-    if (result.error) return res.status(result.status || 400).json({ error: result.error });
-    res.json(result.list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+  /** POST /api/categories/rename — تغيير اسم تصنيف (oldName → newName) في القائمة وفي كل المنتجات */
+  r.post('/rename', async (req, res) => {
+    try {
+      const oldName = req.body && req.body.oldName != null ? String(req.body.oldName).trim() : '';
+      const newName = req.body && req.body.newName != null ? String(req.body.newName).trim() : '';
+      const result = await applyCategoryRename(req.cafeId, oldName, newName);
+      if (result.error) return res.status(result.status || 400).json({ error: result.error });
+      if (io) emitMenuUpdated(io, { reason: 'category-renamed', oldName, newName }, req.cafeId);
+      res.json(result.list);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
 
-/** معالج حذف التصنيف — للتسجيل المباشر في server.js وتفادي 404 */
-async function deleteCategoryHandler(req, res) {
-  try {
-    const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
-    const result = await doDeleteCategory(name);
-    if (result.error) return res.status(result.status || 400).json({ error: result.error });
-    res.json(result.list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  /** POST /api/categories/image — تعيين أو إزالة صورة التصنيف */
+  r.post('/image', async (req, res) => {
+    try {
+      const cafeId = req.cafeId;
+      const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
+      const rawUrl = req.body && Object.prototype.hasOwnProperty.call(req.body, 'imageUrl') ? req.body.imageUrl : undefined;
+      if (!name) return res.status(400).json({ error: 'اسم التصنيف مطلوب' });
+      const list = await categoryRepo.getCategories(cafeId);
+      const idx = list.findIndex((c) => categoryName(c).toLowerCase() === name.toLowerCase());
+      if (idx === -1) return res.status(404).json({ error: 'التصنيف غير موجود' });
+      const imageUrl =
+        rawUrl === null || rawUrl === undefined || rawUrl === ''
+          ? null
+          : String(rawUrl).trim() || null;
+      list[idx] = { name: categoryName(list[idx]), imageUrl };
+      saveCategories(list, cafeId);
+      if (io) emitMenuUpdated(io, { reason: 'category-image-updated', name }, cafeId);
+      res.json(list);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  /** GET /api/categories — قائمة التصنيفات */
+  r.get('/', async (req, res) => {
+    try {
+      const cafeId = req.cafeId;
+      const list = await categoryRepo.getCategories(cafeId);
+      res.json(list);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  /** POST /api/categories — إضافة تصنيف جديد (بدون تكرار) */
+  r.post('/', async (req, res) => {
+    try {
+      const cafeId = req.cafeId;
+      const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
+      if (!name) return res.status(400).json({ error: 'اسم التصنيف مطلوب' });
+      const list = await categoryRepo.getCategories(cafeId);
+      const normalized = name.toLowerCase();
+      if (list.some((c) => categoryName(c).toLowerCase() === normalized)) {
+        return res.status(400).json({ error: 'هذا التصنيف موجود مسبقاً' });
+      }
+      list.push({ name, imageUrl: null });
+      list.sort((a, b) => categoryName(a).localeCompare(categoryName(b), 'ar'));
+      saveCategories(list, cafeId);
+      if (io) emitMenuUpdated(io, { reason: 'category-added', name }, cafeId);
+      res.status(201).json(list);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  /** DELETE /api/categories?name=... — حذف تصنيف وجميع منتجاته */
+  r.delete('/', async (req, res) => {
+    try {
+      const name = (req.query.name != null ? String(req.query.name) : (req.body && req.body.name != null ? String(req.body.name) : '')).trim();
+      if (!name) return res.status(400).json({ error: 'اسم التصنيف مطلوب' });
+      const result = await doDeleteCategory(req.cafeId, name);
+      if (result.error) return res.status(result.status || 400).json({ error: result.error });
+      if (io) emitMenuUpdated(io, { reason: 'category-deleted', name }, req.cafeId);
+      res.json(result.list);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  return r;
 }
 
-/** معالج تغيير اسم التصنيف — للتسجيل المباشر في server.js وتفادي 404 */
-async function renameCategoryHandler(req, res) {
-  try {
-    const oldName = req.body && req.body.oldName != null ? String(req.body.oldName).trim() : '';
-    const newName = req.body && req.body.newName != null ? String(req.body.newName).trim() : '';
-    const result = await applyCategoryRename(oldName, newName);
-    if (result.error) return res.status(result.status || 400).json({ error: result.error });
-    res.json(result.list);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-}
+module.exports = createCategoryRouter;
+module.exports.createCategoryRouter = createCategoryRouter;
 
-module.exports = router;
-module.exports.deleteCategoryHandler = deleteCategoryHandler;
-module.exports.renameCategoryHandler = renameCategoryHandler;
-module.exports.setCategoryImageHandler = setCategoryImageHandler;

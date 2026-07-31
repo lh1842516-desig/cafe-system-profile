@@ -14610,6 +14610,5685 @@
       ],
       "createdAt": "2026-07-08T09:37:39.272Z",
       "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1783704709710_9l7xr7",
+      "displayId": "T1-[object Promise]1",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-10T17:13:12.695+00:00",
+      "paymentAt": "2026-07-10T17:31:48.567Z",
+      "paymentMethod": "cash",
+      "totalAmount": 40000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-[object Promise]1|T1-[object Promise]11",
+      "orderIds": [
+        "T1-[object Promise]1",
+        "T1-[object Promise]11"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-[object Promise]1",
+          "displayOrderId": "—",
+          "orderIndex": 0,
+          "createdAt": "2026-07-10T17:13:12.695+00:00",
+          "closedAt": "2026-07-10T17:31:47.312Z",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-[object Promise]11",
+          "displayOrderId": "—",
+          "orderIndex": 1,
+          "createdAt": "2026-07-10T17:29:54.912Z",
+          "closedAt": "2026-07-10T17:31:48.567Z",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-10T17:31:49.710Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784383842479_p3nzqr",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-073",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-18T14:08:45.493+00:00",
+      "paymentAt": "2026-07-18T14:10:39.875+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 7000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-073|T1-074",
+      "orderIds": [
+        "T1-073",
+        "T1-074"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-073",
+          "displayOrderId": "T1-073",
+          "orderIndex": 0,
+          "createdAt": "2026-07-18T14:08:45.493+00:00",
+          "closedAt": "2026-07-18T14:10:38.024+00:00",
+          "total": 5000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-074",
+          "displayOrderId": "T1-074",
+          "orderIndex": 1,
+          "createdAt": "2026-07-18T14:08:59.714+00:00",
+          "closedAt": "2026-07-18T14:10:39.875+00:00",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-18T14:10:42.479Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784383865356_dovwf3",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-072",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-18T13:36:40.487+00:00",
+      "paymentAt": "2026-07-18T13:41:14.554+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 50000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-072",
+      "orderIds": [
+        "T1-072"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-072",
+          "displayOrderId": "T1-072",
+          "orderIndex": 0,
+          "createdAt": "2026-07-18T13:36:40.487+00:00",
+          "closedAt": "2026-07-18T13:41:14.554+00:00",
+          "total": 50000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 2,
+              "price": 5000
+            },
+            {
+              "name": "لاتي",
+              "quantity": 2,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-18T14:11:05.356Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784384094045_obtiwr",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "K-076",
+      "tableId": "TAKEAWAY",
+      "orderType": "TAKEAWAY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-18T14:11:53.761+00:00",
+      "paymentAt": "2026-07-18T14:14:52.880Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "K-076",
+      "orderIds": [
+        "K-076"
+      ],
+      "orders": [
+        {
+          "orderId": "K-076",
+          "displayOrderId": "K-076",
+          "orderIndex": 0,
+          "createdAt": "2026-07-18T14:11:53.761+00:00",
+          "closedAt": "2026-07-18T14:14:52.880Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-18T14:14:54.045Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784384102647_3iu9kn",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "D-077",
+      "tableId": "DELIVERY",
+      "orderType": "DELIVERY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-18T14:12:19.601+00:00",
+      "paymentAt": "2026-07-18T14:15:01.450Z",
+      "paymentMethod": "cash",
+      "totalAmount": 2000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "D-077",
+      "orderIds": [
+        "D-077"
+      ],
+      "orders": [
+        {
+          "orderId": "D-077",
+          "displayOrderId": "D-077",
+          "orderIndex": 0,
+          "createdAt": "2026-07-18T14:12:19.601+00:00",
+          "closedAt": "2026-07-18T14:15:01.450Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-18T14:15:02.647Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784461958715_wykgf5",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-080",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-19T11:46:29.713+00:00",
+      "paymentAt": "2026-07-19T11:52:36.499+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 40000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T2-080|T2-082",
+      "orderIds": [
+        "T2-080",
+        "T2-082"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-080",
+          "displayOrderId": "T2-080",
+          "orderIndex": 0,
+          "createdAt": "2026-07-19T11:46:29.713+00:00",
+          "closedAt": "2026-07-19T11:52:34.776+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-082",
+          "displayOrderId": "T2-082",
+          "orderIndex": 1,
+          "createdAt": "2026-07-19T11:50:26.971+00:00",
+          "closedAt": "2026-07-19T11:52:36.499+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-19T11:52:38.715Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784461989530_jrpj96",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-075",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-18T14:11:20.491+00:00",
+      "paymentAt": "2026-07-19T11:53:07.538+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-075",
+      "orderIds": [
+        "T1-075"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-075",
+          "displayOrderId": "T1-075",
+          "orderIndex": 0,
+          "createdAt": "2026-07-18T14:11:20.491+00:00",
+          "closedAt": "2026-07-19T11:53:07.538+00:00",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-19T11:53:09.530Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784546933512_guud1x",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-084",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 3,
+      "firstOrderAt": "2026-07-19T12:25:30.901+00:00",
+      "paymentAt": "2026-07-20T11:28:51.605+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 42000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T2-084|T2-086|T2-089",
+      "orderIds": [
+        "T2-084",
+        "T2-086",
+        "T2-089"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-084",
+          "displayOrderId": "T2-084",
+          "orderIndex": 0,
+          "createdAt": "2026-07-19T12:25:30.901+00:00",
+          "closedAt": "2026-07-20T11:28:47.914+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-086",
+          "displayOrderId": "T2-086",
+          "orderIndex": 1,
+          "createdAt": "2026-07-19T12:49:00.549+00:00",
+          "closedAt": "2026-07-20T11:28:49.861+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-089",
+          "displayOrderId": "T2-089",
+          "orderIndex": 2,
+          "createdAt": "2026-07-20T11:19:05.23+00:00",
+          "closedAt": "2026-07-20T11:28:51.605+00:00",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-20T11:28:53.512Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784719696648_k8vzup",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-090",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 3,
+      "firstOrderAt": "2026-07-22T10:40:52.75+00:00",
+      "paymentAt": "2026-07-22T11:28:14.378+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 19000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-090|T1-091|T1-092",
+      "orderIds": [
+        "T1-090",
+        "T1-091",
+        "T1-092"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-090",
+          "displayOrderId": "T1-090",
+          "orderIndex": 0,
+          "createdAt": "2026-07-22T10:40:52.75+00:00",
+          "closedAt": "2026-07-22T11:28:10.448+00:00",
+          "total": 14000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-091",
+          "displayOrderId": "T1-091",
+          "orderIndex": 1,
+          "createdAt": "2026-07-22T10:42:19.26+00:00",
+          "closedAt": "2026-07-22T11:28:12.255+00:00",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-092",
+          "displayOrderId": "T1-092",
+          "orderIndex": 2,
+          "createdAt": "2026-07-22T11:25:50.932+00:00",
+          "closedAt": "2026-07-22T11:28:14.378+00:00",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-22T11:28:16.648Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784724686687_2kc2pz",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-093",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 5,
+      "firstOrderAt": "2026-07-22T11:48:37.208+00:00",
+      "paymentAt": "2026-07-22T12:51:23.961+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 55000,
+      "cashSessionId": "2026-07-03T08:46:17.361+00:00",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-093|T1-094|T1-095|T1-096|T1-097",
+      "orderIds": [
+        "T1-093",
+        "T1-094",
+        "T1-095",
+        "T1-096",
+        "T1-097"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-093",
+          "displayOrderId": "T1-093",
+          "orderIndex": 0,
+          "createdAt": "2026-07-22T11:48:37.208+00:00",
+          "closedAt": "2026-07-22T12:51:10.867+00:00",
+          "total": 24000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 3,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-094",
+          "displayOrderId": "T1-094",
+          "orderIndex": 1,
+          "createdAt": "2026-07-22T11:49:31.828+00:00",
+          "closedAt": "2026-07-22T12:51:15.553+00:00",
+          "total": 10000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-095",
+          "displayOrderId": "T1-095",
+          "orderIndex": 2,
+          "createdAt": "2026-07-22T12:00:39.518+00:00",
+          "closedAt": "2026-07-22T12:51:19.617+00:00",
+          "total": 11000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-096",
+          "displayOrderId": "T1-096",
+          "orderIndex": 3,
+          "createdAt": "2026-07-22T12:22:03.511+00:00",
+          "closedAt": "2026-07-22T12:51:22.012+00:00",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-097",
+          "displayOrderId": "T1-097",
+          "orderIndex": 4,
+          "createdAt": "2026-07-22T12:49:50.386+00:00",
+          "closedAt": "2026-07-22T12:51:23.961+00:00",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-22T12:51:26.687Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784728973623_mij55y",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-001",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 4,
+      "firstOrderAt": "2026-07-22T13:04:20.79+00:00",
+      "paymentAt": "2026-07-22T14:02:50.758+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 59000,
+      "cashSessionId": "2026-07-22T00:00:00+00:00",
+      "openDate": "2026-07-22",
+      "orderIdsKey": "T1-001|T1-004|T1-005|T1-006",
+      "orderIds": [
+        "T1-001",
+        "T1-004",
+        "T1-005",
+        "T1-006"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-001",
+          "displayOrderId": "T1-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-22T13:04:20.79+00:00",
+          "closedAt": "2026-07-22T14:02:45.015+00:00",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-22T13:36:44.785+00:00",
+          "closedAt": "2026-07-22T14:02:46.956+00:00",
+          "total": 22000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 2,
+              "price": 8000
+            },
+            {
+              "name": "كوماند لاتي",
+              "quantity": 2,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-005",
+          "displayOrderId": "T1-005",
+          "orderIndex": 2,
+          "createdAt": "2026-07-22T13:45:54.589+00:00",
+          "closedAt": "2026-07-22T14:02:49.074+00:00",
+          "total": 13000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            },
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-006",
+          "displayOrderId": "T1-006",
+          "orderIndex": 3,
+          "createdAt": "2026-07-22T13:48:15.143+00:00",
+          "closedAt": "2026-07-22T14:02:50.758+00:00",
+          "total": 16000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 2,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-22T14:02:53.623Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784730009807_in1l6o",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-008",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-22T14:06:28.397+00:00",
+      "paymentAt": "2026-07-22T14:20:07.568+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-22T00:00:00+00:00",
+      "openDate": "2026-07-22",
+      "orderIdsKey": "T1-008|T1-011",
+      "orderIds": [
+        "T1-008",
+        "T1-011"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-008",
+          "displayOrderId": "T1-008",
+          "orderIndex": 0,
+          "createdAt": "2026-07-22T14:06:28.397+00:00",
+          "closedAt": "2026-07-22T14:20:06.258+00:00",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-011",
+          "displayOrderId": "T1-011",
+          "orderIndex": 1,
+          "createdAt": "2026-07-22T14:18:20.771+00:00",
+          "closedAt": "2026-07-22T14:20:07.568+00:00",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-22T14:20:09.807Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784796382530_90nx6m",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-003",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-22T13:06:13.507+00:00",
+      "paymentAt": "2026-07-22T13:06:36.54+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 16000,
+      "cashSessionId": "2026-07-22T00:00:00+00:00",
+      "openDate": "2026-07-22",
+      "orderIdsKey": "T1-003",
+      "orderIds": [
+        "T1-003"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-003",
+          "displayOrderId": "T1-003",
+          "orderIndex": 0,
+          "createdAt": "2026-07-22T13:06:13.507+00:00",
+          "closedAt": "2026-07-22T13:06:36.54+00:00",
+          "total": 16000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 2,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T08:46:22.530Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784796382557_y4ud27",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-22T13:05:46.534+00:00",
+      "paymentAt": "2026-07-22T13:06:11.051+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-22T00:00:00+00:00",
+      "openDate": "2026-07-22",
+      "orderIdsKey": "T1-002",
+      "orderIds": [
+        "T1-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-22T13:05:46.534+00:00",
+          "closedAt": "2026-07-22T13:06:11.051+00:00",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T08:46:22.557Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784796531354_uxc6ha",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-012",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-23T08:47:22.558+00:00",
+      "paymentAt": "2026-07-23T08:48:49.053+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-22T00:00:00+00:00",
+      "openDate": "2026-07-22",
+      "orderIdsKey": "T1-012",
+      "orderIds": [
+        "T1-012"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-012",
+          "displayOrderId": "T1-012",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T08:47:22.558+00:00",
+          "closedAt": "2026-07-23T08:48:49.053+00:00",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T08:48:51.354Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784797674596_z5ddzq",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-013",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-23T09:07:29.845+00:00",
+      "paymentAt": "2026-07-23T09:07:52.584+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-22T00:00:00+00:00",
+      "openDate": "2026-07-22",
+      "orderIdsKey": "T1-013",
+      "orderIds": [
+        "T1-013"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-013",
+          "displayOrderId": "T1-013",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T09:07:29.845+00:00",
+          "closedAt": "2026-07-23T09:07:52.584+00:00",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T09:07:54.597Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784798887245_7cdb1x",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "K-001",
+      "tableId": "TAKEAWAY",
+      "orderType": "TAKEAWAY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-23T09:27:54.935+00:00",
+      "paymentAt": "2026-07-23T09:28:06.115Z",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "K-001",
+      "orderIds": [
+        "K-001"
+      ],
+      "orders": [
+        {
+          "orderId": "K-001",
+          "displayOrderId": "K-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T09:27:54.935+00:00",
+          "closedAt": "2026-07-23T09:28:06.115Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T09:28:07.245Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784799094661_r4bs4v",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-23T09:30:16.995+00:00",
+      "paymentAt": "2026-07-23T09:31:32.416+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T1-002",
+      "orderIds": [
+        "T1-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T09:30:16.995+00:00",
+          "closedAt": "2026-07-23T09:31:32.416+00:00",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T09:31:34.661Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784805419122_2k286p",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-001",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-23T11:13:38.955Z",
+      "paymentAt": "2026-07-23T11:16:57.579Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T1-001|T1-002",
+      "orderIds": [
+        "T1-001",
+        "T1-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-001",
+          "displayOrderId": "T1-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T11:13:38.955Z",
+          "closedAt": "2026-07-23T11:16:57.523Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 1,
+          "createdAt": "2026-07-23T11:15:17.776Z",
+          "closedAt": "2026-07-23T11:16:57.579Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T11:16:59.122Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784805576897_mvxt7c",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-003",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-23T11:17:17.046Z",
+      "paymentAt": "2026-07-23T11:19:34.689Z",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T1-003|T1-004",
+      "orderIds": [
+        "T1-003",
+        "T1-004"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-003",
+          "displayOrderId": "T1-003",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T11:17:17.046Z",
+          "closedAt": "2026-07-23T11:19:34.620Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-23T11:17:30.810Z",
+          "closedAt": "2026-07-23T11:19:34.689Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T11:19:36.897Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784808516221_wh5lo8",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-001",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-23T12:07:15.915Z",
+      "paymentAt": "2026-07-23T12:08:34.158Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T2-001",
+      "orderIds": [
+        "T2-001"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-001",
+          "displayOrderId": "T2-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T12:07:15.915Z",
+          "closedAt": "2026-07-23T12:08:34.158Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T12:08:36.222Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784825010435_7dt9fb",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-002",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-23T16:41:02.208Z",
+      "paymentAt": "2026-07-23T16:43:28.590Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T2-002",
+      "orderIds": [
+        "T2-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-002",
+          "displayOrderId": "T2-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T16:41:02.208Z",
+          "closedAt": "2026-07-23T16:43:28.590Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T16:43:30.435Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784827043341_whfizt",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-003",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-23T16:50:56.031Z",
+      "paymentAt": "2026-07-23T17:17:20.189Z",
+      "paymentMethod": "cash",
+      "totalAmount": 4000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T2-003|T2-004",
+      "orderIds": [
+        "T2-003",
+        "T2-004"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-003",
+          "displayOrderId": "T2-003",
+          "orderIndex": 0,
+          "createdAt": "2026-07-23T16:50:56.031Z",
+          "closedAt": "2026-07-23T17:17:19.882Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-004",
+          "displayOrderId": "T2-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-23T16:52:47.001Z",
+          "closedAt": "2026-07-23T17:17:20.189Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-23T17:17:23.341Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784897176476_ihfbcs",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-003",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-24T12:45:26.182Z",
+      "paymentAt": "2026-07-24T12:46:14.305Z",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T1-003",
+      "orderIds": [
+        "T1-003"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-003",
+          "displayOrderId": "T1-003",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T12:45:26.182Z",
+          "closedAt": "2026-07-24T12:46:14.305Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T12:46:16.476Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784897184924_25x46r",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-001",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-24T12:34:55.790Z",
+      "paymentAt": "2026-07-24T12:46:22.143Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T2-001|T2-002",
+      "orderIds": [
+        "T2-001",
+        "T2-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-001",
+          "displayOrderId": "T2-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T12:34:55.790Z",
+          "closedAt": "2026-07-24T12:46:22.088Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-002",
+          "displayOrderId": "T2-002",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T12:36:01.217Z",
+          "closedAt": "2026-07-24T12:46:22.143Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T12:46:24.924Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784897224182_eqlbrd",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-004",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-24T12:46:34.914Z",
+      "paymentAt": "2026-07-24T12:47:02.079Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T2-004",
+      "orderIds": [
+        "T2-004"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-004",
+          "displayOrderId": "T2-004",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T12:46:34.914Z",
+          "closedAt": "2026-07-24T12:47:02.079Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T12:47:04.183Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784897889174_jeaok0",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-006",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-24T12:57:09.385Z",
+      "paymentAt": "2026-07-24T12:58:07.323Z",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T1-006",
+      "orderIds": [
+        "T1-006"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-006",
+          "displayOrderId": "T1-006",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T12:57:09.385Z",
+          "closedAt": "2026-07-24T12:58:07.323Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T12:58:09.174Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784897988002_b89qoa",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-004",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 3,
+      "firstOrderAt": "2026-07-24T12:48:40.937Z",
+      "paymentAt": "2026-07-24T12:59:45.699Z",
+      "paymentMethod": "cash",
+      "totalAmount": 10000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T2-004|T2-005|T2-007",
+      "orderIds": [
+        "T2-004",
+        "T2-005",
+        "T2-007"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-004",
+          "displayOrderId": "T2-004",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T12:48:40.937Z",
+          "closedAt": "2026-07-24T12:59:45.623Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-005",
+          "displayOrderId": "T2-005",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T12:49:50.267Z",
+          "closedAt": "2026-07-24T12:59:45.658Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-007",
+          "displayOrderId": "T2-007",
+          "orderIndex": 2,
+          "createdAt": "2026-07-24T12:58:38.656Z",
+          "closedAt": "2026-07-24T12:59:45.699Z",
+          "total": 4000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T12:59:48.002Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784899934150_6oju7a",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-008",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-24T13:01:13.144Z",
+      "paymentAt": "2026-07-24T13:32:12.400Z",
+      "paymentMethod": "cash",
+      "totalAmount": 6000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T2-008|T2-012",
+      "orderIds": [
+        "T2-008",
+        "T2-012"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-008",
+          "displayOrderId": "T2-008",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T13:01:13.144Z",
+          "closedAt": "2026-07-24T13:32:12.083Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-012",
+          "displayOrderId": "T2-012",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T13:18:38.442Z",
+          "closedAt": "2026-07-24T13:32:12.400Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T13:32:14.150Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784900673481_myx22j",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-011",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 3,
+      "firstOrderAt": "2026-07-24T13:11:52.781+00:00",
+      "paymentAt": "2026-07-24T13:44:31.205Z",
+      "paymentMethod": "cash",
+      "totalAmount": 15000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T1-011|T1-013|T1-015",
+      "orderIds": [
+        "T1-011",
+        "T1-013",
+        "T1-015"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-011",
+          "displayOrderId": "T1-011",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T13:11:52.781+00:00",
+          "closedAt": "2026-07-24T13:44:30.891Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-013",
+          "displayOrderId": "T1-013",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T13:29:43.251+00:00",
+          "closedAt": "2026-07-24T13:44:30.926Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-015",
+          "displayOrderId": "T1-015",
+          "orderIndex": 2,
+          "createdAt": "2026-07-24T13:40:47.414+00:00",
+          "closedAt": "2026-07-24T13:44:31.205Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T13:44:33.481Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784901536459_h4v1w3",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T3-018",
+      "tableId": "3",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-24T13:58:08.868Z",
+      "paymentAt": "2026-07-24T13:58:54.179Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-23T00:00:00+00:00",
+      "openDate": "2026-07-23",
+      "orderIdsKey": "T3-018",
+      "orderIds": [
+        "T3-018"
+      ],
+      "orders": [
+        {
+          "orderId": "T3-018",
+          "displayOrderId": "T3-018",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T13:58:08.868Z",
+          "closedAt": "2026-07-24T13:58:54.179Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T13:58:56.459Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784932134713_ceqre3",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-003",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-24T22:27:39.374Z",
+      "paymentAt": "2026-07-24T22:28:51.239Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-003",
+      "orderIds": [
+        "T2-003"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-003",
+          "displayOrderId": "T2-003",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T22:27:39.374Z",
+          "closedAt": "2026-07-24T22:28:51.239Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T22:28:54.713Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784934262872_qozjp4",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-006",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 4,
+      "firstOrderAt": "2026-07-24T22:29:27.459Z",
+      "paymentAt": "2026-07-24T23:04:19.956Z",
+      "paymentMethod": "cash",
+      "totalAmount": 17000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-006|T2-009|T2-010|T2-011",
+      "orderIds": [
+        "T2-006",
+        "T2-009",
+        "T2-010",
+        "T2-011"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-006",
+          "displayOrderId": "T2-006",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T22:29:27.459Z",
+          "closedAt": "2026-07-24T23:04:19.611Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-009",
+          "displayOrderId": "T2-009",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T22:29:56.248Z",
+          "closedAt": "2026-07-24T23:04:19.632Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-010",
+          "displayOrderId": "T2-010",
+          "orderIndex": 2,
+          "createdAt": "2026-07-24T23:01:09.608Z",
+          "closedAt": "2026-07-24T23:04:19.919Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-011",
+          "displayOrderId": "T2-011",
+          "orderIndex": 3,
+          "createdAt": "2026-07-24T23:03:27.548Z",
+          "closedAt": "2026-07-24T23:04:19.956Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T23:04:22.872Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784934664223_3ezi1d",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-013",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 4,
+      "firstOrderAt": "2026-07-24T23:05:10.009+00:00",
+      "paymentAt": "2026-07-24T23:11:02.108Z",
+      "paymentMethod": "card",
+      "totalAmount": 13000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-013|T2-014|T2-015|T2-016",
+      "orderIds": [
+        "T2-013",
+        "T2-014",
+        "T2-015",
+        "T2-016"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-013",
+          "displayOrderId": "T2-013",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T23:05:10.009+00:00",
+          "closedAt": "2026-07-24T23:11:01.759Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-014",
+          "displayOrderId": "T2-014",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T23:07:33.017+00:00",
+          "closedAt": "2026-07-24T23:11:01.784Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-015",
+          "displayOrderId": "T2-015",
+          "orderIndex": 2,
+          "createdAt": "2026-07-24T23:09:42.067Z",
+          "closedAt": "2026-07-24T23:11:02.075Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-016",
+          "displayOrderId": "T2-016",
+          "orderIndex": 3,
+          "createdAt": "2026-07-24T23:10:17.767Z",
+          "closedAt": "2026-07-24T23:11:02.108Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-24T23:11:04.223Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784968672215_qj31lf",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-013",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-24T23:05:10.009+00:00",
+      "paymentAt": "2026-07-25T08:37:48.632Z",
+      "paymentMethod": "card",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-013|T2-014",
+      "orderIds": [
+        "T2-013",
+        "T2-014"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-013",
+          "displayOrderId": "T2-013",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T23:05:10.009+00:00",
+          "closedAt": "2026-07-25T08:37:48.614Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-014",
+          "displayOrderId": "T2-014",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T23:07:33.017+00:00",
+          "closedAt": "2026-07-25T08:37:48.632Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T08:37:52.215Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784971725784_a5gmb1",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-015",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 5,
+      "firstOrderAt": "2026-07-25T08:38:58.029Z",
+      "paymentAt": "2026-07-25T09:27:09.861Z",
+      "paymentMethod": "cash",
+      "totalAmount": 37000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-015|T2-016|T2-017|T2-018|T2-019",
+      "orderIds": [
+        "T2-015",
+        "T2-016",
+        "T2-017",
+        "T2-018",
+        "T2-019"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-015",
+          "displayOrderId": "T2-015",
+          "orderIndex": 0,
+          "createdAt": "2026-07-25T08:38:58.029Z",
+          "closedAt": "2026-07-25T09:27:09.441Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-016",
+          "displayOrderId": "T2-016",
+          "orderIndex": 1,
+          "createdAt": "2026-07-25T08:44:26.815Z",
+          "closedAt": "2026-07-25T09:27:09.468Z",
+          "total": 19000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 5000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-017",
+          "displayOrderId": "T2-017",
+          "orderIndex": 2,
+          "createdAt": "2026-07-25T09:23:49.383Z",
+          "closedAt": "2026-07-25T09:27:09.771Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-018",
+          "displayOrderId": "T2-018",
+          "orderIndex": 3,
+          "createdAt": "2026-07-25T09:24:09.691Z",
+          "closedAt": "2026-07-25T09:27:09.832Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-019",
+          "displayOrderId": "T2-019",
+          "orderIndex": 4,
+          "createdAt": "2026-07-25T09:25:43.318Z",
+          "closedAt": "2026-07-25T09:27:09.861Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T09:28:45.784Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784971941878_5dmzet",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-020",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-25T09:28:14.906Z",
+      "paymentAt": "2026-07-25T09:32:20.075Z",
+      "paymentMethod": "cash",
+      "totalAmount": 4000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-020|T2-021",
+      "orderIds": [
+        "T2-020",
+        "T2-021"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-020",
+          "displayOrderId": "T2-020",
+          "orderIndex": 0,
+          "createdAt": "2026-07-25T09:28:14.906Z",
+          "closedAt": "2026-07-25T09:32:20.019Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-021",
+          "displayOrderId": "T2-021",
+          "orderIndex": 1,
+          "createdAt": "2026-07-25T09:29:13.120Z",
+          "closedAt": "2026-07-25T09:32:20.075Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T09:32:21.878Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784982932812_d3j9rs",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-017",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-25T12:34:34.426Z",
+      "paymentAt": "2026-07-25T12:35:31.257Z",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-017|T2-018",
+      "orderIds": [
+        "T2-017",
+        "T2-018"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-017",
+          "displayOrderId": "T2-017",
+          "orderIndex": 0,
+          "createdAt": "2026-07-25T12:34:34.426Z",
+          "closedAt": "2026-07-25T12:35:30.952Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-018",
+          "displayOrderId": "T2-018",
+          "orderIndex": 1,
+          "createdAt": "2026-07-25T12:34:49.068Z",
+          "closedAt": "2026-07-25T12:35:31.257Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T12:35:32.813Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784985321998_b044zf",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-015",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-25T13:14:00.761Z",
+      "paymentAt": "2026-07-25T13:15:19.077Z",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-015|T2-016",
+      "orderIds": [
+        "T2-015",
+        "T2-016"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-015",
+          "displayOrderId": "T2-015",
+          "orderIndex": 0,
+          "createdAt": "2026-07-25T13:14:00.761Z",
+          "closedAt": "2026-07-25T13:15:19.067Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-016",
+          "displayOrderId": "T2-016",
+          "orderIndex": 1,
+          "createdAt": "2026-07-25T13:14:17.305Z",
+          "closedAt": "2026-07-25T13:15:19.077Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T13:15:21.998Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784989078651_siy2et",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-013",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 3,
+      "firstOrderAt": "2026-07-24T23:05:10.009+00:00",
+      "paymentAt": "2026-07-25T14:17:56.661Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-013|T2-014|T2-015",
+      "orderIds": [
+        "T2-013",
+        "T2-014",
+        "T2-015"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-013",
+          "displayOrderId": "T2-013",
+          "orderIndex": 0,
+          "createdAt": "2026-07-24T23:05:10.009+00:00",
+          "closedAt": "2026-07-25T14:17:56.353Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-014",
+          "displayOrderId": "T2-014",
+          "orderIndex": 1,
+          "createdAt": "2026-07-24T23:07:33.017+00:00",
+          "closedAt": "2026-07-25T14:17:56.365Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-015",
+          "displayOrderId": "T2-015",
+          "orderIndex": 2,
+          "createdAt": "2026-07-25T14:16:48.473Z",
+          "closedAt": "2026-07-25T14:17:56.661Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T14:17:58.651Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1784990289265_y6du88",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-016",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-25T14:36:40.383Z",
+      "paymentAt": "2026-07-25T14:38:07.131Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-25T00:00:00+00:00",
+      "openDate": "2026-07-25",
+      "orderIdsKey": "T2-016",
+      "orderIds": [
+        "T2-016"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-016",
+          "displayOrderId": "T2-016",
+          "orderIndex": 0,
+          "createdAt": "2026-07-25T14:36:40.383Z",
+          "closedAt": "2026-07-25T14:38:07.131Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T14:38:09.265Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785013818937_ky4rnz",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-014",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-25T21:08:03.260Z",
+      "paymentAt": "2026-07-25T21:10:15.531Z",
+      "paymentMethod": "cash",
+      "totalAmount": 17000,
+      "cashSessionId": "2026-07-26T00:00:00+00:00",
+      "openDate": "2026-07-26",
+      "orderIdsKey": "T2-014|T2-015",
+      "orderIds": [
+        "T2-014",
+        "T2-015"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-014",
+          "displayOrderId": "T2-014",
+          "orderIndex": 0,
+          "createdAt": "2026-07-25T21:08:03.260Z",
+          "closedAt": "2026-07-25T21:10:15.458Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 4,
+              "price": 2000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-015",
+          "displayOrderId": "T2-015",
+          "orderIndex": 1,
+          "createdAt": "2026-07-25T21:08:04.387Z",
+          "closedAt": "2026-07-25T21:10:15.531Z",
+          "total": 9000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 3,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T21:10:18.937Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016828744_re9lb7",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T10-020",
+      "tableId": "10",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-04T08:24:51.389+00:00",
+      "paymentAt": "2026-07-04T08:24:54.307+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 80000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T10-020",
+      "orderIds": [
+        "T10-020"
+      ],
+      "orders": [
+        {
+          "orderId": "T10-020",
+          "displayOrderId": "T10-020",
+          "orderIndex": 0,
+          "createdAt": "2026-07-04T08:24:51.389+00:00",
+          "closedAt": "2026-07-04T08:24:54.307+00:00",
+          "total": 80000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 4,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:28.744Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016828780_ljej11",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-037",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-05T11:49:54.701+00:00",
+      "paymentAt": "2026-07-05T11:50:04.262+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 20000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-037",
+      "orderIds": [
+        "T1-037"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-037",
+          "displayOrderId": "T1-037",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T11:49:54.701+00:00",
+          "closedAt": "2026-07-05T11:50:04.262+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:28.780Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016828813_vso2xu",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T10-022",
+      "tableId": "10",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-04T08:46:40.696+00:00",
+      "paymentAt": "2026-07-04T08:46:45.201+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 20000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T10-022",
+      "orderIds": [
+        "T10-022"
+      ],
+      "orders": [
+        {
+          "orderId": "T10-022",
+          "displayOrderId": "T10-022",
+          "orderIndex": 0,
+          "createdAt": "2026-07-04T08:46:40.696+00:00",
+          "closedAt": "2026-07-04T08:46:45.201+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:28.813Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016828850_anx17z",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T10-023",
+      "tableId": "10",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-04T08:57:29.746+00:00",
+      "paymentAt": "2026-07-04T08:57:36.64+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 20000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T10-023",
+      "orderIds": [
+        "T10-023"
+      ],
+      "orders": [
+        {
+          "orderId": "T10-023",
+          "displayOrderId": "T10-023",
+          "orderIndex": 0,
+          "createdAt": "2026-07-04T08:57:29.746+00:00",
+          "closedAt": "2026-07-04T08:57:36.64+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:28.850Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016828890_e2xorh",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T10-026",
+      "tableId": "10",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-04T09:33:44.288+00:00",
+      "paymentAt": "2026-07-04T09:33:58.595+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 20000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T10-026",
+      "orderIds": [
+        "T10-026"
+      ],
+      "orders": [
+        {
+          "orderId": "T10-026",
+          "displayOrderId": "T10-026",
+          "orderIndex": 0,
+          "createdAt": "2026-07-04T09:33:44.288+00:00",
+          "closedAt": "2026-07-04T09:33:58.595+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:28.890Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016828934_gk4nnd",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-033",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-05T11:18:37.436+00:00",
+      "paymentAt": "2026-07-05T11:19:26.009+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 20000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-033",
+      "orderIds": [
+        "T1-033"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-033",
+          "displayOrderId": "T1-033",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T11:18:37.436+00:00",
+          "closedAt": "2026-07-05T11:19:26.009+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:28.934Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016828973_th3i6p",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T10-025",
+      "tableId": "10",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-04T09:32:04.783+00:00",
+      "paymentAt": "2026-07-04T09:33:27.514+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 58000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T10-025",
+      "orderIds": [
+        "T10-025"
+      ],
+      "orders": [
+        {
+          "orderId": "T10-025",
+          "displayOrderId": "T10-025",
+          "orderIndex": 0,
+          "createdAt": "2026-07-04T09:32:04.783+00:00",
+          "closedAt": "2026-07-04T09:33:27.514+00:00",
+          "total": 58000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 2,
+              "price": 20000
+            },
+            {
+              "name": "مكسيكي",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            },
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:28.973Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829007_miry4z",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-049",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-05T12:06:12.482+00:00",
+      "paymentAt": "2026-07-05T12:06:46.781+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 22000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-049",
+      "orderIds": [
+        "T1-049"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-049",
+          "displayOrderId": "T1-049",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T12:06:12.482+00:00",
+          "closedAt": "2026-07-05T12:06:46.781+00:00",
+          "total": 22000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            },
+            {
+              "name": "مكسيكي",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.007Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829038_qou61k",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-050",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-05T13:41:07.76+00:00",
+      "paymentAt": "2026-07-05T13:41:16.893+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-050",
+      "orderIds": [
+        "T1-050"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-050",
+          "displayOrderId": "T1-050",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T13:41:07.76+00:00",
+          "closedAt": "2026-07-05T13:41:16.893+00:00",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.038Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829066_i95a3b",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T10-019",
+      "tableId": "10",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-04T08:24:30.255+00:00",
+      "paymentAt": "2026-07-04T08:24:37.485+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 22000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T10-019",
+      "orderIds": [
+        "T10-019"
+      ],
+      "orders": [
+        {
+          "orderId": "T10-019",
+          "displayOrderId": "T10-019",
+          "orderIndex": 0,
+          "createdAt": "2026-07-04T08:24:30.255+00:00",
+          "closedAt": "2026-07-04T08:24:37.485+00:00",
+          "total": 22000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            },
+            {
+              "name": "مكسيكي",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.066Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829096_24ah5n",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-036",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-05T11:48:15.671+00:00",
+      "paymentAt": "2026-07-05T11:49:25.52+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-036",
+      "orderIds": [
+        "T1-036"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-036",
+          "displayOrderId": "T1-036",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T11:48:15.671+00:00",
+          "closedAt": "2026-07-05T11:49:25.52+00:00",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.096Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829128_lydp4w",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-039",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-05T11:52:39.932+00:00",
+      "paymentAt": "2026-07-05T11:52:43.453+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 20000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-039",
+      "orderIds": [
+        "T1-039"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-039",
+          "displayOrderId": "T1-039",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T11:52:39.932+00:00",
+          "closedAt": "2026-07-05T11:52:43.453+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.128Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829159_a5p24a",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-040",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-05T11:52:50.531+00:00",
+      "paymentAt": "2026-07-05T11:52:56.073+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 20000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-040",
+      "orderIds": [
+        "T1-040"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-040",
+          "displayOrderId": "T1-040",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T11:52:50.531+00:00",
+          "closedAt": "2026-07-05T11:52:56.073+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.159Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829187_ik9tw9",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-034",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-05T11:47:18.868+00:00",
+      "paymentAt": "2026-07-05T11:47:24.291+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 22000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-034|T1-035",
+      "orderIds": [
+        "T1-034",
+        "T1-035"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-034",
+          "displayOrderId": "T1-034",
+          "orderIndex": 0,
+          "createdAt": "2026-07-05T11:47:18.868+00:00",
+          "closedAt": "2026-07-05T11:47:24.291+00:00",
+          "total": 20000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000,
+              "orderedByName": "مصطفى"
+            }
+          ]
+        },
+        {
+          "orderId": "T1-035",
+          "displayOrderId": "T1-035",
+          "orderIndex": 1,
+          "createdAt": "2026-07-05T11:47:18.985+00:00",
+          "closedAt": "2026-07-05T11:47:24.291+00:00",
+          "total": 2000,
+          "items": [
+            {
+              "name": "مكسيكي",
+              "quantity": 1,
+              "price": 2000,
+              "orderedByName": "علي"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.187Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829216_gsudv3",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-065",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-07T11:09:11.023+00:00",
+      "paymentAt": "2026-07-07T11:09:13.584+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 31000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-065",
+      "orderIds": [
+        "T1-065"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-065",
+          "displayOrderId": "T1-065",
+          "orderIndex": 0,
+          "createdAt": "2026-07-07T11:09:11.023+00:00",
+          "closedAt": "2026-07-07T11:09:13.584+00:00",
+          "total": 31000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 1,
+              "price": 20000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.216Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785016829243_imfjvr",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-067",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-07T20:53:08.543+00:00",
+      "paymentAt": "2026-07-07T20:53:36.344+00:00",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-03T08:46:17.361Z",
+      "openDate": "2026-07-03",
+      "orderIdsKey": "T1-067",
+      "orderIds": [
+        "T1-067"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-067",
+          "displayOrderId": "T1-067",
+          "orderIndex": 0,
+          "createdAt": "2026-07-07T20:53:08.543+00:00",
+          "closedAt": "2026-07-07T20:53:36.344+00:00",
+          "total": 5000,
+          "items": [
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-25T22:00:29.243Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785073449628_c1wfxp",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-001",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-26T13:40:47.013Z",
+      "paymentAt": "2026-07-26T13:44:07.445Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-26",
+      "openDate": "2026-07-26",
+      "orderIdsKey": "T1-001",
+      "orderIds": [
+        "T1-001"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-001",
+          "displayOrderId": "T1-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-26T13:40:47.013Z",
+          "closedAt": "2026-07-26T13:44:07.445Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-26T13:44:09.628Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785104347628_uit8em",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "K-001",
+      "tableId": "TAKEAWAY",
+      "orderType": "TAKEAWAY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-26T21:42:36.290Z",
+      "paymentAt": "2026-07-26T22:19:05.502Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-27",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "K-001",
+      "orderIds": [
+        "K-001"
+      ],
+      "orders": [
+        {
+          "orderId": "K-001",
+          "displayOrderId": "K-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-26T21:42:36.290Z",
+          "closedAt": "2026-07-26T22:19:05.502Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-26T22:19:07.628Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785104517923_vxdo62",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-015",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-26T22:20:53.191Z",
+      "paymentAt": "2026-07-26T22:21:55.995Z",
+      "paymentMethod": "cash",
+      "totalAmount": 2000,
+      "cashSessionId": "2026-07-27",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T2-015",
+      "orderIds": [
+        "T2-015"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-015",
+          "displayOrderId": "T2-015",
+          "orderIndex": 0,
+          "createdAt": "2026-07-26T22:20:53.191Z",
+          "closedAt": "2026-07-26T22:21:55.995Z",
+          "total": 2000,
+          "items": [
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-26T22:21:57.923Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785104702688_1nodo5",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-019",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-26T22:24:05.097Z",
+      "paymentAt": "2026-07-26T22:25:01.072Z",
+      "paymentMethod": "cash",
+      "totalAmount": 10000,
+      "cashSessionId": "2026-07-27",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-019",
+      "orderIds": [
+        "T1-019"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 0,
+          "createdAt": "2026-07-26T22:24:05.097Z",
+          "closedAt": "2026-07-26T22:25:01.072Z",
+          "total": 10000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-26T22:25:02.688Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785106247597_3hn5lq",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-26T22:50:21.341Z",
+      "paymentAt": "2026-07-26T22:50:45.612Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-002",
+      "orderIds": [
+        "T1-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-26T22:50:21.341Z",
+          "closedAt": "2026-07-26T22:50:45.612Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-26T22:50:47.597Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785109816927_b5zzdi",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-26T23:46:46.505Z",
+      "paymentAt": "2026-07-26T23:50:15.615Z",
+      "paymentMethod": "cash",
+      "totalAmount": 9000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-002|T1-004",
+      "orderIds": [
+        "T1-002",
+        "T1-004"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-26T23:46:46.505Z",
+          "closedAt": "2026-07-26T23:50:15.302Z",
+          "total": 6000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 2,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-26T23:48:31.704Z",
+          "closedAt": "2026-07-26T23:50:15.615Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-26T23:50:16.927Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785153057666_bul8j4",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-015",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-27T11:49:17.495Z",
+      "paymentAt": "2026-07-27T11:50:55.762Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T2-015",
+      "orderIds": [
+        "T2-015"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-015",
+          "displayOrderId": "T2-015",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T11:49:17.495Z",
+          "closedAt": "2026-07-27T11:50:55.762Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T11:50:57.666Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785153600388_uvq2mw",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T2-016",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 4,
+      "firstOrderAt": "2026-07-27T11:52:55.791Z",
+      "paymentAt": "2026-07-27T11:59:57.999Z",
+      "paymentMethod": "cash",
+      "totalAmount": 16000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T2-016|T2-017|T2-018|T2-019",
+      "orderIds": [
+        "T2-016",
+        "T2-017",
+        "T2-018",
+        "T2-019"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-016",
+          "displayOrderId": "T2-016",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T11:52:55.791Z",
+          "closedAt": "2026-07-27T11:59:57.694Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-017",
+          "displayOrderId": "T2-017",
+          "orderIndex": 1,
+          "createdAt": "2026-07-27T11:53:17.914Z",
+          "closedAt": "2026-07-27T11:59:57.727Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-018",
+          "displayOrderId": "T2-018",
+          "orderIndex": 2,
+          "createdAt": "2026-07-27T11:58:43.137Z",
+          "closedAt": "2026-07-27T11:59:57.752Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T2-019",
+          "displayOrderId": "T2-019",
+          "orderIndex": 3,
+          "createdAt": "2026-07-27T11:59:14.886Z",
+          "closedAt": "2026-07-27T11:59:57.999Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T12:00:00.388Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785155933596_3ycdzj",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-019",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-27T12:35:16.657Z",
+      "paymentAt": "2026-07-27T12:38:50.111Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-019|T1-021",
+      "orderIds": [
+        "T1-019",
+        "T1-021"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T12:35:16.657Z",
+          "closedAt": "2026-07-27T12:38:50.087Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-021",
+          "displayOrderId": "T1-021",
+          "orderIndex": 1,
+          "createdAt": "2026-07-27T12:36:02.548Z",
+          "closedAt": "2026-07-27T12:38:50.111Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T12:38:53.596Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785157265607_o1e0t6",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 6,
+      "firstOrderAt": "2026-07-27T12:44:08.676+00:00",
+      "paymentAt": "2026-07-27T13:01:03.606Z",
+      "paymentMethod": "cash",
+      "totalAmount": 26000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-002|T1-004|T1-005|T1-008|T1-012|T1-019",
+      "orderIds": [
+        "T1-002",
+        "T1-004",
+        "T1-005",
+        "T1-008",
+        "T1-012",
+        "T1-019"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T12:44:08.676+00:00",
+          "closedAt": "2026-07-27T13:01:03.210Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-27T12:52:10.915+00:00",
+          "closedAt": "2026-07-27T13:01:03.521Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-005",
+          "displayOrderId": "T1-005",
+          "orderIndex": 2,
+          "createdAt": "2026-07-27T12:58:40.742Z",
+          "closedAt": "2026-07-27T13:01:03.537Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-008",
+          "displayOrderId": "T1-008",
+          "orderIndex": 3,
+          "createdAt": "2026-07-27T12:58:58.529Z",
+          "closedAt": "2026-07-27T13:01:03.557Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-012",
+          "displayOrderId": "T1-012",
+          "orderIndex": 4,
+          "createdAt": "2026-07-27T12:59:52.883Z",
+          "closedAt": "2026-07-27T13:01:03.580Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 5,
+          "createdAt": "2026-07-27T13:00:30.708Z",
+          "closedAt": "2026-07-27T13:01:03.606Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T13:01:05.607Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785184698633_z6hszy",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 10,
+      "firstOrderAt": "2026-07-27T12:44:08.676+00:00",
+      "paymentAt": "2026-07-27T20:38:16.696Z",
+      "paymentMethod": "cash",
+      "totalAmount": 42000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-002|T1-004|T1-005|T1-008|T1-012|T1-019|T1-021|T1-022|T1-027|T1-028",
+      "orderIds": [
+        "T1-002",
+        "T1-004",
+        "T1-005",
+        "T1-008",
+        "T1-012",
+        "T1-019",
+        "T1-021",
+        "T1-022",
+        "T1-027",
+        "T1-028"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T12:44:08.676+00:00",
+          "closedAt": "2026-07-27T20:38:11.017Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-27T12:52:10.915+00:00",
+          "closedAt": "2026-07-27T20:38:11.239Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-005",
+          "displayOrderId": "T1-005",
+          "orderIndex": 2,
+          "createdAt": "2026-07-27T12:58:40.742+00:00",
+          "closedAt": "2026-07-27T20:38:11.332Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-008",
+          "displayOrderId": "T1-008",
+          "orderIndex": 3,
+          "createdAt": "2026-07-27T19:33:51.58+00:00",
+          "closedAt": "2026-07-27T20:38:11.366Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-012",
+          "displayOrderId": "T1-012",
+          "orderIndex": 4,
+          "createdAt": "2026-07-27T19:52:27.3+00:00",
+          "closedAt": "2026-07-27T20:38:11.400Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 5,
+          "createdAt": "2026-07-27T20:06:03.104Z",
+          "closedAt": "2026-07-27T20:38:11.438Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-021",
+          "displayOrderId": "T1-021",
+          "orderIndex": 6,
+          "createdAt": "2026-07-27T20:07:02.841Z",
+          "closedAt": "2026-07-27T20:38:14.499Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-022",
+          "displayOrderId": "T1-022",
+          "orderIndex": 7,
+          "createdAt": "2026-07-27T20:08:01.218Z",
+          "closedAt": "2026-07-27T20:38:15.626Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-027",
+          "displayOrderId": "T1-027",
+          "orderIndex": 8,
+          "createdAt": "2026-07-27T20:36:49.284Z",
+          "closedAt": "2026-07-27T20:38:16.117Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-028",
+          "displayOrderId": "T1-028",
+          "orderIndex": 9,
+          "createdAt": "2026-07-27T20:37:40.304Z",
+          "closedAt": "2026-07-27T20:38:16.696Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T20:38:18.633Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785185327108_yqrik2",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 9,
+      "firstOrderAt": "2026-07-27T12:44:08.676+00:00",
+      "paymentAt": "2026-07-27T20:48:45.994Z",
+      "paymentMethod": "cash",
+      "totalAmount": 41000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-002|T1-004|T1-005|T1-008|T1-012|T1-019|T1-021|T1-022|T1-027",
+      "orderIds": [
+        "T1-002",
+        "T1-004",
+        "T1-005",
+        "T1-008",
+        "T1-012",
+        "T1-019",
+        "T1-021",
+        "T1-022",
+        "T1-027"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T12:44:08.676+00:00",
+          "closedAt": "2026-07-27T20:48:43.463Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-27T12:52:10.915+00:00",
+          "closedAt": "2026-07-27T20:48:43.778Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-005",
+          "displayOrderId": "T1-005",
+          "orderIndex": 2,
+          "createdAt": "2026-07-27T12:58:40.742+00:00",
+          "closedAt": "2026-07-27T20:48:43.835Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-008",
+          "displayOrderId": "T1-008",
+          "orderIndex": 3,
+          "createdAt": "2026-07-27T19:33:51.58+00:00",
+          "closedAt": "2026-07-27T20:48:43.887Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-012",
+          "displayOrderId": "T1-012",
+          "orderIndex": 4,
+          "createdAt": "2026-07-27T19:52:27.3+00:00",
+          "closedAt": "2026-07-27T20:48:43.928Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 5,
+          "createdAt": "2026-07-27T20:06:03.104+00:00",
+          "closedAt": "2026-07-27T20:48:43.963Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-021",
+          "displayOrderId": "T1-021",
+          "orderIndex": 6,
+          "createdAt": "2026-07-27T20:45:12.823Z",
+          "closedAt": "2026-07-27T20:48:44.872Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-022",
+          "displayOrderId": "T1-022",
+          "orderIndex": 7,
+          "createdAt": "2026-07-27T20:47:56.969Z",
+          "closedAt": "2026-07-27T20:48:45.946Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-027",
+          "displayOrderId": "T1-027",
+          "orderIndex": 8,
+          "createdAt": "2026-07-27T20:48:22.775Z",
+          "closedAt": "2026-07-27T20:48:45.994Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T20:48:47.108Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785186204333_mmrxte",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-072",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-27T21:02:16.207Z",
+      "paymentAt": "2026-07-27T21:03:22.661Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-072",
+      "orderIds": [
+        "T1-072"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-072",
+          "displayOrderId": "T1-072",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T21:02:16.207Z",
+          "closedAt": "2026-07-27T21:03:22.661Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T21:03:24.333Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785187183039_1q5kn4",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-073",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-27T21:17:42.771Z",
+      "paymentAt": "2026-07-27T21:19:40.846Z",
+      "paymentMethod": "cash",
+      "totalAmount": 9000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-073",
+      "orderIds": [
+        "T1-073"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-073",
+          "displayOrderId": "T1-073",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T21:17:42.771Z",
+          "closedAt": "2026-07-27T21:19:40.846Z",
+          "total": 9000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 3,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T21:19:43.039Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785187770288_jyfakg",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-074",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-27T21:28:45.021Z",
+      "paymentAt": "2026-07-27T21:29:28.275Z",
+      "paymentMethod": "cash",
+      "totalAmount": 12000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-074",
+      "orderIds": [
+        "T1-074"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-074",
+          "displayOrderId": "T1-074",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T21:28:45.021Z",
+          "closedAt": "2026-07-27T21:29:28.275Z",
+          "total": 12000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T21:29:30.288Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785188178556_25a5od",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-076",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-27T21:35:30.597Z",
+      "paymentAt": "2026-07-27T21:36:17.054Z",
+      "paymentMethod": "cash",
+      "totalAmount": 12000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-076",
+      "orderIds": [
+        "T1-076"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-076",
+          "displayOrderId": "T1-076",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T21:35:30.597Z",
+          "closedAt": "2026-07-27T21:36:17.054Z",
+          "total": 12000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-27T21:36:18.556Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785271854210_r8avmn",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 11,
+      "firstOrderAt": "2026-07-27T12:44:08.676+00:00",
+      "paymentAt": "2026-07-28T20:50:35.351Z",
+      "paymentMethod": "cash",
+      "totalAmount": 55000,
+      "cashSessionId": "2026-07-27T00:00:00+00:00",
+      "openDate": "2026-07-27",
+      "orderIdsKey": "T1-002|T1-004|T1-005|T1-008|T1-012|T1-019|T1-021|T1-022|T1-027|T1-028|T1-072",
+      "orderIds": [
+        "T1-002",
+        "T1-004",
+        "T1-005",
+        "T1-008",
+        "T1-012",
+        "T1-019",
+        "T1-021",
+        "T1-022",
+        "T1-027",
+        "T1-028",
+        "T1-072"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-27T12:44:08.676+00:00",
+          "closedAt": "2026-07-28T20:49:47.345Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 1,
+          "createdAt": "2026-07-27T12:52:10.915+00:00",
+          "closedAt": "2026-07-28T20:49:47.366Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-005",
+          "displayOrderId": "T1-005",
+          "orderIndex": 2,
+          "createdAt": "2026-07-27T12:58:40.742+00:00",
+          "closedAt": "2026-07-28T20:49:47.389Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-008",
+          "displayOrderId": "T1-008",
+          "orderIndex": 3,
+          "createdAt": "2026-07-27T19:33:51.58+00:00",
+          "closedAt": "2026-07-28T20:49:47.650Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-012",
+          "displayOrderId": "T1-012",
+          "orderIndex": 4,
+          "createdAt": "2026-07-27T19:52:27.3+00:00",
+          "closedAt": "2026-07-28T20:49:47.689Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 5,
+          "createdAt": "2026-07-27T20:06:03.104+00:00",
+          "closedAt": "2026-07-28T20:49:47.713Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-021",
+          "displayOrderId": "T1-021",
+          "orderIndex": 6,
+          "createdAt": "2026-07-27T20:45:12.823+00:00",
+          "closedAt": "2026-07-28T20:50:06.325Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-022",
+          "displayOrderId": "T1-022",
+          "orderIndex": 7,
+          "createdAt": "2026-07-27T20:53:57.385+00:00",
+          "closedAt": "2026-07-28T20:50:16.789Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-027",
+          "displayOrderId": "T1-027",
+          "orderIndex": 8,
+          "createdAt": "2026-07-27T21:00:26.962+00:00",
+          "closedAt": "2026-07-28T20:50:19.781Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-028",
+          "displayOrderId": "T1-028",
+          "orderIndex": 9,
+          "createdAt": "2026-07-28T20:39:54.648Z",
+          "closedAt": "2026-07-28T20:50:23.812Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-072",
+          "displayOrderId": "T1-072",
+          "orderIndex": 10,
+          "createdAt": "2026-07-28T20:48:10.840Z",
+          "closedAt": "2026-07-28T20:50:35.351Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-28T20:50:54.210Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785272006163_j7fdav",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "K-001",
+      "tableId": "TAKEAWAY",
+      "orderType": "TAKEAWAY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-28T20:53:15.562Z",
+      "paymentAt": "2026-07-28T20:53:22.805Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-28",
+      "openDate": "2026-07-28",
+      "orderIdsKey": "K-001",
+      "orderIds": [
+        "K-001"
+      ],
+      "orders": [
+        {
+          "orderId": "K-001",
+          "displayOrderId": "K-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-28T20:53:15.562Z",
+          "closedAt": "2026-07-28T20:53:22.805Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-28T20:53:26.163Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785272176832_jgn6ax",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "D-002",
+      "tableId": "DELIVERY",
+      "orderType": "DELIVERY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-28T20:56:03.691Z",
+      "paymentAt": "2026-07-28T20:56:09.153Z",
+      "paymentMethod": "cash",
+      "totalAmount": 17000,
+      "cashSessionId": "2026-07-28",
+      "openDate": "2026-07-28",
+      "orderIdsKey": "D-002",
+      "orderIds": [
+        "D-002"
+      ],
+      "orders": [
+        {
+          "orderId": "D-002",
+          "displayOrderId": "D-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-28T20:56:03.691Z",
+          "closedAt": "2026-07-28T20:56:09.153Z",
+          "total": 17000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-28T20:56:16.832Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785283553038_ft1jla",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-002",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:03:06.415Z",
+      "paymentAt": "2026-07-29T00:05:51.170Z",
+      "paymentMethod": "cash",
+      "totalAmount": 5000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-002",
+      "orderIds": [
+        "T1-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:03:06.415Z",
+          "closedAt": "2026-07-29T00:05:51.170Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:05:53.038Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785283833929_1pvcz8",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-004",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:08:42.033Z",
+      "paymentAt": "2026-07-29T00:10:32.336Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-004",
+      "orderIds": [
+        "T1-004"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-004",
+          "displayOrderId": "T1-004",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:08:42.033Z",
+          "closedAt": "2026-07-29T00:10:32.336Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:10:33.929Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785285215252_n9mir0",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-017",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-29T00:24:35.901Z",
+      "paymentAt": "2026-07-29T00:33:33.348Z",
+      "paymentMethod": "cash",
+      "totalAmount": 16000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-017|T1-019",
+      "orderIds": [
+        "T1-017",
+        "T1-019"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-017",
+          "displayOrderId": "T1-017",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:24:35.901Z",
+          "closedAt": "2026-07-29T00:33:33.313Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 1,
+          "createdAt": "2026-07-29T00:27:47.253Z",
+          "closedAt": "2026-07-29T00:33:33.348Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:33:35.252Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785285589599_i7kpwk",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-027",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:37:45.882Z",
+      "paymentAt": "2026-07-29T00:39:47.695Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-027",
+      "orderIds": [
+        "T1-027"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-027",
+          "displayOrderId": "T1-027",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:37:45.882Z",
+          "closedAt": "2026-07-29T00:39:47.695Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:39:49.599Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785285662408_25b3my",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-005",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:15:12.551Z",
+      "paymentAt": "2026-07-29T00:15:32.575Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-005",
+      "orderIds": [
+        "T1-005"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-005",
+          "displayOrderId": "T1-005",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:15:12.551Z",
+          "closedAt": "2026-07-29T00:15:32.575Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:41:02.408Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785285662438_xjx5q7",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-008",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:17:54.850Z",
+      "paymentAt": "2026-07-29T00:18:48.947Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-008",
+      "orderIds": [
+        "T1-008"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-008",
+          "displayOrderId": "T1-008",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:17:54.850Z",
+          "closedAt": "2026-07-29T00:18:48.947Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:41:02.438Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785285662468_32hc31",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-012",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:22:17.158Z",
+      "paymentAt": "2026-07-29T00:22:30.205Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-012",
+      "orderIds": [
+        "T1-012"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-012",
+          "displayOrderId": "T1-012",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:22:17.158Z",
+          "closedAt": "2026-07-29T00:22:30.205Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:41:02.469Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785285662503_l8yx9h",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-021",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:30:14.644Z",
+      "paymentAt": "2026-07-29T00:30:46.841Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-021",
+      "orderIds": [
+        "T1-021"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-021",
+          "displayOrderId": "T1-021",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:30:14.644Z",
+          "closedAt": "2026-07-29T00:30:46.841Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:41:02.503Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785285662537_idi9y0",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-022",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-29T00:33:11.563Z",
+      "paymentAt": "2026-07-29T00:33:21.061Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-28T23:58:31.004Z",
+      "openDate": "2026-07-29",
+      "orderIdsKey": "T1-022",
+      "orderIds": [
+        "T1-022"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-022",
+          "displayOrderId": "T1-022",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T00:33:11.563Z",
+          "closedAt": "2026-07-29T00:33:21.061Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T00:41:02.537Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785365262382_b2yri9",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T1-072",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-29T22:45:13.895Z",
+      "paymentAt": "2026-07-29T22:47:40.507Z",
+      "paymentMethod": "cash",
+      "totalAmount": 21000,
+      "cashSessionId": "2026-07-29T22:38:58.235Z",
+      "openDate": "2026-07-30",
+      "orderIdsKey": "T1-072|T1-073",
+      "orderIds": [
+        "T1-072",
+        "T1-073"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-072",
+          "displayOrderId": "T1-072",
+          "orderIndex": 0,
+          "createdAt": "2026-07-29T22:45:13.895Z",
+          "closedAt": "2026-07-29T22:47:40.471Z",
+          "total": 13000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-073",
+          "displayOrderId": "T1-073",
+          "orderIndex": 1,
+          "createdAt": "2026-07-29T22:45:13.977Z",
+          "closedAt": "2026-07-29T22:47:40.507Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-29T22:47:42.382Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785420411773_gk7tjq",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-001",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 3,
+      "firstOrderAt": "2026-07-30T13:58:09.071Z",
+      "paymentAt": "2026-07-30T14:06:50.910Z",
+      "paymentMethod": "cash",
+      "totalAmount": 10000,
+      "cashSessionId": "2026-07-30T13:57:14.041Z",
+      "openDate": "2026-07-30",
+      "orderIdsKey": "T1-001|T1-002|T1-003",
+      "orderIds": [
+        "T1-001",
+        "T1-002",
+        "T1-003"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-001",
+          "displayOrderId": "T1-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-30T13:58:09.071Z",
+          "closedAt": "2026-07-30T14:06:50.557Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-002",
+          "displayOrderId": "T1-002",
+          "orderIndex": 1,
+          "createdAt": "2026-07-30T14:00:48.070Z",
+          "closedAt": "2026-07-30T14:06:50.875Z",
+          "total": 4000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-003",
+          "displayOrderId": "T1-003",
+          "orderIndex": 2,
+          "createdAt": "2026-07-30T14:03:49.150Z",
+          "closedAt": "2026-07-30T14:06:50.910Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-30T14:06:51.773Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785501422341_ci43vj",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T3-001",
+      "tableId": "3",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T12:36:38.574Z",
+      "paymentAt": "2026-07-31T12:37:00.964Z",
+      "paymentMethod": "card",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-31T11:12:00.623Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T3-001",
+      "orderIds": [
+        "T3-001"
+      ],
+      "orders": [
+        {
+          "orderId": "T3-001",
+          "displayOrderId": "T3-001",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T12:36:38.574Z",
+          "closedAt": "2026-07-31T12:37:00.964Z",
+          "total": 11000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T12:37:02.341Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785501561151_ev361v",
+      "cafeId": "cdb169ba-3f7b-4922-94c3-9f6445d388ae",
+      "displayId": "T3-002",
+      "tableId": "3",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T12:38:52.821Z",
+      "paymentAt": "2026-07-31T12:39:18.616Z",
+      "paymentMethod": "cash",
+      "totalAmount": 32000,
+      "cashSessionId": "2026-07-31T11:12:00.623Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T3-002",
+      "orderIds": [
+        "T3-002"
+      ],
+      "orders": [
+        {
+          "orderId": "T3-002",
+          "displayOrderId": "T3-002",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T12:38:52.821Z",
+          "closedAt": "2026-07-31T12:39:18.616Z",
+          "total": 32000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 2,
+              "price": 3000
+            },
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 2,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T12:39:21.151Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785507461793_a1z13c",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-015",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:17:24.150Z",
+      "paymentAt": "2026-07-31T14:17:40.865Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-015",
+      "orderIds": [
+        "T1-015"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-015",
+          "displayOrderId": "T1-015",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:17:24.150Z",
+          "closedAt": "2026-07-31T14:17:40.865Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T14:17:41.793Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785507518646_viw0e7",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-013",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:11:15.147Z",
+      "paymentAt": "2026-07-31T14:14:04.918Z",
+      "paymentMethod": "cash",
+      "totalAmount": 7000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-013",
+      "orderIds": [
+        "T1-013"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-013",
+          "displayOrderId": "T1-013",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:11:15.147Z",
+          "closedAt": "2026-07-31T14:14:04.918Z",
+          "total": 7000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T14:18:38.646Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785507518671_pixifw",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-014",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:14:23.786Z",
+      "paymentAt": "2026-07-31T14:14:27.122Z",
+      "paymentMethod": "cash",
+      "totalAmount": 4000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-014",
+      "orderIds": [
+        "T1-014"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-014",
+          "displayOrderId": "T1-014",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:14:23.786Z",
+          "closedAt": "2026-07-31T14:14:27.122Z",
+          "total": 4000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T14:18:38.671Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785507548763_rvvcwh",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "K-016",
+      "tableId": "TAKEAWAY",
+      "orderType": "TAKEAWAY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:18:48.212Z",
+      "paymentAt": "2026-07-31T14:19:07.992Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "K-016",
+      "orderIds": [
+        "K-016"
+      ],
+      "orders": [
+        {
+          "orderId": "K-016",
+          "displayOrderId": "K-016",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:18:48.212Z",
+          "closedAt": "2026-07-31T14:19:07.992Z",
+          "total": 11000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T14:19:08.763Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785507549317_50b50x",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "D-017",
+      "tableId": "DELIVERY",
+      "orderType": "DELIVERY",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:18:59.688Z",
+      "paymentAt": "2026-07-31T14:19:08.562Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "D-017",
+      "orderIds": [
+        "D-017"
+      ],
+      "orders": [
+        {
+          "orderId": "D-017",
+          "displayOrderId": "D-017",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:18:59.688Z",
+          "closedAt": "2026-07-31T14:19:08.562Z",
+          "total": 11000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T14:19:09.317Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785507613976_kolkp0",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-018",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:19:48.226Z",
+      "paymentAt": "2026-07-31T14:20:13.022Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-018",
+      "orderIds": [
+        "T1-018"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-018",
+          "displayOrderId": "T1-018",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:19:48.226Z",
+          "closedAt": "2026-07-31T14:20:13.022Z",
+          "total": 11000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T14:20:13.976Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785508009141_vcz556",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-019",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:26:43.196Z",
+      "paymentAt": "2026-07-31T14:26:48.002Z",
+      "paymentMethod": "cash",
+      "totalAmount": 7000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-019",
+      "orderIds": [
+        "T1-019"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-019",
+          "displayOrderId": "T1-019",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:26:43.196Z",
+          "closedAt": "2026-07-31T14:26:48.002Z",
+          "total": 7000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T14:26:49.141Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785510516666_961uut",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-020",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T14:27:02.430Z",
+      "paymentAt": "2026-07-31T15:08:35.581Z",
+      "paymentMethod": "cash",
+      "totalAmount": 17000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-020",
+      "orderIds": [
+        "T1-020"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-020",
+          "displayOrderId": "T1-020",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T14:27:02.430Z",
+          "closedAt": "2026-07-31T15:08:35.581Z",
+          "total": 17000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 3,
+              "price": 3000
+            },
+            {
+              "name": "عصير ليمون",
+              "quantity": 2,
+              "price": 4000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T15:08:36.666Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785510928739_tr5nef",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-021",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-31T15:12:33.112Z",
+      "paymentAt": "2026-07-31T15:15:27.837Z",
+      "paymentMethod": "cash",
+      "totalAmount": 19000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-021|T1-022",
+      "orderIds": [
+        "T1-021",
+        "T1-022"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-021",
+          "displayOrderId": "T1-021",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T15:12:33.112Z",
+          "closedAt": "2026-07-31T15:15:27.586Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 4000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-022",
+          "displayOrderId": "T1-022",
+          "orderIndex": 1,
+          "createdAt": "2026-07-31T15:13:22.738Z",
+          "closedAt": "2026-07-31T15:15:27.837Z",
+          "total": 11000,
+          "items": [
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 4000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T15:15:28.739Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785510933164_p9x5he",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T2-023",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T15:13:56.402Z",
+      "paymentAt": "2026-07-31T15:15:32.395Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T2-023",
+      "orderIds": [
+        "T2-023"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-023",
+          "displayOrderId": "T2-023",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T15:13:56.402Z",
+          "closedAt": "2026-07-31T15:15:32.395Z",
+          "total": 11000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T15:15:33.164Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785511026151_tmzplb",
+      "cafeId": "565c3b73-73be-45e1-9d38-92bc4a43db03",
+      "displayId": "T1-024",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T15:16:47.832Z",
+      "paymentAt": "2026-07-31T15:17:04.811Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-31T14:10:01.006Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-024",
+      "orderIds": [
+        "T1-024"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-024",
+          "displayOrderId": "T1-024",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T15:16:47.832Z",
+          "closedAt": "2026-07-31T15:17:04.811Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 4000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 4000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T15:17:06.151Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785530178807_ln4n5s",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-074",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 2,
+      "firstOrderAt": "2026-07-31T20:33:53.596Z",
+      "paymentAt": "2026-07-31T20:36:17.371Z",
+      "paymentMethod": "cash",
+      "totalAmount": 31000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-074|T1-075",
+      "orderIds": [
+        "T1-074",
+        "T1-075"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-074",
+          "displayOrderId": "T1-074",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T20:33:53.596Z",
+          "closedAt": "2026-07-31T20:36:17.354Z",
+          "total": 5000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            }
+          ]
+        },
+        {
+          "orderId": "T1-075",
+          "displayOrderId": "T1-075",
+          "orderIndex": 1,
+          "createdAt": "2026-07-31T20:33:57.164Z",
+          "closedAt": "2026-07-31T20:36:17.371Z",
+          "total": 26000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 2,
+              "price": 5000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "عصير ليمون",
+              "quantity": 2,
+              "price": 3000
+            },
+            {
+              "name": "موهيتو بلو",
+              "quantity": 3,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T20:36:18.807Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785530329590_ct8361",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-076",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T20:37:58.457Z",
+      "paymentAt": "2026-07-31T20:38:47.657Z",
+      "paymentMethod": "cash",
+      "totalAmount": 3000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-076",
+      "orderIds": [
+        "T1-076"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-076",
+          "displayOrderId": "T1-076",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T20:37:58.457Z",
+          "closedAt": "2026-07-31T20:38:47.657Z",
+          "total": 3000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T20:38:49.590Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785530504110_mjsoi4",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-079",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T20:40:25.649Z",
+      "paymentAt": "2026-07-31T20:41:42.529Z",
+      "paymentMethod": "cash",
+      "totalAmount": 11000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-079",
+      "orderIds": [
+        "T1-079"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-079",
+          "displayOrderId": "T1-079",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T20:40:25.649Z",
+          "closedAt": "2026-07-31T20:41:42.529Z",
+          "total": 11000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 1,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T20:41:44.110Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785530509457_jx6s86",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T2-077",
+      "tableId": "2",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T20:40:19.526Z",
+      "paymentAt": "2026-07-31T20:41:48.248Z",
+      "paymentMethod": "cash",
+      "totalAmount": 8000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T2-077",
+      "orderIds": [
+        "T2-077"
+      ],
+      "orders": [
+        {
+          "orderId": "T2-077",
+          "displayOrderId": "T2-077",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T20:40:19.526Z",
+          "closedAt": "2026-07-31T20:41:48.248Z",
+          "total": 8000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            },
+            {
+              "name": "كوماند لاتي",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T20:41:49.457Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785530682924_64lg20",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-080",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T20:42:48.731Z",
+      "paymentAt": "2026-07-31T20:44:41.540Z",
+      "paymentMethod": "cash",
+      "totalAmount": 7000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-080",
+      "orderIds": [
+        "T1-080"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-080",
+          "displayOrderId": "T1-080",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T20:42:48.731Z",
+          "closedAt": "2026-07-31T20:44:41.540Z",
+          "total": 7000,
+          "items": [
+            {
+              "name": "اسبيرسو",
+              "quantity": 1,
+              "price": 5000
+            },
+            {
+              "name": "موهيتو",
+              "quantity": 1,
+              "price": 2000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T20:44:42.924Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785530943790_z8zv00",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-081",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T20:47:40.574Z",
+      "paymentAt": "2026-07-31T20:49:02.376Z",
+      "paymentMethod": "cash",
+      "totalAmount": 40000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-081",
+      "orderIds": [
+        "T1-081"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-081",
+          "displayOrderId": "T1-081",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T20:47:40.574Z",
+          "closedAt": "2026-07-31T20:49:02.376Z",
+          "total": 40000,
+          "items": [
+            {
+              "name": "لاتي",
+              "quantity": 2,
+              "price": 20000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T20:49:03.790Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785531258883_fulc6e",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-082",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T20:53:01.084Z",
+      "paymentAt": "2026-07-31T20:54:16.990Z",
+      "paymentMethod": "cash",
+      "totalAmount": 7000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-082",
+      "orderIds": [
+        "T1-082"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-082",
+          "displayOrderId": "T1-082",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T20:53:01.084Z",
+          "closedAt": "2026-07-31T20:54:16.990Z",
+          "total": 7000,
+          "items": [
+            {
+              "name": "موهيتو بلو",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "موهيتو بليمون ونعناع",
+              "quantity": 1,
+              "price": 2000
+            },
+            {
+              "name": "عصير ليمون",
+              "quantity": 1,
+              "price": 3000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T20:54:18.883Z",
+      "syncedFromOrders": true
+    },
+    {
+      "id": "ts_1785531800938_41z63g",
+      "cafeId": "e284e27a-a037-43bd-853e-3d57868cd9e6",
+      "displayId": "T1-083",
+      "tableId": "1",
+      "orderType": "DINE_IN",
+      "orderCount": 1,
+      "firstOrderAt": "2026-07-31T21:02:54.514Z",
+      "paymentAt": "2026-07-31T21:03:19.363Z",
+      "paymentMethod": "cash",
+      "totalAmount": 33000,
+      "cashSessionId": "2026-07-31T20:30:06.757Z",
+      "openDate": "2026-07-31",
+      "orderIdsKey": "T1-083",
+      "orderIds": [
+        "T1-083"
+      ],
+      "orders": [
+        {
+          "orderId": "T1-083",
+          "displayOrderId": "T1-083",
+          "orderIndex": 0,
+          "createdAt": "2026-07-31T21:02:54.514Z",
+          "closedAt": "2026-07-31T21:03:19.363Z",
+          "total": 33000,
+          "items": [
+            {
+              "name": "كوماند لاتي",
+              "quantity": 3,
+              "price": 3000
+            },
+            {
+              "name": "امريكانو",
+              "quantity": 3,
+              "price": 8000
+            }
+          ]
+        }
+      ],
+      "createdAt": "2026-07-31T21:03:20.938Z",
+      "syncedFromOrders": true
     }
   ]
 }

@@ -345,3 +345,28 @@ body.has-order-bar .main-content {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
+
+/* زر الخروج الموحد — خلفية حمراء ونص أبيض */
+.btn-logout {
+  padding: 0.45rem 1.1rem !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  background: #dc3545 !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  transition: background 0.2s, color 0.2s !important;
+  min-height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: inherit !important;
+  cursor: pointer !important;
+  outline: none !important;
+}
+.btn-logout:hover {
+  background: #bb2d3b !important;
+  color: #ffffff !important;
+}

@@ -3,6 +3,7 @@
  * يعمل على الشبكة المحلية (LAN) للوصول من أجهزة متعددة
  */
 const path = require('path');
+require('./lib/env');
 
 module.exports = {
   PORT: process.env.PORT || 3000,
@@ -17,4 +18,9 @@ module.exports = {
   CAFE_SETTINGS_FILE: path.join(__dirname, 'data', 'cafe-settings.json'),
   ADMIN_AUTH_FILE: path.join(__dirname, 'data', 'admin-auth.json'),
   MAX_TABLES: 20,
+  SAAS_AUTH_ENABLED: process.env.SAAS_AUTH_ENABLED === 'true',
+  SAAS_JWT_SECRET: process.env.SAAS_JWT_SECRET || (process.env.NODE_ENV === 'production' ? (() => {
+    console.warn('[config] WARNING: SAAS_JWT_SECRET is not set in production! Using fallback secret.');
+    return 'cafezip-production-fallback-secret-key-2026';
+  })() : 'cafezip-fallback-secret-2026'),
 };

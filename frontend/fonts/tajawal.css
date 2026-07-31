@@ -1,0 +1,35 @@
+/*
+ * Self-hosted Tajawal font — served from /fonts/ by Express static middleware.
+ * Font files: /fonts/Tajawal-{400,500,700,800}.ttf  (bundled in repo)
+ *
+ * No external font requests. Works completely offline.
+ */
+
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Tajawal-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/Tajawal-500.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Tajawal-700.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/Tajawal-800.ttf') format('truetype');
+}

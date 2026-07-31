@@ -5,23 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#F5F7FA">
   <title>كابتن — نظام الكافيه</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/captain-order.css?v=20260602-captain-approval">
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/common.css?v=20260731-logout-design">
+  <link rel="stylesheet" href="css/captain-order.css?v=20260731-logout-design">
   <link rel="stylesheet" href="css/captain-theme.css?v=20260608-unified-bg">
 </head>
 <body class="captain-order-page">
+  <script src="/js/saas-auth.js"></script>
+  <script>
+    (function() {
+      document.documentElement.style.visibility = 'hidden';
+      SaasAuth.requireAuth(['OWNER', 'ADMIN', 'CAPTAIN']).then(function(allowed) {
+        if (allowed) {
+          document.documentElement.style.visibility = '';
+        }
+      });
+    })();
+  </script>
   <header class="co-header co-page-header" id="coHeader">
     <div class="co-header-start">
       <h1 class="co-title">كابتن</h1>
       <span class="co-current-table" id="coCurrentTable" aria-live="polite"></span>
     </div>
     <p class="co-header-cafe-name" id="coHeaderCafeName" hidden aria-live="polite"></p>
-    <div class="co-header-end">
+    <div class="co-header-end" style="display: flex; gap: 8px; align-items: center;">
+      <button type="button" class="btn-logout" id="btnSaasLogout" style="display: none;">خروج</button>
       <span class="co-header-voice-host" id="coHeaderVoiceHost" aria-hidden="true"></span>
       <button type="button" class="co-btn-back" id="coBtnBack" aria-label="رجوع إلى الطاولات">رجوع إلى الطاولات</button>
     </div>
+    <script>
+      SaasAuth.checkStatus().then(function(enabled) {
+        if (enabled) {
+          var logoutBtn = document.getElementById('btnSaasLogout');
+          if (logoutBtn) {
+            logoutBtn.style.display = 'inline-flex';
+            logoutBtn.addEventListener('click', function() {
+              SaasAuth.confirmLogout();
+            });
+          }
+        }
+      });
+    </script>
   </header>
 
   <main class="co-main" id="coMain" aria-hidden="true" style="display: none;">
@@ -103,6 +127,6 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="../js/notification.js?v=20260610-bill-request"></script>
   <script src="../js/voice-notify.js"></script>
-  <script src="js/captain-order.js?v=20260602-captain-approval"></script>
+  <script src="js/captain-order.js?v=20260731-logout-restore-fix"></script>
 </body>
 </html>

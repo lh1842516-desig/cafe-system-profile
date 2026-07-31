@@ -158,16 +158,26 @@ async function initTill(cafeId) {
   }
 }
 
-// ── Sync reads ──────────────────────────────────────────────────────────────
-function readCurrentTill() {
-  if (!_till) {
-    _till = defaultTill(getTodayDateStr(), null, 'closed');
+const _tillsByCafe = {};
+
+function getCafeTillState(cafeId) {
+  const cid = String(cafeId || _cafeId || 'default').trim();
+  if (!_tillsByCafe[cid]) {
+    _tillsByCafe[cid] = {
+      till: defaultTill(null, null, 'closed'),
+      sessionId: null
+    };
   }
-  return _till;
+  return _tillsByCafe[cid];
 }
 
-function getActiveSessionMeta() {
-  const t = readCurrentTill();
+// ── Sync reads ──────────────────────────────────────────────────────────────
+function readCurrentTill(cafeId) {
+  return getCafeTillState(cafeId).till;
+}
+
+function getActiveSessionMeta(cafeId) {
+  const t = readCurrentTill(cafeId);
   if (!t || t.status !== 'open' || !t.openedAt) return null;
   const openDate = String(t.open_date || t.date || getOpenDateFromIso(t.openedAt) || '').trim();
   return {
@@ -177,26 +187,28 @@ function getActiveSessionMeta() {
   };
 }
 
-function hasTillOpenedOnDate(dateStr) {
+function hasTillOpenedOnDate(cafeId, dateStr) {
   const target = String(dateStr || '').trim();
   if (!target) return false;
-  const current = readCurrentTill();
+  const current = readCurrentTill(cafeId);
   if (current && current.openedAt) {
     const currentOpenDate = current.open_date || getOpenDateFromIso(current.openedAt);
     if (currentOpenDate === target) return true;
   }
-  // Check closings cache
-  const { getClosings } = require('./store');
-  const closings = getClosings();
-  for (const c of closings) {
-    const openDate = c.open_date || c.date || (c.openedAt ? getOpenDateFromIso(c.openedAt) : null);
-    if (openDate === target) return true;
-  }
+  // Check closings cache safely
+  try {
+    const store = require('./store');
+    const closings = typeof store.getClosings === 'function' ? store.getClosings(cafeId) : [];
+    for (const c of closings) {
+      const openDate = c.open_date || c.date || (c.openedAt ? getOpenDateFromIso(c.openedAt) : null);
+      if (openDate === target) return true;
+    }
+  } catch (_) {}
   return false;
 }
 
-function getSalesToday() {
-  const till = readCurrentTill();
+function getSalesToday(cafeId) {
+  const till = readCurrentTill(cafeId);
   if (!till || !till.openedAt) return { salesCash: 0, salesCard: 0, total: 0 };
   const openDate = String(till.open_date || till.date || getOpenDateFromIso(till.openedAt) || '').trim();
   const session = {
@@ -206,12 +218,12 @@ function getSalesToday() {
     closedAt: till.closedAt || null,
   };
   const { aggregateSalesForSession } = require('../services/cashSessionHelper');
-  return aggregateSalesForSession(session);
+  return aggregateSalesForSession(cafeId, session);
 }
 
-function getSalesForRange(startIso, endIso) {
+function getSalesForRange(cafeId, startIso, endIso) {
   const { getOrders } = require('./store');
-  const orders = getOrders();
+  const orders = getOrders(cafeId);
   const startTs = startIso ? new Date(startIso).getTime() : -Infinity;
   const endTs = endIso ? new Date(endIso).getTime() : Infinity;
   let salesCash = 0, salesCard = 0;
@@ -226,115 +238,129 @@ function getSalesForRange(startIso, endIso) {
   return { salesCash, salesCard, total: salesCash + salesCard };
 }
 
-function ensureTillForToday() { return readCurrentTill(); }
+function ensureTillForToday(cafeId) { return readCurrentTill(cafeId); }
 
 // ── Async writes ─────────────────────────────────────────────────────────────
-async function writeTill(till) {
+async function writeTill(cafeId, till) {
+  const state = getCafeTillState(cafeId);
+  state.till = { ...till };
   _till = { ...till };
-  if (!_cafeId) return;
+  const targetCafeId = cafeId || _cafeId;
+  if (!targetCafeId) return;
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetCafeId);
+  if (!isUuid) return;
   const supabase = getClient();
   try {
-    if (_tillSessionId) {
-      await supabase.from('till_sessions').update(tillToDb(till)).eq('id', _tillSessionId);
+    if (state.sessionId) {
+      await supabase.from('till_sessions').update(tillToDb(till)).eq('id', state.sessionId);
     } else {
       const { data, error } = await supabase
-        .from('till_sessions').insert([tillToDb(till)]).select().single();
+        .from('till_sessions').insert([{ ...tillToDb(till), cafe_id: targetCafeId }]).select().single();
       if (error) throw error;
-      if (data) _tillSessionId = data.id;
+      if (data) state.sessionId = data.id;
     }
   } catch (err) {
     console.error('[till] writeTill error:', err.message);
   }
 }
 
-async function setOpeningBalance(amount) {
-  const till = readCurrentTill();
+async function setOpeningBalance(cafeId, amount) {
+  const till = readCurrentTill(cafeId);
   till.openingBalance = Number(amount) || 0;
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function addExpense(name, amount, note) {
-  const till = readCurrentTill();
+async function addExpense(cafeId, name, amount, note) {
+  const till = readCurrentTill(cafeId);
   const id = 'exp-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
   till.expenses = till.expenses || [];
   till.expenses.push({ id, name: String(name || 'مصروف').trim(), amount: Number(amount) || 0, note: String(note || '').trim() });
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function addWithdrawal(amount, note) {
-  const till = readCurrentTill();
+async function addWithdrawal(cafeId, amount, note) {
+  const till = readCurrentTill(cafeId);
   const id = 'wd-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
   till.withdrawals = till.withdrawals || [];
   till.withdrawals.push({ id, amount: Number(amount) || 0, note: String(note || '').trim() });
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function updateExpense(id, name, amount, note) {
-  const till = readCurrentTill();
+async function updateExpense(cafeId, id, name, amount, note) {
+  const till = readCurrentTill(cafeId);
   const exp = (till.expenses || []).find(e => String(e.id) === String(id));
   if (!exp) { const err = new Error('المصروف غير موجود'); err.code = 'NOT_FOUND'; throw err; }
   exp.name = String(name || 'مصروف').trim();
   exp.amount = Number(amount) || 0;
   exp.note = String(note || '').trim();
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function updateWithdrawal(id, amount, note) {
-  const till = readCurrentTill();
+async function updateWithdrawal(cafeId, id, amount, note) {
+  const till = readCurrentTill(cafeId);
   const wd = (till.withdrawals || []).find(w => String(w.id) === String(id));
   if (!wd) { const err = new Error('عملية السحب غير موجودة'); err.code = 'NOT_FOUND'; throw err; }
   wd.amount = Number(amount) || 0;
   wd.note = String(note || '').trim();
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function removeExpense(id) {
-  const till = readCurrentTill();
+async function removeExpense(cafeId, id) {
+  const till = readCurrentTill(cafeId);
   till.expenses = (till.expenses || []).filter(e => e.id !== id);
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function removeWithdrawal(id) {
-  const till = readCurrentTill();
+async function removeWithdrawal(cafeId, id) {
+  const till = readCurrentTill(cafeId);
   till.withdrawals = (till.withdrawals || []).filter(w => w.id !== id);
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function setNote(note) {
-  const till = readCurrentTill();
+async function setNote(cafeId, note) {
+  const till = readCurrentTill(cafeId);
   till.note = String(note || '').trim();
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function closeTill(closedBy) {
-  const till = readCurrentTill();
+async function closeTill(cafeId, closedBy) {
+  const till = readCurrentTill(cafeId);
   till.closedAt = new Date().toISOString();
   till.closedBy = String(closedBy || '').trim();
   till.status = 'closed';
-  await writeTill(till);
+  await writeTill(cafeId, till);
   return _till;
 }
 
-async function resetTillForNewDay(openingBalance, openedBy) {
-  const till = defaultTill(getTodayDateStr());
+async function resetTillForNewDay(cafeId, openingBalance, openedBy) {
+  const till = defaultTill(getTodayDateStr(), new Date().toISOString(), 'open');
   if (openingBalance !== undefined && openingBalance !== null) {
     till.openingBalance = Number(openingBalance) || 0;
   }
   if (openedBy !== undefined && openedBy !== null) {
     till.openedBy = String(openedBy || '').trim() || null;
   }
+  const state = getCafeTillState(cafeId);
+  state.till = { ...till };
+  state.sessionId = null;
   _till = { ...till };
-  _tillSessionId = null; // New session will get a new UUID
-  await writeTill(till);
-  return _till;
+  await writeTill(cafeId, till);
+  return state.till;
+}
+
+function setTillCache(till, sessionId) {
+  if (till && typeof till === 'object') {
+    _till = { ...till };
+    _tillSessionId = sessionId;
+  }
 }
 
 module.exports = {
@@ -359,5 +385,6 @@ module.exports = {
   getSalesForRange,
   getActiveSessionMeta,
   initTill,
+  setTillCache,
   TILL_FILE: path.join(DATA_DIR, 'currentTill.json'),
 };

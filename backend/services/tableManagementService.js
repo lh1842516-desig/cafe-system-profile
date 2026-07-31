@@ -1,50 +1,42 @@
 /**
- * إدارة الطاولات من لوحة الإعدادات — إضافة، حذف، QR.
+ * إدارة الطاولات من لوحة الإعدادات — إضافة، حذف، QR عند الطلب.
  */
-const {
-  getTables,
-  saveTables,
-  getNextTableId,
-  getOrdersBlockingTableClaim,
-} = require('../data/store');
-const tableCustomerSessions = require('./tableCustomerSessions');
+const tableRepo = require('../repository/tableRepository');
+const orderRepo = require('../repository/orderRepository');
 const browseTableSessions = require('./tableSessions');
-const tableQrService = require('./tableQrService');
 
-function listTablesWithQrStatus() {
-  return getTables().map(function (t) {
+async function listTablesWithQrStatus(cafeId) {
+  const tables = await tableRepo.getTables(cafeId);
+  return tables.map(function (t) {
     const id = String(t.id || '').trim();
     return {
       id,
       label: String(t.label != null ? t.label : id).trim() || id,
-      qrGenerated: tableQrService.qrExists(id),
-      qrPath: tableQrService.qrPublicPath(id),
+      qrGenerated: true,
     };
   });
 }
 
-async function addTable(req) {
-  const tables = getTables();
-  const newId = getNextTableId();
+async function addTable(cafeId, req) {
+  const tables = await tableRepo.getTables(cafeId);
+  const newId = await tableRepo.getNextTableId(cafeId);
   const entry = { id: newId, label: newId };
   const next = tables.concat([entry]);
-  await saveTables(next);
-  const qr = await tableQrService.generateTableQr(newId, req);
+  await tableRepo.saveTables(cafeId, next);
   return {
     table: entry,
-    qr,
-    tables: listTablesWithQrStatus(),
+    tables: await listTablesWithQrStatus(cafeId),
   };
 }
 
-async function deleteTable(tableId, req) {
+async function deleteTable(cafeId, tableId, req) {
   const tid = String(tableId || '').trim();
   if (!tid) {
     const err = new Error('invalid_table_id');
     err.status = 400;
     throw err;
   }
-  const tables = getTables();
+  const tables = await tableRepo.getTables(cafeId);
   const exists = tables.some(function (t) {
     return String(t.id) === tid;
   });
@@ -53,19 +45,16 @@ async function deleteTable(tableId, req) {
     err.status = 404;
     throw err;
   }
-  const blocking = getOrdersBlockingTableClaim(tid);
+  const blocking = await orderRepo.getOrdersBlockingTableClaim(cafeId, tid);
   if (Array.isArray(blocking) && blocking.length > 0) {
     const err = new Error('table_has_open_orders');
     err.status = 409;
     throw err;
   }
-  try {
-    tableCustomerSessions.clearTableUsers(tid);
-  } catch (_) {}
+
   try {
     browseTableSessions.removeSessionsForTable(tid);
   } catch (_) {}
-  tableQrService.deleteTableQr(tid);
   const next = tables.filter(function (t) {
     return String(t.id) !== tid;
   });
@@ -74,16 +63,16 @@ async function deleteTable(tableId, req) {
     err.status = 404;
     throw err;
   }
-  await saveTables(next);
+  await tableRepo.saveTables(cafeId, next);
   return {
     deletedId: tid,
-    tables: listTablesWithQrStatus(),
+    tables: await listTablesWithQrStatus(cafeId),
   };
 }
 
-async function regenerateTableQr(tableId, req) {
+async function regenerateTableQr(cafeId, tableId, req) {
   const tid = String(tableId || '').trim();
-  const tables = getTables();
+  const tables = await tableRepo.getTables(cafeId);
   if (!tables.some(function (t) {
     return String(t.id) === tid;
   })) {
@@ -91,8 +80,7 @@ async function regenerateTableQr(tableId, req) {
     err.status = 404;
     throw err;
   }
-  const qr = await tableQrService.generateTableQr(tid, req);
-  return { tableId: tid, qr, tables: listTablesWithQrStatus() };
+  return { tableId: tid, tables: await listTablesWithQrStatus(cafeId) };
 }
 
 module.exports = {

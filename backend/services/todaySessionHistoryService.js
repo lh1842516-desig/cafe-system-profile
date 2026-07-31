@@ -1,8 +1,8 @@
 /**
  * خدمة سجل جلسات طلبات اليوم — إنشاء واستعلام بعد إغلاق الحساب.
  */
-const { getOrders, getOrderDisplayId } = require('../data/store');
-const till = require('../data/till');
+const orderRepo = require('../repository/orderRepository');
+const tillRepo = require('../repository/tillRepository');
 const { orderBelongsToSession } = require('./cashSessionHelper');
 const historyStore = require('../data/todaySessionHistory');
 
@@ -30,7 +30,7 @@ function orderLineTotal(order) {
   );
 }
 
-function snapshotOrder(order, index) {
+function snapshotOrder(cafeId, order, index) {
   const items = (order.items || []).map((it) => ({
     name: it.name != null ? String(it.name) : '',
     quantity: Number(it.quantity) || 1,
@@ -42,7 +42,7 @@ function snapshotOrder(order, index) {
   }));
   return {
     orderId: order.id,
-    displayOrderId: getOrderDisplayId(order.id),
+    displayOrderId: orderRepo.getOrderDisplayId(cafeId, order.id),
     orderIndex: index,
     createdAt: order.createdAt || null,
     closedAt: order.closedAt || null,
@@ -51,20 +51,20 @@ function snapshotOrder(order, index) {
   };
 }
 
-function getActiveTillSessionOrNull() {
-  const session = till.getActiveSessionMeta();
+async function getActiveTillSessionOrNull(cafeId) {
+  const session = await tillRepo.getActiveSessionMeta(cafeId);
   if (!session || !session.openDate) return null;
   return session;
 }
 
 /** جلسة القاصة لعرض «طلبات اليوم» — مفتوحة أو آخر قاصة مُغلقة (نفس openedAt) */
-function getTillSessionMetaForTodayList() {
-  const active = getActiveTillSessionOrNull();
+async function getTillSessionMetaForTodayList(cafeId) {
+  const active = await getActiveTillSessionOrNull(cafeId);
   if (active) return active;
-  const t = till.readCurrentTill();
+  const t = await tillRepo.readCurrentTill(cafeId);
   if (!t || !t.openedAt) return null;
   const openDate = String(
-    t.open_date || t.date || till.getOpenDateFromIso(t.openedAt) || ''
+    t.open_date || t.date || tillRepo.getOpenDateFromIso(t.openedAt) || ''
   ).trim();
   if (!openDate) return null;
   return {
@@ -75,8 +75,8 @@ function getTillSessionMetaForTodayList() {
   };
 }
 
-function requireActiveTillSession() {
-  const session = getActiveTillSessionOrNull();
+async function requireActiveTillSession(cafeId) {
+  const session = await getActiveTillSessionOrNull(cafeId);
   if (!session) {
     const err = new Error('لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.');
     err.status = 400;
@@ -86,10 +86,11 @@ function requireActiveTillSession() {
 }
 
 /**
+ * @param {string} cafeId
  * @param {{ tableId?: string, orderIds: string[], paymentMethod?: string }} payload
  */
-function createSessionFromClosedOrders(payload) {
-  const tillSession = requireActiveTillSession();
+async function createSessionFromClosedOrders(cafeId, payload) {
+  const tillSession = await requireActiveTillSession(cafeId);
   const orderIds = Array.isArray(payload.orderIds)
     ? payload.orderIds.map((id) => String(id || '').trim()).filter(Boolean)
     : [];
@@ -104,7 +105,7 @@ function createSessionFromClosedOrders(payload) {
   if (existing) return existing;
 
   const payMethod = (payload.paymentMethod || 'cash').toLowerCase() === 'card' ? 'card' : 'cash';
-  const allOrders = getOrders();
+  const allOrders = await orderRepo.getOrders(cafeId);
   const matched = orderIds.map((id) => allOrders.find((o) => String(o.id) === id)).filter(Boolean);
 
   if (matched.length !== orderIds.length) {
@@ -147,6 +148,7 @@ function createSessionFromClosedOrders(payload) {
   const paymentMethod = uniqueMethods.length === 1 ? uniqueMethods[0] : payMethod;
 
   const record = buildSessionRecordFromOrders(
+    cafeId,
     matched,
     tillSession,
     tableId,
@@ -180,7 +182,7 @@ function groupKeyForClosedOrder(order) {
   return 'T:' + tableId + ':' + order.id + ':' + bucket + ':' + pay;
 }
 
-function buildSessionRecordFromOrders(matched, tillSession, tableIdHint, paymentMethodHint) {
+function buildSessionRecordFromOrders(cafeId, matched, tillSession, tableIdHint, paymentMethodHint) {
   if (!matched.length) return null;
   const payMethod =
     (paymentMethodHint || 'cash').toLowerCase() === 'card' ? 'card' : 'cash';
@@ -201,7 +203,7 @@ function buildSessionRecordFromOrders(matched, tillSession, tableIdHint, payment
   });
 
   const orderIds = sorted.map((o) => String(o.id));
-  const orderSnapshots = sorted.map((o, i) => snapshotOrder(o, i));
+  const orderSnapshots = sorted.map((o, i) => snapshotOrder(cafeId, o, i));
   const firstOrderAt = sorted[0] && sorted[0].createdAt ? sorted[0].createdAt : null;
   const paymentAt = sorted.reduce((max, o) => {
     const t = o.closedAt || o.createdAt;
@@ -211,12 +213,13 @@ function buildSessionRecordFromOrders(matched, tillSession, tableIdHint, payment
   }, null);
   const totalAmount = orderSnapshots.reduce((s, o) => s + (o.total || 0), 0);
   const displayId =
-    sorted[0] && getOrderDisplayId(sorted[0].id) !== '—'
-      ? getOrderDisplayId(sorted[0].id)
+    sorted[0] && orderRepo.getOrderDisplayId(cafeId, sorted[0].id) !== '—'
+      ? orderRepo.getOrderDisplayId(cafeId, sorted[0].id)
       : String(sorted[0].id || '');
 
   return {
     id: 'ts_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+    cafeId,
     displayId,
     tableId,
     orderType,
@@ -239,9 +242,9 @@ function buildSessionRecordFromOrders(matched, tillSession, tableIdHint, payment
  * يبني سجلات الجلسة من الطلبات المغلقة الحالية إن لم تُسجَّل عند الإغلاق
  * (مثلاً أُغلقت قبل تفعيل الميزة).
  */
-function syncTodaySessionsFromClosedOrders(tillSession) {
+async function syncTodaySessionsFromClosedOrders(cafeId, tillSession) {
   if (!tillSession) return 0;
-  const closed = getOrders().filter(
+  const closed = (await orderRepo.getOrders(cafeId)).filter(
     (o) => o && o.closed === true && o.closedAt && orderBelongsToSession(o, tillSession)
   );
   if (!closed.length) return 0;
@@ -270,6 +273,7 @@ function syncTodaySessionsFromClosedOrders(tillSession) {
     const idsKey = historyStore.orderIdsKey(orders.map((o) => o.id));
     if (historyStore.findByOrderIdsKey(idsKey, tillSession.sessionId)) return;
     const record = buildSessionRecordFromOrders(
+      cafeId,
       orders,
       tillSession,
       orders[0].tableId,
@@ -284,7 +288,7 @@ function syncTodaySessionsFromClosedOrders(tillSession) {
 }
 
 /** تسجيل جلسة «طلبات اليوم» لطلب سفري/دلفري أُغلق تلقائياً من المطبخ */
-function recordTodaySessionForClosedOrder(order, tillSession) {
+function recordTodaySessionForClosedOrder(cafeId, order, tillSession) {
   if (!order || order.closed !== true || !tillSession) return null;
   const orderType = inferOrderType(order);
   if (orderType !== ORDER_TYPE.TAKEAWAY && orderType !== ORDER_TYPE.DELIVERY) return null;
@@ -296,6 +300,7 @@ function recordTodaySessionForClosedOrder(order, tillSession) {
   if (existing) return existing;
 
   const record = buildSessionRecordFromOrders(
+    cafeId,
     [order],
     tillSession,
     order.tableId,
@@ -305,10 +310,10 @@ function recordTodaySessionForClosedOrder(order, tillSession) {
   return historyStore.appendSession(record);
 }
 
-function listSessionsForCurrentTill() {
-  const tillSession = getTillSessionMetaForTodayList();
+async function listSessionsForCurrentTill(cafeId) {
+  const tillSession = await getTillSessionMetaForTodayList(cafeId);
   if (!tillSession) return [];
-  syncTodaySessionsFromClosedOrders(tillSession);
+  await syncTodaySessionsFromClosedOrders(cafeId, tillSession);
   return historyStore
     .listForCashSession(tillSession.sessionId, tillSession.openDate)
     .sort((a, b) => {
@@ -357,13 +362,14 @@ function getReportDateRange(type, dateStr) {
 }
 
 /** جلسات مدفوعة من السجل حسب فترة التقرير — للأدمن / الأرشيف */
-function listSessionsForReport(type, dateStr) {
+function listSessionsForReport(cafeId, type, dateStr) {
   const range = getReportDateRange(type, dateStr);
   if (!range.start || !range.end) return [];
   return historyStore
     .readAll()
     .filter((s) => {
       if (!s || !s.paymentAt) return false;
+      if (s.cafeId && String(s.cafeId) !== String(cafeId)) return false;
       const ymd = ymdFromIso(s.paymentAt);
       return ymd && ymd >= range.start && ymd <= range.end;
     })
@@ -374,8 +380,8 @@ function listSessionsForReport(type, dateStr) {
     });
 }
 
-function getSessionById(id) {
-  const tillSession = requireActiveTillSession();
+async function getSessionById(cafeId, id) {
+  const tillSession = await requireActiveTillSession(cafeId);
   const row = historyStore.findById(id);
   if (!row) {
     const err = new Error('سجل الجلسة غير موجود.');

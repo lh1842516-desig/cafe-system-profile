@@ -77,18 +77,28 @@ body.admin-app .admin-header h1 {
   color: var(--admin-text);
 }
 
-body.admin-app .admin-header .btn-home,
 body.admin-app .admin-header .btn-menu {
   background: var(--admin-surface2);
   border-color: var(--admin-border);
   color: var(--admin-text);
 }
 
-body.admin-app .admin-header .btn-home:hover,
+body.admin-app .admin-header .btn-logout {
+  background: #dc3545;
+  border-color: #dc3545;
+  color: #ffffff;
+}
+
 body.admin-app .admin-header .btn-menu:hover {
   background: var(--admin-accent-soft);
   border-color: var(--admin-border-accent);
   color: var(--admin-accent);
+}
+
+body.admin-app .admin-header .btn-logout:hover {
+  background: #bb2d3b;
+  border-color: #b02a37;
+  color: #ffffff;
 }
 
 /* ——— الشريط الجانبي ——— */

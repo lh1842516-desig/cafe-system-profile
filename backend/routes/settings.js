@@ -9,7 +9,8 @@ const cafeSettingsStore = require('../services/cafeSettingsStore');
 const kitchenCashierApproval = require('../services/kitchenCashierApproval');
 const tableManagementService = require('../services/tableManagementService');
 const tableQrService = require('../services/tableQrService');
-const { getTables } = require('../data/store');
+const { authenticateToken, optionalToken } = require('./authMiddleware');
+const tableRepo = require('../repository/tableRepository');
 const { CAFE_LOGO_DIR, UPLOADS_DIR } = require('../config');
 
 const ALLOWED_LOGO_EXT = new Set(['.png', '.jpg', '.jpeg', '.webp']);
@@ -19,10 +20,11 @@ function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
-function logoStorageFilename(originalName) {
+function logoStorageFilename(cafeId, originalName) {
   const ext = path.extname(String(originalName || '')).toLowerCase();
   const safeExt = ALLOWED_LOGO_EXT.has(ext) ? ext : '.png';
-  return 'logo' + safeExt;
+  const prefix = cafeId ? String(cafeId).replace(/[^a-zA-Z0-9_-]/g, '') : 'logo';
+  return 'logo-' + prefix + safeExt;
 }
 
 const logoUpload = multer({
@@ -31,8 +33,8 @@ const logoUpload = multer({
       ensureDir(CAFE_LOGO_DIR);
       cb(null, CAFE_LOGO_DIR);
     },
-    filename: function (_req, file, cb) {
-      cb(null, logoStorageFilename(file.originalname));
+    filename: function (req, file, cb) {
+      cb(null, logoStorageFilename(req.cafeId, file.originalname));
     },
   }),
   limits: { fileSize: 3 * 1024 * 1024 },
@@ -47,11 +49,13 @@ const logoUpload = multer({
   },
 });
 
-function removeExistingLogoFiles() {
+function removeExistingLogoFiles(cafeId) {
   ensureDir(CAFE_LOGO_DIR);
+  const prefix = cafeId ? String(cafeId).replace(/[^a-zA-Z0-9_-]/g, '') : 'logo';
+  const pattern = new RegExp('^logo-' + prefix + '\\.(png|jpe?g|webp)$', 'i');
   try {
     fs.readdirSync(CAFE_LOGO_DIR).forEach(function (name) {
-      if (/^logo\.(png|jpe?g|webp)$/i.test(name)) {
+      if (pattern.test(name)) {
         try {
           fs.unlinkSync(path.join(CAFE_LOGO_DIR, name));
         } catch (_) {}
@@ -77,8 +81,14 @@ function emitTablesUpdated(io, payload) {
 function createSettingsRouter(io) {
   const router = express.Router();
 
-  router.get('/cafe', function (_req, res) {
-    res.json(cafeSettingsStore.getCafeSettings());
+  router.get('/cafe', optionalToken, async function (req, res) {
+    try {
+      const cafeId = req.cafeId;
+      const settings = await cafeSettingsStore.getCafeSettings(cafeId);
+      res.json(settings);
+    } catch (err) {
+      res.status(500).json({ error: err.message || 'فشل تحميل الإعدادات' });
+    }
   });
 
   async function handleKitchenApprovalUpdate(req, res) {
@@ -87,12 +97,13 @@ function createSettingsRouter(io) {
       if (body.requireCashierKitchenApproval === undefined) {
         return res.status(400).json({ error: 'requireCashierKitchenApproval مطلوب' });
       }
-      const saved = cafeSettingsStore.saveCafeSettings({
+      const cafeId = req.cafeId;
+      const saved = await cafeSettingsStore.saveCafeSettings(cafeId, {
         requireCashierKitchenApproval: !!body.requireCashierKitchenApproval,
       });
       let approvedOrderIds = [];
       if (!saved.requireCashierKitchenApproval) {
-        approvedOrderIds = await kitchenCashierApproval.approveAllHeldOrdersForCashier(io);
+        approvedOrderIds = await kitchenCashierApproval.approveAllHeldOrdersForCashier(cafeId, io);
       }
       emitSettingsUpdated(io, saved);
       res.json({
@@ -105,10 +116,10 @@ function createSettingsRouter(io) {
     }
   }
 
-  router.post('/cafe/kitchen-approval', handleKitchenApprovalUpdate);
-  router.patch('/cafe/kitchen-approval', handleKitchenApprovalUpdate);
+  router.post('/cafe/kitchen-approval', authenticateToken, handleKitchenApprovalUpdate);
+  router.patch('/cafe/kitchen-approval', authenticateToken, handleKitchenApprovalUpdate);
 
-  router.put('/cafe', async function (req, res) {
+  router.put('/cafe', authenticateToken, async function (req, res) {
     try {
       const body = req.body && typeof req.body === 'object' ? req.body : {};
       const name = String(body.cafeName != null ? body.cafeName : '').trim();
@@ -118,12 +129,14 @@ function createSettingsRouter(io) {
       if (name.length > 80) {
         return res.status(400).json({ error: 'اسم الكافيه طويل جداً' });
       }
-      const previousName = String(cafeSettingsStore.getCafeSettings().cafeName || '').trim();
-      const saved = cafeSettingsStore.saveCafeSettings({ cafeName: name });
+      const cafeId = req.cafeId;
+      const previousSettings = await cafeSettingsStore.getCafeSettings(cafeId);
+      const previousName = String(previousSettings.cafeName || '').trim();
+      const saved = await cafeSettingsStore.saveCafeSettings(cafeId, { cafeName: name });
       let tableQrsRegenerated = 0;
       if (previousName !== name) {
         try {
-          const qrResults = await tableQrService.regenerateAllTableQrs(getTables(), req);
+          const qrResults = await tableQrService.regenerateAllTableQrs(cafeId, await tableRepo.getTables(cafeId), req);
           tableQrsRegenerated = Array.isArray(qrResults) ? qrResults.length : 0;
         } catch (qrErr) {
           console.warn(
@@ -139,9 +152,10 @@ function createSettingsRouter(io) {
     }
   });
 
-  router.post('/cafe/logo', function (req, res) {
-    removeExistingLogoFiles();
-    logoUpload.single('logo')(req, res, function (err) {
+  router.post('/cafe/logo', authenticateToken, function (req, res) {
+    const cafeId = req.cafeId;
+    removeExistingLogoFiles(cafeId);
+    logoUpload.single('logo')(req, res, async function (err) {
       if (err) {
         const msg =
           err.message === 'invalid_logo_type'
@@ -154,7 +168,7 @@ function createSettingsRouter(io) {
       }
       try {
         const rel = '/uploads/cafe-logo/' + req.file.filename;
-        const saved = cafeSettingsStore.saveCafeSettings({ logoUrl: rel });
+        const saved = await cafeSettingsStore.saveCafeSettings(cafeId, { logoUrl: rel });
         emitSettingsUpdated(io, saved);
         res.json(saved);
       } catch (e2) {
@@ -163,10 +177,11 @@ function createSettingsRouter(io) {
     });
   });
 
-  function handleDeleteCafeLogo(_req, res) {
+  async function handleDeleteCafeLogo(req, res) {
     try {
-      removeExistingLogoFiles();
-      const saved = cafeSettingsStore.clearLogoUrl();
+      const cafeId = req.cafeId;
+      removeExistingLogoFiles(cafeId);
+      const saved = await cafeSettingsStore.clearLogoUrl(cafeId);
       emitSettingsUpdated(io, saved);
       res.json(saved);
     } catch (err) {
@@ -174,21 +189,23 @@ function createSettingsRouter(io) {
     }
   }
 
-  router.post('/cafe/logo/delete', handleDeleteCafeLogo);
-  router.delete('/cafe/logo', handleDeleteCafeLogo);
+  router.post('/cafe/logo/delete', authenticateToken, handleDeleteCafeLogo);
+  router.delete('/cafe/logo', authenticateToken, handleDeleteCafeLogo);
 
-  router.get('/tables', function (_req, res) {
+  router.get('/tables', authenticateToken, async function (req, res) {
     try {
-      const tables = tableManagementService.listTablesWithQrStatus();
+      const cafeId = req.cafeId;
+      const tables = await tableManagementService.listTablesWithQrStatus(cafeId);
       res.json({ count: tables.length, tables });
     } catch (err) {
       res.status(500).json({ error: err.message || 'فشل تحميل الطاولات' });
     }
   });
 
-  router.post('/tables', async function (req, res) {
+  router.post('/tables', authenticateToken, async function (req, res) {
     try {
-      const result = await tableManagementService.addTable(req);
+      const cafeId = req.cafeId;
+      const result = await tableManagementService.addTable(cafeId, req);
       emitTablesUpdated(io, { reason: 'table-added', tableId: result.table.id });
       res.status(201).json(result);
     } catch (err) {
@@ -196,9 +213,10 @@ function createSettingsRouter(io) {
     }
   });
 
-  router.delete('/tables/:tableId', async function (req, res) {
+  router.delete('/tables/:tableId', authenticateToken, async function (req, res) {
     try {
-      const result = await tableManagementService.deleteTable(req.params.tableId, req);
+      const cafeId = req.cafeId;
+      const result = await tableManagementService.deleteTable(cafeId, req.params.tableId, req);
       emitTablesUpdated(io, { reason: 'table-deleted', tableId: result.deletedId });
       res.json(result);
     } catch (err) {
@@ -214,13 +232,35 @@ function createSettingsRouter(io) {
     }
   });
 
-  router.post('/tables/:tableId/regenerate-qr', async function (req, res) {
+  router.post('/tables/:tableId/regenerate-qr', authenticateToken, async function (req, res) {
     try {
-      const result = await tableManagementService.regenerateTableQr(req.params.tableId, req);
+      const cafeId = req.cafeId;
+      const result = await tableManagementService.regenerateTableQr(cafeId, req.params.tableId, req);
       emitTablesUpdated(io, { reason: 'qr-regenerated', tableId: result.tableId });
       res.json(result);
     } catch (err) {
       res.status(err.status || 500).json({ error: err.message || 'فشل توليد QR' });
+    }
+  });
+
+  router.get('/tables/:tableId/download-qr', authenticateToken, async function (req, res) {
+    try {
+      const cafeId = req.cafeId;
+      const tid = String(req.params.tableId || '').trim();
+      const tables = await tableRepo.getTables(cafeId);
+      const exists = tables.some(function (t) {
+        return String(t.id) === tid;
+      });
+      if (!exists) {
+        return res.status(403).json({ error: 'غير مصرح لك للوصول لهذه الطاولة' });
+      }
+      const cardPng = await tableQrService.renderTableQrCardPng(cafeId, tid, req);
+      res.setHeader('Content-Type', 'image/png');
+      res.setHeader('Content-Disposition', 'attachment; filename="table_' + tid + '_qr.png"');
+      res.setHeader('Cache-Control', 'no-store');
+      res.send(cardPng);
+    } catch (err) {
+      res.status(500).json({ error: err.message || 'فشل توليد بطاقة QR' });
     }
   });
 

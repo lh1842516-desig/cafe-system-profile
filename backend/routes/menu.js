@@ -3,7 +3,8 @@
  */
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
-const { getMenu, getMenuItem, saveMenu } = require('../data/store');
+const { optionalToken } = require('./authMiddleware');
+const menuRepo = require('../repository/menuRepository');
 const {
   coerceIsAvailable,
   withMenuAvailability,
@@ -32,35 +33,44 @@ function readAvailabilityFromBody(body) {
   return undefined;
 }
 
-function broadcastMenuChange(io, reason, item) {
+function broadcastMenuChange(io, reason, item, cafeId) {
   emitMenuUpdated(io, {
     reason: reason || 'updated',
     id: item && item.id ? item.id : null,
     isAvailable: item ? item.isAvailable : undefined,
     item: item ? withMenuAvailability(item) : null,
-  });
+  }, cafeId);
 }
 
 function createMenuRouter(io) {
   const router = express.Router();
+  router.use(optionalToken);
 
-  router.get('/', (req, res) => {
+  router.get('/', async (req, res) => {
     try {
-      res.json(normalizeMenuList(getMenu()));
+      const cafeId = req.cafeId;
+      const menu = await menuRepo.getMenu(cafeId);
+      res.json(normalizeMenuList(menu));
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   });
 
-  router.get('/:id', (req, res) => {
-    const item = getMenuItem(req.params.id);
-    if (!item) return res.status(404).json({ error: 'Not found' });
-    res.json(withMenuAvailability(item));
+  router.get('/:id', async (req, res) => {
+    try {
+      const cafeId = req.cafeId;
+      const item = await menuRepo.getMenuItem(cafeId, req.params.id);
+      if (!item) return res.status(404).json({ error: 'Not found' });
+      res.json(withMenuAvailability(item));
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
 
   router.post('/', async (req, res) => {
     try {
-      const menu = getMenu();
+      const cafeId = req.cafeId;
+      const menu = await menuRepo.getMenu(cafeId);
       const { name, price, category, imageUrl, ingredients, options } = req.body || {};
       if (!name || price == null) {
         return res.status(400).json({ error: 'Name and price required' });
@@ -78,8 +88,8 @@ function createMenuRouter(io) {
         isAvailable: availability !== undefined ? availability : true,
       });
       menu.push(newItem);
-      await saveMenu(menu);
-      broadcastMenuChange(io, 'created', newItem);
+      await menuRepo.saveMenu(cafeId, menu);
+      broadcastMenuChange(io, 'created', newItem, cafeId);
       res.status(201).json(newItem);
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -88,7 +98,8 @@ function createMenuRouter(io) {
 
   router.patch('/:id/availability', async (req, res) => {
     try {
-      const menu = getMenu();
+      const cafeId = req.cafeId;
+      const menu = await menuRepo.getMenu(cafeId);
       const idx = menu.findIndex((i) => i.id === req.params.id);
       if (idx === -1) return res.status(404).json({ error: 'Not found' });
       const availability = readAvailabilityFromBody(req.body);
@@ -97,9 +108,9 @@ function createMenuRouter(io) {
       }
       menu[idx].isAvailable = availability;
       delete menu[idx].is_available;
-      await saveMenu(menu);
+      await menuRepo.saveMenu(cafeId, menu);
       const item = withMenuAvailability(menu[idx]);
-      broadcastMenuChange(io, 'availability', item);
+      broadcastMenuChange(io, 'availability', item, cafeId);
       res.json(item);
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -108,7 +119,8 @@ function createMenuRouter(io) {
 
   router.put('/:id', async (req, res) => {
     try {
-      const menu = getMenu();
+      const cafeId = req.cafeId;
+      const menu = await menuRepo.getMenu(cafeId);
       const idx = menu.findIndex((i) => i.id === req.params.id);
       if (idx === -1) return res.status(404).json({ error: 'Not found' });
       const { name, price, category, imageUrl, ingredients, options } = req.body || {};
@@ -123,9 +135,9 @@ function createMenuRouter(io) {
         menu[idx].isAvailable = availability;
         delete menu[idx].is_available;
       }
-      await saveMenu(menu);
+      await menuRepo.saveMenu(cafeId, menu);
       const item = withMenuAvailability(menu[idx]);
-      broadcastMenuChange(io, 'updated', item);
+      broadcastMenuChange(io, 'updated', item, cafeId);
       res.json(item);
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -134,15 +146,16 @@ function createMenuRouter(io) {
 
   router.delete('/:id', async (req, res) => {
     try {
-      const menu = getMenu();
+      const cafeId = req.cafeId;
+      const menu = await menuRepo.getMenu(cafeId);
       const removed = menu.find((i) => i.id === req.params.id);
       const filtered = menu.filter((i) => i.id !== req.params.id);
       if (filtered.length === menu.length) {
         return res.status(404).json({ error: 'Not found' });
       }
-      await saveMenu(filtered);
+      await menuRepo.saveMenu(cafeId, filtered);
       if (removed) {
-        emitMenuUpdated(io, { reason: 'deleted', id: removed.id, item: null });
+        emitMenuUpdated(io, { reason: 'deleted', id: removed.id, item: null }, cafeId);
       }
       res.status(204).send();
     } catch (err) {

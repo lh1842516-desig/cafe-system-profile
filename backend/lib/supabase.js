@@ -3,6 +3,7 @@
  * Uses the service role key to bypass Row Level Security.
  * Never cache the result of getClient() across requests; tokens may rotate.
  */
+require('./env');
 const { createClient } = require('@supabase/supabase-js');
 
 let _client = null;

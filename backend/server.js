@@ -7,6 +7,8 @@ const http = require('http');
 const path = require('path');
 const os = require('os');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const { Server } = require('socket.io');
 const config = require('./config');
 const createMenuRouter = require('./routes/menu');
@@ -15,20 +17,21 @@ const statsRoutes = require('./routes/stats');
 const archiveRoutes = require('./routes/archive');
 const closingsRoutes = require('./routes/closings');
 const createTillRouter = require('./routes/till');
-const categoriesRoutes = require('./routes/categories');
+const createCategoryRouter = require('./routes/categories');
 const createTableSessionsRouter = require('./routes/tableSessions');
-const customerSessionRoutes = require('./routes/customerSession');
-const iosKitchenRecoveryRoutes = require('./routes/iosKitchenRecovery');
 const createKitchenRouter = require('./routes/kitchen');
 const { postClosingHandler } = require('./routes/closings');
 const { reportHandler } = require('./routes/archive');
 const { syncClosedOrdersToArchive } = require('./data/archive');
 const { getOrders, getTables } = require('./data/store');
+const tableRepo = require('./repository/tableRepository');
+const orderRepo = require('./repository/orderRepository');
 const tableQrService = require('./services/tableQrService');
-const { attachTableCustomerSocket } = require('./services/tableCustomerSocket');
 const createSettingsRouter = require('./routes/settings');
 const createAdminAuthRouter = require('./routes/adminAuth');
 const todaySessionHistoryRoutes = require('./routes/todaySessionHistory');
+const saasAuthRoutes = require('./routes/saasAuth');
+const superadminRoutes = require('./routes/superadmin');
 
 // Supabase-backed init
 const { initCafeContext, getDefaultCafeId } = require('./lib/cafeContext');
@@ -47,15 +50,90 @@ const io = new Server(server, {
   pingTimeout: 120000,
 });
 
-attachTableCustomerSocket(io);
+const saasAuthService = require('./services/saasAuthService');
 
 io.on('connection', (socket) => {
-  if (config.DEBUG_SOCKET) {
-    console.log('[socket] client connected', socket.id, 'total:', io.engine.clientsCount);
+  let cafeId = null;
+  const token = socket.handshake.query && socket.handshake.query.token;
+  if (token) {
+    const decoded = saasAuthService.verifyToken(token);
+    if (decoded && decoded.cafeId) {
+      cafeId = decoded.cafeId;
+    }
   }
+  const queryCafeId = (socket.handshake.query && socket.handshake.query.cafeId) ||
+                      (socket.handshake.auth && socket.handshake.auth.cafeId);
+  if (!cafeId && queryCafeId) {
+    cafeId = String(queryCafeId).trim();
+  }
+  if (!cafeId) {
+    cafeId = getDefaultCafeId();
+  }
+  socket.data.cfCafeId = cafeId;
+  socket.join(`cafe-${cafeId}-staff`);
+  socket.join(`cafe-${cafeId}-customer`);
+
+  // Customer joins table room for real-time table bill closure & updates
+  socket.on('join_table_room', (data) => {
+    const cid = (data && data.cafeId) || socket.data.cfCafeId || cafeId;
+    const tid = data && data.tableId != null ? String(data.tableId) : '';
+    if (!tid || !cid) return;
+    const { tableRoomName } = require('./services/tableRoomHelper');
+    const room = tableRoomName(tid, cid);
+    socket.join(room);
+    if (config.DEBUG_SOCKET) console.log('[socket] client joined table room:', room, 'socket:', socket.id);
+  });
+
+  if (config.DEBUG_SOCKET) {
+    console.log('[socket] client connected', socket.id, 'cafe:', cafeId, 'total:', io.engine.clientsCount);
+  }
+
+  // Customer → Staff relay: "Call Waiter" button
+  socket.on('customer_call_waiter', (data) => {
+    const cid = (data && data.cafeId) || cafeId;
+    if (!cid) return;
+    const payload = data || {};
+    io.to('cafe-' + cid + '-staff').emit('customer_call_waiter', payload);
+    io.to('cafe-' + cid + '-staff').emit('captain-request', payload);
+    if (config.DEBUG_SOCKET) console.log('[socket] customer_call_waiter relayed', payload);
+  });
+
+  // Customer → Staff relay: "Request Bill" button
+  socket.on('customer_request_bill', (data) => {
+    const cid = (data && data.cafeId) || cafeId;
+    if (!cid) return;
+    const payload = data || {};
+    const tid = String(payload.tableId || '').trim();
+    if (tid) {
+      const tableSessions = require('./services/tableSessions');
+      const { tableRoomName } = require('./services/tableRoomHelper');
+      tableSessions.setTableBillRequested(cid, tid, true);
+      const room = tableRoomName(tid, cid);
+      io.to(room).emit('table_bill_requested', { tableId: tid, isBillRequested: true });
+    }
+    io.to('cafe-' + cid + '-staff').emit('customer_request_bill', payload);
+    io.to('cafe-' + cid + '-staff').emit('bill-request', payload);
+    if (config.DEBUG_SOCKET) console.log('[socket] customer_request_bill relayed', payload);
+  });
 });
 
 app.use(cors());
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 40,
+  message: { error: 'تم تجاوز عدد محاولات تسجيل الدخول المسموح بها، يرجى المحاولة بعد 15 دقيقة.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use('/api/auth/', authLimiter);
+app.use('/api/admin/login', authLimiter);
+
 app.use(express.json());
 /* sendBeacon + URLSearchParams (application/x-www-form-urlencoded) من بعض المتصفحات لا يُعبَّأ req.body من JSON */
 app.use(express.urlencoded({ extended: true }));
@@ -77,7 +155,9 @@ const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 const frontendPath = path.join(__dirname, '..', 'frontend');
 
+
 // API أولاً حتى لا يلتقط express.static طلبات /api/*
+
 app.post('/api/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'لم يتم رفع ملف' });
   const url = `/uploads/${req.file.filename}`;
@@ -95,11 +175,8 @@ app.use(
     },
   })
 );
-app.use('/table-qrs', express.static(config.TABLE_QRS_DIR));
 app.use('/api/menu', createMenuRouter(io));
 app.use('/api/table-sessions', createTableSessionsRouter(io));
-app.use('/api/customer/session', customerSessionRoutes);
-app.use('/api/customer/ios-recovery', iosKitchenRecoveryRoutes);
 app.use('/api/orders', createOrdersRouter(io));
 app.use('/api/today-sessions', todaySessionHistoryRoutes);
 app.use('/api/stats', statsRoutes);
@@ -107,29 +184,16 @@ app.post('/api/closings', postClosingHandler);
 app.use('/api/closings', closingsRoutes);
 app.use('/api/till', createTillRouter(io));
 app.use('/api/kitchen', createKitchenRouter(io));
-app.post('/api/categories/delete', categoriesRoutes.deleteCategoryHandler || function (req, res) { return res.status(404).json({ error: 'غير متوفر' }); });
-app.post('/api/categories/rename', categoriesRoutes.renameCategoryHandler || function (req, res) { return res.status(404).json({ error: 'غير متوفر' }); });
-app.post('/api/categories/image', categoriesRoutes.setCategoryImageHandler || function (req, res) { return res.status(404).json({ error: 'غير متوفر' }); });
-app.use('/api/categories', categoriesRoutes);
+app.use('/api/categories', createCategoryRouter(io));
 app.use('/api/settings', createSettingsRouter(io));
 app.use('/api/admin', createAdminAuthRouter());
+app.use('/api/auth/saas', saasAuthRoutes);
+app.use('/api/superadmin', superadminRoutes);
 // مسار التقرير مسجّل صراحةً لضمان عدم 404
 app.get('/api/archive/report', reportHandler);
 app.use('/api/archive', archiveRoutes);
 
-const customerDist = path.join(frontendPath, 'customer', 'dist');
-const customerNoStore = (res, filePath) => {
-  const lower = String(filePath).toLowerCase();
-  if (lower.endsWith('.html') || lower.endsWith('.css') || lower.endsWith('.js')) {
-    res.setHeader('Cache-Control', 'no-store, must-revalidate');
-  }
-};
 
-// واجهة الزبون (Vite build) — قبل static العام حتى لا يُخدم index.html المصدر
-app.use('/customer', express.static(customerDist, { setHeaders: customerNoStore }));
-app.get(/^\/customer(\/.*)?$/, (req, res) => {
-  res.sendFile(path.join(customerDist, 'index.html'));
-});
 
 // الملفات الثابتة — منع تخزين HTML/CSS/JS في المتصفح أثناء التطوير حتى تظهر التعديلات فوراً
 app.use(
@@ -145,13 +209,24 @@ app.use(
 
 // روابط الصفحات: بعد static حتى يُمرَّر /captain/ عند عدم وجود captain/index.html
 app.get('/', (req, res) => res.sendFile(path.join(frontendPath, 'index.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(frontendPath, 'login', 'index.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(frontendPath, 'admin', 'index.html')));
+app.get(/^\/superadmin\/?$/, (req, res) => res.sendFile(path.join(frontendPath, 'superadmin', 'index.html')));
 app.get('/cashier', (req, res) => res.sendFile(path.join(frontendPath, 'cashier', 'index.html')));
 app.get('/kitchen', (req, res) => res.sendFile(path.join(frontendPath, 'kitchen', 'index.html')));
 // واجهة الكابتن: /captain و /captain/ → واجهة الطلب مباشرة (لا صفحة تحويل)
 app.get(/^\/captain\/?$/, (req, res) =>
   res.sendFile(path.join(frontendPath, 'captain', 'captain-order.html')));
 app.get('/captain/captain-order.html', (req, res) => res.redirect(302, '/captain'));
+// Customer QR-ordering interface
+app.get('/customer', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  res.sendFile(path.join(frontendPath, 'customer', 'index.html'));
+});
+app.get('/customer/', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  res.sendFile(path.join(frontendPath, 'customer', 'index.html'));
+});
 
 /**
  * عميل أغلق الاتصال أثناء إرسال الجسم — express/json (raw-body) يرمي BadRequestError.
@@ -171,19 +246,19 @@ app.use((err, req, res, next) => {
   if (isBenignClientAbort(err)) {
     try {
       if (!res.headersSent) res.end();
-    } catch (_) {}
+    } catch (_) { }
     return;
   }
   try {
     console.error('[express]', err && err.stack ? err.stack : err);
-  } catch (_) {}
+  } catch (_) { }
   try {
     if (!res.headersSent) {
       res.status(err.status && Number(err.status) >= 400 && Number(err.status) < 600 ? err.status : 500).json({
         error: err.message || 'خطأ في الخادم',
       });
     }
-  } catch (_) {}
+  } catch (_) { }
 });
 
 // الحصول على IP المحلي للشبكة لعرضه عند التشغيل
@@ -202,7 +277,6 @@ function getLocalIP() {
 /** روابط الواجهات — كل مسار مرة واحدة فقط */
 const LAN_UI_LINKS = [
   { label: 'أدمن', path: '/admin' },
-  { label: 'زبائن', path: '/customer' },
   { label: 'كاشير', path: '/cashier' },
   { label: 'كابتن', path: '/captain' },
   { label: 'مطبخ', path: '/kitchen' },
@@ -252,21 +326,11 @@ async function startServer() {
     process.exit(1);
   }
 
-  server.listen(config.PORT, config.HOST, () => {
+  server.listen(config.PORT, config.HOST, async () => {
     try {
       syncClosedOrdersToArchive(getOrders);
-    } catch (_) {}
+    } catch (_) { }
     printStartupBanner();
-    tableQrService
-      .regenerateAllTableQrs(getTables(), null)
-      .then(function (results) {
-        if (results && results.length) {
-          console.log('  [QR] تم تحديث ' + results.length + ' بطاقة طاولة (تخطيط Wi-Fi)');
-        }
-      })
-      .catch(function (err) {
-        console.warn('[QR] تعذّر تحديث بطاقات الطاولات عند الإقلاع:', err && err.message ? err.message : err);
-      });
   });
 }
 

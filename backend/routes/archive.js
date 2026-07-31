@@ -2,7 +2,9 @@
  * API أرشيف الطلبات والتقارير — فلترة حسب يوم / شهر / سنة
  */
 const express = require('express');
+const { authenticateToken } = require('./authMiddleware');
 const router = express.Router();
+router.use(authenticateToken);
 const { getReport, getSampleReport } = require('../data/archive');
 
 /** تحويل طلب من صيغة الأرشيف إلى صيغة واجهة الطلبات (مطابق لـ /api/orders/today) */
@@ -27,14 +29,13 @@ function orderToResponse(o) {
  */
 function reportHandler(req, res) {
   try {
+    const cafeId = req.cafeId;
+    if (!cafeId) {
+      return res.status(400).json({ error: 'cafeId مطلوب' });
+    }
     const type = (req.query.type || 'day').toLowerCase();
     const date = req.query.date || '';
-    let report = getReport(type, date);
-    let sampleData = false;
-    if (!report.orders || report.orders.length === 0) {
-      report = getSampleReport(type, date);
-      sampleData = true;
-    }
+    const report = getReport(cafeId, type, date);
     const orders = (report.orders || []).map(orderToResponse);
     res.json({
       totalProfit: report.totalProfit || 0,
@@ -43,7 +44,7 @@ function reportHandler(req, res) {
       topProduct: report.topProduct || '',
       topProductCount: report.topProductCount || 0,
       orders,
-      sampleData,
+      sampleData: false,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -53,4 +54,4 @@ function reportHandler(req, res) {
 router.get('/report', reportHandler);
 
 module.exports = router;
-module.exports.reportHandler = reportHandler;
+module.exports.reportHandler = [authenticateToken, reportHandler];

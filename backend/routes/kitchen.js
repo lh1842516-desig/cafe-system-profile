@@ -5,8 +5,10 @@
 
 const express = require('express');
 const config = require('../config');
-const { getOrders, getTables, saveOrders } = require('../data/store');
-const { getKitchenState, setKitchenStatus, getKitchenStatus } = require('../data/kitchen');
+const { authenticateToken } = require('./authMiddleware');
+const orderRepo = require('../repository/orderRepository');
+const tableRepo = require('../repository/tableRepository');
+const kitchenRepo = require('../repository/kitchenRepository');
 const till = require('../data/till');
 const { orderBelongsToSession } = require('../services/cashSessionHelper');
 const { resolveTableStatus } = require('../services/tableStatusResolve');
@@ -30,7 +32,7 @@ function normalizeKitchenStatus(raw) {
   return 'new';
 }
 
-function tableLabelFor(order) {
+async function tableLabelFor(order, cafeId) {
   const tableIdRaw = String(order.tableId || '').trim();
   const tidUpper = tableIdRaw.toUpperCase();
   if (tidUpper === 'TAKEAWAY') return 'سفري';
@@ -38,7 +40,7 @@ function tableLabelFor(order) {
   const orderType = String(order.orderType || 'DINE_IN').trim().toUpperCase();
   if (orderType === 'TAKEAWAY') return 'سفري';
   if (orderType === 'DELIVERY') return 'دلفري';
-  const tables = getTables();
+  const tables = await tableRepo.getTables(cafeId);
   const row = tables.find((t) => String(t.id) === tableIdRaw);
   const lab = row && row.label != null ? String(row.label) : tableIdRaw;
   return 'طاولة ' + lab;
@@ -61,7 +63,7 @@ function orderTotal(order) {
   return (order.items || []).reduce((sum, it) => sum + (Number(it.price) || 0) * (Number(it.quantity) || 0), 0);
 }
 
-function mapOrderToKitchenTicket(order, kitchenState, now) {
+async function mapOrderToKitchenTicket(cafeId, order, kitchenState, now) {
   const nowDate = now || new Date();
   const ks = kitchenState[order.id] || {};
   let status = normalizeKitchenStatus(ks.status);
@@ -83,9 +85,10 @@ function mapOrderToKitchenTicket(order, kitchenState, now) {
   const bundledCustomerNames = Array.isArray(order.bundledCustomerNames)
     ? order.bundledCustomerNames.map((n) => String(n || '').trim()).filter(Boolean)
     : [];
+  const label = await tableLabelFor(order, cafeId);
   return {
     id: order.id, orderId: order.id, tableId: order.tableId,
-    tableLabel: tableLabelFor(order), orderType: typeMeta.code, orderTypeLabel: typeMeta.label,
+    tableLabel: label, orderType: typeMeta.code, orderTypeLabel: typeMeta.label,
     serviceMeta: undefined,
     customerName: isServiceOrder ? undefined : customerName || undefined,
     kitchenBatchId: kitchenBatchId || undefined,
@@ -111,22 +114,33 @@ function sortByKitchenTime(a, b) {
 
 function createKitchenRouter(io) {
   const router = express.Router();
+  router.use(authenticateToken);
 
-  router.get('/queue', (req, res) => {
+  router.get('/queue', async (req, res) => {
     try {
-      const session = till.getActiveSessionMeta();
+      const cafeId = req.cafeId;
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrders();
-      const kitchenState = getKitchenState();
+      const orders = await orderRepo.getOrders(cafeId);
+      const kitchenState = await kitchenRepo.getKitchenState(cafeId);
       const now = new Date();
-      const all = orders
-        .filter((o) => orderBelongsToSession(o, session))
-        .map((o) => ({ order: o, ticket: mapOrderToKitchenTicket(o, kitchenState, now) }))
+      
+      const mappedPairs = await Promise.all(
+        orders
+          .filter((o) => orderBelongsToSession(o, session))
+          .map(async (o) => {
+            const ticket = await mapOrderToKitchenTicket(cafeId, o, kitchenState, now);
+            return { order: o, ticket };
+          })
+      );
+      
+      const all = mappedPairs
         .filter((pair) => includeTicketInKitchen(pair.order, pair.ticket, now))
         .map((pair) => pair.ticket)
         .filter((t) => t.status !== 'completed' && t.status !== 'held');
+        
       const newOrders = mergeKitchenBatchTickets(all.filter((t) => t.status === 'new' || t.status === 'editing').sort(sortByKitchenTime));
       const preparing = mergeKitchenBatchTickets(all.filter((t) => t.status === 'preparing').sort(sortByKitchenTime));
       res.json({ new: newOrders, preparing });
@@ -136,21 +150,27 @@ function createKitchenRouter(io) {
     }
   });
 
-  router.get('/today', (req, res) => {
+  router.get('/today', async (req, res) => {
     try {
-      const session = till.getActiveSessionMeta();
+      const cafeId = req.cafeId;
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrders();
-      const kitchenState = getKitchenState();
+      const orders = await orderRepo.getOrders(cafeId);
+      const kitchenState = await kitchenRepo.getKitchenState(cafeId);
       const now = new Date();
-      const todayTickets = orders
-        .filter((o) => orderBelongsToSession(o, session))
-        .map((o) => mapOrderToKitchenTicket(o, kitchenState, now))
+      
+      const todayTickets = await Promise.all(
+        orders
+          .filter((o) => orderBelongsToSession(o, session))
+          .map((o) => mapOrderToKitchenTicket(cafeId, o, kitchenState, now))
+      );
+      
+      const sortedTickets = todayTickets
         .filter((t) => t.status === 'completed')
         .sort((a, b) => new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime());
-      res.json(todayTickets);
+      res.json(sortedTickets);
     } catch (e) {
       console.error('kitchen today error', e);
       res.status(500).json({ error: 'فشل تحميل طلبات اليوم' });
@@ -159,7 +179,8 @@ function createKitchenRouter(io) {
 
   router.post('/:orderId/status', async (req, res) => {
     try {
-      const session = till.getActiveSessionMeta();
+      const cafeId = req.cafeId;
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
@@ -168,11 +189,11 @@ function createKitchenRouter(io) {
       const allowed = ['new', 'preparing', 'completed'];
       if (!allowed.includes(status)) return res.status(400).json({ error: 'حالة غير صالحة' });
 
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === String(orderId));
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
 
-      const ksCur = getKitchenStatus(orderId);
+      const ksCur = await kitchenRepo.getKitchenStatus(cafeId, orderId);
       const curRaw = ksCur && ksCur.status != null ? String(ksCur.status).toLowerCase() : '';
       if (status === 'preparing' && curRaw === 'editing') {
         return res.status(409).json({ error: 'الزبون يعدّل الطلب حالياً. انتظر حتى ينهي التعديل.', code: 'CUSTOMER_EDITING' });
@@ -181,33 +202,36 @@ function createKitchenRouter(io) {
         return res.status(400).json({ error: 'لا يمكن تعديل طلب خارج جلسة القاصة الحالية.' });
       }
 
-      const updated = await setKitchenStatus(orderId, status);
+      const updated = await kitchenRepo.setKitchenStatus(cafeId, orderId, status);
       let closedByKitchen = false;
       if (status === 'completed') {
         closedByKitchen = autoCloseIfServiceOrder(order, session);
         if (closedByKitchen) {
-          await saveOrders(orders);
-          try { recordTodaySessionForClosedOrder(order, session); } catch (histErr) {
+          await orderRepo.saveOrders(cafeId, orders);
+          try { recordTodaySessionForClosedOrder(cafeId, order, session); } catch (histErr) {
             console.error('today session record (kitchen)', histErr);
           }
         }
       }
-      try { tableCustomerKitchenUserSync.syncUsersForKitchenOrder(io, orderId, status); } catch (_) {}
+      try { await tableCustomerKitchenUserSync.syncUsersForKitchenOrder(cafeId, io, orderId, status); } catch (_) {}
 
+      const { tableRoomName } = require('../services/tableRoomHelper');
       if (io) {
         const tidForStatus = String(order.tableId);
-        const nextTableStatus = resolveTableStatus(tidForStatus, '');
-        emitTableUpdate(io, { tableId: tidForStatus, status: nextTableStatus.status, sessionId: nextTableStatus.status === 'in_use' ? nextTableStatus.sessionId : null });
-        io.emit('kitchen-updated', { orderId, status });
-        io.emit('orders-updated', { tableId: String(order.tableId), orderId, reason: closedByKitchen ? 'order-closed' : 'kitchen-status' });
-        if (closedByKitchen) io.emit('stats-updated');
+        const nextTableStatus = await resolveTableStatus(cafeId, tidForStatus, '');
+        emitTableUpdate(io, { tableId: tidForStatus, status: nextTableStatus.status, sessionId: nextTableStatus.status === 'in_use' ? nextTableStatus.sessionId : null }, cafeId);
+        const room = tableRoomName(order.tableId, cafeId);
+        io.to('cafe-' + cafeId + '-staff').emit('kitchen-updated', { orderId, status });
+        io.to(room).emit('kitchen-updated', { orderId, status });
+        io.to('cafe-' + cafeId + '-staff').emit('orders-updated', { tableId: String(order.tableId), orderId, reason: closedByKitchen ? 'order-closed' : 'kitchen-status' });
+        if (closedByKitchen) io.to('cafe-' + cafeId + '-staff').emit('stats-updated');
         if (config.DEBUG_SOCKET) {
           console.log('[socket emit] kitchen-updated + orders-updated', orderId, status, 'clients:', io.engine.clientsCount);
         }
         if (status === 'completed') {
           const tableId = String(order.tableId);
-          io.to('table-' + tableId).emit('order_ready', { orderId, tableId });
-          io.emit('order_ready', { orderId, tableId });
+          io.to(room).emit('order_ready', { orderId, tableId });
+          io.to('cafe-' + cafeId + '-staff').emit('order_ready', { orderId, tableId });
         }
       }
       res.json({ ok: true, kitchen: updated });

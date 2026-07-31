@@ -345,3 +345,29 @@ CREATE TABLE IF NOT EXISTS table_ready_pending (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   PRIMARY KEY(cafe_id, table_id)
 );
+
+-- =============================================================================
+-- USERS (Staff & Admin Accounts)
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS users (
+  id            UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+  cafe_id       UUID        REFERENCES cafes(id) ON DELETE CASCADE,
+  full_name     TEXT        NOT NULL,
+  email         TEXT        UNIQUE NOT NULL,
+  password_hash TEXT        NOT NULL,
+  role          TEXT        NOT NULL,
+  status        TEXT        NOT NULL DEFAULT 'active',
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS users_cafe_id_idx ON users(cafe_id);
+
+-- =============================================================================
+-- ALTERATIONS FOR STEP 3D: Platform Management Columns
+-- =============================================================================
+ALTER TABLE cafes ADD COLUMN IF NOT EXISTS address TEXT;
+ALTER TABLE cafes ADD COLUMN IF NOT EXISTS phone TEXT;
+ALTER TABLE cafes ADD COLUMN IF NOT EXISTS subscription_status TEXT NOT NULL DEFAULT 'active';
+

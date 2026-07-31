@@ -17412,11 +17412,1315 @@
     },
     "07": {
       "days": {
+        "22": {
+          "totalProfit": 102000,
+          "totalOrders": 10,
+          "topProduct": "امريكانو",
+          "topProductCount": 9,
+          "orders": [
+            {
+              "id": "T1-003",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 16000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 2,
+                  "price": 8000
+                }
+              ],
+              "time": "16:06",
+              "closedAt": "2026-07-22T13:06:36.54+00:00"
+            },
+            {
+              "id": "T1-002",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "16:06",
+              "closedAt": "2026-07-22T13:06:11.051+00:00"
+            },
+            {
+              "id": "T1-001",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "17:02",
+              "closedAt": "2026-07-22T14:02:45.015Z"
+            },
+            {
+              "id": "T1-004",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 22000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 2,
+                  "price": 8000
+                },
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 2,
+                  "price": 3000
+                }
+              ],
+              "time": "17:02",
+              "closedAt": "2026-07-22T14:02:46.956Z"
+            },
+            {
+              "id": "T1-005",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 13000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 2,
+                  "price": 5000
+                },
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "17:02",
+              "closedAt": "2026-07-22T14:02:49.074Z"
+            },
+            {
+              "id": "T1-006",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 16000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 2,
+                  "price": 8000
+                }
+              ],
+              "time": "17:02",
+              "closedAt": "2026-07-22T14:02:50.758Z"
+            },
+            {
+              "id": "T1-008",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "17:20",
+              "closedAt": "2026-07-22T14:20:06.258Z"
+            },
+            {
+              "id": "T1-011",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "17:20",
+              "closedAt": "2026-07-22T14:20:07.568Z"
+            },
+            {
+              "id": "T1-012",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "11:48",
+              "closedAt": "2026-07-23T08:48:49.053Z"
+            },
+            {
+              "id": "T1-013",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "12:07",
+              "closedAt": "2026-07-23T09:07:52.584Z"
+            }
+          ]
+        },
+        "23": {
+          "totalProfit": 74000,
+          "totalOrders": 19,
+          "topProduct": "كوماند لاتي",
+          "topProductCount": 8,
+          "orders": [
+            {
+              "id": "K-001",
+              "table": "TAKEAWAY",
+              "orderType": "TAKEAWAY",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                },
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "12:28",
+              "closedAt": "2026-07-23T09:28:06.115Z"
+            },
+            {
+              "id": "T1-002",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "12:31",
+              "closedAt": "2026-07-23T09:31:32.416Z"
+            },
+            {
+              "id": "T1-001",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "14:16",
+              "closedAt": "2026-07-23T11:16:57.523Z"
+            },
+            {
+              "id": "T1-003",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "14:19",
+              "closedAt": "2026-07-23T11:19:34.620Z"
+            },
+            {
+              "id": "T1-004",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "14:19",
+              "closedAt": "2026-07-23T11:19:34.689Z"
+            },
+            {
+              "id": "T2-001",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "15:08",
+              "closedAt": "2026-07-23T12:08:34.158Z"
+            },
+            {
+              "id": "T2-002",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "19:43",
+              "closedAt": "2026-07-23T16:43:28.590Z"
+            },
+            {
+              "id": "T2-003",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "20:17",
+              "closedAt": "2026-07-23T17:17:19.882Z"
+            },
+            {
+              "id": "T2-004",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "20:17",
+              "closedAt": "2026-07-23T17:17:20.189Z"
+            },
+            {
+              "id": "T1-006",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "15:58",
+              "closedAt": "2026-07-24T12:58:07.323Z"
+            },
+            {
+              "id": "T2-005",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "15:59",
+              "closedAt": "2026-07-24T12:59:45.658Z"
+            },
+            {
+              "id": "T2-007",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 4000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                },
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "15:59",
+              "closedAt": "2026-07-24T12:59:45.699Z"
+            },
+            {
+              "id": "T2-008",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "16:32",
+              "closedAt": "2026-07-24T13:32:12.083Z"
+            },
+            {
+              "id": "T2-012",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "16:32",
+              "closedAt": "2026-07-24T13:32:12.400Z"
+            },
+            {
+              "id": "T1-011",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "16:44",
+              "closedAt": "2026-07-24T13:44:30.891Z"
+            },
+            {
+              "id": "T1-013",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "16:44",
+              "closedAt": "2026-07-24T13:44:30.926Z"
+            },
+            {
+              "id": "T1-015",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "16:44",
+              "closedAt": "2026-07-24T13:44:31.205Z"
+            },
+            {
+              "id": "T3-018",
+              "table": "3",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "16:58",
+              "closedAt": "2026-07-24T13:58:54.179Z"
+            },
+            {
+              "id": "T1-017",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "12:15",
+              "closedAt": "2026-07-23T09:15:17.585+00:00"
+            }
+          ]
+        },
+        "25": {
+          "totalProfit": 53000,
+          "totalOrders": 14,
+          "topProduct": "كوماند لاتي",
+          "topProductCount": 7,
+          "orders": [
+            {
+              "id": "T2-003",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "01:28",
+              "closedAt": "2026-07-24T22:28:51.239Z"
+            },
+            {
+              "id": "T2-006",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "02:04",
+              "closedAt": "2026-07-24T23:04:19.611Z"
+            },
+            {
+              "id": "T2-009",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "02:04",
+              "closedAt": "2026-07-24T23:04:19.632Z"
+            },
+            {
+              "id": "T2-010",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "02:04",
+              "closedAt": "2026-07-24T23:04:19.919Z"
+            },
+            {
+              "id": "T2-011",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "02:04",
+              "closedAt": "2026-07-24T23:04:19.956Z"
+            },
+            {
+              "id": "T2-013",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "02:11",
+              "closedAt": "2026-07-24T23:11:01.759Z"
+            },
+            {
+              "id": "T2-014",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "02:11",
+              "closedAt": "2026-07-24T23:11:01.784Z"
+            },
+            {
+              "id": "T2-015",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "02:11",
+              "closedAt": "2026-07-24T23:11:02.075Z"
+            },
+            {
+              "id": "T2-016",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "02:11",
+              "closedAt": "2026-07-24T23:11:02.108Z"
+            },
+            {
+              "id": "T2-017",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "12:27",
+              "closedAt": "2026-07-25T09:27:09.771Z"
+            },
+            {
+              "id": "T2-018",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "12:27",
+              "closedAt": "2026-07-25T09:27:09.832Z"
+            },
+            {
+              "id": "T2-019",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "12:27",
+              "closedAt": "2026-07-25T09:27:09.861Z"
+            },
+            {
+              "id": "T2-020",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "12:32",
+              "closedAt": "2026-07-25T09:32:20.019Z"
+            },
+            {
+              "id": "T2-021",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "12:32",
+              "closedAt": "2026-07-25T09:32:20.075Z"
+            }
+          ]
+        },
+        "26": {
+          "totalProfit": 23000,
+          "totalOrders": 4,
+          "topProduct": "كوماند لاتي",
+          "topProductCount": 5,
+          "orders": [
+            {
+              "id": "T2-014",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 4,
+                  "price": 2000
+                }
+              ],
+              "time": "00:10",
+              "closedAt": "2026-07-25T21:10:15.458Z"
+            },
+            {
+              "id": "T2-015",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 9000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 3,
+                  "price": 3000
+                }
+              ],
+              "time": "00:10",
+              "closedAt": "2026-07-25T21:10:15.531Z"
+            },
+            {
+              "id": "T1-001",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "16:44",
+              "closedAt": "2026-07-26T13:44:07.445Z"
+            },
+            {
+              "id": "K-002",
+              "table": "TAKEAWAY",
+              "orderType": "TAKEAWAY",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "18:38",
+              "closedAt": "2026-07-26T15:38:05.243Z"
+            }
+          ]
+        },
+        "27": {
+          "totalProfit": 113000,
+          "totalOrders": 20,
+          "topProduct": "كوماند لاتي",
+          "topProductCount": 11,
+          "orders": [
+            {
+              "id": "K-001",
+              "table": "TAKEAWAY",
+              "orderType": "TAKEAWAY",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "01:19",
+              "closedAt": "2026-07-26T22:19:05.502Z"
+            },
+            {
+              "id": "T2-015",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "01:21",
+              "closedAt": "2026-07-26T22:21:55.995Z"
+            },
+            {
+              "id": "T1-019",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 10000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 2,
+                  "price": 5000
+                }
+              ],
+              "time": "01:25",
+              "closedAt": "2026-07-26T22:25:01.072Z"
+            },
+            {
+              "id": "T1-002",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "01:50",
+              "closedAt": "2026-07-26T22:50:45.612Z"
+            },
+            {
+              "id": "T1-004",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "02:50",
+              "closedAt": "2026-07-26T23:50:15.615Z"
+            },
+            {
+              "id": "T2-016",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "14:59",
+              "closedAt": "2026-07-27T11:59:57.694Z"
+            },
+            {
+              "id": "T2-017",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "14:59",
+              "closedAt": "2026-07-27T11:59:57.727Z"
+            },
+            {
+              "id": "T2-018",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "14:59",
+              "closedAt": "2026-07-27T11:59:57.752Z"
+            },
+            {
+              "id": "T2-019",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "14:59",
+              "closedAt": "2026-07-27T11:59:57.999Z"
+            },
+            {
+              "id": "T1-021",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "15:38",
+              "closedAt": "2026-07-27T12:38:50.111Z"
+            },
+            {
+              "id": "T1-005",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "16:01",
+              "closedAt": "2026-07-27T13:01:03.537Z"
+            },
+            {
+              "id": "T1-008",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "16:01",
+              "closedAt": "2026-07-27T13:01:03.557Z"
+            },
+            {
+              "id": "T1-012",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "16:01",
+              "closedAt": "2026-07-27T13:01:03.580Z"
+            },
+            {
+              "id": "T1-022",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "23:38",
+              "closedAt": "2026-07-27T20:38:15.626Z"
+            },
+            {
+              "id": "T1-027",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "23:38",
+              "closedAt": "2026-07-27T20:38:16.117Z"
+            },
+            {
+              "id": "T1-028",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "23:38",
+              "closedAt": "2026-07-27T20:38:16.696Z"
+            },
+            {
+              "id": "T1-072",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "00:03",
+              "closedAt": "2026-07-27T21:03:22.661Z"
+            },
+            {
+              "id": "T1-073",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 9000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 3,
+                  "price": 3000
+                }
+              ],
+              "time": "00:19",
+              "closedAt": "2026-07-27T21:19:40.846Z"
+            },
+            {
+              "id": "T1-074",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 12000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 2,
+                  "price": 5000
+                },
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "00:29",
+              "closedAt": "2026-07-27T21:29:28.275Z"
+            },
+            {
+              "id": "T1-076",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 12000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 2,
+                  "price": 5000
+                },
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "00:36",
+              "closedAt": "2026-07-27T21:36:17.054Z"
+            }
+          ]
+        },
+        "28": {
+          "totalProfit": 20000,
+          "totalOrders": 2,
+          "topProduct": "موهيتو",
+          "topProductCount": 2,
+          "orders": [
+            {
+              "id": "K-001",
+              "table": "TAKEAWAY",
+              "orderType": "TAKEAWAY",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "23:53",
+              "closedAt": "2026-07-28T20:53:22.805Z"
+            },
+            {
+              "id": "D-002",
+              "table": "DELIVERY",
+              "orderType": "DELIVERY",
+              "total": 17000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                },
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                },
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                },
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "23:56",
+              "closedAt": "2026-07-28T20:56:09.153Z"
+            }
+          ]
+        },
+        "29": {
+          "totalProfit": 37000,
+          "totalOrders": 5,
+          "topProduct": "امريكانو",
+          "topProductCount": 4,
+          "orders": [
+            {
+              "id": "T1-002",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "03:05",
+              "closedAt": "2026-07-29T00:05:51.170Z"
+            },
+            {
+              "id": "T1-004",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "03:10",
+              "closedAt": "2026-07-29T00:10:32.336Z"
+            },
+            {
+              "id": "T1-017",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "03:33",
+              "closedAt": "2026-07-29T00:33:33.313Z"
+            },
+            {
+              "id": "T1-019",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "03:33",
+              "closedAt": "2026-07-29T00:33:33.348Z"
+            },
+            {
+              "id": "T1-027",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "03:39",
+              "closedAt": "2026-07-29T00:39:47.695Z"
+            }
+          ]
+        },
+        "30": {
+          "totalProfit": 31000,
+          "totalOrders": 5,
+          "topProduct": "موهيتو بليمون ونعناع",
+          "topProductCount": 2,
+          "orders": [
+            {
+              "id": "T1-072",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 13000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                },
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "01:47",
+              "closedAt": "2026-07-29T22:47:40.471Z"
+            },
+            {
+              "id": "T1-073",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                },
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "01:47",
+              "closedAt": "2026-07-29T22:47:40.507Z"
+            },
+            {
+              "id": "T1-001",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "موهيتو بليمون ونعناع",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "17:06",
+              "closedAt": "2026-07-30T14:06:50.557Z"
+            },
+            {
+              "id": "T1-002",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 4000,
+              "items": [
+                {
+                  "name": "عصير ليمون",
+                  "qty": 1,
+                  "price": 4000
+                }
+              ],
+              "time": "17:06",
+              "closedAt": "2026-07-30T14:06:50.875Z"
+            },
+            {
+              "id": "T1-003",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "موهيتو بليمون ونعناع",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "17:06",
+              "closedAt": "2026-07-30T14:06:50.910Z"
+            }
+          ]
+        },
         "03": {
-          "totalProfit": 1443000,
-          "totalOrders": 71,
+          "totalProfit": 1797000,
+          "totalOrders": 103,
           "topProduct": "لاتي",
-          "topProductCount": 64,
+          "topProductCount": 75,
           "orders": [
             {
               "id": "T10-001",
@@ -18582,6 +19886,511 @@
               ],
               "time": "12:37",
               "closedAt": "2026-07-08T09:37:39.208Z"
+            },
+            {
+              "id": "T1-[object Promise]",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "04:22",
+              "closedAt": "2026-07-09T01:22:20.118+00:00"
+            },
+            {
+              "id": "T1-[object Promise]1",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "20:31",
+              "closedAt": "2026-07-10T17:31:47.312Z"
+            },
+            {
+              "id": "T1-[object Promise]11",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "20:31",
+              "closedAt": "2026-07-10T17:31:48.567Z"
+            },
+            {
+              "id": "T1-072",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 50000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 2,
+                  "price": 5000
+                },
+                {
+                  "name": "لاتي",
+                  "qty": 2,
+                  "price": 20000
+                }
+              ],
+              "time": "16:41",
+              "closedAt": "2026-07-18T13:41:14.554Z"
+            },
+            {
+              "id": "T1-073",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "17:10",
+              "closedAt": "2026-07-18T14:10:38.024Z"
+            },
+            {
+              "id": "T1-074",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو بليمون ونعناع",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "17:10",
+              "closedAt": "2026-07-18T14:10:39.875Z"
+            },
+            {
+              "id": "K-076",
+              "table": "TAKEAWAY",
+              "orderType": "TAKEAWAY",
+              "total": 8000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "17:14",
+              "closedAt": "2026-07-18T14:14:52.880Z"
+            },
+            {
+              "id": "D-077",
+              "table": "DELIVERY",
+              "orderType": "DELIVERY",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "17:15",
+              "closedAt": "2026-07-18T14:15:01.450Z"
+            },
+            {
+              "id": "T2-080",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "14:52",
+              "closedAt": "2026-07-19T11:52:34.776Z"
+            },
+            {
+              "id": "T2-082",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "14:52",
+              "closedAt": "2026-07-19T11:52:36.499Z"
+            },
+            {
+              "id": "T1-075",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "14:53",
+              "closedAt": "2026-07-19T11:53:07.538Z"
+            },
+            {
+              "id": "T2-083",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "15:25",
+              "closedAt": "2026-07-19T12:25:35.158+00:00"
+            },
+            {
+              "id": "T2-081",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "14:49",
+              "closedAt": "2026-07-19T11:49:58.602+00:00"
+            },
+            {
+              "id": "T2-085",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "15:26",
+              "closedAt": "2026-07-19T12:26:38.077+00:00"
+            },
+            {
+              "id": "T2-087",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "15:51",
+              "closedAt": "2026-07-19T12:51:50.604+00:00"
+            },
+            {
+              "id": "T2-084",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "14:28",
+              "closedAt": "2026-07-20T11:28:47.914Z"
+            },
+            {
+              "id": "T2-086",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 20000,
+              "items": [
+                {
+                  "name": "لاتي",
+                  "qty": 1,
+                  "price": 20000
+                }
+              ],
+              "time": "14:28",
+              "closedAt": "2026-07-20T11:28:49.861Z"
+            },
+            {
+              "id": "T2-089",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو بليمون ونعناع",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "14:28",
+              "closedAt": "2026-07-20T11:28:51.605Z"
+            },
+            {
+              "id": "T2-088",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 6000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 2,
+                  "price": 2000
+                },
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "14:18",
+              "closedAt": "2026-07-20T11:18:52.918+00:00"
+            },
+            {
+              "id": "T1-090",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 14000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 2,
+                  "price": 5000
+                },
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                },
+                {
+                  "name": "موهيتو بلو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "14:28",
+              "closedAt": "2026-07-22T11:28:10.448Z"
+            },
+            {
+              "id": "T1-091",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "14:28",
+              "closedAt": "2026-07-22T11:28:12.255Z"
+            },
+            {
+              "id": "T1-092",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "14:28",
+              "closedAt": "2026-07-22T11:28:14.378Z"
+            },
+            {
+              "id": "T1-093",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 24000,
+              "items": [
+                {
+                  "name": "امريكانو",
+                  "qty": 3,
+                  "price": 8000
+                }
+              ],
+              "time": "15:51",
+              "closedAt": "2026-07-22T12:51:10.867Z"
+            },
+            {
+              "id": "T1-094",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 10000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 2,
+                  "price": 5000
+                }
+              ],
+              "time": "15:51",
+              "closedAt": "2026-07-22T12:51:15.553Z"
+            },
+            {
+              "id": "T1-095",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 11000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                },
+                {
+                  "name": "امريكانو",
+                  "qty": 1,
+                  "price": 8000
+                }
+              ],
+              "time": "15:51",
+              "closedAt": "2026-07-22T12:51:19.617Z"
+            },
+            {
+              "id": "T1-096",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "15:51",
+              "closedAt": "2026-07-22T12:51:22.012Z"
+            },
+            {
+              "id": "T1-097",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "15:51",
+              "closedAt": "2026-07-22T12:51:23.961Z"
+            },
+            {
+              "id": "T2-078",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 2000,
+              "items": [
+                {
+                  "name": "موهيتو",
+                  "qty": 1,
+                  "price": 2000
+                }
+              ],
+              "time": "12:15",
+              "closedAt": "2026-07-23T09:15:17.585+00:00"
+            },
+            {
+              "id": "T2-076",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "12:15",
+              "closedAt": "2026-07-23T09:15:17.585+00:00"
+            },
+            {
+              "id": "T1-077",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "12:15",
+              "closedAt": "2026-07-23T09:15:17.585+00:00"
+            },
+            {
+              "id": "T2-075",
+              "table": "2",
+              "orderType": "DINE_IN",
+              "total": 3000,
+              "items": [
+                {
+                  "name": "كوماند لاتي",
+                  "qty": 1,
+                  "price": 3000
+                }
+              ],
+              "time": "12:15",
+              "closedAt": "2026-07-23T09:15:17.585+00:00"
+            },
+            {
+              "id": "T1-078",
+              "table": "1",
+              "orderType": "DINE_IN",
+              "total": 5000,
+              "items": [
+                {
+                  "name": "اسبيرسو",
+                  "qty": 1,
+                  "price": 5000
+                }
+              ],
+              "time": "12:15",
+              "closedAt": "2026-07-23T09:15:17.585+00:00"
             }
           ]
         }

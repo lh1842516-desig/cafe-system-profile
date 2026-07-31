@@ -1,19 +1,399 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#F5F0EB" />
-    <title>منيو الزبائن</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#FAFAF8">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="اطلب طعامك بسهولة من طاولتك">
+  <title>اطلب الآن</title>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="css/customer.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       Toast Container
+  ══════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- ══════════════════════════════════════════
+       Screen 1 — الترحيب
+  ══════════════════════════════════════════ -->
+  <div class="screen" id="screenWelcome" role="main" aria-label="صفحة الترحيب">
+
+    <!-- حالة الخطأ: QR غير صالح -->
+    <div class="welcome-error" id="welcomeError" hidden>
+      <div class="welcome-error-icon">⚠️</div>
+      <p class="welcome-error-title">رمز QR غير صالح</p>
+      <p class="welcome-error-msg">يرجى مسح رمز QR الموجود على طاولتك مجدداً.</p>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div id="welcomeContent">
+      <div class="welcome-logo-wrap" id="welcomeLogoWrap">
+        <div class="welcome-logo-placeholder" id="welcomeLogoPlaceholder">☕</div>
+      </div>
+
+      <h1 class="welcome-cafe-name" id="welcomeCafeName">يتم التحميل...</h1>
+
+      <div class="welcome-table-badge" id="welcomeTableBadge" aria-label="رقم الطاولة">
+        🪑 <span id="welcomeTableLabel">—</span>
+      </div>
+
+      <p class="welcome-tagline">امسح، اطلب، واستمتع بتجربة طعام مميزة</p>
+
+      <button
+        type="button"
+        class="btn-welcome-start"
+        id="btnStartOrdering"
+        disabled
+        aria-label="ابدأ الطلب"
+      >
+        <span id="btnStartOrderingLabel">جارٍ التحميل...</span>
+        <span class="spinner dark" id="btnStartOrderingSpinner" aria-hidden="true"></span>
+      </button>
+
+      <p class="welcome-footer">نظام الطلب الذاتي</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Screen 2 — المنيو
+  ══════════════════════════════════════════ -->
+  <div class="screen" id="screenMenu" hidden role="main" aria-label="قائمة الطعام">
+
+    <!-- الهيدر -->
+    <header class="menu-header" id="menuHeader">
+      <div class="menu-header-logo-placeholder" id="menuLogoEl">☕</div>
+      <div class="menu-header-info">
+        <div class="menu-header-cafe-name" id="menuCafeName">الكافيه</div>
+        <div class="menu-header-table" id="menuTableLabel">طاولة —</div>
+      </div>
+      <div class="menu-header-actions">
+        <button
+          type="button"
+          class="btn-hamburger"
+          id="btnOpenDrawer"
+          aria-label="فتح القائمة الجانبية"
+        >☰</button>
+      </div>
+    </header>
+
+    <!-- تبويبات التصنيف -->
+    <nav class="menu-categories" id="menuCategories" aria-label="تصنيفات المنيو"></nav>
+
+    <!-- بطاقة حالة الطلب الحالي (تظهر عند وجود طلب) -->
+    <div
+      class="order-status-card"
+      id="orderStatusCard"
+      role="button"
+      tabindex="0"
+      aria-label="حالة طلبك الحالي — انقر للتتبع"
+      hidden
+    >
+      <div class="order-status-card-icon">📦</div>
+      <div class="order-status-card-info">
+        <div class="order-status-card-title" id="orderStatusCardOrderId">طلبك الحالي</div>
+        <div class="order-status-card-label" id="orderStatusCardLabel">جارٍ التحقق...</div>
+      </div>
+      <div class="order-status-badge" id="orderStatusCardBadge"></div>
+    </div>
+
+    <!-- شبكة المنتجات -->
+    <div class="menu-products-wrap">
+      <div class="menu-products-grid" id="menuProductsGrid" aria-label="منتجات المنيو"></div>
+      <div class="menu-empty" id="menuEmpty" hidden>
+        <div class="menu-empty-icon">🍽️</div>
+        <p class="menu-empty-text">لا توجد منتجات في هذا التصنيف</p>
+      </div>
+    </div>
+
+    <!-- Floating Action Button (FAB) — السلة (تظهر في المنيو فقط) -->
+    <button
+      type="button"
+      class="cart-fab"
+      id="btnOpenCart"
+      aria-label="عرض السلة"
+    >
+      <span class="cart-fab-icon">🛒</span>
+      <span class="cart-fab-badge" id="cartFabBadge" hidden>0</span>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Screen 3 — تتبع الطلب
+  ══════════════════════════════════════════ -->
+  <div class="screen" id="screenTracker" hidden role="main" aria-label="تتبع الطلب">
+
+    <header class="tracker-header">
+      <button
+        type="button"
+        class="btn-back-to-menu"
+        id="btnBackToMenu"
+        aria-label="العودة إلى القائمة"
+      >←</button>
+      <div class="tracker-header-info">
+        <div class="tracker-cafe-name" id="trackerCafeName">الكافيه</div>
+        <div class="tracker-table-label" id="trackerTableLabel">طاولة —</div>
+      </div>
+    </header>
+
+    <div class="tracker-body">
+
+      <!-- تحية الزبون -->
+      <div class="tracker-greeting">
+        <div class="tracker-greeting-name" id="trackerGreeting">مرحباً 👋</div>
+        <div class="tracker-order-id" id="trackerOrderId">رقم الطلب: —</div>
+      </div>
+
+      <!-- الخط الزمني للحالة -->
+      <div class="tracker-timeline" id="trackerTimeline" aria-live="polite" aria-label="حالة الطلب">
+        <div class="tracker-timeline-title">حالة طلبك</div>
+        <!-- يتم توليد الخطوات ديناميكياً -->
+      </div>
+
+      <!-- ملخص الأصناف -->
+      <div class="tracker-items-card" id="trackerItemsCard">
+        <div class="tracker-items-title">طلبك</div>
+        <div id="trackerItemsList"></div>
+      </div>
+
+      <!-- الأزرار -->
+      <div class="tracker-actions">
+        <button
+          type="button"
+          class="btn-action-secondary btn-edit-order"
+          id="btnEditOrder"
+          aria-label="تعديل الطلب"
+          hidden
+        >
+          ✏️ تعديل الطلب
+        </button>
+        <button
+          type="button"
+          class="btn-action-danger btn-cancel-order"
+          id="btnCancelOrder"
+          aria-label="إلغاء الطلب"
+          hidden
+        >
+          ❌ إلغاء الطلب
+        </button>
+        <button
+          type="button"
+          class="btn-order-more"
+          id="btnOrderMore"
+          aria-label="طلب المزيد من القائمة"
+        >
+          ➕ طلب المزيد
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Bottom Sheet — تفاصيل المنتج
+  ══════════════════════════════════════════ -->
+  <div class="sheet-overlay" id="productSheetOverlay" aria-modal="true" role="dialog" aria-label="تفاصيل المنتج">
+    <div class="sheet" id="productSheet">
+      <div class="sheet-handle" aria-hidden="true"></div>
+
+      <div id="productSheetImgWrap"></div>
+
+      <div class="product-sheet-body">
+        <h2 class="product-sheet-name" id="productSheetName"></h2>
+        <div class="product-sheet-price" id="productSheetPrice"></div>
+        <p class="product-sheet-desc" id="productSheetDesc"></p>
+
+        <!-- خيارات المنتج (تتولد ديناميكياً) -->
+        <div id="productSheetOptions"></div>
+
+        <!-- ملاحظات -->
+        <label class="sheet-notes-label" for="productNote">ملاحظات (اختياري)</label>
+        <textarea
+          class="sheet-notes-input"
+          id="productNote"
+          placeholder="أي طلب خاص؟"
+          maxlength="200"
+          rows="2"
+        ></textarea>
+
+        <!-- الكمية -->
+        <div class="qty-row">
+          <span class="qty-label">الكمية</span>
+          <div class="qty-stepper" role="group" aria-label="اختيار الكمية">
+            <button type="button" class="qty-btn" id="qtyMinus" aria-label="تقليل الكمية">−</button>
+            <span class="qty-val" id="qtyVal" aria-live="polite">1</span>
+            <button type="button" class="qty-btn" id="qtyPlus" aria-label="زيادة الكمية">+</button>
+          </div>
+        </div>
+
+        <!-- زر الإضافة -->
+        <button type="button" class="btn-add-to-cart" id="btnAddToCart" aria-label="إضافة إلى السلة">
+          إضافة إلى السلة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Bottom Sheet — السلة
+  ══════════════════════════════════════════ -->
+  <div class="sheet-overlay" id="cartSheetOverlay" aria-modal="true" role="dialog" aria-label="سلة الطلب">
+    <div class="sheet" id="cartSheet">
+      <div class="sheet-handle" aria-hidden="true"></div>
+
+      <div class="cart-sheet-header">
+        <div class="cart-sheet-title">
+          🛒 سلتك
+          <span class="cart-table-badge" id="cartSheetTableBadge"></span>
+        </div>
+        <button type="button" id="btnCloseCart" aria-label="إغلاق السلة" style="color: var(--text-muted); font-size: 1.1rem; padding: 0.25rem 0.5rem;">✕</button>
+      </div>
+
+      <div class="cart-items-list" id="cartItemsList" aria-label="أصناف في السلة"></div>
+
+      <div class="cart-sheet-footer">
+        <div class="cart-total-row">
+          <span class="cart-total-label">المجموع</span>
+          <span class="cart-total-value" id="cartSheetTotal">0 IQD</span>
+        </div>
+        <button type="button" class="btn-send-order" id="btnSendOrder" aria-label="إرسال الطلب">
+          إرسال الطلب 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Modal — إدخال اسم الزبون
+  ══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="nameModalOverlay" aria-modal="true" role="dialog" aria-labelledby="nameModalTitle">
+    <div class="modal-card">
+      <div class="modal-icon">👤</div>
+      <h2 class="modal-title" id="nameModalTitle">ما اسمك؟</h2>
+      <p class="modal-subtitle">حتى نتمكن من مناداتك عند جهوز طلبك</p>
+      <input
+        type="text"
+        class="modal-input"
+        id="customerNameInput"
+        placeholder="أدخل اسمك"
+        maxlength="30"
+        autocomplete="name"
+        aria-label="اسم الزبون"
+      >
+      <div class="modal-actions">
+        <button type="button" class="btn-confirm-order" id="btnConfirmOrder" aria-label="تأكيد الطلب">
+          تأكيد الطلب ✓
+        </button>
+        <button type="button" class="btn-cancel-modal" id="btnCancelName" aria-label="إلغاء">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Modal — تأكيد طلب الفاتورة
+  ══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="billConfirmModal" aria-modal="true" role="dialog" aria-labelledby="billModalTitle">
+    <div class="modal-card">
+      <div class="modal-icon">🧾</div>
+      <h2 class="modal-title" id="billModalTitle">طلب الفاتورة؟</h2>
+      <p class="modal-subtitle">سيصل النادل إليك بالفاتورة قريباً</p>
+      <div class="modal-actions">
+        <button type="button" class="btn-confirm-order" id="btnBillConfirm" aria-label="تأكيد طلب الفاتورة">
+          نعم، أريد الفاتورة
+        </button>
+        <button type="button" class="btn-cancel-modal" id="btnBillCancel" aria-label="إلغاء">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Modal — تأكيد إلغاء الطلب
+  ══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="cancelConfirmModal" aria-modal="true" role="dialog" aria-labelledby="cancelModalTitle">
+    <div class="modal-card">
+      <div class="modal-icon">⚠️</div>
+      <h2 class="modal-title" id="cancelModalTitle">إلغاء الطلب</h2>
+      <p class="modal-subtitle">هل أنت متأكد من إلغاء هذا الطلب؟</p>
+      <div class="modal-actions">
+        <button type="button" class="btn-confirm-cancel-order" id="btnConfirmCancelOrder" aria-label="نعم، إلغاء الطلب">
+          نعم، إلغاء الطلب
+        </button>
+        <button type="button" class="btn-cancel-modal" id="btnCancelModalClose" aria-label="إلغاء العملية">
+          إلغاء العملية
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Bottom Sheet — سجل طلباتي
+  ══════════════════════════════════════════ -->
+  <div class="sheet-overlay" id="historySheetOverlay" aria-modal="true" role="dialog" aria-label="سجل طلباتي">
+    <div class="sheet" id="historySheet">
+      <div class="sheet-handle" aria-hidden="true"></div>
+
+      <div class="history-sheet-header">
+        <div class="history-sheet-title">
+          📋 سجل طلباتي
+          <span class="history-table-badge" id="historySheetTableBadge"></span>
+        </div>
+        <button type="button" id="btnCloseHistory" aria-label="إغلاق السجل" style="color: var(--text-muted); font-size: 1.1rem; padding: 0.25rem 0.5rem; border: none; background: transparent; cursor: pointer;">✕</button>
+      </div>
+
+      <div class="history-sheet-body" id="historySheetBody">
+        <!-- يتم توليد كروت الطلبات ديناميكياً -->
+      </div>
+
+      <div class="history-sheet-footer" id="historySheetFooter">
+        <div class="history-grand-total-row">
+          <span class="history-grand-total-label">إجمالي جميع الطلبات</span>
+          <span class="history-grand-total-value" id="historyGrandTotal">0 IQD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       Navigation Drawer (القائمة الجانبية)
+  ══════════════════════════════════════════ -->
+  <div class="drawer-overlay" id="drawerOverlay" aria-modal="true" role="dialog" aria-label="القائمة الجانبية">
+    <div class="drawer" id="drawer">
+      <div class="drawer-header">
+        <div class="drawer-title">القائمة</div>
+        <button type="button" class="btn-drawer-close" id="btnCloseDrawer" aria-label="إغلاق القائمة">✕</button>
+      </div>
+      <div class="drawer-nav">
+        <button type="button" class="drawer-item" id="btnDrawerHistory">
+          <span class="drawer-item-icon">📋</span>
+          <span class="drawer-item-label">سجل طلباتي</span>
+        </button>
+        <button type="button" class="drawer-item" id="btnDrawerOrderStatus">
+          <span class="drawer-item-icon">📦</span>
+          <span class="drawer-item-label">حالة الطلب</span>
+        </button>
+        <button type="button" class="drawer-item" id="btnDrawerCallCaptain">
+          <span class="drawer-item-icon">👨‍🍳</span>
+          <span class="drawer-item-label">طلب كابتن</span>
+        </button>
+        <button type="button" class="drawer-item" id="btnDrawerRequestBill">
+          <span class="drawer-item-icon">🧾</span>
+          <span class="drawer-item-label">طلب الحساب</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/customer.js?v=20260727_v6"></script>
+</body>
 </html>

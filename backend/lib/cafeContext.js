@@ -7,12 +7,65 @@
  *   2. If none exists, create one seeded from cafe-settings.json.
  *   3. Cache the UUID for the rest of the process lifetime.
  */
+require('./env');
 const fs = require('fs');
 const path = require('path');
 
 let _defaultCafeId = null;
 
+async function autoMigrateDatabase() {
+  const dbUrl = (process.env.SUPABASE_DB_URL || '').trim();
+  if (!dbUrl) {
+    console.log('  [cafeContext] No SUPABASE_DB_URL found, skipping auto-migration.');
+    return;
+  }
+  
+  const { Client } = require('pg');
+  const client = new Client({
+    connectionString: dbUrl,
+    ssl: { rejectUnauthorized: false }
+  });
+  
+  try {
+    console.log('  [cafeContext] Connecting to database to verify tables/columns...');
+    await client.connect();
+    
+    // Create users table if missing
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id            UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+        cafe_id       UUID        REFERENCES cafes(id) ON DELETE CASCADE,
+        full_name     TEXT        NOT NULL,
+        email         TEXT        UNIQUE NOT NULL,
+        password_hash TEXT        NOT NULL,
+        role          TEXT        NOT NULL,
+        status        TEXT        NOT NULL DEFAULT 'active',
+        created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+      CREATE INDEX IF NOT EXISTS users_cafe_id_idx ON users(cafe_id);
+    `);
+    
+    // Add columns to cafes table
+    await client.query(`
+      ALTER TABLE cafes ADD COLUMN IF NOT EXISTS address TEXT;
+      ALTER TABLE cafes ADD COLUMN IF NOT EXISTS phone TEXT;
+      ALTER TABLE cafes ADD COLUMN IF NOT EXISTS subscription_status TEXT NOT NULL DEFAULT 'active';
+    `);
+    
+    console.log('  [cafeContext] Database schema check & auto-migration succeeded.');
+  } catch (err) {
+    console.error('  [cafeContext] Database auto-migration error:', err.message);
+  } finally {
+    try {
+      await client.end();
+    } catch (_) {}
+  }
+}
+
 async function initCafeContext() {
+  await autoMigrateDatabase();
+
   const { getClient } = require('./supabase');
   const supabase = getClient();
 

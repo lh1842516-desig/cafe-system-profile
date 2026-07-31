@@ -9,13 +9,23 @@ const path = require('path');
 const { DATA_DIR } = require('../config');
 const { getClient } = require('../lib/supabase');
 
-// ── In-memory cache ────────────────────────────────────────────────────────
+// ── In-memory cache (per-cafe multi-tenant isolated map) ─────────────────
 let _cafeId = null;
-let _menu = [];
-let _orders = [];
-let _tables = [];
-let _closings = [];
-let _sequences = {}; // { [openDate]: lastSeq }
+const _storesByCafe = {};
+
+function getCafeStore(cafeId) {
+  const cid = String(cafeId || _cafeId || 'default').trim();
+  if (!_storesByCafe[cid]) {
+    _storesByCafe[cid] = {
+      menu: [],
+      orders: [],
+      tables: [],
+      closings: [],
+      sequences: {},
+    };
+  }
+  return _storesByCafe[cid];
+}
 
 // ── Legacy JSON helpers (kept for archive.js, todaySessionHistory.js, etc.) ─
 function ensureDir(dir) {
@@ -63,6 +73,8 @@ function menuItemToDb(item) {
 function orderFromDb(row) {
   return {
     id: row.id,
+    cafeId: row.cafe_id,
+    cafe_id: row.cafe_id,
     tableId: row.table_id,
     orderType: row.order_type,
     items: row.items || [],
@@ -287,29 +299,32 @@ async function migrateFromJsonIfNeeded() {
 // ── Load from Supabase into cache ──────────────────────────────────────────
 async function loadFromSupabase() {
   const supabase = getClient();
+  const cid = _cafeId || 'default';
+  const cafeStore = getCafeStore(cid);
+
   const [menuRes, ordersRes, tablesRes, closingsRes, seqRes] = await Promise.all([
-    supabase.from('menu_items').select('*').eq('cafe_id', _cafeId).order('sort_order').order('created_at'),
-    supabase.from('orders').select('*').eq('cafe_id', _cafeId),
-    supabase.from('cafe_tables').select('*').eq('cafe_id', _cafeId),
-    supabase.from('closings').select('*').eq('cafe_id', _cafeId).order('created_at'),
-    supabase.from('order_sequences').select('*').eq('cafe_id', _cafeId),
+    supabase.from('menu_items').select('*').eq('cafe_id', cid).order('sort_order').order('created_at'),
+    supabase.from('orders').select('*').eq('cafe_id', cid),
+    supabase.from('cafe_tables').select('*').eq('cafe_id', cid),
+    supabase.from('closings').select('*').eq('cafe_id', cid).order('created_at'),
+    supabase.from('order_sequences').select('*').eq('cafe_id', cid),
   ]);
 
-  _menu = (menuRes.data || []).map(menuItemFromDb);
-  _orders = (ordersRes.data || []).map(orderFromDb);
-  _tables = (tablesRes.data || []).map(tableFromDb);
-  _closings = (closingsRes.data || []).map(closingFromDb);
-  _sequences = {};
-  (seqRes.data || []).forEach(row => { _sequences[row.open_date] = row.last_sequence; });
+  cafeStore.menu = (menuRes.data || []).map(menuItemFromDb);
+  cafeStore.orders = (ordersRes.data || []).map(orderFromDb);
+  cafeStore.tables = (tablesRes.data || []).map(tableFromDb);
+  cafeStore.closings = (closingsRes.data || []).map(closingFromDb);
+  cafeStore.sequences = {};
+  (seqRes.data || []).forEach(row => { cafeStore.sequences[row.open_date] = row.last_sequence; });
 
   // If tables empty, create defaults
-  if (_tables.length === 0) {
+  if (cafeStore.tables.length === 0) {
     const defaults = Array.from({ length: 20 }, (_, i) => ({ id: String(i + 1), label: String(i + 1) }));
-    await supabase.from('cafe_tables').upsert(defaults.map(tableToDb), { onConflict: 'id,cafe_id' });
-    _tables = defaults;
+    await supabase.from('cafe_tables').upsert(defaults.map(t => tableToDb({ ...t, cafe_id: cid })), { onConflict: 'id,cafe_id' });
+    cafeStore.tables = defaults;
   }
 
-  console.log(`  [store] ${_menu.length} menu items, ${_orders.length} orders, ${_tables.length} tables, ${_closings.length} closings`);
+  console.log(`  [store] [${cid}] ${cafeStore.menu.length} menu items, ${cafeStore.orders.length} orders, ${cafeStore.tables.length} tables, ${cafeStore.closings.length} closings`);
 }
 
 // ── Public init ────────────────────────────────────────────────────────────
@@ -320,35 +335,50 @@ async function initStore(cafeId) {
 }
 
 // ── MENU (sync reads, async writes) ───────────────────────────────────────
-function getMenu() { return _menu; }
-
-function getMenuItem(id) {
-  if (id == null || id === '') return null;
-  const direct = _menu.find(item => item.id === id);
-  if (direct) return direct;
-  const s = String(id);
-  return _menu.find(item => String(item.id) === s) || null;
+function getMenu(cafeId) {
+  return getCafeStore(cafeId).menu;
 }
 
-async function saveMenu(menu) {
-  _menu = [...menu];
-  if (!_cafeId) return;
+/**
+ * Updates the in-memory menu cache WITHOUT writing to Supabase.
+ * Called by menuRepository after fetching fresh data from Supabase.
+ */
+function setMenuCache(menu, cafeId) {
+  const cafeStore = getCafeStore(cafeId);
+  cafeStore.menu = Array.isArray(menu) ? [...menu] : cafeStore.menu;
+}
+
+function getMenuItem(cafeId, id) {
+  if (id == null || id === '') return null;
+  const menu = getCafeStore(cafeId).menu;
+  const direct = menu.find(item => item.id === id);
+  if (direct) return direct;
+  const s = String(id);
+  return menu.find(item => String(item.id) === s) || null;
+}
+
+async function saveMenu(cafeId, menu) {
+  const targetCafeId = cafeId || _cafeId;
+  const cafeStore = getCafeStore(targetCafeId);
+  cafeStore.menu = [...menu];
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetCafeId);
+  if (!targetCafeId || !isUuid) return;
   const supabase = getClient();
   try {
     if (menu.length > 0) {
       const { error } = await supabase.from('menu_items').upsert(
-        menu.map(menuItemToDb),
+        menu.map(item => ({ ...menuItemToDb(item), cafe_id: targetCafeId })),
         { onConflict: 'id,cafe_id' }
       );
       if (error) throw error;
     }
     // Delete removed items
-    const { data: dbItems } = await supabase.from('menu_items').select('id').eq('cafe_id', _cafeId);
+    const { data: dbItems } = await supabase.from('menu_items').select('id').eq('cafe_id', targetCafeId);
     if (dbItems && dbItems.length > 0) {
       const currentIds = new Set(menu.map(i => i.id));
       const toDelete = dbItems.map(r => r.id).filter(id => !currentIds.has(id));
       if (toDelete.length > 0) {
-        await supabase.from('menu_items').delete().in('id', toDelete).eq('cafe_id', _cafeId);
+        await supabase.from('menu_items').delete().in('id', toDelete).eq('cafe_id', targetCafeId);
       }
     }
   } catch (err) {
@@ -357,40 +387,56 @@ async function saveMenu(menu) {
 }
 
 // ── ORDERS (sync reads, async writes) ────────────────────────────────────
-function getOrders() { return _orders; }
+function getOrders(cafeId) {
+  return getCafeStore(cafeId).orders;
+}
 
-function getOrdersByTable(tableId) {
+/**
+ * Updates the in-memory orders cache WITHOUT writing to Supabase.
+ * Called by orderRepository after fetching fresh data from Supabase.
+ */
+function setOrdersCache(orders, cafeId) {
+  const cafeStore = getCafeStore(cafeId);
+  if (Array.isArray(orders)) cafeStore.orders = [...orders];
+}
+
+function getOrdersByTable(cafeId, tableId) {
   const tid = String(tableId == null ? '' : tableId).trim();
-  return _orders.filter(o => String(o.tableId == null ? '' : o.tableId).trim() === tid && o.closed !== true);
+  const orders = getCafeStore(cafeId).orders;
+  return orders.filter(o => String(o.tableId == null ? '' : o.tableId).trim() === tid && o.closed !== true);
 }
 
 const { isOrderKitchenCompleted } = require('./kitchen');
-function getOrdersBlockingTableClaim(tableId) {
-  return getOrdersByTable(tableId).filter(o => !isOrderKitchenCompleted(o.id));
+function getOrdersBlockingTableClaim(cafeId, tableId) {
+  return getOrdersByTable(cafeId, tableId).filter(o => !isOrderKitchenCompleted(o.id));
 }
-function getAllOrdersForTable(tableId) {
-  return _orders.filter(o => o.tableId === tableId);
+function getAllOrdersForTable(cafeId, tableId) {
+  const orders = getCafeStore(cafeId).orders;
+  return orders.filter(o => o.tableId === tableId);
 }
 
-async function saveOrders(orders) {
-  _orders = [...orders];
-  if (!_cafeId) return;
+async function saveOrders(cafeId, orders) {
+  const targetCafeId = cafeId || _cafeId;
+  const cafeStore = getCafeStore(targetCafeId);
+  cafeStore.orders = [...orders];
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetCafeId);
+  if (!targetCafeId || !isUuid) return;
   const supabase = getClient();
   try {
     if (orders.length > 0) {
       const { error } = await supabase.from('orders').upsert(
-        orders.map(orderToDb),
+        orders.map(order => ({ ...orderToDb(order), cafe_id: targetCafeId })),
         { onConflict: 'id,cafe_id' }
       );
       if (error) throw error;
     }
     // Delete removed orders
-    const { data: dbOrders } = await supabase.from('orders').select('id').eq('cafe_id', _cafeId);
+    const { data: dbOrders } = await supabase.from('orders').select('id').eq('cafe_id', targetCafeId);
     if (dbOrders && dbOrders.length > 0) {
       const currentIds = new Set(orders.map(o => o.id));
       const toDelete = dbOrders.map(r => r.id).filter(id => !currentIds.has(id));
       if (toDelete.length > 0) {
-        await supabase.from('orders').delete().in('id', toDelete).eq('cafe_id', _cafeId);
+        await supabase.from('orders').delete().in('id', toDelete).eq('cafe_id', targetCafeId);
       }
     }
   } catch (err) {
@@ -405,39 +451,57 @@ function normalizeTableRow(t) {
   return { id, label };
 }
 
-function getTables() {
-  return _tables.map(t => normalizeTableRow(t)).filter(t => t.id);
+function getTables(cafeId) {
+  return getCafeStore(cafeId).tables.map(t => normalizeTableRow(t)).filter(t => t.id);
 }
 
-async function saveTables(tables) {
+/**
+ * Updates the in-memory tables cache WITHOUT writing to Supabase.
+ * Called by tableRepository after fetching fresh data from Supabase.
+ */
+function setTablesCache(tables, cafeId) {
+  if (Array.isArray(tables)) {
+    const cafeStore = getCafeStore(cafeId);
+    cafeStore.tables = tables.map(t => normalizeTableRow(t)).filter(t => t.id);
+  }
+}
+
+async function saveTables(cafeId, tables) {
   const list = (Array.isArray(tables) ? tables : [])
     .map(t => normalizeTableRow(t))
     .filter(t => t.id);
-  _tables = list;
-  if (!_cafeId) return;
+  const targetCafeId = cafeId || _cafeId;
+  const cafeStore = getCafeStore(targetCafeId);
+  cafeStore.tables = list;
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetCafeId);
+  if (!targetCafeId || !isUuid) return getTables(targetCafeId);
   const supabase = getClient();
   try {
     if (list.length > 0) {
-      await supabase.from('cafe_tables').upsert(list.map(tableToDb), { onConflict: 'id,cafe_id' });
+      await supabase.from('cafe_tables').upsert(
+        list.map(t => ({ ...tableToDb(t), cafe_id: targetCafeId })),
+        { onConflict: 'id,cafe_id' }
+      );
     }
     // Delete removed tables
-    const { data: dbTables } = await supabase.from('cafe_tables').select('id').eq('cafe_id', _cafeId);
+    const { data: dbTables } = await supabase.from('cafe_tables').select('id').eq('cafe_id', targetCafeId);
     if (dbTables && dbTables.length > 0) {
       const currentIds = new Set(list.map(t => t.id));
       const toDelete = dbTables.map(r => r.id).filter(id => !currentIds.has(id));
       if (toDelete.length > 0) {
-        await supabase.from('cafe_tables').delete().in('id', toDelete).eq('cafe_id', _cafeId);
+        await supabase.from('cafe_tables').delete().in('id', toDelete).eq('cafe_id', targetCafeId);
       }
     }
   } catch (err) {
     console.error('[store] saveTables error:', err.message);
   }
-  return getTables();
+  return getTables(targetCafeId);
 }
 
-function getNextTableId() {
+function getNextTableId(cafeId) {
   let maxNum = 0;
-  _tables.forEach(t => {
+  const tables = getCafeStore(cafeId).tables;
+  tables.forEach(t => {
     const n = parseInt(String(t.id || ''), 10);
     if (!Number.isNaN(n) && n > maxNum) maxNum = n;
   });
@@ -450,16 +514,19 @@ function getTodayDateStr() {
   return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 }
 
-async function getNextOrderSequence(openDate) {
+async function getNextOrderSequence(cafeId, openDate) {
   const normalized = String(openDate || '').trim() || getTodayDateStr();
-  const current = typeof _sequences[normalized] === 'number' ? _sequences[normalized] : 0;
+  const sequences = getCafeStore(cafeId).sequences;
+  const current = typeof sequences[normalized] === 'number' ? sequences[normalized] : 0;
   const next = current + 1;
-  _sequences[normalized] = next;
+  sequences[normalized] = next;
+  const targetCafeId = cafeId || _cafeId;
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetCafeId);
   // Fire-and-forget persist (sequence is low-stakes)
-  if (_cafeId) {
+  if (targetCafeId && isUuid) {
     const supabase = getClient();
     supabase.from('order_sequences').upsert(
-      [{ cafe_id: _cafeId, open_date: normalized, last_sequence: next }],
+      [{ cafe_id: targetCafeId, open_date: normalized, last_sequence: next }],
       { onConflict: 'cafe_id,open_date' }
     ).then(({ error }) => {
       if (error) console.error('[store] sequence persist error:', error.message);
@@ -468,16 +535,19 @@ async function getNextOrderSequence(openDate) {
   return next;
 }
 
-async function ensureOrderSequenceAtLeast(openDate, minSeq) {
+async function ensureOrderSequenceAtLeast(cafeId, openDate, minSeq) {
   const normalized = String(openDate || '').trim() || getTodayDateStr();
   if (typeof minSeq !== 'number' || minSeq < 1) return;
-  const cur = typeof _sequences[normalized] === 'number' ? _sequences[normalized] : 0;
+  const sequences = getCafeStore(cafeId).sequences;
+  const cur = typeof sequences[normalized] === 'number' ? sequences[normalized] : 0;
   if (minSeq > cur) {
-    _sequences[normalized] = minSeq;
-    if (_cafeId) {
+    sequences[normalized] = minSeq;
+    const targetCafeId = cafeId || _cafeId;
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetCafeId);
+    if (targetCafeId && isUuid) {
       const supabase = getClient();
       supabase.from('order_sequences').upsert(
-        [{ cafe_id: _cafeId, open_date: normalized, last_sequence: minSeq }],
+        [{ cafe_id: targetCafeId, open_date: normalized, last_sequence: minSeq }],
         { onConflict: 'cafe_id,open_date' }
       ).then(({ error }) => {
         if (error) console.error('[store] sequence ensure error:', error.message);
@@ -487,7 +557,7 @@ async function ensureOrderSequenceAtLeast(openDate, minSeq) {
 }
 
 // ── ORDER DISPLAY ID ────────────────────────────────────────────────────────
-function getOrderDisplayId(id) {
+function getOrderDisplayId(cafeId, id) {
   if (id == null || typeof id !== 'string') return '—';
   const s = id.trim();
   if (/^T\d+-\d{1,}$/.test(s)) return s;
@@ -497,17 +567,21 @@ function getOrderDisplayId(id) {
 }
 
 // ── DATE HELPERS ───────────────────────────────────────────────────────────
-function isToday(dateStr) {
+function isToday(cafeId, dateStr) {
   if (!dateStr) return false;
   const d = new Date(dateStr);
   const now = new Date();
   return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
 }
-function getOrdersClosedToday() { return _orders.filter(o => o.closed && isToday(o.closedAt)); }
-function getOrdersClosedByOpenDate(openDate) {
+function getOrdersClosedToday(cafeId) {
+  const orders = getCafeStore(cafeId).orders;
+  return orders.filter(o => o.closed && isToday(cafeId, o.closedAt));
+}
+function getOrdersClosedByOpenDate(cafeId, openDate) {
   const want = String(openDate || '').trim();
   if (!want) return [];
-  return _orders.filter(o => {
+  const orders = getCafeStore(cafeId).orders;
+  return orders.filter(o => {
     if (!o || o.closed !== true) return false;
     if (o.open_date) return String(o.open_date).trim() === want;
     if (!o.closedAt) return false;
@@ -518,13 +592,21 @@ function getOrdersClosedByOpenDate(openDate) {
 }
 
 // ── CLOSINGS (sync reads, async writes) ───────────────────────────────────
-function getClosings() { return _closings; }
-
-async function saveClosings(closings) {
-  _closings = [...closings];
+function getClosings(cafeId) {
+  return getCafeStore(cafeId).closings;
 }
 
-function getClosingOpenDate(c) {
+function setClosingsCache(closings, cafeId) {
+  if (Array.isArray(closings)) {
+    getCafeStore(cafeId).closings = [...closings];
+  }
+}
+
+async function saveClosings(cafeId, closings) {
+  getCafeStore(cafeId).closings = [...closings];
+}
+
+function getClosingOpenDate(cafeId, c) {
   if (!c) return null;
   if (c.open_date) return String(c.open_date).trim();
   if (c.date) return String(c.date).trim();
@@ -537,26 +619,29 @@ function getClosingOpenDate(c) {
   return null;
 }
 
-function getClosingsByOpenDate(dateStr) {
+function getClosingsByOpenDate(cafeId, dateStr) {
   const normalized = String(dateStr || '').trim();
   if (!normalized) return [];
-  return _closings.filter(c => getClosingOpenDate(c) === normalized);
+  const closings = getCafeStore(cafeId).closings;
+  return closings.filter(c => getClosingOpenDate(cafeId, c) === normalized);
 }
 
-function getClosingsByOpenDateRange(startStr, endStr) {
+function getClosingsByOpenDateRange(cafeId, startStr, endStr) {
   const start = String(startStr || '').trim();
   const end = String(endStr || '').trim();
   if (!start || !end) return [];
-  return _closings.filter(c => {
-    const openDate = getClosingOpenDate(c);
+  const closings = getCafeStore(cafeId).closings;
+  return closings.filter(c => {
+    const openDate = getClosingOpenDate(cafeId, c);
     if (!openDate) return false;
     return openDate >= start && openDate <= end;
   });
 }
 
-function getLastClosing() {
-  if (_closings.length === 0) return null;
-  const c = _closings[_closings.length - 1];
+function getLastClosing(cafeId) {
+  const closings = getCafeStore(cafeId).closings;
+  if (closings.length === 0) return null;
+  const c = closings[closings.length - 1];
   const base = {
     date: String(c.date || ''),
     time: String(c.time || ''),
@@ -580,11 +665,12 @@ function getLastClosing() {
   return base;
 }
 
-function hasClosingForDate(dateStr) {
-  return _closings.some(c => String(c.date) === String(dateStr));
+function hasClosingForDate(cafeId, dateStr) {
+  const closings = getCafeStore(cafeId).closings;
+  return closings.some(c => String(c.date) === String(dateStr));
 }
 
-async function addClosing(obj) {
+async function addClosing(cafeId, obj) {
   const record = {
     date: String(obj.date || ''),
     time: String(obj.time || ''),
@@ -595,8 +681,9 @@ async function addClosing(obj) {
     orderCount: Number(obj.orderCount) || 0,
     status: 'closed',
   };
-  _closings.push(record);
-  if (_cafeId) {
+  const targetCafeId = cafeId || _cafeId;
+  getCafeStore(targetCafeId).closings.push(record);
+  if (targetCafeId) {
     const supabase = getClient();
     try {
       await supabase.from('closings').insert([closingToDb(record)]);
@@ -607,7 +694,7 @@ async function addClosing(obj) {
   return record;
 }
 
-async function addTillClosing(till, salesCash, salesCard) {
+async function addTillClosing(cafeId, till, salesCash, salesCard) {
   const totalSales = (Number(salesCash) || 0) + (Number(salesCard) || 0);
   const expensesList = Array.isArray(till.expenses) ? till.expenses : [];
   const withdrawalsList = Array.isArray(till.withdrawals) ? till.withdrawals : [];
@@ -643,11 +730,12 @@ async function addTillClosing(till, salesCash, salesCard) {
     status: till.status || 'closed',
     orderCount: 0,
   };
-  _closings.push(record);
-  if (_cafeId) {
+  const targetCafeId = cafeId || _cafeId;
+  getCafeStore(targetCafeId).closings.push(record);
+  if (targetCafeId) {
     const supabase = getClient();
     try {
-      await supabase.from('closings').insert([closingToDb(record)]);
+      await supabase.from('closings').insert([{ ...closingToDb(record), cafe_id: targetCafeId }]);
     } catch (err) {
       console.error('[store] addTillClosing error:', err.message);
     }
@@ -655,16 +743,18 @@ async function addTillClosing(till, salesCash, salesCard) {
   return record;
 }
 
-async function clearClosedOrdersForDate(dateStr) {
+async function clearClosedOrdersForDate(cafeId, dateStr) {
   if (!dateStr) return;
+  const targetCafeId = cafeId || _cafeId;
+  const orders = getCafeStore(targetCafeId).orders;
   const normalized = String(dateStr).trim();
-  const filtered = _orders.filter(o => {
+  const filtered = orders.filter(o => {
     if (!o.closed || !o.closedAt) return true;
     const d = new Date(o.closedAt);
     const ds = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
     return ds !== normalized;
   });
-  if (filtered.length !== _orders.length) await saveOrders(filtered);
+  if (filtered.length !== orders.length) await saveOrders(targetCafeId, filtered);
 }
 
 function orderBelongsToTillSession(o, sessionOpenedAt, closedAtIso) {
@@ -677,12 +767,14 @@ function orderBelongsToTillSession(o, sessionOpenedAt, closedAtIso) {
   return created >= opened && created <= closed;
 }
 
-async function purgeOrdersForTillSession(closedTill) {
+async function purgeOrdersForTillSession(cafeId, closedTill) {
   if (!closedTill || !closedTill.openedAt) return;
+  const targetCafeId = cafeId || _cafeId;
+  const orders = getCafeStore(targetCafeId).orders;
   const { addOrderToArchive } = require('./archive');
   const sessionOpenedAt = closedTill.openedAt;
   const closedAtIso = closedTill.closedAt || new Date().toISOString();
-  const filtered = _orders.filter(o => {
+  const filtered = orders.filter(o => {
     if (o.closed !== true) {
       const snap = Object.assign({}, o, { closed: true, closedAt: closedAtIso, paymentMethod: o.paymentMethod || 'cash' });
       addOrderToArchive(snap); // sync JSON call
@@ -691,16 +783,16 @@ async function purgeOrdersForTillSession(closedTill) {
     if (orderBelongsToTillSession(o, sessionOpenedAt, closedAtIso)) return false;
     return true;
   });
-  if (filtered.length !== _orders.length) await saveOrders(filtered);
+  if (filtered.length !== orders.length) await saveOrders(targetCafeId, filtered);
 }
 
 // ── Exports ─────────────────────────────────────────────────────────────────
 module.exports = {
   initStore,
-  getMenu, getMenuItem, saveMenu,
-  getOrders, getOrdersByTable, getOrdersBlockingTableClaim, getAllOrdersForTable, saveOrders,
-  getTables, saveTables, getNextTableId,
-  getClosings, saveClosings, addClosing, getClosingOpenDate,
+  getMenu, getMenuItem, setMenuCache, saveMenu,
+  getOrders, setOrdersCache, getOrdersByTable, getOrdersBlockingTableClaim, getAllOrdersForTable, saveOrders,
+  getTables, setTablesCache, saveTables, getNextTableId,
+  getClosings, setClosingsCache, saveClosings, addClosing, getClosingOpenDate,
   getClosingsByOpenDate, getClosingsByOpenDateRange, getLastClosing,
   hasClosingForDate, clearClosedOrdersForDate, purgeOrdersForTillSession, addTillClosing,
   getNextOrderSequence, ensureOrderSequenceAtLeast, getOrderDisplayId,

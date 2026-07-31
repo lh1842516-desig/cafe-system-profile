@@ -3,38 +3,25 @@
  */
 const express = require('express');
 const { assertMenuItemAvailable } = require('../services/menuAvailability');
-const {
-  getMenuItem,
-  getOrders,
-  getOrdersByTable,
-  getOrdersBlockingTableClaim,
-  getAllOrdersForTable,
-  saveOrders,
-  getTables,
-  getNextOrderSequence,
-  ensureOrderSequenceAtLeast,
-  getOrderDisplayId,
-} = require('../data/store');
+const { optionalToken } = require('./authMiddleware');
+const menuRepo = require('../repository/menuRepository');
+const orderRepo = require('../repository/orderRepository');
+const tableRepo = require('../repository/tableRepository');
 const { addOrderToArchive } = require('../data/archive');
 const till = require('../data/till');
 const { orderBelongsToSession } = require('../services/cashSessionHelper');
 const config = require('../config');
 const tableSessions = require('../services/tableSessions');
-const tableCustomerSessions = require('../services/tableCustomerSessions');
-const tableCustomerCart = require('../services/tableCustomerCart');
-const tableCustomerCoordination = require('../services/tableCustomerCoordination');
 const { emitTableUpdate, emitTableUsersUpdated } = require('../services/tableRealtime');
 const { resolveTableStatus } = require('../services/tableStatusResolve');
-const { getKitchenStatus, setKitchenStatus, removeKitchenEntry } = require('../data/kitchen');
-const tableCustomerKitchenUserSync = require('../services/tableCustomerKitchenUserSync');
-const customerPersistentSession = require('../services/customerPersistentSession');
-const customerDeviceSession = require('../services/customerDeviceSession');
-const tableBillRequestService = require('../services/tableBillRequestService');
-const { emitBillRequestCleared } = require('../services/tableCustomerSocket');
+const kitchenRepo = require('../repository/kitchenRepository');
+const { tableRoomName } = require('../services/tableRoomHelper');
 const kitchenCashierApproval = require('../services/kitchenCashierApproval');
 
 function createOrdersRouter(io) {
   const router = express.Router();
+  router.use(optionalToken);
+
   const ORDER_TYPE = {
     DINE_IN: 'DINE_IN',
     TAKEAWAY: 'TAKEAWAY',
@@ -100,20 +87,22 @@ function createOrdersRouter(io) {
     return out;
   }
 
-  router.get('/today', (req, res) => {
+  router.get('/today', async (req, res) => {
     try {
-      const session = till.getActiveSessionMeta();
+      const cafeId = req.cafeId;
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrders().filter((o) => orderBelongsToSession(o, session));
+      const allOrders = await orderRepo.getOrders(cafeId);
+      const orders = allOrders.filter((o) => orderBelongsToSession(o, session));
       const list = orders.map((o) => {
         const total = (o.items || []).reduce((sum, it) => sum + (it.price || 0) * (it.quantity || 0), 0);
         return {
           ...o,
           orderType: inferOrderTypeFromRecord(o),
           total,
-          displayOrderId: getOrderDisplayId(o.id),
+          displayOrderId: orderRepo.getOrderDisplayId(cafeId, o.id),
         };
       });
       res.json(list);
@@ -122,82 +111,168 @@ function createOrdersRouter(io) {
     }
   });
 
-  function tableLabelForOrder(order) {
+  async function tableLabelForOrder(cafeId, order) {
     const tableIdRaw = String((order && order.tableId) || '').trim();
-    const tables = getTables();
+    const tables = await tableRepo.getTables(cafeId);
     const row = tables.find((t) => String(t.id) === tableIdRaw);
     const lab = row && row.label != null ? String(row.label) : tableIdRaw;
     return 'طاولة ' + lab;
   }
 
   /** طلبات زبائن بانتظار موافقة الكاشير قبل المطبخ */
-  router.get('/pending-cashier-approval', (req, res) => {
+  router.get('/pending-cashier-approval', async (req, res) => {
     try {
-      const session = till.getActiveSessionMeta();
+      const cafeId = req.cafeId;
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrders().filter(function (o) {
-        return (
-          o &&
-          !o.closed &&
-          o.customerSessionId &&
-          orderBelongsToSession(o, session) &&
-          kitchenCashierApproval.isOrderHeld(o.id)
-        );
-      });
-      const list = orders.map(function (o) {
+      const allOrders = await orderRepo.getOrders(cafeId);
+      const orders = [];
+      for (const o of allOrders) {
+        if (o && !o.closed && o.customerSessionId && orderBelongsToSession(o, session)) {
+          if (await kitchenCashierApproval.isOrderHeld(cafeId, o.id)) {
+            orders.push(o);
+          }
+        }
+      }
+      const list = await Promise.all(orders.map(async function (o) {
         const total = (o.items || []).reduce(function (sum, it) {
           return sum + (Number(it.price) || 0) * (Number(it.quantity) || 0);
         }, 0);
+        const label = await tableLabelForOrder(cafeId, o);
         return {
           id: o.id,
           tableId: o.tableId,
-          tableLabel: tableLabelForOrder(o),
+          tableLabel: label,
           customerName: o.customerName || null,
           kitchenBatchId: o.kitchenBatchId || null,
           bundledCustomerNames: o.bundledCustomerNames || null,
           items: o.items || [],
           total,
           createdAt: o.createdAt,
-          displayOrderId: getOrderDisplayId(o.id),
+          displayOrderId: orderRepo.getOrderDisplayId(cafeId, o.id),
         };
-      });
+      }));
       res.json(list);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   });
 
-  router.get('/tables', (req, res) => {
+  router.get('/tables', async (req, res) => {
     try {
-      res.json(getTables());
+      const cafeId = req.cafeId;
+      const tables = await tableRepo.getTables(cafeId);
+      res.json(tables);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   });
 
-  router.get('/table/:tableId', (req, res) => {
+  router.get('/table/:tableId', async (req, res) => {
     try {
-      const session = till.getActiveSessionMeta();
+      const cafeId = req.cafeId;
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrdersByTable(req.params.tableId).filter((o) => orderBelongsToSession(o, session));
-      res.json(orders.map((o) => ({ ...o, displayOrderId: getOrderDisplayId(o.id) })));
+      const ordersRaw = await orderRepo.getOrdersByTable(cafeId, req.params.tableId);
+      const orders = ordersRaw.filter((o) => orderBelongsToSession(o, session));
+      const list = await Promise.all(orders.map(async (o) => {
+        const ks = await kitchenRepo.getKitchenStatus(cafeId, o.id);
+        const isHeld = await kitchenCashierApproval.isOrderHeld(cafeId, o.id);
+        return {
+          ...o,
+          displayOrderId: orderRepo.getOrderDisplayId(cafeId, o.id),
+          kitchenStatus: isHeld ? 'held' : (ks ? String(ks.status).toLowerCase() : 'pending'),
+          awaitingCashierApproval: isHeld,
+        };
+      }));
+      res.json(list);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
   });
 
-  router.get('/table/:tableId/all', (req, res) => {
+  router.get('/table/:tableId/bill-requested', (req, res) => {
     try {
-      const session = till.getActiveSessionMeta();
+      const cafeId = req.cafeId;
+      const tableId = String(req.params.tableId || '').trim();
+      const isRequested = tableSessions.isTableBillRequested(cafeId, tableId);
+      res.json({ tableId, isBillRequested: isRequested });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  router.get('/table/:tableId/all', async (req, res) => {
+    try {
+      const cafeId = req.cafeId;
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const all = getAllOrdersForTable(req.params.tableId).filter((o) => orderBelongsToSession(o, session));
-      res.json(all.map((o) => ({ ...o, displayOrderId: getOrderDisplayId(o.id) })));
+      const allRaw = await orderRepo.getAllOrdersForTable(cafeId, req.params.tableId);
+      const all = allRaw.filter((o) => orderBelongsToSession(o, session));
+      res.json(all.map((o) => ({ ...o, displayOrderId: orderRepo.getOrderDisplayId(cafeId, o.id) })));
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  /**
+   * استعادة جلسة الزبون بعد إغلاق المتصفح أو App Switch.
+   * يُستخدم حصرياً من طبقة Persistent Customer Identity (PCI) في المتصفح.
+   * يُعيد بيانات أحدث طلب مفتوح على الطاولة في الجلسة الحالية فقط.
+   * لا يُعيد أي بيانات إذا لم تكن القاصة مفتوحة أو أُغلقت الطاولة.
+   */
+  router.get('/table/:tableId/recover-session', async (req, res) => {
+    try {
+      const cafeId = req.cafeId;
+      const tableId = String(req.params.tableId || '').trim();
+      if (!tableId) return res.json({ order: null });
+
+      // تحقق إلزامي من sessionId — بدونه لا نُعيد أي بيانات
+      const sessionId = String(req.query.sessionId || '').trim();
+      if (!sessionId) return res.json({ order: null, reason: 'missing_session_id' });
+
+      // تحقق من أن القاصة مفتوحة — لا نُعيد بيانات لجلسات منتهية
+      const session = till.getActiveSessionMeta(cafeId);
+      if (!session || !session.openDate) {
+        return res.json({ order: null, reason: 'no_active_session' });
+      }
+
+      const ordersRaw = await orderRepo.getOrdersByTable(cafeId, tableId);
+      const openOrders = ordersRaw.filter((o) =>
+        !o.closed &&
+        !(o.cancelledByCustomer || o.cancelReason === 'customer_cancel_pending') &&
+        orderBelongsToSession(o, session) &&
+        o.customerSessionId === sessionId  // ← تحقق صارم من هوية الزبون
+      );
+
+      if (!openOrders.length) return res.json({ order: null, reason: 'no_active_order' });
+
+      // أحدث طلب مفتوح يخص هذا الزبون تحديداً
+      const latest = openOrders[openOrders.length - 1];
+      const ks = await kitchenRepo.getKitchenStatus(cafeId, latest.id);
+      const isHeld = await kitchenCashierApproval.isOrderHeld(cafeId, latest.id);
+      const rawStatus = ks && ks.status ? String(ks.status).toLowerCase() : 'pending';
+      const status = isHeld ? 'held'
+        : (rawStatus === 'preparing' ? 'preparing'
+          : (rawStatus === 'done' || rawStatus === 'completed' ? 'completed'
+            : 'waiting'));
+
+      return res.json({
+        order: {
+          id: latest.id,
+          displayOrderId: orderRepo.getOrderDisplayId(cafeId, latest.id),
+          tableId: latest.tableId,
+          customerName: latest.customerName || '',
+          items: latest.items || [],
+          status,
+        }
+      });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -205,6 +280,7 @@ function createOrdersRouter(io) {
 
   router.post('/', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const { tableId, items, customerName, customerSessionId, orderType: rawOrderType, serviceMeta } = req.body;
       const orderType = normalizeOrderType(rawOrderType);
       const needsTable = orderType === ORDER_TYPE.DINE_IN;
@@ -212,25 +288,19 @@ function createOrdersRouter(io) {
         return res.status(400).json({ error: 'بيانات الطلب غير مكتملة: tableId (داخل الصالة) وقائمة items مطلوبة' });
       }
 
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا يمكن إرسال الطلب لأن قاصة اليوم غير مفتوحة.' });
       }
 
       const tableIdStrEarly = needsTable ? String(tableId) : orderType;
-      if (needsTable) {
-        try {
-          tableBillRequestService.assertCanOrder(tableIdStrEarly);
-        } catch (billErr) {
-          return res.status(billErr.status || 409).json({
-            error: billErr.message,
-            code: billErr.code || tableBillRequestService.BILL_BLOCKED_CODE,
-          });
-        }
+      if (needsTable && tableSessions.isTableBillRequested(cafeId, tableIdStrEarly)) {
+        return res.status(400).json({ error: 'تم طلب الفاتورة لهذه الطاولة. لا يمكن إضافة طلبات جديدة حتى إغلاق الفاتورة من الكاشير.' });
       }
 
-      const orderItems = items.map((row) => {
-        const menuItem = getMenuItem(row.menuId);
+
+      const orderItems = await Promise.all(items.map(async (row) => {
+        const menuItem = await menuRepo.getMenuItem(cafeId, row.menuId);
         assertMenuItemAvailable(menuItem, row.menuId);
         const selectedOptions = sanitizeSelectedOptions(menuItem, row);
         return {
@@ -241,24 +311,26 @@ function createOrdersRouter(io) {
           note: row.note ? String(row.note).trim() : '',
           selectedOptions,
         };
-      });
+      }));
 
       const tableIdStr = needsTable ? String(tableId) : orderType;
       const openDate = session.openDate;
-      const orders = getOrders();
-      let seq = await getNextOrderSequence(openDate);
+      const orders = await orderRepo.getOrders(cafeId);
+      let seq = await orderRepo.getNextOrderSequence(cafeId, openDate);
       const idPrefix = orderType === ORDER_TYPE.DELIVERY ? 'D' : orderType === ORDER_TYPE.TAKEAWAY ? 'K' : 'T' + tableIdStr;
       let orderId = idPrefix + '-' + String(seq).padStart(3, '0');
       while (orders.some((o) => o.id === orderId)) {
         seq += 1;
         orderId = idPrefix + '-' + String(seq).padStart(3, '0');
       }
-      await ensureOrderSequenceAtLeast(openDate, seq);
+      await orderRepo.ensureOrderSequenceAtLeast(cafeId, openDate, seq);
 
       const nameTrim =
         customerName != null ? String(customerName).trim().slice(0, 30) : '';
       const newOrder = {
         id: orderId,
+        cafeId: cafeId,
+        cafe_id: cafeId,
         tableId: tableIdStr,
         orderType,
         items: orderItems,
@@ -292,46 +364,23 @@ function createOrdersRouter(io) {
       }
 
       orders.push(newOrder);
-      await saveOrders(orders);
+      await orderRepo.saveOrders(cafeId, orders);
 
-      const csid = customerSessionId != null ? String(customerSessionId).trim() : '';
-      if (csid && needsTable) {
-        try {
-          tableCustomerCoordination.afterKitchenSend(tableIdStr, csid);
-          tableCustomerCart.applyMutations(tableIdStr, csid, [{ op: 'clearAll' }]);
-          customerPersistentSession.registerSession({
-            peerSessionId: csid,
-            customerName: nameTrim,
-            tableId: tableIdStr,
-            activeOrderId: newOrder.id,
-          });
-          try {
-            const kst = kitchenCashierApproval.isOrderHeld(newOrder.id) ? 'held' : 'new';
-            tableCustomerKitchenUserSync.syncUsersForKitchenOrder(io, newOrder.id, kst);
-          } catch (_) {
-            const users = tableCustomerSessions.listConnectedPublicUsers(tableIdStr);
-            emitTableUsersUpdated(io, {
-              tableId: tableIdStr,
-              users,
-              count: tableCustomerSessions.connectedCount(tableIdStr),
-            });
-          }
-        } catch (_) {}
-      }
+
 
       /* بعد إرسال الطلب: occupied — إزالة جلسة «قيد الاستخدام» إن وُجدت */
       if (needsTable) {
         try {
           tableSessions.releaseByTableId(tableIdStr);
         } catch (_) {}
-        emitTableUpdate(io, { tableId: tableIdStr, status: 'occupied', sessionId: null });
+          emitTableUpdate(io, { tableId: tableIdStr, status: 'occupied', sessionId: null });
       }
 
       if (io) {
-        if (kitchenCashierApproval.shouldHoldCustomerOrder(newOrder)) {
-          await kitchenCashierApproval.holdCustomerOrderForCashier(io, newOrder, 'pending-cashier-approval');
+        if (await kitchenCashierApproval.shouldHoldCustomerOrder(newOrder)) {
+          await kitchenCashierApproval.holdCustomerOrderForCashier(cafeId, io, newOrder, 'pending-cashier-approval');
         } else {
-          if (needsTable) io.to('table-' + tableId).emit('new-order', newOrder);
+          if (needsTable) io.to(tableRoomName(tableId, cafeId)).emit('new-order', newOrder);
           kitchenCashierApproval.emitFullKitchenRelease(io, newOrder, 'new-order');
         }
         if (config.DEBUG_SOCKET) {
@@ -339,20 +388,20 @@ function createOrdersRouter(io) {
             '[socket emit] order created',
             newOrder.id,
             'held:',
-            kitchenCashierApproval.isOrderHeld(newOrder.id),
+            kitchenCashierApproval.isOrderHeld(cafeId, newOrder.id),
             'clients:',
             io.engine.clientsCount
           );
         }
       }
-      res.status(201).json({ ...newOrder, displayOrderId: getOrderDisplayId(newOrder.id) });
+      res.status(201).json({ ...newOrder, displayOrderId: orderRepo.getOrderDisplayId(cafeId, newOrder.id) });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
   });
 
-  function kitchenAllowsItemReplace(orderId) {
-    const ks = getKitchenStatus(orderId);
+  async function kitchenAllowsItemReplace(cafeId, orderId) {
+    const ks = await kitchenRepo.getKitchenStatus(cafeId, orderId);
     const raw = ks && ks.status != null ? String(ks.status).toLowerCase() : 'new';
     if (raw === 'preparing' || raw === 'completed') return false;
     return true;
@@ -402,6 +451,7 @@ function createOrdersRouter(io) {
   /** استبدال كل أصناف الطلب — يُستدعى من POST .../items (body.replace) أو مسارات replace-items / PUT */
   async function replaceOrderItemsFull(req, res) {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
       const { tableId, items } = req.body || {};
       if (!tableId || !Array.isArray(items)) {
@@ -410,11 +460,11 @@ function createOrdersRouter(io) {
       if (items.length === 0) {
         return res.status(400).json({ error: 'يجب أن يبقى صنف واحد على الأقل في الطلب.' });
       }
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا يمكن تعديل الطلب لأن قاصة اليوم غير مفتوحة.' });
       }
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === orderId);
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
       if (order.closed) return res.status(400).json({ error: 'الطلب مغلق' });
@@ -424,11 +474,11 @@ function createOrdersRouter(io) {
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن تعديل طلب خارج جلسة القاصة الحالية.' });
       }
-      if (!kitchenAllowsItemReplace(order.id)) {
+      if (!await kitchenAllowsItemReplace(order.id)) {
         return res.status(400).json({ error: 'لا يمكن تعديل الأصناف بعد بدء التجهيز.' });
       }
-      const orderItems = items.map((row) => {
-        const menuItem = getMenuItem(row.menuId);
+      const orderItems = await Promise.all(items.map(async (row) => {
+        const menuItem = await menuRepo.getMenuItem(cafeId, row.menuId);
         assertMenuItemAvailable(menuItem, row.menuId);
         const selectedOptions = sanitizeSelectedOptions(menuItem, row);
         return {
@@ -439,47 +489,51 @@ function createOrdersRouter(io) {
           note: row.note ? String(row.note).trim() : '',
           selectedOptions,
         };
-      });
+      }));
       const merged = mergeDuplicateLineItems(orderItems);
       if (merged.length === 0) {
         return res.status(400).json({ error: 'لا توجد أصناف صالحة بعد الدمج.' });
       }
       order.items = merged;
-      await saveOrders(orders);
-      const heldReplace = kitchenCashierApproval.isOrderHeld(order.id);
+      await orderRepo.saveOrders(cafeId, orders);
+      const heldReplace = await kitchenCashierApproval.isOrderHeld(cafeId, order.id);
       if (!heldReplace) {
-        await setKitchenStatus(order.id, 'new');
+        await kitchenRepo.setKitchenStatus(cafeId, order.id, 'new');
       }
       if (io) {
-        io.emit('orders-updated', {
+        const room = tableRoomName(order.tableId, cafeId);
+        io.to('cafe-' + cafeId + '-staff').emit('orders-updated', {
           tableId: String(order.tableId),
           orderId: order.id,
           reason: heldReplace ? 'items-replaced-held' : 'items-replaced',
         });
         if (!heldReplace) {
-          io.emit('kitchen-updated', { orderId: order.id, reason: 'items-replaced', status: 'new' });
+          io.to('cafe-' + cafeId + '-staff').emit('kitchen-updated', { orderId: order.id, reason: 'items-replaced', status: 'new' });
+          io.to(room).emit('kitchen-updated', { orderId: order.id, reason: 'items-replaced', status: 'new' });
         }
-        io.emit('stats-updated');
+        io.to('cafe-' + cafeId + '-staff').emit('stats-updated');
       }
-      res.json({ ...order, displayOrderId: getOrderDisplayId(order.id) });
+      res.json({ ...order, displayOrderId: orderRepo.getOrderDisplayId(cafeId, order.id) });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
   }
 
   /** طلب واحد للزبون — ?tableId= مطلوب — مسار صريح + /:orderId للتوافق */
-  function getSingleOrderForCustomer(req, res) {
+  async function getSingleOrderForCustomer(req, res) {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
       const tableId = String(req.query.tableId || '').trim();
       if (!tableId) return res.status(400).json({ error: 'tableId مطلوب' });
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrders();
-      const order = orders.find((o) => String(o.id) === orderId);
-      if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
+      const orders = await orderRepo.getOrders(cafeId);
+      const sameId = orders.filter((o) => String(o.id) === orderId);
+      if (!sameId.length) return res.status(404).json({ error: 'الطلب غير موجود' });
+      const order = sameId.find((o) => !o.closed) || sameId[sameId.length - 1];
       if (order.closed) return res.status(400).json({ error: 'الطلب مغلق' });
       if (String(order.tableId) !== String(tableId)) {
         return res.status(403).json({ error: 'الطاولة غير متطابقة مع الطلب' });
@@ -487,10 +541,10 @@ function createOrdersRouter(io) {
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن عرض طلب خارج جلسة القاصة الحالية.' });
       }
-      const canEditKitchen = kitchenAllowsItemReplace(order.id);
+      const canEditKitchen = await kitchenAllowsItemReplace(cafeId, order.id);
       res.json({
         ...order,
-        displayOrderId: getOrderDisplayId(order.id),
+        displayOrderId: orderRepo.getOrderDisplayId(cafeId, order.id),
         canEditKitchen,
       });
     } catch (err) {
@@ -503,7 +557,8 @@ function createOrdersRouter(io) {
 
   router.post('/:orderId/close', async (req, res) => {
     try {
-      const orders = getOrders();
+      const cafeId = req.cafeId;
+      const orders = await orderRepo.getOrders(cafeId);
       const paramId = req.params.orderId != null ? String(req.params.orderId) : '';
       const sameId = orders.filter((o) => String(o.id) === paramId);
       if (!sameId.length) return res.status(404).json({ error: 'الطلب غير موجود' });
@@ -514,7 +569,7 @@ function createOrdersRouter(io) {
 
       const method = (req.body && req.body.paymentMethod) ? String(req.body.paymentMethod).toLowerCase() : 'cash';
       const pay = method === 'card' ? 'card' : 'cash';
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
@@ -524,46 +579,52 @@ function createOrdersRouter(io) {
       }
       const closedAt = new Date().toISOString();
       toClose.forEach((order) => {
+        if (!order.cafeId) order.cafeId = cafeId;
+        if (!order.cafe_id) order.cafe_id = cafeId;
         order.closed = true;
         order.closedAt = closedAt;
         order.paymentMethod = pay;
-        if (!order.open_date) order.open_date = session.openDate;
+        // دائماً نُثبّت open_date من جلسة القاصة المفتوحة — حتى لو الطلب أُخذ
+        // بعد منتصف الليل في يوم تقويمي جديد، يُحفظ في أرشيف تاريخ فتح القاصة.
+        order.open_date = session.openDate;
         order.close_open_date = session.openDate;
         order.cash_session_id = session.sessionId;
-        addOrderToArchive(order);
+        addOrderToArchive(order, cafeId);
       });
-      await saveOrders(orders);
+      await orderRepo.saveOrders(cafeId, orders);
       const primary = toClose[toClose.length - 1];
       const closedTableId = String(primary.tableId);
       const primaryType = normalizeOrderType(primary.orderType);
       if (primaryType === ORDER_TYPE.DINE_IN) {
         try {
           tableSessions.resetTableAccess(closedTableId);
-          tableCustomerSessions.clearTableUsers(closedTableId);
-          customerPersistentSession.closeSessionsForTable(closedTableId);
-          customerDeviceSession.invalidateTable(closedTableId);
+          tableSessions.setTableBillRequested(cafeId, closedTableId, false);
         } catch (_) {}
-        const nextStatus = resolveTableStatus(closedTableId, '');
+        const nextStatus = resolveTableStatus(cafeId, closedTableId, '');
         emitTableUpdate(io, {
           tableId: closedTableId,
           status: nextStatus.status,
           sessionId: nextStatus.status === 'in_use' ? nextStatus.sessionId : null,
-        });
-        if (io && nextStatus.status === 'available') {
-          io.to('table-' + closedTableId).emit('table_bill_closed', { tableId: closedTableId });
-        }
-        if (tableBillRequestService.maybeClearIfNoOpenOrders(closedTableId)) {
-          emitBillRequestCleared(io, closedTableId);
+        }, cafeId);
+        if (io) {
+          const room = tableRoomName(closedTableId, cafeId);
+          io.to(room).emit('table_bill_closed', { tableId: closedTableId, status: nextStatus.status });
         }
       }
       if (io) {
-        io.emit('stats-updated');
-        io.emit('orders-updated', {
+        const room = tableRoomName(closedTableId, cafeId);
+        io.to('cafe-' + cafeId + '-staff').emit('stats-updated');
+        io.to('cafe-' + cafeId + '-staff').emit('orders-updated', {
           tableId: closedTableId,
           reason: 'order-closed',
           orderId: primary.id,
         });
-        io.emit('kitchen-updated', {
+        io.to('cafe-' + cafeId + '-staff').emit('kitchen-updated', {
+          orderId: primary.id,
+          reason: 'order-closed',
+          tableId: closedTableId,
+        });
+        io.to(room).emit('kitchen-updated', {
           orderId: primary.id,
           reason: 'order-closed',
           tableId: closedTableId,
@@ -578,22 +639,23 @@ function createOrdersRouter(io) {
   /** موافقة الكاشير — إرسال الطلب إلى المطبخ */
   router.post('/:orderId/approve-kitchen', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === orderId);
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
       if (order.closed) return res.status(400).json({ error: 'الطلب مغلق' });
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن الموافقة على طلب خارج جلسة القاصة الحالية.' });
       }
-      if (!kitchenCashierApproval.isOrderHeld(order.id)) {
+      if (!await kitchenCashierApproval.isOrderHeld(cafeId, order.id)) {
         return res.status(400).json({ error: 'الطلب ليس بانتظار موافقة الكاشير.' });
       }
-      const approvedIds = await kitchenCashierApproval.approveOrdersForCashier(io, order);
+      const approvedIds = await kitchenCashierApproval.approveOrdersForCashier(cafeId, io, order);
       if (!approvedIds.length) {
         return res.status(400).json({ error: 'تعذّر إرسال الطلب إلى المطبخ.' });
       }
@@ -602,7 +664,7 @@ function createOrdersRouter(io) {
         orderId: order.id,
         approvedOrderIds: approvedIds,
         tableId: order.tableId,
-        tableLabel: tableLabelForOrder(order),
+        tableLabel: await tableLabelForOrder(cafeId, order),
       });
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -612,22 +674,23 @@ function createOrdersRouter(io) {
   /** رفض الكاشير — إلغاء الطلب وإبلاغ الزبون */
   router.post('/:orderId/reject-kitchen', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === orderId);
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
       if (order.closed) return res.status(400).json({ error: 'الطلب مغلق' });
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن الرفض على طلب خارج جلسة القاصة الحالية.' });
       }
-      if (!kitchenCashierApproval.isOrderHeld(order.id)) {
+      if (!await kitchenCashierApproval.isOrderHeld(cafeId, order.id)) {
         return res.status(400).json({ error: 'الطلب ليس بانتظار موافقة الكاشير.' });
       }
-      const rejectedIds = await kitchenCashierApproval.rejectOrdersForCashier(io, order, session);
+      const rejectedIds = await kitchenCashierApproval.rejectOrdersForCashier(cafeId, io, order, session);
       if (!rejectedIds.length) {
         return res.status(400).json({ error: 'تعذّر رفض الطلب.' });
       }
@@ -636,7 +699,7 @@ function createOrdersRouter(io) {
         orderId: order.id,
         rejectedOrderIds: rejectedIds,
         tableId: order.tableId,
-        tableLabel: tableLabelForOrder(order),
+        tableLabel: await tableLabelForOrder(cafeId, order),
       });
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -644,24 +707,46 @@ function createOrdersRouter(io) {
   });
 
   /** حالة المطبخ للزبون (واجهة الطلب الذاتي) — pending / preparing / done */
-  router.get('/:orderId/kitchen-status', (req, res) => {
+  router.get('/:orderId/kitchen-status', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
-      const orders = getOrders();
-      const order = orders.find((o) => String(o.id) === orderId);
-      if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
+      const session = till.getActiveSessionMeta(cafeId);
+      const orders = await orderRepo.getOrders(cafeId);
+      const sameId = orders.filter((o) => {
+        if (!o) return false;
+        if (String(o.id) === orderId) return true;
+        const dId = orderRepo.getOrderDisplayId(cafeId, o.id);
+        if (String(dId) === orderId) return true;
+        return false;
+      });
+
+      if (!sameId.length) {
+        return res.json({ orderId, status: 'pending', closed: false, awaitingCashierApproval: false });
+      }
+
+      let order = sameId.find((o) => o && !o.closed && session && session.openDate && orderBelongsToSession(o, session));
+      if (!order) order = sameId.find((o) => o && !o.closed);
+      if (!order && sameId.length > 0) {
+        const tid = sameId[0].tableId;
+        const activeTableOrder = orders.find((o) => o && !o.closed && String(o.tableId) === String(tid));
+        if (activeTableOrder) order = activeTableOrder;
+      }
+      if (!order) order = sameId[sameId.length - 1];
       if (order.closed) {
         const wasRejected =
           Boolean(order.rejectedByCashier) || order.cancelReason === 'cashier_rejected_approval';
+        const wasCancelledByCustomer = Boolean(order.cancelledByCustomer);
         return res.json({
           orderId: order.id,
           tableId: order.tableId,
           status: wasRejected ? 'rejected' : 'done',
           closed: true,
           rejected: wasRejected,
+          cancelledByCustomer: wasCancelledByCustomer,
         });
       }
-      const ks = getKitchenStatus(order.id);
+      const ks = await kitchenRepo.getKitchenStatus(cafeId, order.id);
       const raw = ks && ks.status != null ? String(ks.status).toLowerCase() : 'new';
       let status = 'pending';
       if (raw === 'preparing') status = 'preparing';
@@ -685,14 +770,15 @@ function createOrdersRouter(io) {
   /** قفل تعديل الزبون — kitchen.json = editing (يمنع المطبخ من «بدء التجهيز» حتى الحفظ أو الإلغاء) */
   router.post('/:orderId/begin-edit', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
       const tableId = String((req.body && req.body.tableId) || '').trim();
       if (!tableId) return res.status(400).json({ error: 'tableId مطلوب' });
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا يمكن تعديل الطلب لأن قاصة اليوم غير مفتوحة.' });
       }
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === orderId);
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
       if (order.closed) return res.status(400).json({ error: 'الطلب مغلق' });
@@ -702,7 +788,7 @@ function createOrdersRouter(io) {
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن تعديل طلب خارج جلسة القاصة الحالية.' });
       }
-      const ks = getKitchenStatus(orderId);
+      const ks = await kitchenRepo.getKitchenStatus(cafeId, orderId);
       const raw = ks && ks.status != null ? String(ks.status).toLowerCase() : 'new';
       if (raw === 'preparing') {
         return res.status(409).json({
@@ -713,10 +799,12 @@ function createOrdersRouter(io) {
       if (raw === 'completed') {
         return res.status(400).json({ error: 'الطلب مكتمل في المطبخ.' });
       }
-      await setKitchenStatus(orderId, 'editing');
+      await kitchenRepo.setKitchenStatus(cafeId, orderId, 'editing');
       if (io) {
-        io.emit('kitchen-updated', { orderId, status: 'editing', reason: 'begin-edit' });
-        io.emit('orders-updated', { tableId: String(order.tableId), orderId, reason: 'begin-edit' });
+        const room = tableRoomName(order.tableId, cafeId);
+        io.to('cafe-' + cafeId + '-staff').emit('kitchen-updated', { orderId, status: 'editing', reason: 'begin-edit' });
+        io.to(room).emit('kitchen-updated', { orderId, status: 'editing', reason: 'begin-edit' });
+        io.to('cafe-' + cafeId + '-staff').emit('orders-updated', { tableId: String(order.tableId), orderId, reason: 'begin-edit' });
       }
       res.json({ ok: true, status: 'editing' });
     } catch (err) {
@@ -727,14 +815,15 @@ function createOrdersRouter(io) {
   /** إلغاء وضع التعديل عند إغلاق السلة دون حفظ — يعيد الطلب لـ new */
   router.post('/:orderId/cancel-edit', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
       const tableId = String((req.body && req.body.tableId) || '').trim();
       if (!tableId) return res.status(400).json({ error: 'tableId مطلوب' });
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة.' });
       }
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === orderId);
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
       if (String(order.tableId) !== tableId) {
@@ -743,13 +832,15 @@ function createOrdersRouter(io) {
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن تعديل طلب خارج جلسة القاصة الحالية.' });
       }
-      const ks = getKitchenStatus(orderId);
+      const ks = await kitchenRepo.getKitchenStatus(cafeId, orderId);
       const raw = ks && ks.status != null ? String(ks.status).toLowerCase() : '';
       if (raw === 'editing') {
-        await setKitchenStatus(orderId, 'new');
+        await kitchenRepo.setKitchenStatus(cafeId, orderId, 'new');
         if (io) {
-          io.emit('kitchen-updated', { orderId, status: 'new', reason: 'cancel-edit' });
-          io.emit('orders-updated', { tableId: String(order.tableId), orderId, reason: 'cancel-edit' });
+          const room = tableRoomName(order.tableId, cafeId);
+          io.to('cafe-' + cafeId + '-staff').emit('kitchen-updated', { orderId, status: 'new', reason: 'cancel-edit' });
+          io.to(room).emit('kitchen-updated', { orderId, status: 'new', reason: 'cancel-edit' });
+          io.to('cafe-' + cafeId + '-staff').emit('orders-updated', { tableId: String(order.tableId), orderId, reason: 'cancel-edit' });
         }
       }
       res.json({ ok: true });
@@ -764,14 +855,15 @@ function createOrdersRouter(io) {
    */
   router.post('/:orderId/cancel-by-customer', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
       const tableId = String((req.body && req.body.tableId) || '').trim();
       if (!tableId) return res.status(400).json({ error: 'tableId مطلوب' });
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا يمكن الإلغاء لأن قاصة اليوم غير مفتوحة.' });
       }
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === orderId);
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
       if (order.closed) return res.status(400).json({ error: 'الطلب مغلق مسبقاً' });
@@ -781,7 +873,7 @@ function createOrdersRouter(io) {
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن إلغاء طلب خارج جلسة القاصة الحالية.' });
       }
-      const ks = getKitchenStatus(orderId);
+      const ks = await kitchenRepo.getKitchenStatus(cafeId, orderId);
       const raw = ks && ks.status != null ? String(ks.status).toLowerCase() : 'new';
       if (raw === 'preparing') {
         return res.status(409).json({
@@ -800,30 +892,33 @@ function createOrdersRouter(io) {
       if (!order.open_date) order.open_date = session.openDate;
       order.close_open_date = session.openDate;
       order.cash_session_id = session.sessionId;
-      await removeKitchenEntry(orderId);
-      await saveOrders(orders);
+      await kitchenRepo.removeKitchenEntry(cafeId, orderId);
+      await orderRepo.saveOrders(cafeId, orders);
       const closedTableId = String(order.tableId);
       /** إن لم يبقَ أي طلب مفتوح على الطاولة: جلسة جديدة «قيد الاستخدام»؛ وإلا تبقى مشغولة */
-      const remainingOpen = getOrdersBlockingTableClaim(closedTableId);
+      const remainingOpen = await orderRepo.getOrdersBlockingTableClaim(cafeId, closedTableId);
       let newBrowseSession = null;
       if (remainingOpen.length === 0) {
-        newBrowseSession = tableSessions.createSessionAfterCancel(closedTableId, (tid) => getOrdersBlockingTableClaim(tid));
+        newBrowseSession = tableSessions.createSessionAfterCancel(closedTableId, (tid) => remainingOpen);
       }
       const mineSid = newBrowseSession ? String(newBrowseSession.sessionId) : '';
-      const nextStatus = resolveTableStatus(closedTableId, mineSid);
+      const nextStatus = resolveTableStatus(cafeId, closedTableId, mineSid);
       emitTableUpdate(io, {
         tableId: closedTableId,
         status: nextStatus.status,
         sessionId: nextStatus.status === 'in_use' ? nextStatus.sessionId : null,
-      });
+        reason: 'order-cancelled-by-customer',
+      }, cafeId);
       if (io) {
-        io.emit('orders-updated', {
+        const room = tableRoomName(closedTableId, cafeId);
+        io.to('cafe-' + cafeId + '-staff').emit('orders-updated', {
           tableId: closedTableId,
           orderId,
           reason: 'order-cancelled-by-customer',
         });
-        io.emit('kitchen-updated', { orderId, reason: 'order-cancelled-by-customer' });
-        io.emit('stats-updated');
+        io.to('cafe-' + cafeId + '-staff').emit('kitchen-updated', { orderId, reason: 'order-cancelled-by-customer' });
+        io.to(room).emit('kitchen-updated', { orderId, reason: 'order-cancelled-by-customer' });
+        io.to('cafe-' + cafeId + '-staff').emit('stats-updated');
       }
       res.json({
         ok: true,
@@ -842,16 +937,17 @@ function createOrdersRouter(io) {
       if (shouldReplaceFullOrder(req.body)) {
         return replaceOrderItemsFull(req, res);
       }
+      const cafeId = req.cafeId;
       const orderId = String(req.params.orderId || '').trim();
       const { tableId, items } = req.body || {};
       if (!tableId || !Array.isArray(items) || items.length === 0) {
         return res.status(400).json({ error: 'tableId وقائمة items مطلوبة' });
       }
-      const session = till.getActiveSessionMeta();
+      const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.status(400).json({ error: 'لا يمكن تعديل الطلب لأن قاصة اليوم غير مفتوحة.' });
       }
-      const orders = getOrders();
+      const orders = await orderRepo.getOrders(cafeId);
       const order = orders.find((o) => String(o.id) === orderId);
       if (!order) return res.status(404).json({ error: 'الطلب غير موجود' });
       if (order.closed) return res.status(400).json({ error: 'الطلب مغلق' });
@@ -861,16 +957,9 @@ function createOrdersRouter(io) {
       if (!orderBelongsToSession(order, session)) {
         return res.status(400).json({ error: 'لا يمكن تعديل طلب خارج جلسة القاصة الحالية.' });
       }
-      try {
-        tableBillRequestService.assertCanOrder(String(tableId));
-      } catch (billErr) {
-        return res.status(billErr.status || 409).json({
-          error: billErr.message,
-          code: billErr.code || tableBillRequestService.BILL_BLOCKED_CODE,
-        });
-      }
-      const orderItems = items.map((row) => {
-        const menuItem = getMenuItem(row.menuId);
+
+      const orderItems = await Promise.all(items.map(async (row) => {
+        const menuItem = await menuRepo.getMenuItem(cafeId, row.menuId);
         assertMenuItemAvailable(menuItem, row.menuId);
         const selectedOptions = sanitizeSelectedOptions(menuItem, row);
         return {
@@ -881,20 +970,22 @@ function createOrdersRouter(io) {
           note: row.note ? String(row.note).trim() : '',
           selectedOptions,
         };
-      });
+      }));
       order.items = (order.items || []).concat(orderItems);
-      await saveOrders(orders);
-      const heldAppend = kitchenCashierApproval.isOrderHeld(order.id);
+      await orderRepo.saveOrders(cafeId, orders);
+      const heldAppend = await kitchenCashierApproval.isOrderHeld(cafeId, order.id);
       if (io) {
-        io.emit('orders-updated', {
+        const room = tableRoomName(order.tableId, cafeId);
+        io.to('cafe-' + cafeId + '-staff').emit('orders-updated', {
           tableId: String(order.tableId),
           orderId: order.id,
           reason: heldAppend ? 'items-appended-held' : 'items-appended',
         });
         if (!heldAppend) {
-          io.emit('kitchen-updated', { orderId: order.id, reason: 'items-appended' });
+          io.to('cafe-' + cafeId + '-staff').emit('kitchen-updated', { orderId: order.id, reason: 'items-appended' });
+          io.to(room).emit('kitchen-updated', { orderId: order.id, reason: 'items-appended' });
         }
-        io.emit('stats-updated');
+        io.to('cafe-' + cafeId + '-staff').emit('stats-updated');
       }
       res.json(order);
     } catch (err) {
@@ -909,10 +1000,11 @@ function createOrdersRouter(io) {
   router.put('/order/:orderId/items', replaceOrderItemsFull);
   router.put('/:orderId/items', replaceOrderItemsFull);
 
-  router.get('/', (req, res) => {
+  router.get('/', async (req, res) => {
     try {
+      const cafeId = req.cafeId;
       const closed = req.query.closed === 'true';
-      let orders = getOrders();
+      let orders = await orderRepo.getOrders(cafeId);
       if (req.query.closed) {
         orders = orders.filter((o) => o.closed === closed);
       }

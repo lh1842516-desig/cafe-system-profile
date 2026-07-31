@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>تسجيل الدخول — نظام إدارة الكافيه</title>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #12141c 0%, #1a1d23 100%);
+      padding: 1.5rem;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 440px;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .login-card {
+      background: rgba(37, 41, 48, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: clamp(1.5rem, 5vw, 2.5rem);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .brand-logo {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .brand-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .btn-login {
+      width: 100%;
+      background: var(--accent);
+      color: #12141c;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-login:hover {
+      background: var(--accent-hover);
+    }
+
+    .error-box {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: rgba(242, 139, 130, 0.15);
+      border: 1px solid rgba(242, 139, 130, 0.3);
+      color: var(--danger);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      display: none;
+      animation: shake 0.4s ease-in-out;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: auto;
+      touch-action: manipulation;
+    }
+
+    .password-toggle-btn:hover {
+      color: var(--text);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px);
+      }
+
+      75% {
+        transform: translateX(6px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="brand-section">
+        <span class="brand-logo">☕</span>
+        <h1 class="brand-title">مرحباً بك في Cafe System</h1>
+        <p class="brand-subtitle"> سجل الدخول للوصول إلى لوحة التحكم والواجهات خاص بيك</p>
+      </div>
+
+      <form id="loginForm" novalidate autocomplete="off">
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني</label>
+          <input type="email" id="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="example@cafezip.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">كلمة المرور</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" autocomplete="new-password" placeholder="••••••••" required
+              style="padding-left: 45px;">
+            <button type="button" id="passwordToggleBtn" class="password-toggle-btn"
+              aria-label="إظهار كلمة المرور">عرض</button>
+          </div>
+        </div>
+
+        <div id="errorBox" class="error-box" role="alert"></div>
+
+        <button type="submit" id="submitBtn" class="btn btn-login">تسجيل الدخول</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/saas-auth.js"></script>
+  <script src="saas-login.js"></script>
+</body>
+
+</html>

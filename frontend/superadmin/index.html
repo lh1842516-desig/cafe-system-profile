@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم -AH System</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Auth Guard -->
+  <script src="/js/saas-auth.js"></script>
+  <script>
+    // Enforce Super Admin only
+    SaasAuth.requireAuth(['SUPER_ADMIN']);
+  </script>
+
+  <style>
+    :root {
+      --bg-main: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8fafc;
+      --border-color: #94a3b8;
+      --primary: #2563eb;
+      --primary-glow: rgba(37, 99, 235, 0.25);
+      --accent: #1d4ed8;
+      --text-main: #020617;
+      --text-muted: #334155;
+      --success: #16a34a;
+      --success-glow: rgba(22, 163, 74, 0.2);
+      --danger: #dc2626;
+      --warning: #d97706;
+      --sidebar-width: 260px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+      background-image: none;
+    }
+
+    /* Layout */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: #f8fafc;
+      border-left: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .main-content {
+      margin-right: var(--sidebar-width);
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+    }
+
+    /* Sidebar Styling */
+    .brand {
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 24px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-tag {
+      font-size: 11px;
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      font-weight: 700;
+    }
+
+    .nav-links {
+      list-style: none;
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), transparent);
+      border-right: 3px solid var(--primary);
+    }
+
+    .nav-item-logout {
+      color: #dc2626 !important;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      margin-top: 6px;
+    }
+
+    .nav-item-logout:hover {
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+    }
+
+    .nav-icon {
+      font-size: 18px;
+    }
+
+    .sidebar-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .user-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 6px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Main Area Styling */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .header-title h1 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .header-title p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #020617;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #e2e8f0;
+      color: #020617;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #ffffff !important;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-primary *,
+    .btn-primary span {
+      color: #ffffff !important;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      color: #ffffff !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+
+    /* KPI Cards */
+    .kpis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .kpi-card.kpi-success::before {
+      background: var(--success);
+    }
+
+    .kpi-card.kpi-warning::before {
+      background: var(--warning);
+    }
+
+    .kpi-card.kpi-danger::before {
+      background: var(--danger);
+    }
+
+    .kpi-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .kpi-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .kpi-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Tabs Content Container */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Section Panels */
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 30px;
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Table Design */
+    .table-container {
+      overflow-x: auto;
+      margin-top: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+    }
+
+    th {
+      padding: 14px 16px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .badge-danger {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Search & Filter Toolbar */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 8px;
+      min-width: 280px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      color: #020617;
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #020617;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #020617;
+    }
+
+    .form-control {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #020617;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      width: 100%;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    /* Analytics Chart Styling */
+    .analytics-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .chart-panel {
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .svg-chart-container {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 15px;
+    }
+
+    /* Logs & Audit List */
+    .log-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 350px;
+      overflow-y: auto;
+      padding-left: 5px;
+    }
+
+    .log-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .log-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .log-text {
+      color: var(--text-main);
+    }
+
+    .log-time {
+      color: var(--text-muted);
+      font-size: 11px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Tooltip styling */
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .status-dot-online {
+      background-color: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .status-dot-offline {
+      background-color: var(--danger);
+      box-shadow: 0 0 8px var(--danger);
+    }
+
+    /* Cafe Accordion Styling for Users Tab */
+    .cafe-accordion-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cafe-accordion-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .cafe-accordion-card:hover {
+      border-color: #94a3b8;
+      background: #ffffff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .cafe-accordion-header {
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      background: #f8fafc;
+      transition: background 0.2s ease;
+    }
+
+    .cafe-accordion-header:hover {
+      background: #f1f5f9;
+    }
+
+    .cafe-info-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cafe-name-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-count-pill {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(59, 130, 246, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    .cafe-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .accordion-chevron {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s, color 0.2s;
+    }
+
+    .cafe-accordion-card.expanded .accordion-chevron {
+      transform: rotate(180deg);
+      color: var(--primary);
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .cafe-accordion-body {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.3s ease;
+      background: #ffffff;
+      border-top: 1px solid transparent;
+    }
+
+    .cafe-accordion-card.expanded .cafe-accordion-body {
+      max-height: 2500px;
+      opacity: 1;
+      border-top-color: var(--border-color);
+      padding: 16px 22px 22px;
+      background: #ffffff;
+    }
+
+    .accordion-footer-action {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 14px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .btn-add-cafe-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add-cafe-user:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 0 14px var(--primary-glow);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-logo">AH Cafes System </span>
+      <span class="brand-tag">سحابي</span>
+    </div>
+
+    <ul class="nav-links">
+      <li>
+        <a class="nav-item active" data-tab="overviewTab">
+          <span class="nav-icon">📊</span>
+          <span>نظرة عامة</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="cafesTab">
+          <span class="nav-icon">🏪</span>
+          <span>إدارة الكافيهات</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="usersTab">
+          <span class="nav-icon">👥</span>
+          <span>إدارة المستخدمين</span>
+        </a>
+      </li>
+      <li>
+        <a class="nav-item" data-tab="monitoringTab">
+          <span class="nav-icon">🛡️</span>
+          <span>مراقبة النظام</span>
+        </a>
+      </li>
+      <li style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color);">
+        <a class="nav-item nav-item-logout" id="sidebarLogoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span>تسجيل الخروج</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="user-avatar" id="avatarLetter">M</div>
+        <div class="user-info">
+          <span class="user-name" id="userNameLabel">مسؤول النظام</span>
+          <span class="user-role">Super Admin</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-title">
+        <h1 id="tabTitle">لوحة التحكم العامة</h1>
+        <p id="tabSubtitle">مراقبة وتجهيز الكافيهات المشتركة في المنصة</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="headerActionBtn" style="display:none;">
+          <span>+</span>
+          <span id="headerActionLabel">إضافة كافيه</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- TAB: OVERVIEW -->
+    <section class="tab-content active" id="overviewTab">
+      <div class="kpis-grid">
+        <div class="kpi-card">
+          <span class="kpi-title">إجمالي الكافيهات</span>
+          <span class="kpi-value" id="kpiTotalCafes">0</span>
+          <span class="kpi-desc">نشطة ومسجلة في المنصة</span>
+        </div>
+        <div class="kpi-card kpi-success">
+          <span class="kpi-title">حسابات المستخدمين</span>
+          <span class="kpi-value" id="kpiTotalUsers">0</span>
+          <span class="kpi-desc">مالك، مدير، كاشير، مطبخ، كابتن</span>
+        </div>
+        <div class="kpi-card kpi-warning">
+          <span class="kpi-title">الاشتراكات النشطة</span>
+          <span class="kpi-value" id="kpiActiveSubs">0</span>
+          <span class="kpi-desc">كافيهات بنطاق اشتراك ساري</span>
+        </div>
+        <div class="kpi-card kpi-success">
+          <span class="kpi-title">حالة المنصة</span>
+          <span class="kpi-value" style="font-size: 18px; display: flex; align-items: center; gap: 8px;">
+            <span class="status-dot status-dot-online"></span>
+            <span>مستقرة</span>
+          </span>
+          <span class="kpi-desc" id="dbLatencyLabel">متصلة بقاعدة البيانات</span>
+        </div>
+      </div>
+
+      <!-- ANALYTICS ROW -->
+      <div class="analytics-row">
+        <!-- Pure CSS/SVG Bar Chart for Visual Analytics -->
+        <div class="panel chart-panel">
+          <div class="panel-header">
+            <span class="panel-title">📈 نمو الكافيهات Provisioning</span>
+            <span class="kpi-desc">آخر 6 أشهر</span>
+          </div>
+          <div class="svg-chart-container">
+            <svg width="100%" height="150" viewBox="0 0 500 150" preserveAspectRatio="none">
+              <!-- Grid lines -->
+              <line x1="0" y1="30" x2="500" y2="30" stroke="#e2e8f0" stroke-width="1" />
+              <line x1="0" y1="70" x2="500" y2="70" stroke="#e2e8f0" stroke-width="1" />
+              <line x1="0" y1="110" x2="500" y2="110" stroke="#e2e8f0" stroke-width="1" />
+
+              <!-- Bars (Mock Growth representation) -->
+              <rect x="30" y="100" width="38" height="50" rx="4" fill="#3b82f6" opacity="0.85" />
+              <text x="49" y="136" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">يناير</text>
+
+              <rect x="110" y="80" width="38" height="70" rx="4" fill="#3b82f6" opacity="0.9" />
+              <text x="129" y="136" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">فبراير</text>
+
+              <rect x="190" y="60" width="38" height="90" rx="4" fill="#3b82f6" opacity="0.95" />
+              <text x="209" y="136" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">مارس</text>
+
+              <rect x="270" y="45" width="38" height="105" rx="4" fill="#2563eb" />
+              <text x="289" y="136" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">أبريل</text>
+
+              <rect x="350" y="30" width="38" height="120" rx="4" fill="#2563eb" />
+              <text x="369" y="136" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">مايو</text>
+
+              <rect x="430" y="15" width="38" height="135" rx="4" fill="#1d4ed8" />
+              <text x="449" y="136" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">يونيو</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">📊 توزيع الأدوار</span>
+          </div>
+          <!-- Pure CSS role breakdown indicators -->
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:10px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <span>الملاك والمشرفون</span>
+                <span id="roleCountAdmin">0</span>
+              </div>
+              <div
+                style="width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:4px; overflow:hidden;">
+                <div id="roleBarAdmin"
+                  style="width:0%; height:100%; background:var(--primary); border-radius:4px; transition: width 0.6s;">
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <span>الكاشيرات</span>
+                <span id="roleCountCashier">0</span>
+              </div>
+              <div
+                style="width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:4px; overflow:hidden;">
+                <div id="roleBarCashier"
+                  style="width:0%; height:100%; background:var(--success); border-radius:4px; transition: width 0.6s;">
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <span>المطابخ</span>
+                <span id="roleCountKitchen">0</span>
+              </div>
+              <div
+                style="width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:4px; overflow:hidden;">
+                <div id="roleBarKitchen"
+                  style="width:0%; height:100%; background:var(--warning); border-radius:4px; transition: width 0.6s;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIT / LOGS -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">📋 سجل المراقبة والعمليات (Audit Log)</span>
+        </div>
+        <div class="log-list" id="auditLogList">
+          <div class="log-item">
+            <div class="log-meta">
+              <span class="log-text">جاري تحميل سجل النشاطات...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: CAFES -->
+    <section class="tab-content" id="cafesTab">
+      <div class="panel">
+        <div class="toolbar">
+          <input type="text" class="search-input" id="cafeSearchInput"
+            placeholder="البحث باسم الكافيه، العنوان أو الهاتف...">
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>اسم الكافيه</th>
+                <th>المعرف البرمجي (Slug)</th>
+                <th>العنوان</th>
+                <th>الهاتف</th>
+                <th>حالة الاشتراك</th>
+                <th>تاريخ الإنشاء</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="cafesTableBody">
+              <!-- Cafe rows will be generated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: USERS -->
+    <section class="tab-content" id="usersTab">
+      <div class="panel">
+        <div class="toolbar" style="margin-bottom: 20px;">
+          <input type="text" class="search-input" id="userSearchInput"
+            placeholder="البحث باسم الموظف، البريد، أو الكافيه...">
+        </div>
+        <div id="usersTableBody" class="cafe-accordion-container">
+          <!-- Dynamically populated cafe accordions will be rendered here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: MONITORING -->
+    <section class="tab-content" id="monitoringTab">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">📈 حالة سيرفر المنصة ومكونات الربط</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div
+            style="background:rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius:12px; padding:20px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-weight:700;">
+              <span>اتصال Supabase</span>
+              <span id="supabaseConnStatus" class="badge badge-success">متصل</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:13px;">تم التحقق من ربط الـ API Client مع Supabase PostgreSQL
+              وجداول Tenants.</p>
+          </div>
+
+          <div
+            style="background:rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius:12px; padding:20px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-weight:700;">
+              <span>الذاكرة المؤقتة وإدارة الجلسات</span>
+              <span class="badge badge-success">نشطة</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:13px;">تعمل خوادم الذاكرة المؤقتة وجلسات الطاولات المحلية
+              (Table Sessions) بكفاءة كاملة.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: CAFE CREATE / EDIT -->
+  <div class="modal-overlay" id="cafeModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="cafeModalTitle">إضافة كافيه جديد</h3>
+        <button class="modal-close" id="closeCafeModalBtn">&times;</button>
+      </div>
+      <form id="cafeForm" autocomplete="off">
+        <input type="hidden" id="cafeIdInput">
+        <div class="form-group">
+          <label for="cafeNameInput">اسم الكافيه *</label>
+          <input type="text" class="form-control" id="cafeNameInput" required placeholder="مثال: قهوة وحلى" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <div class="form-group">
+          <label for="cafeSlugInput">المعرف البرمجي (Slug - اختياري)</label>
+          <input type="text" class="form-control" id="cafeSlugInput" placeholder="مثال: qahwa-halwa" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="cafeAddressInput">العنوان</label>
+          <input type="text" class="form-control" id="cafeAddressInput" placeholder="مثال: بغداد، حي المنصور" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="cafePhoneInput">الهاتف</label>
+          <input type="text" class="form-control" id="cafePhoneInput" placeholder="مثال: 07700000000" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="cafeSubStatusSelect">حالة الاشتراك</label>
+          <select class="form-control" id="cafeSubStatusSelect" style="height:42px;">
+            <option value="active">نشط (Active)</option>
+            <option value="suspended">معطل (Suspended)</option>
+            <option value="trial">تجريبي (Trial)</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" id="cancelCafeBtn">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="saveCafeBtn">حفظ الكافيه</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: USER CREATE / EDIT -->
+  <div class="modal-overlay" id="userModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="userModalTitle">إضافة مستخدم جديد</h3>
+        <button class="modal-close" id="closeUserModalBtn">&times;</button>
+      </div>
+      <form id="userForm" autocomplete="off">
+        <input type="hidden" id="userIdInput">
+        <div class="form-group">
+          <label for="userFullNameInput">الاسم الكامل *</label>
+          <input type="text" class="form-control" id="userFullNameInput" required placeholder="مثال: علي محمد" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <div class="form-group">
+          <label for="userEmailInput">البريد الإلكتروني *</label>
+          <input type="email" class="form-control" id="userEmailInput" required placeholder="name@cafezip.com" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <div class="form-group" id="passwordGroup">
+          <label for="userPasswordInput">كلمة المرور *</label>
+          <input type="password" class="form-control" id="userPasswordInput" placeholder="كلمة المرور لا تقل عن 6 أحرف" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label for="userCafeSelect">الكافيه التابع له</label>
+          <select class="form-control" id="userCafeSelect" style="height:42px;">
+            <!-- Will be populated dynamically -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="userRoleSelect">الدور الوظيفي *</label>
+          <select class="form-control" id="userRoleSelect" required style="height:42px;">
+            <option value="SUPER_ADMIN">مسؤول المنصة (SUPER_ADMIN)</option>
+            <option value="OWNER">مالك (OWNER)</option>
+            <option value="ADMIN">مدير (ADMIN)</option>
+            <option value="CASHIER">كاشير (CASHIER)</option>
+            <option value="KITCHEN">مطبخ (KITCHEN)</option>
+            <option value="CAPTAIN">كابتن (CAPTAIN)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="userStatusSelect">الحالة</label>
+          <select class="form-control" id="userStatusSelect" style="height:42px;">
+            <option value="active">نشط (Active)</option>
+            <option value="disabled">معطل (Disabled)</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" id="cancelUserBtn">إلغاء</button>
+          <button type="submit" class="btn btn-primary" id="saveUserBtn">حفظ الحساب</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: RESET PASSWORD -->
+  <div class="modal-overlay" id="resetPasswordModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">إعادة تعيين كلمة المرور</h3>
+        <button class="modal-close" id="closeResetPasswordModalBtn">&times;</button>
+      </div>
+      <form id="resetPasswordForm">
+        <input type="hidden" id="resetPasswordUserIdInput">
+        <div class="form-group">
+          <label for="newPasswordInput">كلمة المرور الجديدة *</label>
+          <input type="password" class="form-control" id="newPasswordInput" required
+            placeholder="كلمة المرور لا تقل عن 6 أحرف">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" id="cancelResetPasswordBtn">إلغاء</button>
+          <button type="submit" class="btn btn-primary">تعيين كلمة المرور</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/cafe-dialog.js"></script>
+  <script src="./superadmin.js"></script>
+</body>
+
+</html>

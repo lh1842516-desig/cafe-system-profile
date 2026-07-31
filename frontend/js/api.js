@@ -93,10 +93,28 @@ var api = {
   request: function (path, options) {
     var url = path.indexOf('http') === 0 ? path : API_BASE + path;
     var method = options.method || 'GET';
+    var headers = Object.assign({ 'Content-Type': 'application/json' }, options.headers);
+    try {
+      var token = sessionStorage.getItem('cafezip_saas_token');
+      if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+      }
+    } catch (_) {}
+    try {
+      if (!headers['x-cafe-id']) {
+        var activeCafeId = (new URLSearchParams(window.location.search)).get('cafeId') ||
+                           sessionStorage.getItem('cust_cafe_id') ||
+                           sessionStorage.getItem('cafezip_cafe_id') ||
+                           localStorage.getItem('cafezip_cafe_id');
+        if (activeCafeId) {
+          headers['x-cafe-id'] = String(activeCafeId).trim();
+        }
+      }
+    } catch (_) {}
     return fetch(url, {
       method: method,
       cache: options.cache != null ? options.cache : method === 'GET' ? 'no-store' : 'default',
-      headers: Object.assign({ 'Content-Type': 'application/json' }, options.headers),
+      headers: headers,
       body: options.body,
     }).then(function (res) {
       return res.text().then(function (text) {
@@ -208,6 +226,9 @@ var api = {
     },
     update: function (id, data) {
       return api.put('/api/menu/' + id, data);
+    },
+    delete: function (id) {
+      return api.delete('/api/menu/' + encodeURIComponent(id));
     },
     setAvailability: function (id, isAvailable) {
       return api.patch('/api/menu/' + encodeURIComponent(id) + '/availability', {
@@ -359,8 +380,16 @@ var api = {
   uploadImage: function (file) {
     var form = new FormData();
     form.append('image', file);
+    var headers = {};
+    try {
+      var token = sessionStorage.getItem('cafezip_saas_token');
+      if (token) {
+        headers['Authorization'] = 'Bearer ' + token;
+      }
+    } catch (_) {}
     return fetch(API_BASE + '/api/upload', {
       method: 'POST',
+      headers: headers,
       body: form,
     }).then(function (res) {
       if (!res.ok) return res.text().then(function (t) { throw new Error(t); });
@@ -383,8 +412,16 @@ var api = {
     uploadLogo: function (file) {
       var form = new FormData();
       form.append('logo', file);
+      var headers = {};
+      try {
+        var token = sessionStorage.getItem('cafezip_saas_token');
+        if (token) {
+          headers['Authorization'] = 'Bearer ' + token;
+        }
+      } catch (_) {}
       return fetch(API_BASE + '/api/settings/cafe/logo', {
         method: 'POST',
+        headers: headers,
         body: form,
       }).then(function (res) {
         return res.json().then(function (body) {
@@ -417,6 +454,27 @@ var api = {
     },
     regenerateTableQr: function (tableId) {
       return api.post('/api/settings/tables/' + encodeURIComponent(String(tableId || '').trim()) + '/regenerate-qr', {});
+    },
+    downloadTableQr: function (tableId) {
+      var tid = encodeURIComponent(String(tableId || '').trim());
+      var headers = {};
+      try {
+        var token = sessionStorage.getItem('cafezip_saas_token');
+        if (token) {
+          headers['Authorization'] = 'Bearer ' + token;
+        }
+      } catch (_) {}
+      return fetch(API_BASE + '/api/settings/tables/' + tid + '/download-qr', {
+        method: 'GET',
+        headers: headers,
+      }).then(function (res) {
+        if (!res.ok) {
+          return res.json().then(function (b) {
+            throw new Error((b && b.error) || 'fished_download');
+          });
+        }
+        return res.blob();
+      });
     },
   },
 

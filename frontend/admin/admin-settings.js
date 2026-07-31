@@ -81,26 +81,14 @@
   function buildTableCard(t) {
     var id = String(t.id || '').trim();
     var label = String(t.label != null ? t.label : id).trim() || id;
-    var qrOk = !!t.qrGenerated;
-    var qrPath = t.qrPath ? absAssetUrl(t.qrPath) : '';
-    var statusClass = qrOk ? 'is-ok' : 'is-missing';
-    var statusText = qrOk ? 'QR جاهز' : 'QR غير موجود';
-    var downloadBtn = qrOk
-      ? '<a class="btn btn-secondary" href="' +
-        escapeHtml(qrPath) +
-        '" download="table_' +
-        escapeHtml(id) +
-        '.png" target="_blank" rel="noopener">تحميل QR</a>'
-      : '';
+    var downloadBtn = '<button type="button" class="btn btn-secondary" data-action="download-qr" data-id="' +
+      escapeHtml(id) +
+      '">تحميل QR</button>';
     return (
       '<article class="settings-table-card" data-table-id="' +
       escapeHtml(id) +
       '">' +
-      '<span class="settings-table-card__status ' +
-      statusClass +
-      '">' +
-      statusText +
-      '</span>' +
+      '<span class="settings-table-card__status is-ok">QR جاهز</span>' +
       '<div class="settings-table-card__body">' +
       '<p class="settings-table-card__name">طاولة <span>' +
       escapeHtml(label) +
@@ -349,12 +337,43 @@
     });
   }
 
+  function downloadQr(tableId, btn) {
+    if (!tableId || !global.api || !global.api.settings || !global.api.settings.downloadTableQr) return;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'جاري التوليد…';
+    }
+    global.api.settings
+      .downloadTableQr(tableId)
+      .then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'table_' + tableId + '_qr.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+        toast('تم تحميل بطاقة QR للطاولة ' + tableId);
+      })
+      .catch(function (err) {
+        toast((err && err.message) || 'فشل تحميل بطاقة QR');
+      })
+      .then(function () {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'تحميل QR';
+        }
+      });
+  }
+
   function onTableListClick(ev) {
     var btn = ev.target && ev.target.closest ? ev.target.closest('[data-action]') : null;
     if (!btn) return;
     var action = btn.getAttribute('data-action');
     var id = btn.getAttribute('data-id');
     if (action === 'delete-table') deleteTable(id);
+    else if (action === 'download-qr') downloadQr(id, btn);
   }
 
   function bindEvents() {

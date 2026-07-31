@@ -73,9 +73,9 @@ async function initKitchenState(cafeId) {
 }
 
 // ── Sync reads ─────────────────────────────────────────────────────────────
-function readKitchenState() { return _kitchenState; }
+function readKitchenState(cafeId) { return _kitchenState; }
 
-function getKitchenStatus(orderId) {
+function getKitchenStatus(cafeId, orderId) {
   return _kitchenState[orderId] || null;
 }
 
@@ -89,56 +89,63 @@ function normalizeKitchenStatusRead(raw) {
   return 'new';
 }
 
-function isOrderKitchenCompleted(orderId) {
-  const ks = getKitchenStatus(orderId);
+function isOrderKitchenCompleted(cafeId, orderId) {
+  const ks = getKitchenStatus(cafeId, orderId);
   return normalizeKitchenStatusRead(ks && ks.status) === 'completed';
 }
 
 // ── Async writes ───────────────────────────────────────────────────────────
-async function setKitchenStatus(orderId, status) {
+async function setKitchenStatus(cafeId, orderId, status) {
   const now = new Date().toISOString();
   const prev = _kitchenState[orderId] || {};
   const entry = { status, updatedAt: now, createdAt: prev.createdAt || now };
   _kitchenState[orderId] = entry;
 
-  if (_cafeId) {
+  const targetCafeId = cafeId || _cafeId;
+  if (targetCafeId) {
     const supabase = getClient();
     try {
       const { error } = await supabase.from('kitchen_state').upsert(
-        [{ order_id: orderId, cafe_id: _cafeId, status, created_at: entry.createdAt, updated_at: now }],
+        [{ order_id: orderId, cafe_id: targetCafeId, status, created_at: entry.createdAt, updated_at: now }],
         { onConflict: 'order_id,cafe_id' }
       );
       if (error) console.error('[kitchen] setKitchenStatus error:', error.message);
     } catch (err) {
-      console.error('[kitchen] setKitchenStatus error:', err.message);
+      if (!err.message.includes('fetch failed')) {
+        console.error('[kitchen] setKitchenStatus error:', err.message);
+      }
     }
   }
   return entry;
 }
 
-async function removeKitchenEntry(orderId) {
+async function removeKitchenEntry(cafeId, orderId) {
   const id = orderId != null ? String(orderId).trim() : '';
   if (!id || !_kitchenState[id]) return false;
   delete _kitchenState[id];
 
-  if (_cafeId) {
+  const targetCafeId = cafeId || _cafeId;
+  if (targetCafeId) {
     const supabase = getClient();
     try {
-      await supabase.from('kitchen_state').delete().eq('order_id', id).eq('cafe_id', _cafeId);
+      await supabase.from('kitchen_state').delete().eq('order_id', id).eq('cafe_id', targetCafeId);
     } catch (err) {
-      console.error('[kitchen] removeKitchenEntry error:', err.message);
+      if (!err.message.includes('fetch failed')) {
+        console.error('[kitchen] removeKitchenEntry error:', err.message);
+      }
     }
   }
   return true;
 }
 
-async function saveKitchenState(state) {
+async function saveKitchenState(cafeId, state) {
   _kitchenState = { ...state };
-  if (!_cafeId) return;
+  const targetCafeId = cafeId || _cafeId;
+  if (!targetCafeId) return;
   const supabase = getClient();
   try {
     // Delete all and re-insert
-    await supabase.from('kitchen_state').delete().eq('cafe_id', _cafeId);
+    await supabase.from('kitchen_state').delete().eq('cafe_id', targetCafeId);
     const entries = Object.entries(state);
     if (entries.length > 0) {
       const now = new Date().toISOString();
@@ -157,15 +164,22 @@ async function saveKitchenState(state) {
   }
 }
 
-async function resetKitchenState() {
+async function resetKitchenState(cafeId) {
   _kitchenState = {};
-  if (_cafeId) {
+  const targetCafeId = cafeId || _cafeId;
+  if (targetCafeId) {
     const supabase = getClient();
     try {
-      await supabase.from('kitchen_state').delete().eq('cafe_id', _cafeId);
+      await supabase.from('kitchen_state').delete().eq('cafe_id', targetCafeId);
     } catch (err) {
       console.error('[kitchen] resetKitchenState error:', err.message);
     }
+  }
+}
+
+function setKitchenStateCache(state) {
+  if (state && typeof state === 'object') {
+    _kitchenState = { ...state };
   }
 }
 
@@ -180,4 +194,5 @@ module.exports = {
   removeKitchenEntry,
   normalizeKitchenStatusRead,
   isOrderKitchenCompleted,
+  setKitchenStateCache,
 };

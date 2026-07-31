@@ -4,30 +4,24 @@
  * كي تبقى واجهة الطاولات وقفل «تغيير الطاولة» كالسلوك الأصلي.
  * مسارات الحجز/الإلغاء تستخدم getOrdersBlockingTableClaim منفصلة في store + routes.
  */
-const { getOrdersByTable } = require('../data/store');
+const orderRepo = require('../repository/orderRepository');
 const tableSessions = require('./tableSessions');
-const tableBillRequestService = require('./tableBillRequestService');
+
 
 /**
+ * @param {string} cafeId
  * @param {string} tableId
  * @param {string} mineSessionId
  * @param {string} [mineOrderId] — إن وُجد ويطابق طلباً مفتوحاً على الطاولة تُعاد isMine=true (استئناف بعد إغلاق المتصفح)
  * @returns {{ status: 'available'|'in_use'|'occupied'|'awaiting_bill', sessionId: string|null, isMine: boolean, statusLabel?: string }}
  */
-function resolveTableStatus(tableId, mineSessionId, mineOrderId) {
+async function resolveTableStatus(cafeId, tableId, mineSessionId, mineOrderId) {
   const tid = String(tableId || '').trim();
   const oidWant = String(mineOrderId || '').trim();
-  const open = getOrdersByTable(tid);
+  const open = await orderRepo.getOrdersByTable(cafeId, tid);
   if (open && open.length > 0) {
     const mineByOrder = !!(oidWant && open.some((o) => String(o.id) === oidWant));
-    if (tableBillRequestService.isBillRequested(tid)) {
-      return {
-        status: 'awaiting_bill',
-        sessionId: null,
-        isMine: mineByOrder,
-        statusLabel: tableBillRequestService.STATUS_LABEL,
-      };
-    }
+
     return { status: 'occupied', sessionId: null, isMine: mineByOrder };
   }
   const sess = tableSessions.getSessionByTable(tid);

@@ -71,18 +71,20 @@
       max-width: calc(100% - 8rem);
       pointer-events: none;
     }
-    .admin-header .btn-home {
+    .admin-header .btn-logout {
       grid-column: 3;
-      padding: 0.5rem 1rem;
+      padding: 0.45rem 1.1rem;
       font-size: 0.9rem;
+      font-weight: 600;
       border-radius: 10px;
-      background: rgba(255,255,255,0.12);
+      background: #dc3545;
       color: #fff;
       text-decoration: none;
       transition: background 0.2s, color 0.2s;
-      min-height: 44px;
+      min-height: 40px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       justify-self: end;
       border: none;
       font-family: inherit;
@@ -90,8 +92,8 @@
       position: relative;
       z-index: 1;
     }
-    .admin-header .btn-home:hover {
-      background: rgba(255,255,255,0.18);
+    .admin-header .btn-logout:hover {
+      background: #bb2d3b;
       color: #fff;
     }
     /* زر القائمة — واضح وقابل للنقر، متناسق مع زر الرئيسية */
@@ -347,36 +349,14 @@
       width: 100%;
       max-width: none;
     }
-    #pageSettings .settings-top-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.5rem;
-      width: 100%;
-      align-items: stretch;
-    }
-    #pageSettings .settings-top-row .settings-card {
+    #pageSettings .settings-card--full {
       max-width: none;
       width: 100%;
-      display: flex;
-      flex-direction: column;
     }
-    #pageSettings .settings-top-row .settings-card form {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    #pageSettings .settings-top-row .form-actions {
-      margin-top: auto;
-      padding-top: 0.5rem;
-    }
-    #pageSettings .settings-card:not(.settings-card--tables):not(.settings-top-row .settings-card) {
+    #pageSettings .settings-card:not(.settings-card--tables):not(.settings-card--full) {
       max-width: 520px;
     }
-    @media (max-width: 960px) {
-      #pageSettings .settings-top-row {
-        grid-template-columns: 1fr;
-      }
-    }
+
     #pageSettings .admin-login-input-wrap input {
       padding-left: 3.1rem !important;
       padding-right: 1rem !important;
@@ -3103,50 +3083,18 @@
   </style>
 </head>
 <body class="admin-app">
-  <div id="adminLoginGate" class="admin-login-gate" aria-label="تسجيل دخول الأدمن">
-    <div class="admin-login-card">
-      <img src="/admin/assets/ah-systems-logo.png" alt="A.H SYSTEMS &amp; WEB SOLUTIONS" class="admin-login-logo" width="155" height="auto">
-      <h2 class="admin-login-title">تسجيل الدخول</h2>
-      <p class="admin-login-subtitle">لوحة تحكم الأدمن</p>
-      <form id="adminLoginForm" class="admin-login-form" autocomplete="on">
-        <div id="adminLoginNormal" class="admin-login-normal">
-          <div class="form-group">
-            <label for="adminLoginUser">اسم المستخدم</label>
-            <input type="text" id="adminLoginUser" name="username" autocomplete="username" placeholder="أدخل اسم المستخدم">
-          </div>
-          <div class="form-group">
-            <label for="adminLoginPass">رمز الدخول</label>
-            <div class="admin-login-input-wrap">
-              <input type="password" id="adminLoginPass" name="password" autocomplete="current-password" placeholder="أدخل رمز الدخول">
-              <button type="button" class="admin-login-eye" id="btnTogglePass" aria-label="إظهار رمز الدخول" title="إظهار رمز الدخول">
-                <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-              </button>
-            </div>
-          </div>
-          <p id="adminLoginError" class="admin-login-error" hidden role="alert"></p>
-          <button type="submit" class="btn-admin-login">دخول</button>
-          <button type="button" class="btn-admin-forgot" id="btnForgotPass">هل نسيت رمز الدخول؟</button>
-        </div>
-        <div id="adminLoginRecovery" class="admin-login-recovery" hidden>
-          <div class="form-group">
-            <label for="adminRecoveryCode">رمز الاستيراد</label>
-            <div class="admin-login-input-wrap">
-              <input type="password" id="adminRecoveryCode" name="recovery" autocomplete="off" placeholder="أدخل رمز الاستيراد">
-              <button type="button" class="admin-login-eye" id="btnToggleRecovery" aria-label="إظهار رمز الاستيراد" title="إظهار رمز الاستيراد">
-                <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-              </button>
-            </div>
-          </div>
-          <p id="adminRecoveryError" class="admin-login-error" hidden role="alert"></p>
-          <button type="submit" class="btn-admin-login">دخول</button>
-          <button type="button" class="btn-admin-back-login" id="btnBackToLogin">العودة لتسجيل الدخول</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="admin-wrap" id="adminAppWrap" hidden aria-hidden="true">
+  <script src="/js/saas-auth.js"></script>
+  <script>
+    (function() {
+      document.documentElement.style.visibility = 'hidden';
+      SaasAuth.requireAuth(['OWNER', 'ADMIN']).then(function(allowed) {
+        if (allowed) {
+          document.documentElement.style.visibility = '';
+        }
+      });
+    })();
+  </script>
+  <div class="admin-wrap" id="adminAppWrap">
     <main class="admin-main" id="adminMain">
       <header class="admin-header">
         <button type="button" class="btn-menu" id="btnMenuOpen" aria-label="فتح القائمة">
@@ -3154,17 +3102,17 @@
           <span>القائمة</span>
         </button>
         <h1>لوحة تحكم الأدمن</h1>
-        <a href="../" class="btn-home" id="btnHome">الرئيسية</a>
+        <button type="button" class="btn-logout" id="btnSaasLogout">خروج</button>
       </header>
       <div class="admin-content">
         <div id="pageAddItem" class="admin-page">
           <h2 class="page-title" id="pageAddItemTitle">إضافة عنصر جديد</h2>
           <div class="form-card">
-            <form id="formAddItem">
+            <form id="formAddItem" autocomplete="off">
               <input type="hidden" id="editId">
               <div class="form-group">
                 <label for="itemName">اسم العنصر</label>
-                <input type="text" id="itemName" required placeholder="مثال: إسبريسو">
+                <input type="text" id="itemName" required placeholder="مثال: إسبريسو" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
               </div>
               <div class="form-group">
                 <label for="itemPrice">السعر (IQD)</label>
@@ -3283,14 +3231,13 @@
         <div id="pageSettings" class="admin-page">
           <h2 class="page-title">الإعدادات</h2>
           <div class="settings-stack">
-            <div class="settings-top-row">
-              <section class="settings-card" aria-labelledby="settingsCafeTitle">
+              <section class="settings-card settings-card--full" aria-labelledby="settingsCafeTitle">
                 <h3 id="settingsCafeTitle" class="settings-card__title">إعدادات الكافيه</h3>
                 <p class="settings-card__desc">اسم الكافيه والشعار يظهران في صفحة الترحيب ومنيو الزبائن.</p>
                 <form id="formCafeSettings">
                   <div class="form-group">
                     <label for="settingsCafeName">اسم الكافيه</label>
-                    <input type="text" id="settingsCafeName" maxlength="80" placeholder="مثال: Shot Cafe" autocomplete="organization">
+                    <input type="text" id="settingsCafeName" maxlength="80" placeholder="مثال: Shot Cafe" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                   </div>
                   <div class="form-group">
                     <label>شعار الكافيه</label>
@@ -3309,47 +3256,7 @@
                   </div>
                 </form>
               </section>
-              <section class="settings-card" aria-labelledby="settingsSecurityTitle">
-                <h3 id="settingsSecurityTitle" class="settings-card__title">إعدادات الأمان</h3>
-                <p class="settings-card__desc">تغيير رمز دخول لوحة التحكم. استخدم الرمز الحالي ثم عيّن الرمز الجديد.</p>
-                <form id="formSecuritySettings" autocomplete="off">
-                  <div class="form-group">
-                    <label for="settingsCurrentPassword">رمز الدخول الحالي</label>
-                    <div class="admin-login-input-wrap">
-                      <input type="password" id="settingsCurrentPassword" autocomplete="current-password" placeholder="أدخل رمز الدخول الحالي">
-                      <button type="button" class="admin-login-eye" id="btnToggleCurrentPass" aria-label="إظهار رمز الدخول الحالي" title="إظهار رمز الدخول الحالي">
-                        <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                        <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="settingsNewPassword">تعيين الرمز الجديد</label>
-                    <div class="admin-login-input-wrap">
-                      <input type="password" id="settingsNewPassword" autocomplete="new-password" placeholder="أدخل الرمز الجديد">
-                      <button type="button" class="admin-login-eye" id="btnToggleNewPass" aria-label="إظهار الرمز الجديد" title="إظهار الرمز الجديد">
-                        <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                        <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="settingsConfirmPassword">تأكيد الرمز الجديد</label>
-                    <div class="admin-login-input-wrap">
-                      <input type="password" id="settingsConfirmPassword" autocomplete="new-password" placeholder="أعد إدخال الرمز الجديد">
-                      <button type="button" class="admin-login-eye" id="btnToggleConfirmPass" aria-label="إظهار تأكيد الرمز" title="إظهار تأكيد الرمز">
-                        <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                        <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-                      </button>
-                    </div>
-                  </div>
-                  <p id="settingsSecurityError" class="settings-security-error" hidden role="alert"></p>
-                  <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" id="btnSaveSecuritySettings">حفظ التغييرات</button>
-                  </div>
-                </form>
-              </section>
-            </div>
+
             <section class="settings-card settings-card--tables" aria-labelledby="settingsTablesTitle">
               <h3 id="settingsTablesTitle" class="settings-card__title">إعدادات الطاولات</h3>
               <p class="settings-card__desc">إضافة أو حذف الطاولات مع توليد QR تلقائياً للزبائن.</p>
@@ -3536,7 +3443,34 @@
   <script src="../js/api.js?v=20260609-admin-security"></script>
   <script src="admin-settings.js?v=20260603-logo-delete-fix"></script>
   <script src="admin-security.js?v=20260609-admin-security"></script>
-  <script src="admin-auth.js?v=20260609-admin-security"></script>
   <script src="admin.js"></script>
+  <script>
+    (function() {
+      var logoutBtn = document.getElementById('btnSaasLogout');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (window.SaasAuth && typeof SaasAuth.confirmLogout === 'function') {
+            SaasAuth.confirmLogout();
+          } else if (window.CafeDialog && typeof window.CafeDialog.confirm === 'function') {
+            window.CafeDialog.confirm('هل أنت تأكد من الخروج من الصفحة؟', {
+              title: 'تأكيد الخروج',
+              okText: 'نعم',
+              cancelText: 'لا'
+            }).then(function(ok) {
+              if (ok) {
+                sessionStorage.removeItem('shotCafeAdminAuth');
+                window.location.href = '/login';
+              }
+            });
+          } else {
+            if (confirm('هل أنت تأكد من الخروج من الصفحة؟')) {
+              sessionStorage.removeItem('shotCafeAdminAuth');
+              window.location.href = '/login';
+            }
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

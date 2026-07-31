@@ -839,6 +839,7 @@
   /** تحميل إحصائيات الصفحة الرئيسية + كارت قاصة اليوم. أثناء وجود قاصة مفتوحة تُحسب الإحصائيات من جلسة القاصة (وليس تقويم «اليوم» فقط). */
   async function loadStats() {
     var todayStr = getTodayDateStr();
+    var closingsList = null;
     try {
       var tillRes = await api.till.current();
       var tillData = tillRes && tillRes.till;
@@ -851,11 +852,16 @@
           renderStats(null);
         }
       } else {
-        var list = await api.closings.list();
-        var closingForToday = list ? list.find(function (c) {
-          var d = c.open_date != null ? c.open_date : c.date;
-          return String(d) === todayStr;
-        }) : null;
+        closingsList = await api.closings.list();
+        var matchesToday = function (c) {
+          if (!c) return false;
+          var raw = c.open_date || c.date || c.closedAt || c.openedAt;
+          if (!raw) return false;
+          var d = String(raw).trim().split('T')[0].split(' ')[0];
+          return d === todayStr;
+        };
+        var todayClosings = closingsList ? closingsList.filter(matchesToday) : [];
+        var closingForToday = todayClosings.length > 0 ? todayClosings[todayClosings.length - 1] : null;
         if (closingForToday) {
           try {
             var report = await api.archive.report('day', todayStr);
@@ -901,12 +907,16 @@
       renderStats(null);
     }
     try {
-      var list = await api.closings.list();
-      // عرض «قاصة اليوم» فقط إذا وُجدت قاصة مغلقة لليوم الحالي (لا نعرض بيانات أمس)
-      var closingForTodayCard = list ? list.find(function (c) {
-        var d = c.open_date != null ? c.open_date : c.date;
-        return String(d) === todayStr;
-      }) : null;
+      var list = closingsList || (await api.closings.list());
+      var matchesTodayCard = function (c) {
+        if (!c) return false;
+        var raw = c.open_date || c.date || c.closedAt || c.openedAt;
+        if (!raw) return false;
+        var d = String(raw).trim().split('T')[0].split(' ')[0];
+        return d === todayStr;
+      };
+      var cardClosings = list ? list.filter(matchesTodayCard) : [];
+      var closingForTodayCard = cardClosings.length > 0 ? cardClosings[cardClosings.length - 1] : null;
       renderClosingCard(closingForTodayCard);
     } catch (_) {
       renderClosingCard(null);
@@ -1512,15 +1522,15 @@
 
   async function loadMenu() {
     try {
-      var items = await api.menu.list();
+      var apiCatPromise = (api.categories && api.categories.list)
+        ? api.categories.list().catch(function () { return []; })
+        : Promise.resolve([]);
+      var [items, apiCategoriesRaw] = await Promise.all([
+        api.menu.list(),
+        apiCatPromise
+      ]);
       allMenuItems = items || [];
-      var apiCategories = [];
-      if (api.categories && api.categories.list) {
-        try {
-          apiCategories = await api.categories.list();
-          if (!Array.isArray(apiCategories)) apiCategories = [];
-        } catch (_) {}
-      }
+      var apiCategories = Array.isArray(apiCategoriesRaw) ? apiCategoriesRaw : [];
       var categoriesWithCounts = mergeCategoriesWithCounts(apiCategories, allMenuItems);
       lastCategoriesWithCounts = categoriesWithCounts;
       fillCategorySelect(categoriesWithCounts);
@@ -2082,7 +2092,10 @@
   async function loadTodayOrders() {
     var todayStr = getTodayDateStr();
     try {
-      var list = await api.closings.list();
+      var [list, fallbackOrders] = await Promise.all([
+        api.closings.list().catch(function () { return null; }),
+        api.orders.today().catch(function () { return []; })
+      ]);
       var closingForToday = list ? list.find(function (c) { return String(c.date) === todayStr; }) : null;
       if (closingForToday) {
         try {
@@ -2093,8 +2106,7 @@
           }
         } catch (_) {}
       }
-      var orders = await api.orders.today();
-      renderTodayOrders(orders);
+      renderTodayOrders(fallbackOrders || []);
     } catch (_) {
       if (todayGroupedList) todayGroupedList.innerHTML = '';
       emptyOrders.style.display = 'block';
@@ -2222,15 +2234,13 @@
     try {
       window._lastArchiveReportType = type;
       window._lastArchiveReportDate = dateVal;
-      var data = await api.archive.report(type, dateVal);
-      renderArchiveReport(data);
       var range = getArchiveOpenDateRange(type, dateVal);
-      var closingsList = [];
-      if (range.start === range.end) {
-        closingsList = await api.closings.listByOpenDate(range.start);
-      } else {
-        closingsList = await api.closings.listByOpenDateRange(range.start, range.end);
-      }
+      var reportPromise = api.archive.report(type, dateVal);
+      var closingsPromise = (range.start === range.end)
+        ? api.closings.listByOpenDate(range.start)
+        : api.closings.listByOpenDateRange(range.start, range.end);
+      var [data, closingsList] = await Promise.all([reportPromise, closingsPromise]);
+      renderArchiveReport(data);
       renderArchiveClosings(closingsList, type, dateVal, range);
     } catch (err) {
       showToast(err.json && err.json.error ? err.json.error : 'فشل تحميل التقرير');

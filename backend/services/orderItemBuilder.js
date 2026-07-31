@@ -1,7 +1,8 @@
+'use strict';
 /**
  * تحويل صفوف السلة/الطلب إلى عناصر مطبخ — مصدر واحد للإنشاء والإرسال الجماعي.
  */
-const { getMenuItem } = require('../data/store');
+const menuRepo = require('../repository/menuRepository');
 
 function sanitizeSelectedOptions(menuItem, row) {
   const raw = row && row.selectedOptions;
@@ -32,12 +33,12 @@ function sanitizeSelectedOptions(menuItem, row) {
   return out;
 }
 
-function buildOrderItemsFromRows(rows) {
+async function buildOrderItemsFromRows(cafeId, rows) {
   if (!Array.isArray(rows) || !rows.length) {
     return [];
   }
-  return rows.map((row) => {
-    const menuItem = getMenuItem(row.menuId);
+  return await Promise.all(rows.map(async (row) => {
+    const menuItem = await menuRepo.getMenuItem(cafeId, row.menuId);
     if (!menuItem) throw new Error('عنصر منيو غير موجود: ' + row.menuId);
     return {
       menuId: menuItem.id,
@@ -47,7 +48,7 @@ function buildOrderItemsFromRows(rows) {
       note: row.note ? String(row.note).trim() : '',
       selectedOptions: sanitizeSelectedOptions(menuItem, row),
     };
-  });
+  }));
 }
 
 module.exports = {

@@ -3,7 +3,6 @@
  * طلبات داخل الصالة تبقى مفتوحة حتى يغلقها الكاشير (دفع).
  */
 
-const { saveOrders } = require('../data/store');
 const { addOrderToArchive } = require('../data/archive');
 
 function inferServiceOrderType(order) {

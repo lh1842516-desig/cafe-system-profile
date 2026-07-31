@@ -2,6 +2,8 @@
  * بث تغييرات حالة الطاولة لجميع عملاء واجهة الزبون (Socket.io)
  * الحمولة: { tableId: number|string, status: 'available'|'inUse'|'occupied', sessionId? }
  */
+const { tableRoomName } = require('./tableRoomHelper');
+
 function toWireTableId(tableId) {
   const s = String(tableId != null ? tableId : '').trim();
   if (!s) return '';
@@ -10,7 +12,7 @@ function toWireTableId(tableId) {
   return s;
 }
 
-function emitTableUpdate(io, payload) {
+function emitTableUpdate(io, payload, cafeId) {
   if (!io || typeof io.emit !== 'function') return;
   const raw = String(payload.status || 'available').toLowerCase();
   let status = 'available';
@@ -27,25 +29,44 @@ function emitTableUpdate(io, payload) {
   if (payload.statusLabel != null && String(payload.statusLabel).trim() !== '') {
     msg.statusLabel = String(payload.statusLabel).trim();
   }
-  io.emit('table_update', msg);
+  const cid = cafeId || payload.cafeId || require('../lib/cafeContext').getDefaultCafeId();
+  if (cid) {
+    io.to('cafe-' + cid + '-staff').emit('table_update', msg);
+    const room = tableRoomName(payload.tableId, cid);
+    if (room) {
+      io.to(room).emit('table_update', msg);
+    }
+  } else {
+    io.emit('table_update', msg);
+  }
 }
 
 /** سلة زبون واحد — للجهاز صاحب الجلسة فقط */
-function emitCustomerCart(io, payload) {
+function emitCustomerCart(io, payload, cafeId) {
   if (!io || typeof io.emit !== 'function') return;
   const tid = payload && payload.tableId != null ? payload.tableId : '';
   const sessionId = payload && payload.sessionId != null ? String(payload.sessionId).trim() : '';
   const items = payload && Array.isArray(payload.items) ? payload.items : [];
   if (!tid || !sessionId) return;
-  io.emit('customer_cart_updated', {
-    tableId: toWireTableId(tid),
-    sessionId,
-    items,
-  });
+  const cid = cafeId || payload.cafeId || require('../lib/cafeContext').getDefaultCafeId();
+  const room = tableRoomName(tid, cid);
+  if (room) {
+    io.to(room).emit('customer_cart_updated', {
+      tableId: toWireTableId(tid),
+      sessionId,
+      items,
+    });
+  } else {
+    io.emit('customer_cart_updated', {
+      tableId: toWireTableId(tid),
+      sessionId,
+      items,
+    });
+  }
 }
 
 /** قائمة المتصلين بالطاولة + العدد */
-function emitTableUsersUpdated(io, payload) {
+function emitTableUsersUpdated(io, payload, cafeId) {
   if (!io || typeof io.emit !== 'function') return;
   const tid = payload && payload.tableId != null ? payload.tableId : '';
   if (!tid) return;
@@ -56,11 +77,21 @@ function emitTableUsersUpdated(io, payload) {
       : users.filter(function (u) {
           return u && u.connected !== false;
         }).length;
-  io.emit('table_users_updated', {
-    tableId: toWireTableId(tid),
-    users,
-    count: Number.isFinite(count) ? count : users.length,
-  });
+  const cid = cafeId || payload.cafeId || require('../lib/cafeContext').getDefaultCafeId();
+  const room = tableRoomName(tid, cid);
+  if (room) {
+    io.to(room).emit('table_users_updated', {
+      tableId: toWireTableId(tid),
+      users,
+      count: Number.isFinite(count) ? count : users.length,
+    });
+  } else {
+    io.emit('table_users_updated', {
+      tableId: toWireTableId(tid),
+      users,
+      count: Number.isFinite(count) ? count : users.length,
+    });
+  }
 }
 
 module.exports = { emitTableUpdate, emitCustomerCart, emitTableUsersUpdated };

@@ -147,6 +147,9 @@ body.captain-order-page {
 .co-header.co-header--has-table .co-btn-back {
   display: inline-block;
 }
+.co-header.co-header--has-table #btnSaasLogout {
+  display: none !important;
+}
 
 /* ——— Main 3-column layout ——— */
 .co-main {

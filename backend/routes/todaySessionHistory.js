@@ -3,6 +3,7 @@
  */
 const express = require('express');
 const router = express.Router();
+const { authenticateToken } = require('./authMiddleware');
 const {
   createSessionFromClosedOrders,
   listSessionsForCurrentTill,
@@ -10,39 +11,44 @@ const {
   getSessionById,
 } = require('../services/todaySessionHistoryService');
 
+router.use(authenticateToken);
+
 router.get('/report', (req, res) => {
   try {
     const type = String(req.query.type || 'day').trim();
     const date = String(req.query.date || '').trim();
-    const sessions = listSessionsForReport(type, date);
+    const sessions = listSessionsForReport(req.cafeId, type, date);
     res.json(sessions);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });
   }
 });
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const sessions = listSessionsForCurrentTill();
+    const cafeId = req.cafeId;
+    const sessions = await listSessionsForCurrentTill(cafeId);
     res.json(sessions);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });
   }
 });
 
-router.get('/:sessionId', (req, res) => {
+router.get('/:sessionId', async (req, res) => {
   try {
-    const session = getSessionById(req.params.sessionId);
+    const cafeId = req.cafeId;
+    const session = await getSessionById(cafeId, req.params.sessionId);
     res.json(session);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
+    const cafeId = req.cafeId;
     const body = req.body || {};
-    const session = createSessionFromClosedOrders({
+    const session = await createSessionFromClosedOrders(cafeId, {
       tableId: body.tableId,
       orderIds: body.orderIds,
       paymentMethod: body.paymentMethod,

@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#F5F7FA">
   <title>واجهة الكاشير — نظام الكافيه</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/fonts.css">
   <link rel="stylesheet" href="../css/common.css">
+
   <style>
     /* خط عربي أوضح لكل واجهة الكاشير */
     .cashier-layout,
@@ -3127,15 +3126,40 @@
   <link rel="stylesheet" href="../css/cashier-theme.css?v=20260609-cashbox-open-fields">
 </head>
 <body class="cashier-app">
+  <script src="/js/saas-auth.js"></script>
+  <script>
+    (function() {
+      document.documentElement.style.visibility = 'hidden';
+      SaasAuth.requireAuth(['OWNER', 'ADMIN', 'CASHIER']).then(function(allowed) {
+        if (allowed) {
+          document.documentElement.style.visibility = '';
+        }
+      });
+    })();
+  </script>
   <header class="page-header cashier-page-header" id="cashierPageHeader">
     <div class="cashier-header-start">
       <button type="button" class="cashier-sidebar-open-btn" id="btnCashierSidebarOpen" aria-label="فتح القائمة">☰</button>
     <h1>واجهة الكاشير</h1>
     </div>
     <p class="cashier-header-cafe-name" id="cashierHeaderCafeName" hidden aria-live="polite"></p>
-    <div class="cashier-header-tools">
+    <div class="cashier-header-tools" style="display: flex; gap: 8px; align-items: center;">
+      <button type="button" class="btn-logout" id="btnSaasLogout" style="display: none;">خروج</button>
       <span id="realtimeStatus" class="realtime-status" aria-live="polite">جاري الاتصال...</span>
     </div>
+    <script>
+      SaasAuth.checkStatus().then(function(enabled) {
+        if (enabled) {
+          var logoutBtn = document.getElementById('btnSaasLogout');
+          if (logoutBtn) {
+            logoutBtn.style.display = 'inline-flex';
+            logoutBtn.addEventListener('click', function() {
+              SaasAuth.confirmLogout();
+            });
+          }
+        }
+      });
+    </script>
   </header>
 
   <div class="cashier-body cashier-sidebar-hidden" id="cashierBody">
@@ -3234,7 +3258,7 @@
                 <div class="cashbox-open-field-row">
                   <label for="cashboxOpenNameInput" class="cashbox-info-label">اسم المستخدم</label>
                   <div class="cashbox-open-input-wrap">
-                    <input type="text" id="cashboxOpenNameInput" class="cashbox-input-text"  autocomplete="name" maxlength="80" aria-label="اسم المستخدم الذي يفتح القاصة">
+                    <input type="text" id="cashboxOpenNameInput" class="cashbox-input-text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="80" aria-label="اسم المستخدم الذي يفتح القاصة">
                   </div>
                 </div>
                 <div class="cashbox-open-field-row cashbox-open-balance-row">
@@ -3507,7 +3531,7 @@
         <div class="cashbox-open-field-row">
           <label for="cashboxCloseNameInput" class="cashbox-info-label">اسم المستخدم</label>
           <div class="cashbox-open-input-wrap">
-            <input type="text" id="cashboxCloseNameInput" class="cashbox-input-text" placeholder="مثال: أحمد" autocomplete="name" maxlength="80" aria-label="اسم المستخدم الذي يغلق القاصة">
+            <input type="text" id="cashboxCloseNameInput" class="cashbox-input-text" placeholder="مثال: أحمد" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="80" aria-label="اسم المستخدم الذي يغلق القاصة">
           </div>
         </div>
       </div>
@@ -3551,14 +3575,14 @@
           <p class="cashier-order-type-section__title">معلومات الطلب (اختياري)</p>
           <div class="cashier-order-type-field">
             <span class="cashier-order-type-field__icon" aria-hidden="true">👤</span>
-            <input type="text" id="cashierTakeawayCashierName" placeholder="اسم الكاشير" autocomplete="name">
+            <input type="text" id="cashierTakeawayCashierName" placeholder="اسم الكاشير" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
           </div>
         </div>
         <div class="cashier-order-type-section" id="cashierSectionDelivery" hidden>
           <p class="cashier-order-type-section__title">معلومات التوصيل</p>
           <div class="cashier-order-type-field">
             <span class="cashier-order-type-field__icon" aria-hidden="true">👤</span>
-            <input type="text" id="cashierDeliveryName" placeholder="اسم الزبون" value="مجهول" autocomplete="name">
+            <input type="text" id="cashierDeliveryName" placeholder="اسم الزبون" value="مجهول" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
           </div>
           <div class="cashier-order-type-field">
             <span class="cashier-order-type-field__icon" aria-hidden="true">📞</span>

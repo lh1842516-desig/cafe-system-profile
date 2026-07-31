@@ -191,12 +191,35 @@
     });
   }
 
-  if (sessionStorage.getItem(AUTH_KEY) === '1') {
-    showApp(false);
+  if (window.SaasAuth) {
+    SaasAuth.checkStatus().then(function(enabled) {
+      if (enabled) {
+        showApp(false);
+        var saasLogoutBtn = document.getElementById('btnSaasLogout');
+        if (saasLogoutBtn) {
+          saasLogoutBtn.style.display = 'inline-flex';
+          saasLogoutBtn.addEventListener('click', function() {
+            SaasAuth.logout();
+          });
+        }
+      } else {
+        if (sessionStorage.getItem(AUTH_KEY) === '1') {
+          showApp(false);
+        } else {
+          showLogin();
+          setRecoveryMode(false);
+          userInput && userInput.focus();
+        }
+      }
+    });
   } else {
-    showLogin();
-    setRecoveryMode(false);
-    userInput && userInput.focus();
+    if (sessionStorage.getItem(AUTH_KEY) === '1') {
+      showApp(false);
+    } else {
+      showLogin();
+      setRecoveryMode(false);
+      userInput && userInput.focus();
+    }
   }
 
   btnForgotPass && btnForgotPass.addEventListener('click', function () {
