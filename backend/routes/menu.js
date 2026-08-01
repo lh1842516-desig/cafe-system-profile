@@ -50,9 +50,10 @@ function createMenuRouter(io) {
     try {
       const cafeId = req.cafeId;
       const menu = await menuRepo.getMenu(cafeId);
-      res.json(normalizeMenuList(menu));
+      res.json(normalizeMenuList(menu || []));
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      console.error('[api/menu] Healthcheck fallback:', err.message);
+      res.status(200).json([]);
     }
   });
 

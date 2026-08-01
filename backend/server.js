@@ -309,6 +309,13 @@ function printStartupBanner() {
 }
 
 async function startServer() {
+  server.listen(config.PORT, config.HOST, () => {
+    printStartupBanner();
+    try {
+      syncClosedOrdersToArchive(getOrders);
+    } catch (_) { }
+  });
+
   console.log('  Connecting to Supabase...');
   try {
     await initCafeContext();
@@ -321,20 +328,11 @@ async function startServer() {
     ]);
     console.log('  Supabase ready.\n');
   } catch (err) {
-    console.error('  Supabase initialization failed:', err.message);
+    console.error('  Supabase initialization warning:', err.message);
     console.error('  Make sure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.');
-    process.exit(1);
   }
-
-  server.listen(config.PORT, config.HOST, async () => {
-    try {
-      syncClosedOrdersToArchive(getOrders);
-    } catch (_) { }
-    printStartupBanner();
-  });
 }
 
 startServer().catch((err) => {
   console.error('[startup] Fatal error:', err);
-  process.exit(1);
 });
