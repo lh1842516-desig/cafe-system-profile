@@ -312,7 +312,7 @@ function printStartupBanner() {
 }
 
 async function startServer() {
-  server.listen(config.PORT, () => {
+  server.listen(config.PORT, '0.0.0.0', () => {
     printStartupBanner();
     try {
       syncClosedOrdersToArchive(getOrders);
