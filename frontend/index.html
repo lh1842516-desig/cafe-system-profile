@@ -87,6 +87,28 @@
       </a>
     </div>
   </div>
+  <script src="js/saas-auth.js"></script>
+  <script>
+    (async function () {
+      if (typeof SaasAuth !== 'undefined') {
+        const enabled = await SaasAuth.checkStatus();
+        if (enabled) {
+          const token = SaasAuth.getToken();
+          const user = SaasAuth.getUser();
+          if (!token || !user || !SaasAuth.isTokenValid(token)) {
+            window.location.replace('/login');
+            return;
+          }
+          const role = String(user.role || '').toUpperCase();
+          if (role === 'SUPER_ADMIN') window.location.replace('/superadmin');
+          else if (role === 'OWNER' || role === 'ADMIN') window.location.replace('/admin');
+          else if (role === 'CASHIER') window.location.replace('/cashier');
+          else if (role === 'KITCHEN') window.location.replace('/kitchen');
+          else if (role === 'CAPTAIN') window.location.replace('/captain');
+        }
+      }
+    })();
+  </script>
 </body>
 
 </html>
