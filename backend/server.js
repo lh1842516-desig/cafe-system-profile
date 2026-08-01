@@ -211,7 +211,7 @@ app.use(
 );
 
 // روابط الصفحات: بعد static حتى يُمرَّر /captain/ عند عدم وجود captain/index.html
-app.get('/', (req, res) => res.sendFile(path.join(frontendPath, 'index.html')));
+app.get('/', (req, res) => res.redirect(302, '/login'));
 app.get('/login', (req, res) => res.sendFile(path.join(frontendPath, 'login', 'index.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(frontendPath, 'admin', 'index.html')));
 app.get(/^\/superadmin\/?$/, (req, res) => res.sendFile(path.join(frontendPath, 'superadmin', 'index.html')));

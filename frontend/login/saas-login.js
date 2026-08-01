@@ -22,8 +22,8 @@
   // Check if SaaS Auth is enabled on mount
   SaasAuth.checkStatus().then((enabled) => {
     if (!enabled) {
-      // Local Mode is active: redirect back to home hub immediately
-      window.location.replace('/');
+      // Local Mode is active: redirect to cashier page
+      window.location.replace('/cashier');
     }
   });
 
