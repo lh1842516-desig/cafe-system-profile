@@ -2,13 +2,13 @@
   "name": "workspace",
   "version": "1.0.0",
   "description": "نظام إدارة محلي لكافيه واحد، يعمل على الشبكة الداخلية بدون الحاجة لسيرفر خارجي أو قواعد بيانات سحابية.",
-  "main": "index.js",
+  "main": "backend/server.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
     "postinstall": "cd backend && npm install",
-    "start": "cd backend && node server.js"
+    "start": "node backend/server.js"
   },
   "keywords": [],
   "author": "",

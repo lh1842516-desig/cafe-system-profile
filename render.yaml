@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: cafe-system
+    env: node
+    buildCommand: npm install
+    startCommand: node backend/server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20
