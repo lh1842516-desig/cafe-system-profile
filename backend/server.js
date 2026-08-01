@@ -158,6 +158,9 @@ const frontendPath = path.join(__dirname, '..', 'frontend');
 
 // API أولاً حتى لا يلتقط express.static طلبات /api/*
 
+app.get('/health', (req, res) => res.status(200).send('OK'));
+app.get('/api/health', (req, res) => res.status(200).json({ status: 'ok' }));
+
 app.post('/api/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'لم يتم رفع ملف' });
   const url = `/uploads/${req.file.filename}`;
@@ -309,7 +312,7 @@ function printStartupBanner() {
 }
 
 async function startServer() {
-  server.listen(config.PORT, config.HOST, () => {
+  server.listen(config.PORT, () => {
     printStartupBanner();
     try {
       syncClosedOrdersToArchive(getOrders);
