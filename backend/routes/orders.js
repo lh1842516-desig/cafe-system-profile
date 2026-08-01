@@ -250,15 +250,11 @@ function createOrdersRouter(io) {
 
       if (!openOrders.length) return res.json({ order: null, reason: 'no_active_order' });
 
-      // البحث عن الطلب المطابق لجلسة الزبون، أو الاعتماد على أحدث طلب مفتوح لهذه الطاولة
-      let matched = openOrders.find((o) =>
+      // البحث عن الطلب المطابق لجلسة الزبون بصورة صارمة
+      const matched = openOrders.find((o) =>
         (sessionId && o.customerSessionId === sessionId) ||
         (customerId && o.customerId === customerId)
       );
-
-      if (!matched && openOrders.length > 0) {
-        matched = openOrders[openOrders.length - 1];
-      }
 
       if (!matched) return res.json({ order: null, reason: 'no_active_order' });
 

@@ -1774,10 +1774,11 @@ async function restoreActiveOrder() {
       if (String(o.tableId) !== TABLE_ID) return false;
       if (o.closed) return false;
       if (o.cancelledByCustomer || o.cancelReason === 'customer_cancel_pending') return false;
-      // مطابقة الذكية: إما بـ SESSION_ID أو customerId أو أحدث طلب مفتوح للطاولة
+      // مطابقة صارمة لجلسة الزبون فقط — يمنع تسرب جلسة زبون آخر على نفس الطاولة
       if (o.customerSessionId && o.customerSessionId === SESSION_ID) return true;
       if (savedCustId && o.customerId && o.customerId === savedCustId) return true;
-      return true; // إذا وجد طلب مفتوح غير مغلق على نفس الطاولة في جلسة الكاشير الحالية
+      if (state.orderId && String(o.id) === String(state.orderId)) return true;
+      return false;
     });
 
     if (activeOrders.length > 0) {
