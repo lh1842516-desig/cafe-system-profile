@@ -233,11 +233,9 @@ function createOrdersRouter(io) {
       const tableId = String(req.params.tableId || '').trim();
       if (!tableId) return res.json({ order: null });
 
-      // تحقق إلزامي من sessionId — بدونه لا نُعيد أي بيانات
       const sessionId = String(req.query.sessionId || '').trim();
-      if (!sessionId) return res.json({ order: null, reason: 'missing_session_id' });
+      const customerId = String(req.query.customerId || '').trim();
 
-      // تحقق من أن القاصة مفتوحة — لا نُعيد بيانات لجلسات منتهية
       const session = till.getActiveSessionMeta(cafeId);
       if (!session || !session.openDate) {
         return res.json({ order: null, reason: 'no_active_session' });
@@ -247,16 +245,25 @@ function createOrdersRouter(io) {
       const openOrders = ordersRaw.filter((o) =>
         !o.closed &&
         !(o.cancelledByCustomer || o.cancelReason === 'customer_cancel_pending') &&
-        orderBelongsToSession(o, session) &&
-        o.customerSessionId === sessionId  // ← تحقق صارم من هوية الزبون
+        orderBelongsToSession(o, session)
       );
 
       if (!openOrders.length) return res.json({ order: null, reason: 'no_active_order' });
 
-      // أحدث طلب مفتوح يخص هذا الزبون تحديداً
-      const latest = openOrders[openOrders.length - 1];
-      const ks = await kitchenRepo.getKitchenStatus(cafeId, latest.id);
-      const isHeld = await kitchenCashierApproval.isOrderHeld(cafeId, latest.id);
+      // البحث عن الطلب المطابق لجلسة الزبون، أو الاعتماد على أحدث طلب مفتوح لهذه الطاولة
+      let matched = openOrders.find((o) =>
+        (sessionId && o.customerSessionId === sessionId) ||
+        (customerId && o.customerId === customerId)
+      );
+
+      if (!matched && openOrders.length > 0) {
+        matched = openOrders[openOrders.length - 1];
+      }
+
+      if (!matched) return res.json({ order: null, reason: 'no_active_order' });
+
+      const ks = await kitchenRepo.getKitchenStatus(cafeId, matched.id);
+      const isHeld = await kitchenCashierApproval.isOrderHeld(cafeId, matched.id);
       const rawStatus = ks && ks.status ? String(ks.status).toLowerCase() : 'pending';
       const status = isHeld ? 'held'
         : (rawStatus === 'preparing' ? 'preparing'
@@ -265,12 +272,13 @@ function createOrdersRouter(io) {
 
       return res.json({
         order: {
-          id: latest.id,
-          displayOrderId: orderRepo.getOrderDisplayId(cafeId, latest.id),
-          tableId: latest.tableId,
-          customerName: latest.customerName || '',
-          items: latest.items || [],
+          id: matched.id,
+          displayOrderId: orderRepo.getOrderDisplayId(cafeId, matched.id),
+          tableId: matched.tableId,
+          customerName: matched.customerName || '',
+          items: matched.items || [],
           status,
+          customerSessionId: matched.customerSessionId,
         }
       });
     } catch (err) {

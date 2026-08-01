@@ -11,18 +11,6 @@
    1. CONSTANTS & PARSE URL
 ══════════════════════════════════════════════════════════ */
 var params = new URLSearchParams(window.location.search);
-// Purge any legacy localStorage keys to ensure complete reset when app is swiped away
-(function purgeLegacyLocalStorage() {
-  try {
-    ['cust_name'].forEach(function(k) { localStorage.removeItem(k); });
-    for (var i = localStorage.length - 1; i >= 0; i--) {
-      var k = localStorage.key(i);
-      if (k && (k.indexOf('cust_session_') === 0 || k.indexOf('cust_active_order_') === 0 || k.indexOf('cust_last_order_id_') === 0 || k.indexOf('cust_table_closed_') === 0)) {
-        localStorage.removeItem(k);
-      }
-    }
-  } catch (_) {}
-}());
 
 var rawCafeId = (params.get('cafeId') || '').trim();
 if (rawCafeId) {
@@ -48,18 +36,20 @@ var TABLE_ID = rawTableId || (function() {
 
 var IS_QR_SCAN = params.get('qr') === '1' || params.get('scan') === '1' || params.get('qrScan') === 'true' || !!params.get('t');
 
-// Storage Helpers (Pure ephemeral sessionStorage — resets completely when swiping away browser app & reopening Safari/Chrome)
+// Storage Helpers (Robust Persistence across iOS Safari App Switcher & browser restarts)
 function getPersistedItem(key) {
   try {
-    return sessionStorage.getItem(key);
+    return localStorage.getItem(key) || sessionStorage.getItem(key);
   } catch (_) { return null; }
 }
 
 function setPersistedItem(key, val) {
+  try { localStorage.setItem(key, val); } catch (_) {}
   try { sessionStorage.setItem(key, val); } catch (_) {}
 }
 
 function removePersistedItem(key) {
+  try { localStorage.removeItem(key); } catch (_) {}
   try { sessionStorage.removeItem(key); } catch (_) {}
 }
 
@@ -1777,12 +1767,17 @@ async function restoreActiveOrder() {
     var allOrders = await apiFetch('/api/orders/table/' + TABLE_ID);
     if (!Array.isArray(allOrders)) return cached;
 
+    var pciInfo = getPCI();
+    var savedCustId = pciInfo && pciInfo.customerId ? pciInfo.customerId : null;
+
     var activeOrders = allOrders.filter(function (o) {
       if (String(o.tableId) !== TABLE_ID) return false;
       if (o.closed) return false;
       if (o.cancelledByCustomer || o.cancelReason === 'customer_cancel_pending') return false;
-      // فلترة صارمة بـ SESSION_ID وحده — طبقة PCI تضمن الحفاظ عليه عبر إغلاق المتصفح
-      return (o.customerSessionId && o.customerSessionId === SESSION_ID);
+      // مطابقة الذكية: إما بـ SESSION_ID أو customerId أو أحدث طلب مفتوح للطاولة
+      if (o.customerSessionId && o.customerSessionId === SESSION_ID) return true;
+      if (savedCustId && o.customerId && o.customerId === savedCustId) return true;
+      return true; // إذا وجد طلب مفتوح غير مغلق على نفس الطاولة في جلسة الكاشير الحالية
     });
 
     if (activeOrders.length > 0) {
@@ -1790,6 +1785,9 @@ async function restoreActiveOrder() {
       state.orderId = latest.id;
       state.orderItems = latest.items || [];
       state.orderDisplayId = latest.displayOrderId || latest.id;
+      if (latest.customerSessionId) {
+        setPersistedItem('cust_session_' + TABLE_ID, latest.customerSessionId);
+      }
       if (latest.customerName) {
         state.customerName = latest.customerName;
         saveName(latest.customerName);
@@ -1814,36 +1812,36 @@ async function restoreActiveOrder() {
       updateOrderStatusCard();
 
       // Phase 3 — استعادة عبر Persistent Identity (بعد إغلاق المتصفح أو App Switch)
-      // تُنفَّذ فقط إذا لم تنجح Phase 1 و Phase 2 في إيجاد طلب نشط
       try {
         var _pci3 = getPCI();
-        if (_pci3 && _pci3.customerId) {
-          var _recData = await apiFetch(
-            '/api/orders/table/' + TABLE_ID + '/recover-session?sessionId=' + encodeURIComponent(SESSION_ID)
-          );
-          if (_recData && _recData.order) {
-            var _ro = _recData.order;
-            state.orderId = _ro.id;
-            state.orderItems = _ro.items || [];
-            state.orderDisplayId = _ro.displayOrderId || _ro.id;
-            if (_ro.customerName) {
-              state.customerName = _ro.customerName;
-              saveName(_ro.customerName);
-            }
-            setPersistedItem('cust_last_order_id_' + TABLE_ID, _ro.id);
-            // مزامنة sessionId في PCI مع SESSION_ID الحالي
-            savePCI({ customerId: _pci3.customerId, sessionId: SESSION_ID, cafeId: CAFE_ID, tableId: TABLE_ID });
-            await fetchAndUpdateStatus();
-            updateOrderStatusCard();
-            saveActiveOrderCache({
-              id: state.orderId,
-              displayOrderId: state.orderDisplayId,
-              items: state.orderItems,
-              customerName: state.customerName,
-              status: state.orderStatus
-            });
-            return _ro;
+        var custIdParam = _pci3 && _pci3.customerId ? _pci3.customerId : '';
+        var _recData = await apiFetch(
+          '/api/orders/table/' + TABLE_ID + '/recover-session?sessionId=' + encodeURIComponent(SESSION_ID) + '&customerId=' + encodeURIComponent(custIdParam)
+        );
+        if (_recData && _recData.order) {
+          var _ro = _recData.order;
+          state.orderId = _ro.id;
+          state.orderItems = _ro.items || [];
+          state.orderDisplayId = _ro.displayOrderId || _ro.id;
+          if (_ro.customerSessionId) {
+            setPersistedItem('cust_session_' + TABLE_ID, _ro.customerSessionId);
           }
+          if (_ro.customerName) {
+            state.customerName = _ro.customerName;
+            saveName(_ro.customerName);
+          }
+          setPersistedItem('cust_last_order_id_' + TABLE_ID, _ro.id);
+          savePCI({ customerId: custIdParam || 'cid-' + Date.now(), sessionId: _ro.customerSessionId || SESSION_ID, cafeId: CAFE_ID, tableId: TABLE_ID });
+          await fetchAndUpdateStatus();
+          updateOrderStatusCard();
+          saveActiveOrderCache({
+            id: state.orderId,
+            displayOrderId: state.orderDisplayId,
+            items: state.orderItems,
+            customerName: state.customerName,
+            status: state.orderStatus
+          });
+          return _ro;
         }
       } catch (_) {}
 
