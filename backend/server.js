@@ -163,40 +163,64 @@ app.get('/health', (req, res) => res.status(200).send('OK'));
 app.get('/api/health', (req, res) => res.status(200).json({ status: 'ok' }));
 
 const memoryStorage = multer.memoryStorage();
-const memoryUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
+const memoryUpload = multer({ storage: memoryStorage, limits: { fileSize: 50 * 1024 * 1024 } });
 
-app.post('/api/upload', memoryUpload.single('image'), async (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'لم يتم رفع ملف' });
-  const ext = path.extname(req.file.originalname) || '.jpg';
-  const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-
-  // Always save local backup copy to ensure 100% resilience
-  try {
-    if (!fs.existsSync(config.UPLOADS_DIR)) {
-      fs.mkdirSync(config.UPLOADS_DIR, { recursive: true });
+app.post('/api/upload', (req, res, next) => {
+  memoryUpload.single('image')(req, res, async (err) => {
+    if (err) {
+      return res.status(400).json({ error: err.message || 'حجم الملف كبير جداً' });
     }
-    const localPath = path.join(config.UPLOADS_DIR, filename);
-    fs.writeFileSync(localPath, req.file.buffer);
-  } catch (err) {
-    console.warn('[upload] local write warning:', err.message);
-  }
+    if (!req.file) return res.status(400).json({ error: 'لم يتم رفع ملف' });
 
-  try {
-    const { getClient } = require('./lib/supabase');
-    const supabase = getClient();
-    const { error: upErr } = await supabase.storage.from('uploads').upload(filename, req.file.buffer, {
-      contentType: req.file.mimetype || 'image/jpeg',
-      upsert: true
-    });
-    if (!upErr) {
-      const { data: pubUrlData } = supabase.storage.from('uploads').getPublicUrl(filename);
-      if (pubUrlData && pubUrlData.publicUrl) {
-        return res.json({ url: pubUrlData.publicUrl });
+    let buffer = req.file.buffer;
+    let ext = path.extname(req.file.originalname).toLowerCase() || '.jpg';
+    let mime = req.file.mimetype || 'image/jpeg';
+
+    // Optimize image size using sharp if available
+    try {
+      const sharp = require('sharp');
+      buffer = await sharp(req.file.buffer)
+        .resize(1920, 1920, { fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 85 })
+        .toBuffer();
+      ext = '.jpg';
+      mime = 'image/jpeg';
+    } catch (_) {}
+
+    const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+
+    // Local backup save
+    try {
+      if (!fs.existsSync(config.UPLOADS_DIR)) {
+        fs.mkdirSync(config.UPLOADS_DIR, { recursive: true });
       }
+      fs.writeFileSync(path.join(config.UPLOADS_DIR, filename), buffer);
+    } catch (localErr) {
+      console.warn('[upload] local write warning:', localErr.message);
     }
-  } catch (_) {}
 
-  res.json({ url: `/uploads/${filename}` });
+    // Upload to Supabase Storage
+    try {
+      const { getClient } = require('./lib/supabase');
+      const supabase = getClient();
+      const { error: upErr } = await supabase.storage.from('uploads').upload(filename, buffer, {
+        contentType: mime,
+        upsert: true
+      });
+      if (!upErr) {
+        const { data: pubUrlData } = supabase.storage.from('uploads').getPublicUrl(filename);
+        if (pubUrlData && pubUrlData.publicUrl) {
+          return res.json({ url: pubUrlData.publicUrl });
+        }
+      } else {
+        console.error('[upload] Supabase Storage error:', upErr.message);
+      }
+    } catch (sErr) {
+      console.error('[upload] Supabase exception:', sErr.message);
+    }
+
+    res.json({ url: `/uploads/${filename}` });
+  });
 });
 // صور المنيو: أسماء الملفات فريدة (Date.now()-random) فالمحتوى ثابت لكل رابط،
 // لذا نخزّنها مؤقتاً 30 يوماً بلا إعادة تحقق حتى تظهر فوراً عند التنقل بين الصفحات والتصنيفات.
