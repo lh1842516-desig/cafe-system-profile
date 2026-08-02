@@ -107,6 +107,7 @@
   let currentTodaySessionReceipt = null;
   let isGlobalPrintInProgress = false;
   let cashierMenuItems = [];
+  let cashierCategories = [];
   let newOrderType = 'DINE_IN';
   let newOrderCategory = '';
   let newOrderSearch = '';
@@ -1002,8 +1003,12 @@
       });
   }
 
-  function groupedCategories(items) {
+  function groupedCategories(items, categoryList) {
     var set = Object.create(null);
+    (categoryList || []).forEach(function (cat) {
+      var name = typeof cat === 'object' && cat ? String(cat.name || '').trim() : String(cat || '').trim();
+      if (name) set[name] = true;
+    });
     (items || []).forEach(function (it) {
       var c = String((it && it.category) || '').trim();
       if (c) set[c] = true;
@@ -1462,7 +1467,7 @@
   function renderNewOrderUi() {
     if (!cashierNewOrderBody) return;
 
-    var cats = groupedCategories(cashierMenuItems);
+    var cats = groupedCategories(cashierMenuItems, cashierCategories);
     if (cashierNewOrderCategories) {
       setupCategoryStripTouchScroll();
       var chips = ['<button type="button" class="cashier-cat-chip' + (newOrderCategory ? '' : ' active') + '" data-cat="">الكل</button>']
@@ -1555,7 +1560,7 @@
     if (cashierNewOrderTotal) cashierNewOrderTotal.textContent = formatPrice(calcNewOrderTotal());
   }
 
-  function openNewOrderModal() {
+  async function openNewOrderModal() {
     if (!panelNewOrder) return;
     newOrderType = 'DINE_IN';
     newOrderCategory = '';
@@ -1565,6 +1570,14 @@
     if (cashierDeliveryPhone) cashierDeliveryPhone.value = '';
     if (cashierDeliveryAddress) cashierDeliveryAddress.value = '';
     if (cashierNewOrderSearch) cashierNewOrderSearch.value = '';
+    try {
+      if (api && api.categories && typeof api.categories.list === 'function') {
+        cashierCategories = await api.categories.list();
+      }
+      if (api && api.menu && typeof api.menu.list === 'function') {
+        cashierMenuItems = await api.menu.list();
+      }
+    } catch (_) {}
     renderNewOrderUi();
     setActiveSidebarItem('new-order');
   }
@@ -3211,6 +3224,11 @@
         cashierMenuItems = await api.menu.list();
       } catch (_) {
         cashierMenuItems = [];
+      }
+      try {
+        cashierCategories = await api.categories.list();
+      } catch (_) {
+        cashierCategories = [];
       }
       renderTables();
       connectSocket();
