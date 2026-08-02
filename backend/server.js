@@ -332,29 +332,38 @@ function printStartupBanner() {
   console.log('');
 }
 
+const adminAuthStore = require('./services/adminAuthStore');
+const todaySessionHistory = require('./data/todaySessionHistory');
+const tableSessions = require('./services/tableSessions');
+
 async function startServer() {
+  console.log('  Connecting to Supabase and restoring full state...');
+  try {
+    await initCafeContext();
+    const cafeId = getDefaultCafeId();
+    console.log(`  Cafe ID: ${cafeId}`);
+    todaySessionHistory.setCafeId(cafeId);
+    tableSessions.setCafeId(cafeId);
+
+    await Promise.all([
+      initStore(cafeId),
+      initTill(cafeId),
+      initKitchenState(cafeId),
+      adminAuthStore.getAdminAuthAsync(),
+      todaySessionHistory.readAll(),
+    ]);
+    console.log('  Supabase state fully restored. Ready for requests.\n');
+  } catch (err) {
+    console.error('  Supabase initialization warning:', err.message);
+    console.error('  Make sure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.');
+  }
+
   server.listen(config.PORT, '0.0.0.0', () => {
     printStartupBanner();
     try {
       syncClosedOrdersToArchive(getOrders);
     } catch (_) { }
   });
-
-  console.log('  Connecting to Supabase...');
-  try {
-    await initCafeContext();
-    const cafeId = getDefaultCafeId();
-    console.log(`  Cafe ID: ${cafeId}`);
-    await Promise.all([
-      initStore(cafeId),
-      initTill(cafeId),
-      initKitchenState(cafeId),
-    ]);
-    console.log('  Supabase ready.\n');
-  } catch (err) {
-    console.error('  Supabase initialization warning:', err.message);
-    console.error('  Make sure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.');
-  }
 }
 
 startServer().catch((err) => {

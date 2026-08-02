@@ -109,6 +109,12 @@ async function initTill(cafeId) {
       _till = tillData;
     }
   }
+
+  const cid = String(cafeId || _cafeId || 'default').trim();
+  _tillsByCafe[cid] = {
+    till: _till,
+    sessionId: _tillSessionId
+  };
 }
 
 const _tillsByCafe = {};
