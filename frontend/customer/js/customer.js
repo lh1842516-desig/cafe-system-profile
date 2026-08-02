@@ -348,7 +348,7 @@ function setWelcomeCafeInfo(info) {
 
   if (info.logoUrl) {
     var img = document.createElement('img');
-    img.src = API_BASE + info.logoUrl;
+    img.src = resolveAssetUrl(info.logoUrl);
     img.alt = 'شعار الكافيه';
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
     img.onerror = function () { /* keep placeholder */ };
