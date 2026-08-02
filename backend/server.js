@@ -5,6 +5,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const fs = require('fs');
 const os = require('os');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -168,6 +169,18 @@ app.post('/api/upload', memoryUpload.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'لم يتم رفع ملف' });
   const ext = path.extname(req.file.originalname) || '.jpg';
   const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+
+  // Always save local backup copy to ensure 100% resilience
+  try {
+    if (!fs.existsSync(config.UPLOADS_DIR)) {
+      fs.mkdirSync(config.UPLOADS_DIR, { recursive: true });
+    }
+    const localPath = path.join(config.UPLOADS_DIR, filename);
+    fs.writeFileSync(localPath, req.file.buffer);
+  } catch (err) {
+    console.warn('[upload] local write warning:', err.message);
+  }
+
   try {
     const { getClient } = require('./lib/supabase');
     const supabase = getClient();
@@ -182,9 +195,7 @@ app.post('/api/upload', memoryUpload.single('image'), async (req, res) => {
       }
     }
   } catch (_) {}
-  // Local fallback if storage bucket fails
-  const localPath = path.join(config.UPLOADS_DIR, filename);
-  fs.writeFileSync(localPath, req.file.buffer);
+
   res.json({ url: `/uploads/${filename}` });
 });
 // صور المنيو: أسماء الملفات فريدة (Date.now()-random) فالمحتوى ثابت لكل رابط،

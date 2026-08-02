@@ -1233,12 +1233,19 @@
         '<span class="category-count">' + c.count + ' ' + label + '</span>' +
         '</div>';
     }).join('');
+    function isSameCategory(catA, catB) {
+      var a = String(catA || '').trim().toLowerCase();
+      var b = String(catB || '').trim().toLowerCase();
+      try { if (typeof a.normalize === 'function') a = a.normalize('NFC'); } catch (_) {}
+      try { if (typeof b.normalize === 'function') b = b.normalize('NFC'); } catch (_) {}
+      return a === b;
+    }
+
     menuCategoryCards.querySelectorAll('.menu-category-card').forEach(function (card) {
       card.addEventListener('click', function () {
         selectedCategory = card.dataset.category;
         var filtered = allMenuItems.filter(function (item) {
-          var cat = item.category != null ? String(item.category).trim() : '';
-          return cat === selectedCategory;
+          return isSameCategory(item.category, selectedCategory);
         });
         showCategoryDetailView(selectedCategory);
         renderMenu(filtered);
