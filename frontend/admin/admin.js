@@ -649,22 +649,6 @@
     return out;
   }
 
-  function setEditMode(item) {
-    var titleEl = document.getElementById('pageAddItemTitle');
-    if (item) {
-      editId.value = item.id;
-      itemName.value = item.name;
-      writeItemPrice(item.price);
-      itemCategory.value = item.category || '';
-      itemImageUrl.value = item.imageUrl || '';
-      itemIngredients.value = item.ingredients || '';
-      itemImage.value = '';
-      clearOptionGroups();
-      if (Array.isArray(item.options) && item.options.length) {
-        item.options.forEach(function (g) {
-          addOptionGroupRow(g.title, g.values || []);
-        });
-      }
   function resolveAssetUrl(url) {
     if (!url) return '';
     var s = String(url).trim();
@@ -682,6 +666,22 @@
     return a === b;
   }
 
+  function setEditMode(item) {
+    var titleEl = document.getElementById('pageAddItemTitle');
+    if (item) {
+      editId.value = item.id;
+      itemName.value = item.name;
+      writeItemPrice(item.price);
+      itemCategory.value = item.category || '';
+      itemImageUrl.value = item.imageUrl || '';
+      itemIngredients.value = item.ingredients || '';
+      itemImage.value = '';
+      clearOptionGroups();
+      if (Array.isArray(item.options) && item.options.length) {
+        item.options.forEach(function (g) {
+          addOptionGroupRow(g.title, g.values || []);
+        });
+      }
       if (item.imageUrl) {
         itemImagePreview.src = resolveAssetUrl(item.imageUrl);
         itemImagePreview.style.display = 'block';
@@ -1252,14 +1252,6 @@
         '<span class="category-count">' + c.count + ' ' + label + '</span>' +
         '</div>';
     }).join('');
-    function isSameCategory(catA, catB) {
-      var a = String(catA || '').trim().toLowerCase();
-      var b = String(catB || '').trim().toLowerCase();
-      try { if (typeof a.normalize === 'function') a = a.normalize('NFC'); } catch (_) {}
-      try { if (typeof b.normalize === 'function') b = b.normalize('NFC'); } catch (_) {}
-      return a === b;
-    }
-
     menuCategoryCards.querySelectorAll('.menu-category-card').forEach(function (card) {
       card.addEventListener('click', function () {
         selectedCategory = card.dataset.category;
