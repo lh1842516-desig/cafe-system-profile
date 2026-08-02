@@ -387,12 +387,31 @@ var api = {
         headers['Authorization'] = 'Bearer ' + token;
       }
     } catch (_) {}
-    return fetch(API_BASE + '/api/upload', {
+    try {
+      var activeCafeId = (new URLSearchParams(window.location.search)).get('cafeId') ||
+                         sessionStorage.getItem('cust_cafe_id') ||
+                         sessionStorage.getItem('cafezip_cafe_id') ||
+                         localStorage.getItem('cafezip_cafe_id');
+      if (activeCafeId) {
+        headers['x-cafe-id'] = String(activeCafeId).trim();
+      }
+    } catch (_) {}
+    var baseUrl = typeof API_BASE !== 'undefined' ? API_BASE : (window.API_BASE || '');
+    return fetch(baseUrl + '/api/upload', {
       method: 'POST',
       headers: headers,
       body: form,
     }).then(function (res) {
-      if (!res.ok) return res.text().then(function (t) { throw new Error(t); });
+      if (!res.ok) {
+        return res.text().then(function (t) {
+          var msg = t;
+          try {
+            var parsed = JSON.parse(t);
+            if (parsed && parsed.error) msg = parsed.error;
+          } catch (_) {}
+          throw new Error(msg);
+        });
+      }
       return res.json().then(function (data) { return data.url; });
     });
   },

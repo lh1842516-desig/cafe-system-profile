@@ -674,6 +674,14 @@
     return base + (s.charAt(0) === '/' ? s : '/' + s);
   }
 
+  function isSameCategory(catA, catB) {
+    var a = String(catA || '').trim().toLowerCase();
+    var b = String(catB || '').trim().toLowerCase();
+    try { if (typeof a.normalize === 'function') a = a.normalize('NFC'); } catch (_) {}
+    try { if (typeof b.normalize === 'function') b = b.normalize('NFC'); } catch (_) {}
+    return a === b;
+  }
+
       if (item.imageUrl) {
         itemImagePreview.src = resolveAssetUrl(item.imageUrl);
         itemImagePreview.style.display = 'block';
@@ -1407,8 +1415,7 @@
       var count = 0;
       if (selectedCategory !== undefined && selectedCategory !== null) {
         count = allMenuItems.filter(function (item) {
-          var cat = item.category != null ? String(item.category).trim() : '';
-          return cat === selectedCategory;
+          return isSameCategory(item.category, selectedCategory);
         }).length;
       }
       openDeleteCategoryModal(selectedCategory || '', count);
@@ -1553,8 +1560,7 @@
         renderCategoryCards(categoriesWithCounts);
       } else {
         var filtered = allMenuItems.filter(function (item) {
-          var cat = item.category != null ? String(item.category).trim() : '';
-          return cat === selectedCategory;
+          return isSameCategory(item.category, selectedCategory);
         });
         showCategoryDetailView(selectedCategory);
         renderMenu(filtered);
