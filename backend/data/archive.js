@@ -121,56 +121,128 @@ async function getReportAsync(cafeId, type, dateStr) {
   const cid = String(cafeId || '').trim();
   if (!cid || !dateStr || !type) return aggregateDays({});
 
-  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
-  if (!isUuid) return aggregateDays({});
+  const daysMap = {};
+  const ordersById = new Map();
 
-  try {
-    const supabase = getClient();
-    let query = supabase.from('archive_orders').select('*').eq('cafe_id', cid);
+  function addRowToMap(r) {
+    const id = String(r.id || '');
+    if (!id || ordersById.has(id)) return;
 
-    const parts = dateStr.trim().split('-');
-    if (type === 'day' && parts.length >= 3) {
-      query = query.eq('open_date', dateStr.trim());
-    } else if (type === 'month' && parts.length >= 2) {
-      const monthPrefix = `${parts[0]}-${parts[1].padStart(2, '0')}`;
-      query = query.like('open_date', `${monthPrefix}%`);
-    } else if (type === 'year') {
-      query = query.like('open_date', `${parts[0]}%`);
+    const items = (r.items || []).map((it) => ({
+      name: it.name || '',
+      qty: Number(it.qty || it.quantity) || 1,
+      price: Number(it.price) || 0,
+    }));
+    let total = Number(r.total);
+    if (Number.isNaN(total) || total == null || total === 0) {
+      total = items.reduce((s, it) => s + it.price * it.qty, 0);
     }
+    const closedAt = r.closed_at || r.closedAt || r.created_at || r.createdAt || null;
+    const createdAt = r.created_at || r.createdAt || closedAt;
+    const openDate = r.open_date || r.openDate || (closedAt ? String(closedAt).slice(0, 10) : '');
+    const tableId = r.table_id != null ? String(r.table_id) : (r.table != null ? String(r.table) : '');
 
-    const { data: rows, error } = await query;
-    if (error || !rows) return aggregateDays({});
+    const rec = {
+      id,
+      table: tableId,
+      orderType: r.order_type || r.orderType || 'DINE_IN',
+      paymentMethod: r.payment_method || r.paymentMethod || 'cash',
+      total,
+      items,
+      time: closedAt ? (typeof closedAt === 'string' ? closedAt.slice(11, 16) : '') : '',
+      closedAt,
+      createdAt,
+      open_date: openDate,
+    };
+    ordersById.set(id, rec);
 
+    const dayKey = openDate || 'unknown';
+    if (!daysMap[dayKey]) {
+      daysMap[dayKey] = { totalProfit: 0, totalOrders: 0, topProduct: '', topProductCount: 0, orders: [] };
+    }
+    daysMap[dayKey].orders.push(rec);
+    daysMap[dayKey].totalOrders += 1;
+    daysMap[dayKey].totalProfit += rec.total;
+  }
+
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
+  if (isUuid) {
+    try {
+      const supabase = getClient();
+      const parts = dateStr.trim().split('-');
+
+      let archiveQuery = supabase.from('archive_orders').select('*').eq('cafe_id', cid);
+      let ordersQuery = supabase.from('orders').select('*').eq('cafe_id', cid).eq('closed', true);
+
+      if (type === 'day' && parts.length >= 3) {
+        archiveQuery = archiveQuery.eq('open_date', dateStr.trim());
+        ordersQuery = ordersQuery.eq('open_date', dateStr.trim());
+      } else if (type === 'month' && parts.length >= 2) {
+        const monthPrefix = `${parts[0]}-${parts[1].padStart(2, '0')}`;
+        archiveQuery = archiveQuery.like('open_date', `${monthPrefix}%`);
+        ordersQuery = ordersQuery.like('open_date', `${monthPrefix}%`);
+      } else if (type === 'year') {
+        archiveQuery = archiveQuery.like('open_date', `${parts[0]}%`);
+        ordersQuery = ordersQuery.like('open_date', `${parts[0]}%`);
+      }
+
+      const [archiveRes, ordersRes] = await Promise.all([
+        archiveQuery.catch(() => ({ data: [] })),
+        ordersQuery.catch(() => ({ data: [] })),
+      ]);
+
+      (archiveRes.data || []).forEach(addRowToMap);
+      (ordersRes.data || []).forEach(addRowToMap);
+    } catch (err) {
+      console.error('[archive] Error fetching report async:', err.message);
+    }
+  }
+
+  if (ordersById.size === 0) {
+    try {
+      const store = require('./store');
+      let localOrders = [];
+      if (type === 'day') {
+        localOrders = store.getOrdersClosedByOpenDate(cid, dateStr.trim());
+      } else {
+        const all = store.getOrders(cid) || [];
+        const parts = dateStr.trim().split('-');
+        localOrders = all.filter((o) => {
+          if (!o || !o.closed) return false;
+          const od = o.open_date || (o.closedAt ? String(o.closedAt).slice(0, 10) : '');
+          if (!od) return false;
+          if (type === 'month') return od.startsWith(`${parts[0]}-${parts[1].padStart(2, '0')}`);
+          if (type === 'year') return od.startsWith(parts[0]);
+          return false;
+        });
+      }
+      localOrders.forEach(addRowToMap);
+    } catch (_) {}
+  }
+
+  return aggregateDays(daysMap);
+}
+
+function getReport(cafeId, type, dateStr) {
+  try {
+    const store = require('./store');
+    const localOrders = store.getOrdersClosedByOpenDate(cafeId, dateStr);
+    if (!localOrders || !localOrders.length) return aggregateDays({});
     const daysMap = {};
-    rows.forEach(r => {
-      const dayKey = r.open_date || (r.closed_at ? r.closed_at.slice(0, 10) : 'unknown');
+    localOrders.forEach((o) => {
+      const rec = orderToArchiveRecord(o);
+      const dayKey = o.open_date || (o.closedAt ? String(o.closedAt).slice(0, 10) : 'unknown');
       if (!daysMap[dayKey]) {
         daysMap[dayKey] = { totalProfit: 0, totalOrders: 0, topProduct: '', topProductCount: 0, orders: [] };
       }
-      const rec = {
-        id: r.id,
-        table: r.table_id || '',
-        orderType: r.order_type || 'DINE_IN',
-        total: Number(r.total) || 0,
-        items: (r.items || []).map(it => ({ name: it.name, qty: it.qty || it.quantity || 1, price: it.price || 0 })),
-        time: r.closed_at ? r.closed_at.slice(11, 16) : '',
-        closedAt: r.closed_at
-      };
       daysMap[dayKey].orders.push(rec);
       daysMap[dayKey].totalOrders += 1;
       daysMap[dayKey].totalProfit += rec.total;
     });
-
     return aggregateDays(daysMap);
-  } catch (err) {
-    console.error('[archive] Error fetching report:', err.message);
+  } catch (_) {
     return aggregateDays({});
   }
-}
-
-function getReport(cafeId, type, dateStr) {
-  // Return empty default synchronously for immediate response if sync called, but getReportAsync is available
-  return aggregateDays({});
 }
 
 function getSampleReport(type, dateStr) {

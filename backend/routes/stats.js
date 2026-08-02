@@ -69,7 +69,7 @@ router.get('/today', async (req, res) => {
     // Fallback: If till is closed or session has no orders, fetch from archive report for today
     const d = new Date();
     const todayStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    const archiveReport = archive.getReport(cafeId, 'day', todayStr);
+    const archiveReport = await archive.getReportAsync(cafeId, 'day', todayStr);
     res.json({
       ordersCountToday: archiveReport.totalOrders || 0,
       dineInOrdersToday: archiveReport.dineInOrders || 0,
