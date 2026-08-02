@@ -395,9 +395,14 @@ function getNextTableId(cafeId) {
 }
 
 // ── ORDER SEQUENCES (async) ────────────────────────────────────────────────
-function getTodayDateStr() {
-  const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+function getTodayDateStr(timeZone = 'Asia/Baghdad') {
+  try {
+    const formatter = new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' });
+    return formatter.format(new Date());
+  } catch (_) {
+    const d = new Date(Date.now() + 3 * 3600 * 1000);
+    return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0');
+  }
 }
 
 async function getNextOrderSequence(cafeId, openDate) {

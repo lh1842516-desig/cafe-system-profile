@@ -131,7 +131,14 @@ function isToday(cafeId, dateStr) {
 async function getOrdersClosedToday(cafeId) {
   if (!cafeId) return store.getOrdersClosedToday(cafeId);
   try {
-    const today = new Date().toISOString().split('T')[0];
+    let today = '';
+    try {
+      const formatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Baghdad', year: 'numeric', month: '2-digit', day: '2-digit' });
+      today = formatter.format(new Date());
+    } catch (_) {
+      const d = new Date(Date.now() + 3 * 3600 * 1000);
+      today = d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0');
+    }
     const supabase = getClient();
     const { data, error } = await supabase
       .from('orders')

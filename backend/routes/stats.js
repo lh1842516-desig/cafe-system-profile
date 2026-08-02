@@ -67,8 +67,16 @@ router.get('/today', async (req, res) => {
     }
 
     // Fallback: If till is closed or session has no orders, fetch from archive report for today
-    const d = new Date();
-    const todayStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    let todayStr = req.query.date || '';
+    if (!todayStr) {
+      try {
+        const formatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Baghdad', year: 'numeric', month: '2-digit', day: '2-digit' });
+        todayStr = formatter.format(new Date());
+      } catch (_) {
+        const d = new Date(Date.now() + 3 * 3600 * 1000);
+        todayStr = d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0');
+      }
+    }
     const archiveReport = await archive.getReportAsync(cafeId, 'day', todayStr);
     res.json({
       ordersCountToday: archiveReport.totalOrders || 0,
