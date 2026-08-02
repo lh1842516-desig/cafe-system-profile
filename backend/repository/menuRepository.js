@@ -28,10 +28,6 @@ function menuItemFromDb(row) {
 
 // ── READ: getMenu (ASYNC) ───────────────────────────────────────────────────
 async function getMenu(cafeId) {
-  const cached = store.getMenu(cafeId);
-  if (cached && Array.isArray(cached) && cached.length > 0) {
-    return cached;
-  }
   if (!cafeId) return store.getMenu(cafeId);
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cafeId);
   if (!isUuid) return store.getMenu(cafeId);

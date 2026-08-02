@@ -733,11 +733,22 @@
   formAddItem.addEventListener('submit', async function (e) {
     e.preventDefault();
     var id = editId.value.trim();
+    var imgFile = itemImage.files && itemImage.files[0] ? itemImage.files[0] : null;
+    var finalImageUrl = itemImageUrl.value.trim();
+    if (imgFile && !finalImageUrl) {
+      try {
+        finalImageUrl = await api.uploadImage(imgFile);
+        itemImageUrl.value = finalImageUrl;
+      } catch (err) {
+        showToast('فشل رفع الصورة: ' + (err.message || ''));
+        return;
+      }
+    }
     var payload = {
       name: itemName.value.trim(),
       price: readItemPrice(),
       category: itemCategory.value || '',
-      imageUrl: itemImageUrl.value.trim(),
+      imageUrl: finalImageUrl,
       ingredients: itemIngredients.value.trim(),
       options: collectOptionsFromDom(),
     };
