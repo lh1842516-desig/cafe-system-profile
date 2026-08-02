@@ -187,8 +187,8 @@ async function getReportAsync(cafeId, type, dateStr) {
       }
 
       const [archiveRes, ordersRes] = await Promise.all([
-        archiveQuery.catch(() => ({ data: [] })),
-        ordersQuery.catch(() => ({ data: [] })),
+        Promise.resolve(archiveQuery).catch(() => ({ data: [] })),
+        Promise.resolve(ordersQuery).catch(() => ({ data: [] })),
       ]);
 
       (archiveRes.data || []).forEach(addRowToMap);
