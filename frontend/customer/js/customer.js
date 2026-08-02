@@ -201,6 +201,15 @@ var API_BASE = (function () {
   return 'http://127.0.0.1:3000';
 }());
 
+function resolveAssetUrl(url) {
+  if (!url) return '';
+  var s = String(url).trim();
+  if (!s) return '';
+  if (/^https?:\/\//i.test(s) || /^data:/i.test(s)) return s;
+  var base = String(API_BASE || '').replace(/\/$/, '');
+  return base + (s.charAt(0) === '/' ? s : '/' + s);
+}
+
 async function apiFetch(path, opts) {
   var options = Object.assign({ headers: {} }, opts || {});
   options.headers['x-cafe-id'] = CAFE_ID;
@@ -366,7 +375,7 @@ function renderMenuHeader() {
 
   if (info.logoUrl) {
     var img = document.createElement('img');
-    img.src = API_BASE + info.logoUrl;
+    img.src = resolveAssetUrl(info.logoUrl);
     img.alt = 'شعار';
     img.className = 'menu-header-logo';
     img.onerror = function () { };
@@ -483,7 +492,7 @@ function renderProducts() {
     // Image
     var imgHtml = '';
     if (item.imageUrl) {
-      imgHtml = '<div class="product-card-img-wrap"><img src="' + API_BASE + item.imageUrl + '" alt="' + (item.name || '') + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=&quot;product-card-placeholder&quot;>' + randEmoji(item.name || '') + '</div>\'"></div>';
+      imgHtml = '<div class="product-card-img-wrap"><img src="' + resolveAssetUrl(item.imageUrl) + '" alt="' + (item.name || '') + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=&quot;product-card-placeholder&quot;>' + randEmoji(item.name || '') + '</div>\'"></div>';
     } else {
       imgHtml = '<div class="product-card-img-wrap"><div class="product-card-placeholder">' + randEmoji(item.name || '') + '</div></div>';
     }
@@ -546,7 +555,7 @@ function openProductSheet(item) {
   // Image
   var imgWrap = $('productSheetImgWrap');
   if (item.imageUrl) {
-    imgWrap.innerHTML = '<img class="product-sheet-img" src="' + API_BASE + item.imageUrl + '" alt="' + escHtml(item.name || '') + '" onerror="this.parentNode.innerHTML=\'<div class=&quot;product-sheet-img-placeholder&quot;>' + randEmoji(item.name || '') + '</div>\'">';
+    imgWrap.innerHTML = '<img class="product-sheet-img" src="' + resolveAssetUrl(item.imageUrl) + '" alt="' + escHtml(item.name || '') + '" onerror="this.parentNode.innerHTML=\'<div class=&quot;product-sheet-img-placeholder&quot;>' + randEmoji(item.name || '') + '</div>\'">';
   } else {
     imgWrap.innerHTML = '<div class="product-sheet-img-placeholder">' + randEmoji(item.name || '') + '</div>';
   }

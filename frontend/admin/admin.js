@@ -665,8 +665,17 @@
           addOptionGroupRow(g.title, g.values || []);
         });
       }
+  function resolveAssetUrl(url) {
+    if (!url) return '';
+    var s = String(url).trim();
+    if (!s) return '';
+    if (/^https?:\/\//i.test(s) || /^data:/i.test(s)) return s;
+    var base = String(window.API_BASE || '').replace(/\/$/, '');
+    return base + (s.charAt(0) === '/' ? s : '/' + s);
+  }
+
       if (item.imageUrl) {
-        itemImagePreview.src = (window.API_BASE || '') + item.imageUrl;
+        itemImagePreview.src = resolveAssetUrl(item.imageUrl);
         itemImagePreview.style.display = 'block';
       } else { itemImagePreview.style.display = 'none'; }
       formAddItem.querySelector('button[type="submit"]').textContent = 'حفظ التعديل';
@@ -693,7 +702,7 @@
     try {
       var url = await api.uploadImage(file);
       itemImageUrl.value = url;
-      itemImagePreview.src = (window.API_BASE || '') + url;
+      itemImagePreview.src = resolveAssetUrl(url);
       itemImagePreview.style.display = 'block';
     } catch (e) {
       showToast('فشل رفع الصورة');
@@ -1148,11 +1157,10 @@
   }
 
   function updateCategoryImageDialog(url) {
-    var base = window.API_BASE || '';
     var hasImage = !!url;
     if (menuCategoryImagePreview) {
       menuCategoryImagePreview.style.display = hasImage ? 'block' : 'none';
-      menuCategoryImagePreview.src = hasImage ? base + url : '';
+      menuCategoryImagePreview.src = hasImage ? resolveAssetUrl(url) : '';
       menuCategoryImagePreview.alt = selectedCategory ? ('صورة تصنيف ' + selectedCategory) : 'صورة التصنيف';
     }
     if (categoryImageEmpty) categoryImageEmpty.style.display = hasImage ? 'none' : 'flex';
@@ -1208,14 +1216,13 @@
       return;
     }
     if (emptyCategories) emptyCategories.style.display = 'none';
-    var base = window.API_BASE || '';
     menuCategoryCards.innerHTML = categories.map(function (c) {
       var label = c.count === 1 ? 'عنصر' : 'عناصر';
-      var src = c.imageUrl ? base + escapeHtml(c.imageUrl) : placeholderImg;
+      var src = c.imageUrl ? resolveAssetUrl(c.imageUrl) : placeholderImg;
       var thumb =
         '<div class="menu-category-card__thumb">' +
           '<img src="' +
-          src +
+          escapeHtml(src) +
           '" alt="' +
           escapeHtml(c.name) +
           '" loading="lazy" decoding="async" width="400" height="300"/>' +
@@ -1247,10 +1254,10 @@
       return;
     }
     if (emptyMenu) emptyMenu.style.display = 'none';
-    var base = window.API_BASE || '';
     menuList.innerHTML = items.map(function (item) {
+      var imgSrc = item.imageUrl ? resolveAssetUrl(item.imageUrl) : placeholderImg;
       return '<div class="menu-card-admin">' +
-        '<img src="' + ((item.imageUrl && base + item.imageUrl) || placeholderImg) + '" alt="' + escapeHtml(item.name) + '">' +
+        '<img src="' + escapeHtml(imgSrc) + '" alt="' + escapeHtml(item.name) + '">' +
         '<div class="body">' +
           '<div class="name">' + escapeHtml(item.name) + '</div>' +
           '<div class="meta">' + escapeHtml(item.category || '—') + '</div>' +

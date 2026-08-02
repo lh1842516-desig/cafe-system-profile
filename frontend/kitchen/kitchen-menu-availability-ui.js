@@ -52,8 +52,11 @@
 
   function imageSrc(url) {
     if (!url) return PLACEHOLDER_SVG;
-    if (String(url).indexOf('http') === 0 || String(url).indexOf('data:') === 0) return url;
-    return String(url);
+    var s = String(url).trim();
+    if (!s) return PLACEHOLDER_SVG;
+    if (/^https?:\/\//i.test(s) || /^data:/i.test(s)) return s;
+    var base = String(global.API_BASE || '').replace(/\/$/, '');
+    return base + (s.charAt(0) === '/' ? s : '/' + s);
   }
 
 
