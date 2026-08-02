@@ -1,48 +1,11 @@
 'use strict';
 
 /**
- * cafeRepository.js
- * Manages cafe records for SaaS (Supabase) and Local Mode (local JSON file fallback).
+ * cafeRepository.js — Supabase Single Source of Truth
  */
 
-const fs = require('fs');
-const path = require('path');
-const config = require('../config');
 const { getClient } = require('../lib/supabase');
 const { v4: uuidv4 } = require('uuid');
-
-const CAFES_FILE = path.join(config.DATA_DIR, 'cafes.json');
-
-function ensureCafesFile() {
-  if (!fs.existsSync(config.DATA_DIR)) {
-    fs.mkdirSync(config.DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(CAFES_FILE)) {
-    fs.writeFileSync(CAFES_FILE, JSON.stringify([], null, 2), 'utf8');
-  }
-}
-
-function readLocalCafes() {
-  ensureCafesFile();
-  try {
-    const content = fs.readFileSync(CAFES_FILE, 'utf8');
-    return JSON.parse(content) || [];
-  } catch (err) {
-    console.error('[cafeRepository] Error reading local cafes:', err.message);
-    return [];
-  }
-}
-
-function writeLocalCafes(cafes) {
-  ensureCafesFile();
-  try {
-    fs.writeFileSync(CAFES_FILE, JSON.stringify(cafes, null, 2), 'utf8');
-    return true;
-  } catch (err) {
-    console.error('[cafeRepository] Error writing local cafes:', err.message);
-    return false;
-  }
-}
 
 function mapCafeFromDb(row) {
   if (!row) return null;
@@ -60,56 +23,48 @@ function mapCafeFromDb(row) {
 }
 
 async function getCafes() {
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { data, error } = await supabase
-        .from('cafes')
-        .select('*')
-        .order('name', { ascending: true });
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('cafes')
+      .select('*')
+      .order('name', { ascending: true });
 
-      if (error) {
-        console.error('[cafeRepository] getCafes error:', error.message);
-        return readLocalCafes().map(mapCafeFromDb);
-      }
-      return (data || []).map(mapCafeFromDb);
-    } catch (err) {
-      console.error('[cafeRepository] getCafes exception:', err.message);
-      return readLocalCafes().map(mapCafeFromDb);
+    if (error) {
+      console.error('[cafeRepository] getCafes error:', error.message);
+      return [];
     }
+    return (data || []).map(mapCafeFromDb);
+  } catch (err) {
+    console.error('[cafeRepository] getCafes exception:', err.message);
+    return [];
   }
-
-  return readLocalCafes().map(mapCafeFromDb);
 }
 
 async function getCafeById(id) {
   const normId = String(id || '').trim();
   if (!normId) return null;
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { data, error } = await supabase
-        .from('cafes')
-        .select('*')
-        .eq('id', normId)
-        .limit(1);
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('cafes')
+      .select('*')
+      .eq('id', normId)
+      .limit(1);
 
-      if (error) {
-        console.error('[cafeRepository] getCafeById error:', error.message);
-        return mapCafeFromDb(readLocalCafes().find(c => String(c.id) === normId));
-      }
-      if (data && data.length > 0) {
-        return mapCafeFromDb(data[0]);
-      }
+    if (error) {
+      console.error('[cafeRepository] getCafeById error:', error.message);
       return null;
-    } catch (err) {
-      console.error('[cafeRepository] getCafeById exception:', err.message);
-      return mapCafeFromDb(readLocalCafes().find(c => String(c.id) === normId));
     }
+    if (data && data.length > 0) {
+      return mapCafeFromDb(data[0]);
+    }
+    return null;
+  } catch (err) {
+    console.error('[cafeRepository] getCafeById exception:', err.message);
+    return null;
   }
-
-  return mapCafeFromDb(readLocalCafes().find(c => String(c.id) === normId));
 }
 
 async function createCafe(cafeData) {
@@ -128,30 +83,25 @@ async function createCafe(cafeData) {
     updated_at: new Date().toISOString(),
   };
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { data, error } = await supabase
-        .from('cafes')
-        .insert([newCafe])
-        .select('*');
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('cafes')
+      .insert([newCafe])
+      .select('*');
 
-      if (error) {
-        console.error('[cafeRepository] createCafe error:', error.message);
-        saveLocalCafe(newCafe);
-        return mapCafeFromDb(newCafe);
-      }
-      if (data && data.length > 0) {
-        return mapCafeFromDb(data[0]);
-      }
-    } catch (err) {
-      console.error('[cafeRepository] createCafe exception:', err.message);
-      saveLocalCafe(newCafe);
+    if (error) {
+      console.error('[cafeRepository] createCafe error:', error.message);
       return mapCafeFromDb(newCafe);
     }
+    if (data && data.length > 0) {
+      return mapCafeFromDb(data[0]);
+    }
+  } catch (err) {
+    console.error('[cafeRepository] createCafe exception:', err.message);
+    return mapCafeFromDb(newCafe);
   }
 
-  saveLocalCafe(newCafe);
   return mapCafeFromDb(newCafe);
 }
 
@@ -171,91 +121,49 @@ async function updateCafe(id, cafeData) {
     updateFields.subscription_status = String(cafeData.subscriptionStatus).trim().toLowerCase();
   }
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { data, error } = await supabase
-        .from('cafes')
-        .update(updateFields)
-        .eq('id', normId)
-        .select('*');
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('cafes')
+      .update(updateFields)
+      .eq('id', normId)
+      .select('*');
 
-      if (error) {
-        console.error('[cafeRepository] updateCafe error:', error.message);
-        const local = updateLocalCafe(normId, updateFields);
-        return mapCafeFromDb(local);
-      }
-      if (data && data.length > 0) {
-        return mapCafeFromDb(data[0]);
-      }
-    } catch (err) {
-      console.error('[cafeRepository] updateCafe exception:', err.message);
-      const local = updateLocalCafe(normId, updateFields);
-      return mapCafeFromDb(local);
+    if (error) {
+      console.error('[cafeRepository] updateCafe error:', error.message);
+      return null;
     }
+    if (data && data.length > 0) {
+      return mapCafeFromDb(data[0]);
+    }
+  } catch (err) {
+    console.error('[cafeRepository] updateCafe exception:', err.message);
+    return null;
   }
 
-  const local = updateLocalCafe(normId, updateFields);
-  return mapCafeFromDb(local);
+  return null;
 }
 
 async function deleteCafe(id) {
   const normId = String(id || '').trim();
   if (!normId) return false;
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { error } = await supabase
-        .from('cafes')
-        .delete()
-        .eq('id', normId);
+  try {
+    const supabase = getClient();
+    const { error } = await supabase
+      .from('cafes')
+      .delete()
+      .eq('id', normId);
 
-      if (error) {
-        console.error('[cafeRepository] deleteCafe error:', error.message);
-        return deleteLocalCafe(normId);
-      }
-      return true;
-    } catch (err) {
-      console.error('[cafeRepository] deleteCafe exception:', err.message);
-      return deleteLocalCafe(normId);
+    if (error) {
+      console.error('[cafeRepository] deleteCafe error:', error.message);
+      return false;
     }
-  }
-
-  return deleteLocalCafe(normId);
-}
-
-// Local Helpers
-function saveLocalCafe(rawCafe) {
-  const cafes = readLocalCafes();
-  const idx = cafes.findIndex(c => c.id === rawCafe.id);
-  if (idx !== -1) {
-    cafes[idx] = Object.assign({}, cafes[idx], rawCafe);
-  } else {
-    cafes.push(rawCafe);
-  }
-  writeLocalCafes(cafes);
-}
-
-function updateLocalCafe(id, fields) {
-  const cafes = readLocalCafes();
-  const idx = cafes.findIndex(c => String(c.id) === id);
-  if (idx !== -1) {
-    cafes[idx] = Object.assign({}, cafes[idx], fields);
-    writeLocalCafes(cafes);
-    return cafes[idx];
-  }
-  return null;
-}
-
-function deleteLocalCafe(id) {
-  const cafes = readLocalCafes();
-  const filtered = cafes.filter(c => String(c.id) !== id);
-  if (filtered.length !== cafes.length) {
-    writeLocalCafes(filtered);
     return true;
+  } catch (err) {
+    console.error('[cafeRepository] deleteCafe exception:', err.message);
+    return false;
   }
-  return false;
 }
 
 module.exports = {

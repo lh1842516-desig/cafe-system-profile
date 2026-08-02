@@ -1,44 +1,30 @@
 /**
  * جلسات اختيار الطاولة (قبل إرسال الطلب) — inUse
  * occupied يُستنتج من وجود طلب مفتوح على الطاولة.
+ * Supabase Single Source of Truth مع Memory Cache
  */
-const fs = require('fs');
-const path = require('path');
+'use strict';
 const { v4: uuidv4 } = require('uuid');
-const { DATA_DIR } = require('../config');
+const { getClient } = require('../lib/supabase');
 
-const FILE = path.join(DATA_DIR, 'table-sessions.json');
+let _cafeId = null;
+let _tableSessionsCache = [];
+let _loaded = false;
 
-function ensureDir(dir) {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+function setCafeId(cid) {
+  if (cid) _cafeId = cid;
 }
 
-function readJson(filePath, defaultValue) {
-  ensureDir(path.dirname(filePath));
-  if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, JSON.stringify(defaultValue, null, 2), 'utf8');
-    return defaultValue;
-  }
-  try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  } catch {
-    return defaultValue;
-  }
-}
-
-function writeJson(filePath, data) {
-  ensureDir(path.dirname(filePath));
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-}
 const MAX_AGE_MS = 2 * 60 * 60 * 1000;
 
-function readData() {
-  const data = readJson(FILE, { sessions: [] });
-  return Array.isArray(data.sessions) ? data.sessions : [];
-}
-
-function writeSessions(sessions) {
-  writeJson(FILE, { sessions });
+function normalizeSessionShape(session) {
+  const src = session && typeof session === 'object' ? session : {};
+  return {
+    sessionId: String(src.sessionId || src.id || '').trim(),
+    tableId: String(src.tableId || src.table_id || '').trim(),
+    status: String(src.status || 'in_use').trim() || 'in_use',
+    createdAt: String(src.createdAt || src.created_at || new Date().toISOString()),
+  };
 }
 
 function prune(sessions) {
@@ -50,21 +36,54 @@ function prune(sessions) {
   });
 }
 
+async function loadFromSupabase() {
+  const cid = _cafeId || 'default';
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('table_sessions')
+      .select('*');
+
+    if (!error && data) {
+      _tableSessionsCache = data.map(normalizeSessionShape);
+    }
+  } catch (err) {
+    console.warn('[tableSessions] Error loading from Supabase:', err.message);
+  }
+  _loaded = true;
+  return _tableSessionsCache;
+}
+
+function writeSessions(sessions) {
+  _tableSessionsCache = Array.isArray(sessions) ? [...sessions] : [];
+
+  const cid = _cafeId || 'default';
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
+  if (!isUuid) return;
+
+  const supabase = getClient();
+  const rows = _tableSessionsCache.map(s => ({
+    id: s.sessionId || uuidv4(),
+    cafe_id: cid,
+    table_id: s.tableId,
+    status: s.status || 'in_use',
+    created_at: s.createdAt || new Date().toISOString()
+  })).filter(r => !!r.id && !!r.table_id);
+
+  if (rows.length > 0) {
+    supabase.from('table_sessions').upsert(rows, { onConflict: 'id,cafe_id' })
+      .catch(err => console.error('[tableSessions] Persist error:', err.message));
+  }
+}
+
 function getSessions() {
-  const raw = readData().map(normalizeSessionShape);
+  if (!_loaded) {
+    loadFromSupabase().catch(() => {});
+  }
+  const raw = _tableSessionsCache.map(normalizeSessionShape);
   const pruned = prune(raw);
   if (pruned.length !== raw.length) writeSessions(pruned);
   return pruned;
-}
-
-function normalizeSessionShape(session) {
-  const src = session && typeof session === 'object' ? session : {};
-  return {
-    sessionId: String(src.sessionId || '').trim(),
-    tableId: String(src.tableId || '').trim(),
-    status: String(src.status || 'in_use').trim() || 'in_use',
-    createdAt: String(src.createdAt || new Date().toISOString()),
-  };
 }
 
 function getSessionById(sessionId) {
@@ -88,10 +107,6 @@ function tableHasOpenOrder(tableId, getOpenOrdersForTable) {
   return Array.isArray(list) && list.length > 0;
 }
 
-/**
- * @param {object} [options]
- * @param {boolean} [options.sharedJoin] — انضمام زبون إضافي عبر QR (لا يُرفض بسبب طلبات مفتوحة لزبائن آخرين على نفس الطاولة)
- */
 function claimTable(tableId, getOpenOrdersForTable, resumeOrderId, options) {
   const tid = String(tableId || '').trim();
   if (!tid) return { ok: false, code: 'in_use' };
@@ -167,6 +182,13 @@ function releaseSession(sessionId) {
   });
   if (next.length === sessions.length) return false;
   writeSessions(next);
+
+  const cid = _cafeId || 'default';
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
+  if (isUuid) {
+    const supabase = getClient();
+    supabase.from('table_sessions').delete().eq('id', id).eq('cafe_id', cid).catch(() => {});
+  }
   return true;
 }
 
@@ -253,7 +275,10 @@ function isTableBillRequested(cafeId, tableId) {
   return billRequestedMap.get(cid + ':' + tid) === true;
 }
 
+loadFromSupabase().catch(() => {});
+
 module.exports = {
+  setCafeId,
   getSessions,
   getSessionById,
   getSessionByTable,

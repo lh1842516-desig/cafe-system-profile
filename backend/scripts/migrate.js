@@ -122,6 +122,12 @@ async function run() {
   try {
     console.log('📦  Running migration: 001_initial_schema.sql…');
     await client.query(sql);
+    const sql2File = path.join(__dirname, '..', 'migrations', '002_complete_supabase_migration.sql');
+    if (fs.existsSync(sql2File)) {
+      console.log('📦  Running migration: 002_complete_supabase_migration.sql…');
+      const sql2 = fs.readFileSync(sql2File, 'utf8');
+      await client.query(sql2);
+    }
     console.log('✅  Migration complete — all tables created.');
   } catch (err) {
     console.error('❌  Migration failed:', err.message);

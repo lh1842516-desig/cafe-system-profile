@@ -27,21 +27,12 @@ function getCafeStore(cafeId) {
   return _storesByCafe[cid];
 }
 
-// ── Legacy JSON helpers (kept for archive.js, todaySessionHistory.js, etc.) ─
-function ensureDir(dir) {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-}
-function readJson(filePath, defaultValue = []) {
-  ensureDir(path.dirname(filePath));
-  if (!fs.existsSync(filePath)) return defaultValue;
-  try { return JSON.parse(fs.readFileSync(filePath, 'utf8')); } catch { return defaultValue; }
-}
-function writeJson(filePath, data) {
-  ensureDir(path.dirname(filePath));
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-}
+function ensureDir(dir) {}
+function readJson(filePath, defaultValue = []) { return defaultValue; }
+function writeJson(filePath, data) {}
+async function migrateFromJsonIfNeeded() {}
 
-// ── DB → JS mappers ────────────────────────────────────────────────────────
+// ── DB ↔ JS mappers ────────────────────────────────────────────────────────
 function menuItemFromDb(row) {
   return {
     id: row.id,
@@ -151,7 +142,6 @@ function closingFromDb(row) {
     note: row.note || '',
     orderCount: Number(row.order_count) || 0,
     status: row.status || 'closed',
-    // legacy fields
     totalSales_legacy: Number(row.total_sales) || 0,
   };
 }
@@ -190,110 +180,6 @@ function closingToDb(c) {
     order_count: Number(c.orderCount) || 0,
     status: c.status || 'closed',
   };
-}
-
-// ── Migration from JSON files (first-run only) ─────────────────────────────
-async function migrateFromJsonIfNeeded() {
-  const supabase = getClient();
-  const { data: chk } = await supabase
-    .from('menu_items').select('id').eq('cafe_id', _cafeId).limit(1);
-  if (chk && chk.length > 0) return; // already migrated
-
-  console.log('  [store] Migrating data from JSON files...');
-
-  // Menu
-  try {
-    const menuJson = readJson(path.join(DATA_DIR, 'menu.json'), []);
-    if (menuJson.length) {
-      const { error } = await supabase.from('menu_items').upsert(
-        menuJson.map(item => menuItemToDb({ ...item, isAvailable: item.isAvailable !== false })),
-        { onConflict: 'id,cafe_id' }
-      );
-      if (error) console.warn('[store] menu migration:', error.message);
-      else console.log(`  [store] migrated ${menuJson.length} menu items`);
-    }
-  } catch (e) { console.warn('[store] menu migration error:', e.message); }
-
-  // Tables
-  try {
-    const def = Array.from({ length: 20 }, (_, i) => ({ id: String(i + 1), label: String(i + 1) }));
-    const tablesJson = readJson(path.join(DATA_DIR, 'tables.json'), def);
-    if (tablesJson.length) {
-      await supabase.from('cafe_tables').upsert(
-        tablesJson.map(t => tableToDb(t)),
-        { onConflict: 'id,cafe_id' }
-      );
-      console.log(`  [store] migrated ${tablesJson.length} tables`);
-    }
-  } catch (e) { console.warn('[store] tables migration error:', e.message); }
-
-  // Orders
-  try {
-    const ordersJson = readJson(path.join(DATA_DIR, 'orders.json'), []);
-    if (ordersJson.length) {
-      for (let i = 0; i < ordersJson.length; i += 50) {
-        const chunk = ordersJson.slice(i, i + 50);
-        await supabase.from('orders').upsert(
-          chunk.map(o => orderToDb({
-            ...o,
-            tableId: o.tableId || o.table_id,
-            orderType: o.orderType || o.order_type || 'DINE_IN',
-            createdAt: o.createdAt || o.created_at,
-            closedAt: o.closedAt || o.closed_at,
-            paymentMethod: o.paymentMethod || o.payment_method,
-            customerName: o.customerName || o.customer_name,
-            customerSessionId: o.customerSessionId || o.customer_session_id,
-            kitchenBatchId: o.kitchenBatchId || o.kitchen_batch_id,
-            bundledCustomerNames: o.bundledCustomerNames || o.bundled_customer_names || [],
-            serviceMeta: o.serviceMeta || o.service_meta,
-            rejectedByCashier: o.rejectedByCashier || o.rejected_by_cashier || false,
-            cancelReason: o.cancelReason || o.cancel_reason,
-          })),
-          { onConflict: 'id,cafe_id' }
-        );
-      }
-      console.log(`  [store] migrated ${ordersJson.length} orders`);
-    }
-  } catch (e) { console.warn('[store] orders migration error:', e.message); }
-
-  // Closings
-  try {
-    const closingsJson = readJson(path.join(DATA_DIR, 'closings.json'), []);
-    if (closingsJson.length) {
-      await supabase.from('closings').upsert(
-        closingsJson.map(c => closingToDb({
-          ...c,
-          salesCash: c.salesCash || 0,
-          salesCard: c.salesCard || 0,
-          openedAt: c.openedAt || null,
-          openedBy: c.openedBy || '',
-          closedAt: c.closedAt || null,
-          closedBy: c.closedBy || '',
-        })),
-        { onConflict: 'cafe_id,date' }
-      );
-      console.log(`  [store] migrated ${closingsJson.length} closings`);
-    }
-  } catch (e) { console.warn('[store] closings migration error:', e.message); }
-
-  // Order sequences
-  try {
-    const seqJson = readJson(path.join(DATA_DIR, 'orderSequence.json'), {});
-    const lastByOpenDate = (seqJson.lastByOpenDate || {});
-    const entries = Object.entries(lastByOpenDate);
-    if (entries.length) {
-      await supabase.from('order_sequences').upsert(
-        entries.map(([open_date, last_sequence]) => ({
-          cafe_id: _cafeId,
-          open_date,
-          last_sequence: Number(last_sequence) || 0,
-        })),
-        { onConflict: 'cafe_id,open_date' }
-      );
-    }
-  } catch (e) { console.warn('[store] sequences migration error:', e.message); }
-
-  console.log('  [store] Migration complete');
 }
 
 // ── Load from Supabase into cache ──────────────────────────────────────────

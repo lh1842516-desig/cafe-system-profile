@@ -1,21 +1,13 @@
 /**
  * API التصنيفات — قائمة تصنيفات المنيو (مشتركة بين الأدمن والكابتن والزبون)
- * كل تصنيف: { name, imageUrl } (مع ترحيل تلقائي من مصفوفة نصوص قديمة)
+ * Supabase Single Source of Truth
  */
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const { DATA_DIR } = require('../config');
 const { optionalToken } = require('./authMiddleware');
 const menuRepo = require('../repository/menuRepository');
 const categoryRepo = require('../repository/categoryRepository');
 
-const CATEGORIES_FILE = path.join(DATA_DIR, 'categories.json');
 const router = express.Router();
-
-function ensureDir(dir) {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-}
 
 function categoryName(c) {
   if (c == null) return '';
@@ -23,70 +15,6 @@ function categoryName(c) {
     return String(c.name != null ? c.name : '').trim();
   }
   return String(c).trim();
-}
-
-function normalizeCategoryEntry(entry) {
-  if (entry == null) return null;
-  if (typeof entry === 'object' && !Array.isArray(entry)) {
-    const name = String(entry.name != null ? entry.name : '').trim();
-    if (!name) return null;
-    const raw = entry.imageUrl;
-    const imageUrl = raw != null && String(raw).trim() !== '' ? String(raw).trim() : null;
-    return { name, imageUrl };
-  }
-  const name = String(entry).trim();
-  if (!name) return null;
-  return { name, imageUrl: null };
-}
-
-function normalizeCategoryList(arr) {
-  if (!Array.isArray(arr)) return [];
-  const out = [];
-  arr.forEach((raw) => {
-    const n = normalizeCategoryEntry(raw);
-    if (n) out.push(n);
-  });
-  return out;
-}
-
-function getCategoriesFilePath(cafeId) {
-  const cid = String(cafeId || '').trim();
-  if (cid) {
-    return path.join(DATA_DIR, `categories_${cid}.json`);
-  }
-  return path.join(DATA_DIR, 'categories.json');
-}
-
-function readCategories(cafeId) {
-  const cid = String(cafeId || '').trim();
-  if (!cid) {
-    const defaultFile = path.join(DATA_DIR, 'categories.json');
-    ensureDir(path.dirname(defaultFile));
-    if (!fs.existsSync(defaultFile)) return [];
-    try {
-      const data = fs.readFileSync(defaultFile, 'utf8');
-      return normalizeCategoryList(JSON.parse(data));
-    } catch { return []; }
-  }
-  const filePath = path.join(DATA_DIR, `categories_${cid}.json`);
-  ensureDir(path.dirname(filePath));
-  if (!fs.existsSync(filePath)) {
-    return [];
-  }
-  try {
-    const data = fs.readFileSync(filePath, 'utf8');
-    const arr = JSON.parse(data);
-    if (!Array.isArray(arr)) return [];
-    return normalizeCategoryList(arr);
-  } catch {
-    return [];
-  }
-}
-
-function saveCategories(arr, cafeId) {
-  const filePath = getCategoriesFilePath(cafeId);
-  ensureDir(path.dirname(filePath));
-  fs.writeFileSync(filePath, JSON.stringify(arr, null, 2), 'utf8');
 }
 
 router.use(optionalToken);
@@ -107,7 +35,7 @@ async function doDeleteCategory(cafeId, name) {
   const idx = list.findIndex((c) => categoryName(c).toLowerCase() === normalized);
   if (idx !== -1) {
     list.splice(idx, 1);
-    saveCategories(list, cafeId);
+    await categoryRepo.saveCategories(list, cafeId);
   }
   const menu = await menuRepo.getMenu(cafeId);
   const filtered = menu.filter((item) => {
@@ -134,7 +62,7 @@ async function applyCategoryRename(cafeId, oldName, newName) {
   if (oldName === '') {
     list.push({ name: newName, imageUrl: null });
     list.sort((a, b) => categoryName(a).localeCompare(categoryName(b), 'ar'));
-    saveCategories(list, cafeId);
+    await categoryRepo.saveCategories(list, cafeId);
   } else {
     const idx = list.findIndex((c) => categoryName(c).toLowerCase() === oldNorm);
     if (idx === -1) {
@@ -145,7 +73,7 @@ async function applyCategoryRename(cafeId, oldName, newName) {
       list[idx] = { name: newName, imageUrl: prevImage };
     }
     list.sort((a, b) => categoryName(a).localeCompare(categoryName(b), 'ar'));
-    saveCategories(list, cafeId);
+    await categoryRepo.saveCategories(list, cafeId);
   }
   let changed = false;
   menu.forEach((item) => {
@@ -165,7 +93,6 @@ function createCategoryRouter(io) {
   const r = express.Router();
   r.use(optionalToken);
 
-  // مسار الحذف أولاً
   r.post('/delete', async (req, res) => {
     try {
       const name = req.body && req.body.name != null ? String(req.body.name).trim() : '';
@@ -178,7 +105,6 @@ function createCategoryRouter(io) {
     }
   });
 
-  /** POST /api/categories/rename — تغيير اسم تصنيف (oldName → newName) في القائمة وفي كل المنتجات */
   r.post('/rename', async (req, res) => {
     try {
       const oldName = req.body && req.body.oldName != null ? String(req.body.oldName).trim() : '';
@@ -192,7 +118,6 @@ function createCategoryRouter(io) {
     }
   });
 
-  /** POST /api/categories/image — تعيين أو إزالة صورة التصنيف */
   r.post('/image', async (req, res) => {
     try {
       const cafeId = req.cafeId;
@@ -207,7 +132,7 @@ function createCategoryRouter(io) {
           ? null
           : String(rawUrl).trim() || null;
       list[idx] = { name: categoryName(list[idx]), imageUrl };
-      saveCategories(list, cafeId);
+      await categoryRepo.saveCategories(list, cafeId);
       if (io) emitMenuUpdated(io, { reason: 'category-image-updated', name }, cafeId);
       res.json(list);
     } catch (err) {
@@ -215,7 +140,6 @@ function createCategoryRouter(io) {
     }
   });
 
-  /** GET /api/categories — قائمة التصنيفات */
   r.get('/', async (req, res) => {
     try {
       const cafeId = req.cafeId;
@@ -226,7 +150,6 @@ function createCategoryRouter(io) {
     }
   });
 
-  /** POST /api/categories — إضافة تصنيف جديد (بدون تكرار) */
   r.post('/', async (req, res) => {
     try {
       const cafeId = req.cafeId;
@@ -239,7 +162,7 @@ function createCategoryRouter(io) {
       }
       list.push({ name, imageUrl: null });
       list.sort((a, b) => categoryName(a).localeCompare(categoryName(b), 'ar'));
-      saveCategories(list, cafeId);
+      await categoryRepo.saveCategories(list, cafeId);
       if (io) emitMenuUpdated(io, { reason: 'category-added', name }, cafeId);
       res.status(201).json(list);
     } catch (err) {
@@ -247,7 +170,6 @@ function createCategoryRouter(io) {
     }
   });
 
-  /** DELETE /api/categories?name=... — حذف تصنيف وجميع منتجاته */
   r.delete('/', async (req, res) => {
     try {
       const name = (req.query.name != null ? String(req.query.name) : (req.body && req.body.name != null ? String(req.body.name) : '')).trim();
@@ -266,4 +188,3 @@ function createCategoryRouter(io) {
 
 module.exports = createCategoryRouter;
 module.exports.createCategoryRouter = createCategoryRouter;
-

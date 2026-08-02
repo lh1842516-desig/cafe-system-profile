@@ -17,39 +17,6 @@ async function initKitchenState(cafeId) {
   _cafeId = cafeId;
   const supabase = getClient();
 
-  // Check if already migrated
-  const { data: existing } = await supabase
-    .from('kitchen_state').select('order_id').eq('cafe_id', _cafeId).limit(1);
-
-  if (!existing || existing.length === 0) {
-    // Migrate from kitchen.json if it exists
-    const KITCHEN_FILE = path.join(DATA_DIR, 'kitchen.json');
-    if (fs.existsSync(KITCHEN_FILE)) {
-      try {
-        const jsonState = JSON.parse(fs.readFileSync(KITCHEN_FILE, 'utf8'));
-        if (jsonState && typeof jsonState === 'object') {
-          const entries = Object.entries(jsonState);
-          if (entries.length > 0) {
-            const { error } = await supabase.from('kitchen_state').upsert(
-              entries.map(([orderId, ks]) => ({
-                order_id: orderId,
-                cafe_id: _cafeId,
-                status: ks.status || 'new',
-                created_at: ks.createdAt || new Date().toISOString(),
-                updated_at: ks.updatedAt || new Date().toISOString(),
-              })),
-              { onConflict: 'order_id,cafe_id' }
-            );
-            if (error) console.warn('[kitchen] migration error:', error.message);
-            else console.log(`  [kitchen] migrated ${entries.length} kitchen state entries`);
-          }
-        }
-      } catch (e) {
-        console.warn('[kitchen] JSON migration failed:', e.message);
-      }
-    }
-  }
-
   // Load from Supabase
   const { data: rows, error } = await supabase
     .from('kitchen_state').select('*').eq('cafe_id', _cafeId);

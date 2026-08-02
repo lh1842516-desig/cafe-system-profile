@@ -1,32 +1,17 @@
 /**
  * بيانات دخول الأدمن — اسم المستخدم ورمز الدخول.
+ * Supabase Single Source of Truth مع Memory Cache
  */
-const fs = require('fs');
-const path = require('path');
-const { ADMIN_AUTH_FILE } = require('../config');
+'use strict';
+const { getClient } = require('../lib/supabase');
 
 const DEFAULT_AUTH = {
   username: 'admin',
   password: '20262026',
 };
 
-function ensureAuthFile() {
-  const dir = path.dirname(ADMIN_AUTH_FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  if (!fs.existsSync(ADMIN_AUTH_FILE)) {
-    fs.writeFileSync(ADMIN_AUTH_FILE, JSON.stringify(DEFAULT_AUTH, null, 2), 'utf8');
-  }
-}
-
-function readAuthRaw() {
-  ensureAuthFile();
-  try {
-    const data = JSON.parse(fs.readFileSync(ADMIN_AUTH_FILE, 'utf8'));
-    return data && typeof data === 'object' ? data : {};
-  } catch (_) {
-    return {};
-  }
-}
+let _authCache = { ...DEFAULT_AUTH };
+let _loaded = false;
 
 function normalizeAuth(raw) {
   const src = raw && typeof raw === 'object' ? raw : {};
@@ -38,8 +23,41 @@ function normalizeAuth(raw) {
   };
 }
 
+async function loadAuthFromSupabase() {
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase.from('admin_auth').select('*').limit(1);
+    if (!error && data && data.length > 0) {
+      _authCache = normalizeAuth(data[0]);
+    } else {
+      // Seed default admin in Supabase if none exists
+      const { data: inserted } = await supabase.from('admin_auth').upsert([{
+        username: DEFAULT_AUTH.username,
+        password: DEFAULT_AUTH.password,
+        updated_at: new Date().toISOString()
+      }], { onConflict: 'username' }).select();
+      if (inserted && inserted.length > 0) {
+        _authCache = normalizeAuth(inserted[0]);
+      }
+    }
+  } catch (err) {
+    console.warn('[adminAuthStore] Exception loading admin auth:', err.message);
+  }
+  _loaded = true;
+  return _authCache;
+}
+
 function getAdminAuth() {
-  return normalizeAuth(readAuthRaw());
+  if (!_loaded) {
+    // Background async load to keep memory sync
+    loadAuthFromSupabase().catch(() => {});
+  }
+  return _authCache;
+}
+
+async function getAdminAuthAsync() {
+  await loadAuthFromSupabase();
+  return _authCache;
 }
 
 function verifyLogin(username, password) {
@@ -55,11 +73,9 @@ function verifyLogin(username, password) {
   return { ok: true };
 }
 
-/**
- * @returns {{ ok: true } | { ok: false, code: string, message: string }}
- */
-function changePassword(currentPassword, newPassword, confirmPassword) {
-  const auth = getAdminAuth();
+async function changePassword(currentPassword, newPassword, confirmPassword) {
+  await loadAuthFromSupabase();
+  const auth = _authCache;
   const cur = String(currentPassword != null ? currentPassword : '');
   const next = String(newPassword != null ? newPassword : '');
   const confirm = String(confirmPassword != null ? confirmPassword : '');
@@ -80,14 +96,29 @@ function changePassword(currentPassword, newPassword, confirmPassword) {
     return { ok: false, code: 'same_password', message: 'الرمز الجديد يجب أن يختلف عن الرمز الحالي' };
   }
 
-  const updated = normalizeAuth(Object.assign({}, auth, { password: next }));
-  ensureAuthFile();
-  fs.writeFileSync(ADMIN_AUTH_FILE, JSON.stringify(updated, null, 2), 'utf8');
+  const updated = normalizeAuth({ username: auth.username, password: next });
+  _authCache = updated;
+
+  try {
+    const supabase = getClient();
+    await supabase.from('admin_auth').upsert([{
+      username: updated.username,
+      password: updated.password,
+      updated_at: new Date().toISOString()
+    }], { onConflict: 'username' });
+  } catch (err) {
+    console.error('[adminAuthStore] Failed to update admin password in Supabase:', err.message);
+  }
+
   return { ok: true };
 }
 
+// Initial load call
+loadAuthFromSupabase().catch(() => {});
+
 module.exports = {
   getAdminAuth,
+  getAdminAuthAsync,
   verifyLogin,
   changePassword,
   DEFAULT_AUTH,

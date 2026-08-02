@@ -1,48 +1,11 @@
 'use strict';
 
 /**
- * userRepository.js
- * Manages user records for SaaS (Supabase) and Local Mode (local JSON file fallback).
+ * userRepository.js — Supabase Single Source of Truth
  */
 
-const fs = require('fs');
-const path = require('path');
-const config = require('../config');
 const { getClient } = require('../lib/supabase');
 const { v4: uuidv4 } = require('uuid');
-
-const USERS_FILE = path.join(config.DATA_DIR, 'users.json');
-
-function ensureUsersFile() {
-  if (!fs.existsSync(config.DATA_DIR)) {
-    fs.mkdirSync(config.DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(USERS_FILE)) {
-    fs.writeFileSync(USERS_FILE, JSON.stringify([], null, 2), 'utf8');
-  }
-}
-
-function readLocalUsers() {
-  ensureUsersFile();
-  try {
-    const content = fs.readFileSync(USERS_FILE, 'utf8');
-    return JSON.parse(content) || [];
-  } catch (err) {
-    console.error('[userRepository] Error reading local users:', err.message);
-    return [];
-  }
-}
-
-function writeLocalUsers(users) {
-  ensureUsersFile();
-  try {
-    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
-    return true;
-  } catch (err) {
-    console.error('[userRepository] Error writing local users:', err.message);
-    return false;
-  }
-}
 
 function mapUserFromDb(row) {
   if (!row) return null;
@@ -64,61 +27,52 @@ async function getUserByEmail(cafeId, email) {
   const normEmail = String(email || '').trim().toLowerCase();
   if (!normEmail) return null;
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', normEmail)
-        .limit(1);
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', normEmail)
+      .limit(1);
 
-      if (error) {
-        console.error('[userRepository] getUserByEmail error:', error.message);
-        // Fallback to local
-        return getLocalUserByEmail(cafeId, normEmail);
-      }
-      if (data && data.length > 0) {
-        return mapUserFromDb(data[0]);
-      }
+    if (error) {
+      console.error('[userRepository] getUserByEmail error:', error.message);
       return null;
-    } catch (err) {
-      console.error('[userRepository] getUserByEmail exception:', err.message);
-      return getLocalUserByEmail(cafeId, normEmail);
     }
+    if (data && data.length > 0) {
+      return mapUserFromDb(data[0]);
+    }
+    return null;
+  } catch (err) {
+    console.error('[userRepository] getUserByEmail exception:', err.message);
+    return null;
   }
-
-  return getLocalUserByEmail(cafeId, normEmail);
 }
 
 async function getUserById(cafeId, id) {
   const normId = String(id || '').trim();
   if (!normId) return null;
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', normId)
-        .limit(1);
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', normId)
+      .limit(1);
 
-      if (error) {
-        console.error('[userRepository] getUserById error:', error.message);
-        return getLocalUserById(cafeId, normId);
-      }
-      if (data && data.length > 0) {
-        return mapUserFromDb(data[0]);
-      }
+    if (error) {
+      console.error('[userRepository] getUserById error:', error.message);
       return null;
-    } catch (err) {
-      console.error('[userRepository] getUserById exception:', err.message);
-      return getLocalUserById(cafeId, normId);
     }
+    if (data && data.length > 0) {
+      return mapUserFromDb(data[0]);
+    }
+    return null;
+  } catch (err) {
+    console.error('[userRepository] getUserById exception:', err.message);
+    return null;
   }
-
-  return getLocalUserById(cafeId, normId);
 }
 
 async function createUser(cafeId, userData) {
@@ -135,86 +89,45 @@ async function createUser(cafeId, userData) {
     updated_at: new Date().toISOString(),
   };
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { plain_password, ...dbUser } = newUser;
-      const { data, error } = await supabase
-        .from('users')
-        .insert([dbUser])
-        .select('*');
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('users')
+      .insert([newUser])
+      .select('*');
 
-      if (error) {
-        console.error('[userRepository] createUser error:', error.message);
-        // Fallback to local
-        saveLocalUser(newUser);
-        return mapUserFromDb(newUser);
-      }
-      saveLocalUser(newUser);
-      if (data && data.length > 0) {
-        return mapUserFromDb({ ...data[0], plain_password: newUser.plain_password });
-      }
-    } catch (err) {
-      console.error('[userRepository] createUser exception:', err.message);
-      saveLocalUser(newUser);
+    if (error) {
+      console.error('[userRepository] createUser error:', error.message);
       return mapUserFromDb(newUser);
     }
+    if (data && data.length > 0) {
+      return mapUserFromDb(data[0]);
+    }
+  } catch (err) {
+    console.error('[userRepository] createUser exception:', err.message);
+    return mapUserFromDb(newUser);
   }
 
-  saveLocalUser(newUser);
   return mapUserFromDb(newUser);
 }
 
-// Local helpers
-function getLocalUserByEmail(cafeId, email) {
-  const users = readLocalUsers();
-  const user = users.find((u) => String(u.email || '').toLowerCase() === email);
-  return user ? mapUserFromDb(user) : null;
-}
-
-function getLocalUserById(cafeId, id) {
-  const users = readLocalUsers();
-  const user = users.find((u) => String(u.id) === id);
-  return user ? mapUserFromDb(user) : null;
-}
-
-function saveLocalUser(rawUser) {
-  const users = readLocalUsers();
-  const idx = users.findIndex((u) => u.id === rawUser.id || (rawUser.email && u.email === rawUser.email));
-  if (idx !== -1) {
-    users[idx] = Object.assign({}, users[idx], rawUser, { updated_at: new Date().toISOString() });
-  } else {
-    users.push(rawUser);
-  }
-  writeLocalUsers(users);
-}
-
 async function getAllUsers() {
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .order('created_at', { ascending: false });
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error('[userRepository] getAllUsers error:', error.message);
-        return readLocalUsers().map(mapUserFromDb);
-      }
-      const localUsers = readLocalUsers();
-      return (data || []).map(dbRow => {
-        const matchedLocal = localUsers.find(l => String(l.id) === String(dbRow.id));
-        const plainPassword = matchedLocal ? (matchedLocal.plain_password || matchedLocal.plainPassword || '') : '';
-        return mapUserFromDb({ ...dbRow, plain_password: plainPassword || dbRow.plain_password });
-      });
-    } catch (err) {
-      console.error('[userRepository] getAllUsers exception:', err.message);
-      return readLocalUsers().map(mapUserFromDb);
+    if (error) {
+      console.error('[userRepository] getAllUsers error:', error.message);
+      return [];
     }
+    return (data || []).map(mapUserFromDb);
+  } catch (err) {
+    console.error('[userRepository] getAllUsers exception:', err.message);
+    return [];
   }
-
-  return readLocalUsers().map(mapUserFromDb);
 }
 
 async function updateUser(id, userData) {
@@ -232,81 +145,49 @@ async function updateUser(id, userData) {
   if (userData.status !== undefined) updateFields.status = String(userData.status).trim().toLowerCase();
   if (userData.cafeId !== undefined) updateFields.cafe_id = userData.cafeId || null;
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { plain_password, ...dbUpdateFields } = updateFields;
-      const { data, error } = await supabase
-        .from('users')
-        .update(dbUpdateFields)
-        .eq('id', normId)
-        .select('*');
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('users')
+      .update(updateFields)
+      .eq('id', normId)
+      .select('*');
 
-      if (error) {
-        console.error('[userRepository] updateUser error:', error.message);
-        const local = updateLocalUser(normId, updateFields);
-        return mapUserFromDb(local);
-      }
-      const local = updateLocalUser(normId, updateFields);
-      if (data && data.length > 0) {
-        return mapUserFromDb({ ...data[0], plain_password: local.plain_password });
-      }
-    } catch (err) {
-      console.error('[userRepository] updateUser exception:', err.message);
-      const local = updateLocalUser(normId, updateFields);
-      return mapUserFromDb(local);
+    if (error) {
+      console.error('[userRepository] updateUser error:', error.message);
+      return null;
     }
+    if (data && data.length > 0) {
+      return mapUserFromDb(data[0]);
+    }
+  } catch (err) {
+    console.error('[userRepository] updateUser exception:', err.message);
+    return null;
   }
 
-  const local = updateLocalUser(normId, updateFields);
-  return mapUserFromDb(local);
+  return null;
 }
 
 async function deleteUser(id) {
   const normId = String(id || '').trim();
   if (!normId) return false;
 
-  if (config.SAAS_AUTH_ENABLED) {
-    try {
-      const supabase = getClient();
-      const { error } = await supabase
-        .from('users')
-        .delete()
-        .eq('id', normId);
+  try {
+    const supabase = getClient();
+    const { error } = await supabase
+      .from('users')
+      .delete()
+      .eq('id', normId);
 
-      if (error) {
-        console.error('[userRepository] deleteUser error:', error.message);
-        return deleteLocalUser(normId);
-      }
-      return true;
-    } catch (err) {
-      console.error('[userRepository] deleteUser exception:', err.message);
-      return deleteLocalUser(normId);
+    if (error) {
+      console.error('[userRepository] deleteUser error:', error.message);
+      return false;
     }
-  }
-
-  return deleteLocalUser(normId);
-}
-
-function updateLocalUser(id, fields) {
-  const users = readLocalUsers();
-  const idx = users.findIndex((u) => String(u.id) === id);
-  if (idx !== -1) {
-    users[idx] = Object.assign({}, users[idx], fields);
-    writeLocalUsers(users);
-    return users[idx];
-  }
-  return null;
-}
-
-function deleteLocalUser(id) {
-  const users = readLocalUsers();
-  const filtered = users.filter((u) => String(u.id) !== id);
-  if (filtered.length !== users.length) {
-    writeLocalUsers(filtered);
     return true;
+  } catch (err) {
+    console.error('[userRepository] deleteUser exception:', err.message);
+    return false;
   }
-  return false;
 }
 
 module.exports = {

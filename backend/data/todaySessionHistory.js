@@ -1,32 +1,67 @@
 /**
- * سجل جلسات «طلبات اليوم» — ملف JSON واحد.
- * يُنشأ سجل واحد لكل دفعة إغلاق (طاولة مدفوعة / طلب سفري مغلق).
+ * سجل جلسات «طلبات اليوم» — Supabase Single Source of Truth مع Memory Cache
  */
-const fs = require('fs');
-const path = require('path');
-const { DATA_DIR } = require('../config');
+'use strict';
+const { getClient } = require('../lib/supabase');
 
-const HISTORY_FILE = path.join(DATA_DIR, 'today-session-history.json');
+let _cafeId = null;
+let _sessionsCache = [];
+let _loaded = false;
 
-function ensureFile() {
-  if (!fs.existsSync(HISTORY_FILE)) {
-    fs.writeFileSync(HISTORY_FILE, JSON.stringify({ sessions: [] }, null, 2), 'utf8');
+function setCafeId(cid) {
+  if (cid) _cafeId = cid;
+}
+
+async function loadFromSupabase(cafeId) {
+  const cid = cafeId || _cafeId || 'default';
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('today_session_history')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    if (!error && data) {
+      _sessionsCache = data.map(r => r.data || r).filter(Boolean);
+    }
+  } catch (err) {
+    console.warn('[todaySessionHistory] Error loading history:', err.message);
   }
+  _loaded = true;
+  return _sessionsCache;
 }
 
 function readAll() {
-  ensureFile();
-  try {
-    const raw = JSON.parse(fs.readFileSync(HISTORY_FILE, 'utf8'));
-    return Array.isArray(raw.sessions) ? raw.sessions : [];
-  } catch {
-    return [];
+  if (!_loaded) {
+    loadFromSupabase().catch(() => {});
   }
+  return _sessionsCache;
 }
 
 function writeAll(sessions) {
-  ensureFile();
-  fs.writeFileSync(HISTORY_FILE, JSON.stringify({ sessions: sessions || [] }, null, 2), 'utf8');
+  _sessionsCache = Array.isArray(sessions) ? [...sessions] : [];
+  // Background persist to Supabase
+  const cid = _cafeId || 'default';
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
+  if (!isUuid) return;
+
+  const supabase = getClient();
+  const rows = _sessionsCache.map(s => {
+    const sessionKey = s.orderIdsKey || s.id || `session_${Date.now()}_${Math.random()}`;
+    return {
+      cafe_id: cid,
+      session_key: sessionKey,
+      cash_session_id: s.cashSessionId || null,
+      open_date: s.openDate || null,
+      data: s,
+      created_at: s.createdAt || new Date().toISOString()
+    };
+  });
+
+  if (rows.length > 0) {
+    supabase.from('today_session_history').upsert(rows, { onConflict: 'cafe_id,session_key' })
+      .catch(err => console.error('[todaySessionHistory] Persist error:', err.message));
+  }
 }
 
 function orderIdsKey(orderIds) {
@@ -76,8 +111,11 @@ function appendSession(session) {
   return session;
 }
 
+// Initial load call
+loadFromSupabase().catch(() => {});
+
 module.exports = {
-  HISTORY_FILE,
+  setCafeId,
   readAll,
   writeAll,
   orderIdsKey,

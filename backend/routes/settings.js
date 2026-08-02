@@ -167,8 +167,23 @@ function createSettingsRouter(io) {
         return res.status(400).json({ error: 'لم يتم رفع ملف' });
       }
       try {
-        const rel = '/uploads/cafe-logo/' + req.file.filename;
-        const saved = await cafeSettingsStore.saveCafeSettings(cafeId, { logoUrl: rel });
+        let logoUrl = '/uploads/cafe-logo/' + req.file.filename;
+        try {
+          const { getClient } = require('../lib/supabase');
+          const supabase = getClient();
+          const fileBuffer = fs.readFileSync(req.file.path);
+          const storagePath = `cafe-logo/${req.file.filename}`;
+          const { error: upErr } = await supabase.storage.from('uploads').upload(storagePath, fileBuffer, {
+            contentType: req.file.mimetype || 'image/png',
+            upsert: true
+          });
+          if (!upErr) {
+            const { data: pubUrlData } = supabase.storage.from('uploads').getPublicUrl(storagePath);
+            if (pubUrlData && pubUrlData.publicUrl) logoUrl = pubUrlData.publicUrl;
+          }
+        } catch (_) {}
+
+        const saved = await cafeSettingsStore.saveCafeSettings(cafeId, { logoUrl });
         emitSettingsUpdated(io, saved);
         res.json(saved);
       } catch (e2) {

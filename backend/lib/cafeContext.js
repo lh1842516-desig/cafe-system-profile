@@ -110,22 +110,9 @@ async function initCafeContext() {
     return _defaultCafeId;
   }
 
-  // ── 2. No café yet — seed from local settings file ───────────────────────
-  let name = 'My Cafe';
+  // ── 2. No café yet — create default café in Supabase ───────────────────────
+  let name = 'Shot Cafe';
   let logoUrl = null;
-  let requireCashierKitchenApproval = true;
-
-  try {
-    const settingsPath = path.join(__dirname, '..', 'data', 'cafe-settings.json');
-    if (fs.existsSync(settingsPath)) {
-      const raw = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
-      if (raw.cafeName) name = String(raw.cafeName).trim();
-      if (raw.logoUrl) logoUrl = String(raw.logoUrl).trim() || null;
-      if (raw.requireCashierKitchenApproval !== undefined) {
-        requireCashierKitchenApproval = !!raw.requireCashierKitchenApproval;
-      }
-    }
-  } catch (_) {}
 
   // ── 3. Insert café + settings ─────────────────────────────────────────────
   const { data: newCafe, error: insertError } = await supabase

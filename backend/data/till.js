@@ -86,62 +86,7 @@ async function initTill(cafeId) {
   _cafeId = cafeId;
   const supabase = getClient();
 
-  // Check if any till sessions exist in Supabase
-  const { data: existing } = await supabase
-    .from('till_sessions').select('id, status').eq('cafe_id', _cafeId).limit(1);
-
-  if (!existing || existing.length === 0) {
-    // Migrate from currentTill.json
-    const TILL_FILE = path.join(DATA_DIR, 'currentTill.json');
-    if (fs.existsSync(TILL_FILE)) {
-      try {
-        const raw = JSON.parse(fs.readFileSync(TILL_FILE, 'utf8'));
-        if (raw && (raw.openedAt || raw.date)) {
-          const openedAt = raw.openedAt || (raw.date ? raw.date + 'T00:00:00.000Z' : new Date().toISOString());
-          const closedAt = raw.closedAt || null;
-          const tillData = {
-            date: raw.date || getTodayDateStr(),
-            openedAt,
-            open_date: raw.open_date || getOpenDateFromIso(openedAt),
-            openingBalance: Number(raw.openingBalance) || 0,
-            expenses: Array.isArray(raw.expenses) ? raw.expenses : [],
-            withdrawals: Array.isArray(raw.withdrawals) ? raw.withdrawals : [],
-            closedAt,
-            closedBy: raw.closedBy || null,
-            openedBy: raw.openedBy || null,
-            status: raw.status || (closedAt ? 'closed' : 'open'),
-            note: raw.note || '',
-          };
-          const { data: inserted, error } = await supabase
-            .from('till_sessions').insert([tillToDb(tillData)]).select().single();
-          if (!error && inserted) {
-            _till = tillData;
-            _tillSessionId = inserted.id;
-            console.log(`  [till] migrated till session (${tillData.status})`);
-            return;
-          } else if (error) {
-            console.warn('[till] migration insert error:', error.message);
-          }
-        }
-      } catch (e) {
-        console.warn('[till] JSON migration failed:', e.message);
-      }
-    }
-
-    // No data anywhere — create a default closed till
-    const tillData = defaultTill(getTodayDateStr(), null, 'closed');
-    const { data: inserted, error } = await supabase
-      .from('till_sessions').insert([tillToDb(tillData)]).select().single();
-    if (!error && inserted) {
-      _till = tillData;
-      _tillSessionId = inserted.id;
-    } else {
-      _till = tillData;
-    }
-    return;
-  }
-
-  // Load the most recent till session
+  // Load the most recent till session from Supabase
   const { data: rows } = await supabase
     .from('till_sessions')
     .select('*')
@@ -154,7 +99,15 @@ async function initTill(cafeId) {
     _tillSessionId = rows[0].id;
     console.log(`  [till] ${_till.status} session loaded (${_till.open_date})`);
   } else {
-    _till = defaultTill(getTodayDateStr(), null, 'closed');
+    const tillData = defaultTill(getTodayDateStr(), null, 'closed');
+    const { data: inserted } = await supabase
+      .from('till_sessions').insert([tillToDb(tillData)]).select().single();
+    if (inserted) {
+      _till = tillData;
+      _tillSessionId = inserted.id;
+    } else {
+      _till = tillData;
+    }
   }
 }
 

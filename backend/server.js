@@ -161,10 +161,31 @@ const frontendPath = path.join(__dirname, '..', 'frontend');
 app.get('/health', (req, res) => res.status(200).send('OK'));
 app.get('/api/health', (req, res) => res.status(200).json({ status: 'ok' }));
 
-app.post('/api/upload', upload.single('image'), (req, res) => {
+const memoryStorage = multer.memoryStorage();
+const memoryUpload = multer({ storage: memoryStorage, limits: { fileSize: 5 * 1024 * 1024 } });
+
+app.post('/api/upload', memoryUpload.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'لم يتم رفع ملف' });
-  const url = `/uploads/${req.file.filename}`;
-  res.json({ url });
+  const ext = path.extname(req.file.originalname) || '.jpg';
+  const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+  try {
+    const { getClient } = require('./lib/supabase');
+    const supabase = getClient();
+    const { error: upErr } = await supabase.storage.from('uploads').upload(filename, req.file.buffer, {
+      contentType: req.file.mimetype || 'image/jpeg',
+      upsert: true
+    });
+    if (!upErr) {
+      const { data: pubUrlData } = supabase.storage.from('uploads').getPublicUrl(filename);
+      if (pubUrlData && pubUrlData.publicUrl) {
+        return res.json({ url: pubUrlData.publicUrl });
+      }
+    }
+  } catch (_) {}
+  // Local fallback if storage bucket fails
+  const localPath = path.join(config.UPLOADS_DIR, filename);
+  fs.writeFileSync(localPath, req.file.buffer);
+  res.json({ url: `/uploads/${filename}` });
 });
 // صور المنيو: أسماء الملفات فريدة (Date.now()-random) فالمحتوى ثابت لكل رابط،
 // لذا نخزّنها مؤقتاً 30 يوماً بلا إعادة تحقق حتى تظهر فوراً عند التنقل بين الصفحات والتصنيفات.
