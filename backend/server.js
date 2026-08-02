@@ -234,6 +234,14 @@ app.use(
     },
   })
 );
+// Disable HTTP caching on all API endpoints
+app.use('/api', (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
+
 app.use('/api/menu', createMenuRouter(io));
 app.use('/api/table-sessions', createTableSessionsRouter(io));
 app.use('/api/orders', createOrdersRouter(io));
