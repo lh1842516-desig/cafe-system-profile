@@ -1434,6 +1434,14 @@ async function handleEditOrder() {
     return;
   }
 
+  var btn = $('btnEditOrder');
+  var origHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.classList.add('loading');
+    btn.innerHTML = '<span class="spinner dark"></span> جارٍ التحضير للتعديل...';
+  }
+
   // 1. Call backend /begin-edit to set kitchen status = 'editing'
   try {
     await apiFetch('/api/orders/' + state.orderId + '/begin-edit', {
@@ -1443,6 +1451,12 @@ async function handleEditOrder() {
   } catch (err) {
     showToast('❌ ' + (err.message || 'تعذّر بدء التعديل'), 'error', 4000);
     return;
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      btn.innerHTML = origHtml;
+    }
   }
 
   // 2. Load items back into cart

@@ -71,7 +71,7 @@ function writeSessions(sessions) {
   })).filter(r => !!r.id && !!r.table_id);
 
   if (rows.length > 0) {
-    supabase.from('table_sessions').upsert(rows, { onConflict: 'id,cafe_id' })
+    Promise.resolve(supabase.from('table_sessions').upsert(rows, { onConflict: 'id,cafe_id' }))
       .catch(err => console.error('[tableSessions] Persist error:', err.message));
   }
 }
@@ -187,7 +187,7 @@ function releaseSession(sessionId) {
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
   if (isUuid) {
     const supabase = getClient();
-    supabase.from('table_sessions').delete().eq('id', id).eq('cafe_id', cid).catch(() => {});
+    Promise.resolve(supabase.from('table_sessions').delete().eq('id', id).eq('cafe_id', cid)).catch(() => {});
   }
   return true;
 }

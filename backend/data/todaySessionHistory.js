@@ -59,7 +59,7 @@ function writeAll(sessions) {
   });
 
   if (rows.length > 0) {
-    supabase.from('today_session_history').upsert(rows, { onConflict: 'cafe_id,session_key' })
+    Promise.resolve(supabase.from('today_session_history').upsert(rows, { onConflict: 'cafe_id,session_key' }))
       .catch(err => console.error('[todaySessionHistory] Persist error:', err.message));
   }
 }

@@ -1620,8 +1620,18 @@ input, textarea { font-family: var(--font); }
   transition: all 0.15s;
   cursor: pointer;
 }
-.btn-action-secondary:hover { background: var(--amber-light); color: var(--amber-dark); border-color: #FDE68A; }
-.btn-action-secondary:active { transform: scale(0.98); }
+.btn-action-secondary:hover:not(:disabled):not(.loading) { background: var(--amber-light); color: var(--amber-dark); border-color: #FDE68A; }
+.btn-action-secondary:active:not(:disabled):not(.loading) { transform: scale(0.98); }
+.btn-action-secondary:disabled,
+.btn-action-secondary.loading {
+  opacity: 0.8;
+  cursor: not-allowed;
+  background: var(--surface) !important;
+  color: var(--text-sub) !important;
+  border-color: var(--border) !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
 
 .btn-action-danger {
   width: 100%;
