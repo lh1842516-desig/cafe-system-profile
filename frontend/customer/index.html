@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -12,6 +13,7 @@
   <link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="css/customer.css">
 </head>
+
 <body>
 
   <!-- ══════════════════════════════════════════
@@ -43,15 +45,9 @@
         🪑 <span id="welcomeTableLabel">—</span>
       </div>
 
-      <p class="welcome-tagline">امسح، اطلب، واستمتع بتجربة طعام مميزة</p>
+      <p class="welcome-tagline">امسح، اطلب، واستمتع بتجربة مميزة</p>
 
-      <button
-        type="button"
-        class="btn-welcome-start"
-        id="btnStartOrdering"
-        disabled
-        aria-label="ابدأ الطلب"
-      >
+      <button type="button" class="btn-welcome-start" id="btnStartOrdering" disabled aria-label="ابدأ الطلب">
         <span id="btnStartOrderingLabel">جارٍ التحميل...</span>
         <span class="spinner dark" id="btnStartOrderingSpinner" aria-hidden="true"></span>
       </button>
@@ -73,12 +69,7 @@
         <div class="menu-header-table" id="menuTableLabel">طاولة —</div>
       </div>
       <div class="menu-header-actions">
-        <button
-          type="button"
-          class="btn-hamburger"
-          id="btnOpenDrawer"
-          aria-label="فتح القائمة الجانبية"
-        >☰</button>
+        <button type="button" class="btn-hamburger" id="btnOpenDrawer" aria-label="فتح القائمة الجانبية">☰</button>
       </div>
     </header>
 
@@ -86,14 +77,8 @@
     <nav class="menu-categories" id="menuCategories" aria-label="تصنيفات المنيو"></nav>
 
     <!-- بطاقة حالة الطلب الحالي (تظهر عند وجود طلب) -->
-    <div
-      class="order-status-card"
-      id="orderStatusCard"
-      role="button"
-      tabindex="0"
-      aria-label="حالة طلبك الحالي — انقر للتتبع"
-      hidden
-    >
+    <div class="order-status-card" id="orderStatusCard" role="button" tabindex="0"
+      aria-label="حالة طلبك الحالي — انقر للتتبع" hidden>
       <div class="order-status-card-icon">📦</div>
       <div class="order-status-card-info">
         <div class="order-status-card-title" id="orderStatusCardOrderId">طلبك الحالي</div>
@@ -112,12 +97,7 @@
     </div>
 
     <!-- Floating Action Button (FAB) — السلة (تظهر في المنيو فقط) -->
-    <button
-      type="button"
-      class="cart-fab"
-      id="btnOpenCart"
-      aria-label="عرض السلة"
-    >
+    <button type="button" class="cart-fab" id="btnOpenCart" aria-label="عرض السلة">
       <span class="cart-fab-icon">🛒</span>
       <span class="cart-fab-badge" id="cartFabBadge" hidden>0</span>
     </button>
@@ -129,12 +109,7 @@
   <div class="screen" id="screenTracker" hidden role="main" aria-label="تتبع الطلب">
 
     <header class="tracker-header">
-      <button
-        type="button"
-        class="btn-back-to-menu"
-        id="btnBackToMenu"
-        aria-label="العودة إلى القائمة"
-      >←</button>
+      <button type="button" class="btn-back-to-menu" id="btnBackToMenu" aria-label="العودة إلى القائمة">←</button>
       <div class="tracker-header-info">
         <div class="tracker-cafe-name" id="trackerCafeName">الكافيه</div>
         <div class="tracker-table-label" id="trackerTableLabel">طاولة —</div>
@@ -163,30 +138,15 @@
 
       <!-- الأزرار -->
       <div class="tracker-actions">
-        <button
-          type="button"
-          class="btn-action-secondary btn-edit-order"
-          id="btnEditOrder"
-          aria-label="تعديل الطلب"
-          hidden
-        >
+        <button type="button" class="btn-action-secondary btn-edit-order" id="btnEditOrder" aria-label="تعديل الطلب"
+          hidden>
           ✏️ تعديل الطلب
         </button>
-        <button
-          type="button"
-          class="btn-action-danger btn-cancel-order"
-          id="btnCancelOrder"
-          aria-label="إلغاء الطلب"
-          hidden
-        >
+        <button type="button" class="btn-action-danger btn-cancel-order" id="btnCancelOrder" aria-label="إلغاء الطلب"
+          hidden>
           ❌ إلغاء الطلب
         </button>
-        <button
-          type="button"
-          class="btn-order-more"
-          id="btnOrderMore"
-          aria-label="طلب المزيد من القائمة"
-        >
+        <button type="button" class="btn-order-more" id="btnOrderMore" aria-label="طلب المزيد من القائمة">
           ➕ طلب المزيد
         </button>
       </div>
@@ -213,13 +173,8 @@
 
         <!-- ملاحظات -->
         <label class="sheet-notes-label" for="productNote">ملاحظات (اختياري)</label>
-        <textarea
-          class="sheet-notes-input"
-          id="productNote"
-          placeholder="أي طلب خاص؟"
-          maxlength="200"
-          rows="2"
-        ></textarea>
+        <textarea class="sheet-notes-input" id="productNote" placeholder="أي طلب خاص؟" maxlength="200"
+          rows="2"></textarea>
 
         <!-- الكمية -->
         <div class="qty-row">
@@ -251,7 +206,8 @@
           🛒 سلتك
           <span class="cart-table-badge" id="cartSheetTableBadge"></span>
         </div>
-        <button type="button" id="btnCloseCart" aria-label="إغلاق السلة" style="color: var(--text-muted); font-size: 1.1rem; padding: 0.25rem 0.5rem;">✕</button>
+        <button type="button" id="btnCloseCart" aria-label="إغلاق السلة"
+          style="color: var(--text-muted); font-size: 1.1rem; padding: 0.25rem 0.5rem;">✕</button>
       </div>
 
       <div class="cart-items-list" id="cartItemsList" aria-label="أصناف في السلة"></div>
@@ -276,15 +232,8 @@
       <div class="modal-icon">👤</div>
       <h2 class="modal-title" id="nameModalTitle">ما اسمك؟</h2>
       <p class="modal-subtitle">حتى نتمكن من مناداتك عند جهوز طلبك</p>
-      <input
-        type="text"
-        class="modal-input"
-        id="customerNameInput"
-        placeholder="أدخل اسمك"
-        maxlength="30"
-        autocomplete="name"
-        aria-label="اسم الزبون"
-      >
+      <input type="text" class="modal-input" id="customerNameInput" placeholder="أدخل اسمك" maxlength="30"
+        autocomplete="name" aria-label="اسم الزبون">
       <div class="modal-actions">
         <button type="button" class="btn-confirm-order" id="btnConfirmOrder" aria-label="تأكيد الطلب">
           تأكيد الطلب ✓
@@ -346,7 +295,8 @@
           📋 سجل طلباتي
           <span class="history-table-badge" id="historySheetTableBadge"></span>
         </div>
-        <button type="button" id="btnCloseHistory" aria-label="إغلاق السجل" style="color: var(--text-muted); font-size: 1.1rem; padding: 0.25rem 0.5rem; border: none; background: transparent; cursor: pointer;">✕</button>
+        <button type="button" id="btnCloseHistory" aria-label="إغلاق السجل"
+          style="color: var(--text-muted); font-size: 1.1rem; padding: 0.25rem 0.5rem; border: none; background: transparent; cursor: pointer;">✕</button>
       </div>
 
       <div class="history-sheet-body" id="historySheetBody">
@@ -396,4 +346,5 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="js/customer.js?v=20260803_logo_fix"></script>
 </body>
+
 </html>

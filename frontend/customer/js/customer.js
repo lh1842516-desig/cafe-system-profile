@@ -53,9 +53,10 @@ function removePersistedItem(key) {
   try { sessionStorage.removeItem(key); } catch (_) {}
 }
 
-if (IS_QR_SCAN && TABLE_ID) {
+if ((IS_QR_SCAN || rawTableId) && TABLE_ID) {
   try {
-    if (window.history && window.history.replaceState) {
+    removePersistedItem('cust_table_closed_' + TABLE_ID);
+    if (IS_QR_SCAN && window.history && window.history.replaceState) {
       var cleanUrl = window.location.protocol + '//' + window.location.host + window.location.pathname +
         '?cafeId=' + encodeURIComponent(CAFE_ID) + '&tableId=' + encodeURIComponent(TABLE_ID);
       window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
