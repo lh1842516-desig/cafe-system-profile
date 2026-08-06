@@ -219,7 +219,7 @@ function resolveAssetUrl(url) {
 }
 
 async function apiFetch(path, opts) {
-  var options = Object.assign({ headers: {} }, opts || {});
+  var options = Object.assign({ headers: {}, credentials: 'same-origin' }, opts || {});
   options.headers['x-cafe-id'] = CAFE_ID;
   if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
     options.headers['Content-Type'] = 'application/json';

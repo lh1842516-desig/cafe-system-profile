@@ -57,6 +57,30 @@ function createOrdersRouter(io) {
     return { cashierName };
   }
 
+  function getOrCreateDeviceIdCookie(req, res) {
+    let cookieDeviceId = null;
+    const rc = req && req.headers && req.headers.cookie;
+    if (rc) {
+      rc.split(';').forEach((c) => {
+        const parts = c.split('=');
+        const k = parts.shift().trim();
+        if (k === 'cafe_cust_device_id') {
+          cookieDeviceId = decodeURIComponent(parts.join('=')).trim();
+        }
+      });
+    }
+    if (!cookieDeviceId) {
+      const crypto = require('crypto');
+      cookieDeviceId = (crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+      if (res && res.setHeader) {
+        try {
+          res.setHeader('Set-Cookie', `cafe_cust_device_id=${encodeURIComponent(cookieDeviceId)}; Path=/; Max-Age=31536000; SameSite=Lax`);
+        } catch (_) {}
+      }
+    }
+    return cookieDeviceId;
+  }
+
   /** يتحقق من أن الخيارات المرسلة ضمن القيم المعرّفة في المنيو فقط (single / multi) */
   function sanitizeSelectedOptions(menuItem, row) {
     const raw = row && row.selectedOptions;
@@ -233,6 +257,7 @@ function createOrdersRouter(io) {
       const tableId = String(req.params.tableId || '').trim();
       if (!tableId) return res.json({ order: null });
 
+      const cookieDeviceId = getOrCreateDeviceIdCookie(req, res);
       const sessionId = String(req.query.sessionId || '').trim();
       const customerId = String(req.query.customerId || '').trim();
 
@@ -250,10 +275,11 @@ function createOrdersRouter(io) {
 
       if (!openOrders.length) return res.json({ order: null, reason: 'no_active_order' });
 
-      // البحث عن الطلب المطابق لجلسة الزبون بصورة صارمة
+      // البحث عن الطلب المطابق لجلسة الزبون بصورة صارمة (Session ID / Customer ID / Cookie Device ID)
       const matched = openOrders.find((o) =>
         (sessionId && o.customerSessionId === sessionId) ||
-        (customerId && o.customerId === customerId)
+        (customerId && (o.customerId === customerId || o.customer_id === customerId)) ||
+        (cookieDeviceId && (o.customerId === cookieDeviceId || o.customer_id === cookieDeviceId))
       );
 
       if (!matched) return res.json({ order: null, reason: 'no_active_order' });
@@ -349,8 +375,11 @@ function createOrdersRouter(io) {
       if (customerSessionId != null && String(customerSessionId).trim()) {
         newOrder.customerSessionId = String(customerSessionId).trim();
       }
+      const cookieDeviceId = getOrCreateDeviceIdCookie(req, res);
       if (customerId != null && String(customerId).trim()) {
         newOrder.customerId = String(customerId).trim();
+      } else if (cookieDeviceId) {
+        newOrder.customerId = cookieDeviceId;
       }
       if (orderType === ORDER_TYPE.DELIVERY) {
         const deliveryInfo = normalizeDeliveryInfo(serviceMeta);
