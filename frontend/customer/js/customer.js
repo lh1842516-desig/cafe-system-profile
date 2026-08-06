@@ -809,10 +809,7 @@ async function renderHistorySheet() {
         if (String(o.tableId) !== TABLE_ID) return false;
         if (o.closed) return false;
         if (o.cancelledByCustomer || o.cancelReason === 'customer_cancel_pending') return false;
-        // فلترة صارمة بـ SESSION_ID فقط — لمنع تسرب بيانات زبائن آخرين على نفس الطاولة
-        if (o.customerSessionId && o.customerSessionId === SESSION_ID) return true;
-        if (state.orderId && String(o.id) === String(state.orderId)) return true;
-        return false;
+        return true;
       });
     }
   } catch (_) {
