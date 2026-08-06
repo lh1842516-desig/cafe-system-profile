@@ -72,27 +72,34 @@ var TABLE_LABEL = TABLE_ID ? 'طاولة ' + TABLE_ID : '—';
    لا يحتوي على طلبات أو سلة أو سجل — المصدر الحقيقي هو قاعدة البيانات.
    مفتاح التخزين: cpid_<cafeId>_<tableId>
 ══════════════════════════════════════════════════════════ */
-var PCI_KEY = CAFE_ID && TABLE_ID ? 'cpid_' + CAFE_ID + '_' + TABLE_ID : '';
+var PCI_KEY = CAFE_ID && TABLE_ID ? 'cpid_' + CAFE_ID + '_' + TABLE_ID : (TABLE_ID ? 'cpid_' + TABLE_ID : '');
 
 function getPCI() {
-  if (!PCI_KEY) return null;
+  if (!TABLE_ID) return null;
   try {
-    var raw = localStorage.getItem(PCI_KEY);
+    var raw = (PCI_KEY ? localStorage.getItem(PCI_KEY) : null) || localStorage.getItem('cpid_' + TABLE_ID) || localStorage.getItem('cpid_global');
     if (!raw) return null;
     var d = JSON.parse(raw);
-    if (!d || d.cafeId !== CAFE_ID || d.tableId !== TABLE_ID) return null;
+    if (!d || (d.tableId && String(d.tableId) !== String(TABLE_ID))) return null;
     return d;
   } catch (_) { return null; }
 }
 
 function savePCI(data) {
-  if (!PCI_KEY) return;
-  try { localStorage.setItem(PCI_KEY, JSON.stringify(data)); } catch (_) {}
+  if (!data) return;
+  try {
+    if (PCI_KEY) localStorage.setItem(PCI_KEY, JSON.stringify(data));
+    if (TABLE_ID) localStorage.setItem('cpid_' + TABLE_ID, JSON.stringify(data));
+    localStorage.setItem('cpid_global', JSON.stringify(data));
+  } catch (_) {}
 }
 
 function clearPCI() {
-  if (!PCI_KEY) return;
-  try { localStorage.removeItem(PCI_KEY); } catch (_) {}
+  try {
+    if (PCI_KEY) localStorage.removeItem(PCI_KEY);
+    if (TABLE_ID) localStorage.removeItem('cpid_' + TABLE_ID);
+    localStorage.removeItem('cpid_global');
+  } catch (_) {}
 }
 
 // Session ID — يُحمَّل أولاً من sessionStorage، وعند انتهائه يُستعاد من PCI (Persistent Identity)
@@ -1903,8 +1910,14 @@ async function loadData() {
     document.title = state.cafeInfo.cafeName + ' — اطلب الآن';
 
     // Auto restore active order session if refresh or App Switcher re-open occurred
-    await restoreActiveOrder();
+    var restored = await restoreActiveOrder();
     updateOrderStatusCard();
+
+    if (restored || state.orderId) {
+      await fetchAndUpdateStatus();
+      renderTracker();
+      showScreen('tracker');
+    }
 
   } catch (err) {
     showToast('⚠️ تعذّر تحميل بيانات الكافيه', 'error', 5000);
@@ -1942,14 +1955,21 @@ function bindEvents() {
       return;
     }
 
+    await restoreActiveOrder();
+    await fetchAndUpdateStatus();
+    updateOrderStatusCard();
+
+    if (state.orderId) {
+      renderTracker();
+      showScreen('tracker');
+      return;
+    }
+
     renderMenuHeader();
     renderCategories();
     renderProducts();
     updateCartBar();
     showScreen('menu');
-    await restoreActiveOrder();
-    await fetchAndUpdateStatus();
-    updateOrderStatusCard();
   });
 
   // ── Order Status Card tap ──
