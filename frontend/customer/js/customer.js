@@ -913,6 +913,39 @@ async function renderHistorySheet() {
 }
 
 /* ══════════════════════════════════════════════════════════
+   14.6. DRAWER NOTIFICATION BADGE (شارة إشعارات زر القائمة)
+══════════════════════════════════════════════════════════ */
+async function updateDrawerBadge() {
+  var badgeEl = $('drawerBadge');
+  if (!badgeEl || !CAFE_ID || !TABLE_ID) return;
+
+  try {
+    var orders = await apiFetch('/api/orders/table/' + TABLE_ID);
+    if (!Array.isArray(orders)) {
+      badgeEl.hidden = true;
+      return;
+    }
+    var activeCount = orders.filter(function (o) {
+      if (String(o.tableId) !== TABLE_ID) return false;
+      if (o.closed) return false;
+      if (o.cancelledByCustomer || o.cancelReason === 'customer_cancel_pending') return false;
+      var status = String(o.kitchenStatus || o.status || 'pending').toLowerCase();
+      if (status === 'completed' || status === 'done' || status === 'closed' || status === 'rejected') return false;
+      return true; // pending, waiting, held, preparing, new, received
+    }).length;
+
+    if (activeCount > 0) {
+      badgeEl.textContent = activeCount > 99 ? '99+' : String(activeCount);
+      badgeEl.hidden = false;
+    } else {
+      badgeEl.hidden = true;
+    }
+  } catch (_) {
+    // Keep current display state on error
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
    15. NAME MODAL
 ══════════════════════════════════════════════════════════ */
 function openNameModal() {
@@ -1013,8 +1046,9 @@ async function submitOrder() {
     renderTracker();
     showScreen('tracker');
 
-    // Show order status card on menu
+    // Show order status card on menu & update drawer badge
     updateOrderStatusCard();
+    updateDrawerBadge();
 
   } catch (err) {
     showToast('❌ ' + (err.message || 'فشل الإرسال'), 'error', 4000);
@@ -1135,6 +1169,7 @@ function connectSocket() {
         updateOrderStatusCard();
       }
       fetchAndUpdateStatus();
+      updateDrawerBadge();
       var hist = $('historySheetOverlay');
       if (hist && hist.classList.contains('open')) renderHistorySheet();
     });
@@ -1147,13 +1182,14 @@ function connectSocket() {
       state.orderStatus = 'completed';
       renderTrackerStatus();
       updateOrderStatusCard();
+      updateDrawerBadge();
       showToast('🎉 طلبك جاهز! تفضل!', 'success', 5000);
       var hist = $('historySheetOverlay');
       if (hist && hist.classList.contains('open')) renderHistorySheet();
     });
 
     sock.on('new-order', function (data) {
-      // After cashier approval, order goes from held to new
+      updateDrawerBadge();
       if (!state.orderId) return;
       var oid = (data && (data.orderId || data.id)) || '';
       var matchesOrder = oid && (String(oid) === String(state.orderId) || String(oid) === String(state.orderDisplayId));
@@ -1256,6 +1292,7 @@ async function fetchAndUpdateStatus() {
     }
 
     if (mapped === 'completed' || mapped === 'rejected') stopPolling();
+    updateDrawerBadge();
   } catch (_) { }
 }
 
@@ -1900,6 +1937,7 @@ async function loadData() {
     // Auto restore active order session if refresh or App Switcher re-open occurred
     await restoreActiveOrder();
     updateOrderStatusCard();
+    updateDrawerBadge();
 
   } catch (err) {
     showToast('⚠️ تعذّر تحميل بيانات الكافيه', 'error', 5000);

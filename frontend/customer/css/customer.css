@@ -328,6 +328,7 @@ input, textarea { font-family: var(--font); }
 
 /* زر الهامبرغر في الهيدر */
 .btn-hamburger {
+  position: relative;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -347,6 +348,29 @@ input, textarea { font-family: var(--font); }
   background: var(--amber-light);
   color: var(--amber-dark);
   border-color: #FDE68A;
+}
+
+/* شارة الإشعار الحمراء فوق زر القائمة */
+.drawer-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--red, #DC2626);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
+  border: 2px solid var(--surface, #ffffff);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 10;
 }
 
 /* زر السلة العائم (FAB) — دائري ببروز ووضوح عالي في شاشة المنيو */
