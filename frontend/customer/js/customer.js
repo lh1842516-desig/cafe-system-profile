@@ -917,12 +917,14 @@ async function renderHistorySheet() {
 ══════════════════════════════════════════════════════════ */
 async function updateDrawerBadge() {
   var badgeEl = $('drawerBadge');
-  if (!badgeEl || !CAFE_ID || !TABLE_ID) return;
+  var drawerBadgeEl = $('drawerHistoryBadge');
+  if (!CAFE_ID || !TABLE_ID) return;
 
   try {
     var orders = await apiFetch('/api/orders/table/' + TABLE_ID);
     if (!Array.isArray(orders)) {
-      badgeEl.hidden = true;
+      if (badgeEl) badgeEl.hidden = true;
+      if (drawerBadgeEl) drawerBadgeEl.hidden = true;
       return;
     }
     var activeCount = orders.filter(function (o) {
@@ -934,11 +936,13 @@ async function updateDrawerBadge() {
       return true; // pending, waiting, held, preparing, new, received
     }).length;
 
+    var txt = activeCount > 99 ? '99+' : String(activeCount);
     if (activeCount > 0) {
-      badgeEl.textContent = activeCount > 99 ? '99+' : String(activeCount);
-      badgeEl.hidden = false;
+      if (badgeEl) { badgeEl.textContent = txt; badgeEl.hidden = false; }
+      if (drawerBadgeEl) { drawerBadgeEl.textContent = txt; drawerBadgeEl.hidden = false; }
     } else {
-      badgeEl.hidden = true;
+      if (badgeEl) badgeEl.hidden = true;
+      if (drawerBadgeEl) drawerBadgeEl.hidden = true;
     }
   } catch (_) {
     // Keep current display state on error

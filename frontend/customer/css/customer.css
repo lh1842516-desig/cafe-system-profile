@@ -539,6 +539,22 @@ input, textarea { font-family: var(--font); }
 .drawer-item-label {
   flex: 1;
 }
+.drawer-item-badge {
+  background: var(--red, #DC2626);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35);
+  margin-inline-start: auto;
+}
 
 /* تبويبات التصنيف */
 .menu-categories {
