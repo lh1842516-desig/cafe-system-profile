@@ -34,6 +34,7 @@ function orderFromDb(row) {
     paymentMethod: row.payment_method,
     customerName: row.customer_name,
     customerSessionId: row.customer_session_id,
+    customerId: row.customer_id,
     kitchenBatchId: row.kitchen_batch_id,
     bundledCustomerNames: row.bundled_customer_names || [],
     serviceMeta: row.service_meta,

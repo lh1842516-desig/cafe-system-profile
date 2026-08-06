@@ -981,6 +981,7 @@ async function submitOrder() {
         items: items,
         customerName: name,
         customerSessionId: SESSION_ID,
+        customerId: (getPCI() && getPCI().customerId) || undefined,
         orderType: 'DINE_IN',
       },
     });
@@ -1812,6 +1813,7 @@ async function restoreActiveOrder() {
       state.orderDisplayId = latest.displayOrderId || latest.id;
       if (latest.customerSessionId) {
         setPersistedItem('cust_session_' + TABLE_ID, latest.customerSessionId);
+        SESSION_ID = latest.customerSessionId;
       }
       if (latest.customerName) {
         state.customerName = latest.customerName;

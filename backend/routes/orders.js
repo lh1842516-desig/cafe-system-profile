@@ -285,7 +285,8 @@ function createOrdersRouter(io) {
   router.post('/', async (req, res) => {
     try {
       const cafeId = req.cafeId;
-      const { tableId, items, customerName, customerSessionId, orderType: rawOrderType, serviceMeta } = req.body;
+      const { tableId, items, customerName, customerSessionId, customerId: rawCustomerId, orderType: rawOrderType, serviceMeta } = req.body;
+      const customerId = rawCustomerId || req.body.customer_id;
       const orderType = normalizeOrderType(rawOrderType);
       const needsTable = orderType === ORDER_TYPE.DINE_IN;
       if ((!tableId && needsTable) || !Array.isArray(items) || items.length === 0) {
@@ -347,6 +348,9 @@ function createOrdersRouter(io) {
       if (nameTrim) newOrder.customerName = nameTrim;
       if (customerSessionId != null && String(customerSessionId).trim()) {
         newOrder.customerSessionId = String(customerSessionId).trim();
+      }
+      if (customerId != null && String(customerId).trim()) {
+        newOrder.customerId = String(customerId).trim();
       }
       if (orderType === ORDER_TYPE.DELIVERY) {
         const deliveryInfo = normalizeDeliveryInfo(serviceMeta);

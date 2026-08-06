@@ -46,11 +46,12 @@ async function autoMigrateDatabase() {
       CREATE INDEX IF NOT EXISTS users_cafe_id_idx ON users(cafe_id);
     `);
     
-    // Add columns to cafes table
+    // Add columns to cafes & orders tables
     await client.query(`
       ALTER TABLE cafes ADD COLUMN IF NOT EXISTS address TEXT;
       ALTER TABLE cafes ADD COLUMN IF NOT EXISTS phone TEXT;
       ALTER TABLE cafes ADD COLUMN IF NOT EXISTS subscription_status TEXT NOT NULL DEFAULT 'active';
+      ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_id TEXT;
     `);
     
     console.log('  [cafeContext] Database schema check & auto-migration succeeded.');
