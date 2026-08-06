@@ -27,10 +27,10 @@ function getCafeStore(cafeId) {
   return _storesByCafe[cid];
 }
 
-function ensureDir(dir) {}
+function ensureDir(dir) { }
 function readJson(filePath, defaultValue = []) { return defaultValue; }
-function writeJson(filePath, data) {}
-async function migrateFromJsonIfNeeded() {}
+function writeJson(filePath, data) { }
+async function migrateFromJsonIfNeeded() { }
 
 // ── DB ↔ JS mappers ────────────────────────────────────────────────────────
 function menuItemFromDb(row) {
@@ -78,7 +78,6 @@ function orderFromDb(row) {
     paymentMethod: row.payment_method,
     customerName: row.customer_name,
     customerSessionId: row.customer_session_id,
-    customerId: row.customer_id,
     kitchenBatchId: row.kitchen_batch_id,
     bundledCustomerNames: row.bundled_customer_names || [],
     serviceMeta: row.service_meta,
@@ -102,7 +101,6 @@ function orderToDb(order) {
     payment_method: order.paymentMethod || null,
     customer_name: order.customerName || null,
     customer_session_id: order.customerSessionId || null,
-    customer_id: order.customerId || null,
     kitchen_batch_id: order.kitchenBatchId || null,
     bundled_customer_names: order.bundledCustomerNames || [],
     service_meta: order.serviceMeta || null,

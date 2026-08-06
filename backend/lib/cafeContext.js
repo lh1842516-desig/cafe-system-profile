@@ -19,17 +19,17 @@ async function autoMigrateDatabase() {
     console.log('  [cafeContext] No SUPABASE_DB_URL found, skipping auto-migration.');
     return;
   }
-  
+
   const { Client } = require('pg');
   const client = new Client({
     connectionString: dbUrl,
     ssl: { rejectUnauthorized: false }
   });
-  
+
   try {
     console.log('  [cafeContext] Connecting to database to verify tables/columns...');
     await client.connect();
-    
+
     // Create users table if missing
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
@@ -45,22 +45,21 @@ async function autoMigrateDatabase() {
       );
       CREATE INDEX IF NOT EXISTS users_cafe_id_idx ON users(cafe_id);
     `);
-    
-    // Add columns to cafes & orders tables
+
+    // Add columns to cafes table
     await client.query(`
       ALTER TABLE cafes ADD COLUMN IF NOT EXISTS address TEXT;
       ALTER TABLE cafes ADD COLUMN IF NOT EXISTS phone TEXT;
       ALTER TABLE cafes ADD COLUMN IF NOT EXISTS subscription_status TEXT NOT NULL DEFAULT 'active';
-      ALTER TABLE orders ADD COLUMN IF NOT EXISTS customer_id TEXT;
     `);
-    
+
     console.log('  [cafeContext] Database schema check & auto-migration succeeded.');
   } catch (err) {
     console.error('  [cafeContext] Database auto-migration error:', err.message);
   } finally {
     try {
       await client.end();
-    } catch (_) {}
+    } catch (_) { }
   }
 }
 

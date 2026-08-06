@@ -17,10 +17,10 @@ if (rawCafeId) {
   try {
     sessionStorage.setItem('cust_cafe_id', rawCafeId);
     localStorage.setItem('cust_last_cafe_id', rawCafeId);
-  } catch (_) {}
+  } catch (_) { }
 }
-var CAFE_ID = rawCafeId || (function() {
-  try { return sessionStorage.getItem('cust_cafe_id') || localStorage.getItem('cust_last_cafe_id') || ''; } catch(_) { return ''; }
+var CAFE_ID = rawCafeId || (function () {
+  try { return sessionStorage.getItem('cust_cafe_id') || localStorage.getItem('cust_last_cafe_id') || ''; } catch (_) { return ''; }
 })();
 
 var rawTableId = (params.get('tableId') || '').trim();
@@ -28,10 +28,10 @@ if (rawTableId) {
   try {
     sessionStorage.setItem('cust_table_id', rawTableId);
     localStorage.setItem('cust_last_table_id', rawTableId);
-  } catch (_) {}
+  } catch (_) { }
 }
-var TABLE_ID = rawTableId || (function() {
-  try { return sessionStorage.getItem('cust_table_id') || localStorage.getItem('cust_last_table_id') || ''; } catch(_) { return ''; }
+var TABLE_ID = rawTableId || (function () {
+  try { return sessionStorage.getItem('cust_table_id') || localStorage.getItem('cust_last_table_id') || ''; } catch (_) { return ''; }
 })();
 
 var IS_QR_SCAN = params.get('qr') === '1' || params.get('scan') === '1' || params.get('qrScan') === 'true' || !!params.get('t');
@@ -44,13 +44,13 @@ function getPersistedItem(key) {
 }
 
 function setPersistedItem(key, val) {
-  try { localStorage.setItem(key, val); } catch (_) {}
-  try { sessionStorage.setItem(key, val); } catch (_) {}
+  try { localStorage.setItem(key, val); } catch (_) { }
+  try { sessionStorage.setItem(key, val); } catch (_) { }
 }
 
 function removePersistedItem(key) {
-  try { localStorage.removeItem(key); } catch (_) {}
-  try { sessionStorage.removeItem(key); } catch (_) {}
+  try { localStorage.removeItem(key); } catch (_) { }
+  try { sessionStorage.removeItem(key); } catch (_) { }
 }
 
 if ((IS_QR_SCAN || rawTableId) && TABLE_ID) {
@@ -61,7 +61,7 @@ if ((IS_QR_SCAN || rawTableId) && TABLE_ID) {
         '?cafeId=' + encodeURIComponent(CAFE_ID) + '&tableId=' + encodeURIComponent(TABLE_ID);
       window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
     }
-  } catch (_) {}
+  } catch (_) { }
 }
 var TABLE_LABEL = TABLE_ID ? 'طاولة ' + TABLE_ID : '—';
 
@@ -72,34 +72,27 @@ var TABLE_LABEL = TABLE_ID ? 'طاولة ' + TABLE_ID : '—';
    لا يحتوي على طلبات أو سلة أو سجل — المصدر الحقيقي هو قاعدة البيانات.
    مفتاح التخزين: cpid_<cafeId>_<tableId>
 ══════════════════════════════════════════════════════════ */
-var PCI_KEY = CAFE_ID && TABLE_ID ? 'cpid_' + CAFE_ID + '_' + TABLE_ID : (TABLE_ID ? 'cpid_' + TABLE_ID : '');
+var PCI_KEY = CAFE_ID && TABLE_ID ? 'cpid_' + CAFE_ID + '_' + TABLE_ID : '';
 
 function getPCI() {
-  if (!TABLE_ID) return null;
+  if (!PCI_KEY) return null;
   try {
-    var raw = (PCI_KEY ? localStorage.getItem(PCI_KEY) : null) || localStorage.getItem('cpid_' + TABLE_ID) || localStorage.getItem('cpid_global');
+    var raw = localStorage.getItem(PCI_KEY);
     if (!raw) return null;
     var d = JSON.parse(raw);
-    if (!d || (d.tableId && String(d.tableId) !== String(TABLE_ID))) return null;
+    if (!d || d.cafeId !== CAFE_ID || d.tableId !== TABLE_ID) return null;
     return d;
   } catch (_) { return null; }
 }
 
 function savePCI(data) {
-  if (!data) return;
-  try {
-    if (PCI_KEY) localStorage.setItem(PCI_KEY, JSON.stringify(data));
-    if (TABLE_ID) localStorage.setItem('cpid_' + TABLE_ID, JSON.stringify(data));
-    localStorage.setItem('cpid_global', JSON.stringify(data));
-  } catch (_) {}
+  if (!PCI_KEY) return;
+  try { localStorage.setItem(PCI_KEY, JSON.stringify(data)); } catch (_) { }
 }
 
 function clearPCI() {
-  try {
-    if (PCI_KEY) localStorage.removeItem(PCI_KEY);
-    if (TABLE_ID) localStorage.removeItem('cpid_' + TABLE_ID);
-    localStorage.removeItem('cpid_global');
-  } catch (_) {}
+  if (!PCI_KEY) return;
+  try { localStorage.removeItem(PCI_KEY); } catch (_) { }
 }
 
 // Session ID — يُحمَّل أولاً من sessionStorage، وعند انتهائه يُستعاد من PCI (Persistent Identity)
@@ -132,16 +125,16 @@ var SESSION_ID = (function () {
         ? crypto.randomUUID()
         : 'cid-' + Date.now() + '-' + Math.random().toString(36).slice(2));
     savePCI({ customerId: custId, sessionId: SESSION_ID, cafeId: CAFE_ID, tableId: TABLE_ID });
-  } catch (_) {}
+  } catch (_) { }
 }());
 
 // Persisted customer name
 var CUSTOMER_NAME_KEY = 'cust_name';
 function getSavedName() {
-  try { return (getPersistedItem(CUSTOMER_NAME_KEY) || '').trim(); } catch(_) { return ''; }
+  try { return (getPersistedItem(CUSTOMER_NAME_KEY) || '').trim(); } catch (_) { return ''; }
 }
 function saveName(n) {
-  try { setPersistedItem(CUSTOMER_NAME_KEY, (n || '').trim()); } catch(_) {}
+  try { setPersistedItem(CUSTOMER_NAME_KEY, (n || '').trim()); } catch (_) { }
 }
 
 // Instant Active Order Cache (per table)
@@ -150,7 +143,7 @@ function saveActiveOrderCache(data) {
   try {
     if (!data) { removePersistedItem(ACTIVE_ORDER_CACHE_KEY); return; }
     setPersistedItem(ACTIVE_ORDER_CACHE_KEY, JSON.stringify(data));
-  } catch (_) {}
+  } catch (_) { }
 }
 function getActiveOrderCache() {
   try {
@@ -219,7 +212,7 @@ function resolveAssetUrl(url) {
 }
 
 async function apiFetch(path, opts) {
-  var options = Object.assign({ headers: {}, credentials: 'same-origin' }, opts || {});
+  var options = Object.assign({ headers: {} }, opts || {});
   options.headers['x-cafe-id'] = CAFE_ID;
   if (options.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
     options.headers['Content-Type'] = 'application/json';
@@ -988,7 +981,6 @@ async function submitOrder() {
         items: items,
         customerName: name,
         customerSessionId: SESSION_ID,
-        customerId: (getPCI() && getPCI().customerId) || undefined,
         orderType: 'DINE_IN',
       },
     });
@@ -1051,7 +1043,7 @@ function resetCustomerSessionAndReturnToWelcome() {
     removePersistedItem('cust_last_order_id_' + TABLE_ID);
     setPersistedItem('cust_table_closed_' + TABLE_ID, '1');
     clearPCI(); // حذف Persistent Customer Identity عند إغلاق الطاولة
-  } catch (_) {}
+  } catch (_) { }
 
   // 2. Generate a fresh new Customer Session ID
   SESSION_ID = (typeof crypto !== 'undefined' && crypto.randomUUID)
@@ -1063,7 +1055,7 @@ function resetCustomerSessionAndReturnToWelcome() {
     var _nCid = (typeof crypto !== 'undefined' && crypto.randomUUID)
       ? crypto.randomUUID() : 'cid-' + Date.now() + '-' + Math.random().toString(36).slice(2);
     savePCI({ customerId: _nCid, sessionId: SESSION_ID, cafeId: CAFE_ID, tableId: TABLE_ID });
-  } catch (_) {}
+  } catch (_) { }
 
   // 3. Reset internal app state
   state.orderId = null;
@@ -1196,7 +1188,7 @@ function connectSocket() {
         }
         renderCategories();
         renderProducts();
-      }).catch(function () {});
+      }).catch(function () { });
     });
 
     sock.on('disconnect', function () { startPolling(); });
@@ -1308,8 +1300,8 @@ function showRejectionNotice() {
   notice.innerHTML =
     '<div class="rejection-notice__icon">❌</div>' +
     '<div class="rejection-notice__body">' +
-      '<div class="rejection-notice__title">تم رفض طلبك</div>' +
-      '<div class="rejection-notice__sub">لم يوافق الكاشير على طلبك، يُرجى مراجعة الكاشير لإعادة الطلب.</div>' +
+    '<div class="rejection-notice__title">تم رفض طلبك</div>' +
+    '<div class="rejection-notice__sub">لم يوافق الكاشير على طلبك، يُرجى مراجعة الكاشير لإعادة الطلب.</div>' +
     '</div>' +
     '<button class="rejection-notice__close" aria-label="إغلاق">✕</button>';
 
@@ -1820,7 +1812,6 @@ async function restoreActiveOrder() {
       state.orderDisplayId = latest.displayOrderId || latest.id;
       if (latest.customerSessionId) {
         setPersistedItem('cust_session_' + TABLE_ID, latest.customerSessionId);
-        SESSION_ID = latest.customerSessionId;
       }
       if (latest.customerName) {
         state.customerName = latest.customerName;
@@ -1877,7 +1868,7 @@ async function restoreActiveOrder() {
           });
           return _ro;
         }
-      } catch (_) {}
+      } catch (_) { }
 
       return null;
     }
@@ -1910,14 +1901,8 @@ async function loadData() {
     document.title = state.cafeInfo.cafeName + ' — اطلب الآن';
 
     // Auto restore active order session if refresh or App Switcher re-open occurred
-    var restored = await restoreActiveOrder();
+    await restoreActiveOrder();
     updateOrderStatusCard();
-
-    if (restored || state.orderId) {
-      await fetchAndUpdateStatus();
-      renderTracker();
-      showScreen('tracker');
-    }
 
   } catch (err) {
     showToast('⚠️ تعذّر تحميل بيانات الكافيه', 'error', 5000);
@@ -1941,27 +1926,17 @@ function bindEvents() {
         showToast('⚠️ يرجى مسح كود الـ QR الخاص بالطاولة لبدء طلب جديد.', 'warning', 5000);
         return;
       }
-    } catch (_) {}
+    } catch (_) { }
 
     try {
       var billCheck = await apiFetch('/api/orders/table/' + TABLE_ID + '/bill-requested');
       if (billCheck && billCheck.isBillRequested) {
         state.isBillRequested = true;
       }
-    } catch (_) {}
+    } catch (_) { }
 
     if (state.isBillRequested) {
       showToast('⚠️ هذه الطاولة بانتظار تصفير الحساب من الكاشير، يرجى الانتظار قليلاً.', 'info', 4500);
-      return;
-    }
-
-    await restoreActiveOrder();
-    await fetchAndUpdateStatus();
-    updateOrderStatusCard();
-
-    if (state.orderId) {
-      renderTracker();
-      showScreen('tracker');
       return;
     }
 
@@ -1970,6 +1945,9 @@ function bindEvents() {
     renderProducts();
     updateCartBar();
     showScreen('menu');
+    await restoreActiveOrder();
+    await fetchAndUpdateStatus();
+    updateOrderStatusCard();
   });
 
   // ── Order Status Card tap ──

@@ -57,30 +57,6 @@ function createOrdersRouter(io) {
     return { cashierName };
   }
 
-  function getOrCreateDeviceIdCookie(req, res) {
-    let cookieDeviceId = null;
-    const rc = req && req.headers && req.headers.cookie;
-    if (rc) {
-      rc.split(';').forEach((c) => {
-        const parts = c.split('=');
-        const k = parts.shift().trim();
-        if (k === 'cafe_cust_device_id') {
-          cookieDeviceId = decodeURIComponent(parts.join('=')).trim();
-        }
-      });
-    }
-    if (!cookieDeviceId) {
-      const crypto = require('crypto');
-      cookieDeviceId = (crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now() + '-' + Math.random().toString(36).slice(2));
-      if (res && res.setHeader) {
-        try {
-          res.setHeader('Set-Cookie', `cafe_cust_device_id=${encodeURIComponent(cookieDeviceId)}; Path=/; Max-Age=31536000; SameSite=Lax`);
-        } catch (_) {}
-      }
-    }
-    return cookieDeviceId;
-  }
-
   /** يتحقق من أن الخيارات المرسلة ضمن القيم المعرّفة في المنيو فقط (single / multi) */
   function sanitizeSelectedOptions(menuItem, row) {
     const raw = row && row.selectedOptions;
@@ -98,9 +74,9 @@ function createOrdersRouter(io) {
         let arr = Array.isArray(raw[title])
           ? raw[title]
           : String(raw[title] || '')
-              .split(/[,،]+/g)
-              .map((s) => String(s || '').trim())
-              .filter(Boolean);
+            .split(/[,،]+/g)
+            .map((s) => String(s || '').trim())
+            .filter(Boolean);
         arr = arr.filter((x) => allowed.includes(String(x).trim()));
         if (arr.length) out[title] = arr;
       } else {
@@ -257,7 +233,6 @@ function createOrdersRouter(io) {
       const tableId = String(req.params.tableId || '').trim();
       if (!tableId) return res.json({ order: null });
 
-      const cookieDeviceId = getOrCreateDeviceIdCookie(req, res);
       const sessionId = String(req.query.sessionId || '').trim();
       const customerId = String(req.query.customerId || '').trim();
 
@@ -275,11 +250,10 @@ function createOrdersRouter(io) {
 
       if (!openOrders.length) return res.json({ order: null, reason: 'no_active_order' });
 
-      // البحث عن الطلب المطابق لجلسة الزبون بصورة صارمة (Session ID / Customer ID / Cookie Device ID)
+      // البحث عن الطلب المطابق لجلسة الزبون بصورة صارمة
       const matched = openOrders.find((o) =>
         (sessionId && o.customerSessionId === sessionId) ||
-        (customerId && (o.customerId === customerId || o.customer_id === customerId)) ||
-        (cookieDeviceId && (o.customerId === cookieDeviceId || o.customer_id === cookieDeviceId))
+        (customerId && o.customerId === customerId)
       );
 
       if (!matched) return res.json({ order: null, reason: 'no_active_order' });
@@ -311,8 +285,7 @@ function createOrdersRouter(io) {
   router.post('/', async (req, res) => {
     try {
       const cafeId = req.cafeId;
-      const { tableId, items, customerName, customerSessionId, customerId: rawCustomerId, orderType: rawOrderType, serviceMeta } = req.body;
-      const customerId = rawCustomerId || req.body.customer_id;
+      const { tableId, items, customerName, customerSessionId, orderType: rawOrderType, serviceMeta } = req.body;
       const orderType = normalizeOrderType(rawOrderType);
       const needsTable = orderType === ORDER_TYPE.DINE_IN;
       if ((!tableId && needsTable) || !Array.isArray(items) || items.length === 0) {
@@ -375,12 +348,6 @@ function createOrdersRouter(io) {
       if (customerSessionId != null && String(customerSessionId).trim()) {
         newOrder.customerSessionId = String(customerSessionId).trim();
       }
-      const cookieDeviceId = getOrCreateDeviceIdCookie(req, res);
-      if (customerId != null && String(customerId).trim()) {
-        newOrder.customerId = String(customerId).trim();
-      } else if (cookieDeviceId) {
-        newOrder.customerId = cookieDeviceId;
-      }
       if (orderType === ORDER_TYPE.DELIVERY) {
         const deliveryInfo = normalizeDeliveryInfo(serviceMeta);
         if (!deliveryInfo.customerName || !deliveryInfo.phoneNumber || !deliveryInfo.address) {
@@ -409,8 +376,8 @@ function createOrdersRouter(io) {
       if (needsTable) {
         try {
           tableSessions.releaseByTableId(tableIdStr);
-        } catch (_) {}
-          emitTableUpdate(io, { tableId: tableIdStr, status: 'occupied', sessionId: null });
+        } catch (_) { }
+        emitTableUpdate(io, { tableId: tableIdStr, status: 'occupied', sessionId: null });
       }
 
       if (io) {
@@ -636,7 +603,7 @@ function createOrdersRouter(io) {
         try {
           tableSessions.resetTableAccess(closedTableId);
           tableSessions.setTableBillRequested(cafeId, closedTableId, false);
-        } catch (_) {}
+        } catch (_) { }
         const nextStatus = resolveTableStatus(cafeId, closedTableId, '');
         emitTableUpdate(io, {
           tableId: closedTableId,
