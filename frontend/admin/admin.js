@@ -2254,6 +2254,14 @@
       showToast('اختر يومًا أو شهرًا أو سنة');
       return;
     }
+
+    var btn = btnArchiveReport;
+    var origHtml = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="admin-btn-spinner"></span> جاري التحميل...';
+    }
+
     try {
       window._lastArchiveReportType = type;
       window._lastArchiveReportDate = dateVal;
@@ -2269,6 +2277,11 @@
       showToast(err.json && err.json.error ? err.json.error : 'فشل تحميل التقرير');
       renderArchiveReport(null, true);
       renderArchiveClosings([], null, null, null);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = origHtml;
+      }
     }
   }
 

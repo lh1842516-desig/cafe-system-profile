@@ -1157,3 +1157,19 @@ body.admin-app .admin-receipt-overlay .receipt-box-actions {
   background: var(--admin-surface2);
   border-top-color: var(--admin-border);
 }
+
+/* ——— مؤشر التحميل داخل أزرار الأدمن ——— */
+.admin-btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: adminBtnSpin 0.6s linear infinite;
+  vertical-align: middle;
+  margin-inline-end: 6px;
+}
+@keyframes adminBtnSpin {
+  to { transform: rotate(360deg); }
+}
