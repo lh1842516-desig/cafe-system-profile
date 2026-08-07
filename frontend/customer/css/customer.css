@@ -1228,10 +1228,30 @@ input, textarea { font-family: var(--font); }
   margin-bottom: 0.75rem;
 }
 
+.history-order-header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
 .history-order-num {
   font-size: 0.95rem;
   font-weight: 800;
   color: var(--text);
+}
+
+.history-order-customer-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--amber-dark, #b45309);
+  background: var(--amber-light, #fef3c7);
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--r-pill, 9999px);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: fit-content;
 }
 
 .history-order-status-badge {

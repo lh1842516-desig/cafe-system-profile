@@ -879,6 +879,19 @@ async function renderHistorySheet() {
 
     var orderNum = 'الطلب #' + (idx + 1) + (order.displayOrderId ? ' (' + order.displayOrderId + ')' : '');
 
+    var custName = '';
+    if (Array.isArray(order.bundledCustomerNames) && order.bundledCustomerNames.length > 0) {
+      custName = order.bundledCustomerNames.map(function (n) { return String(n || '').trim(); }).filter(Boolean).join('، ');
+    } else if (order.customerName && String(order.customerName).trim()) {
+      custName = String(order.customerName).trim();
+    } else if (order.serviceMeta && order.serviceMeta.customerName && String(order.serviceMeta.customerName).trim()) {
+      custName = String(order.serviceMeta.customerName).trim();
+    }
+
+    var nameBadgeHtml = custName
+      ? '<span class="history-order-customer-name">👤 ' + escHtml(custName) + '</span>'
+      : '';
+
     var subtotal = (order.items || []).reduce(function (sum, it) {
       return sum + ((Number(it.price) || 0) * (Number(it.quantity) || 1));
     }, 0);
@@ -897,7 +910,10 @@ async function renderHistorySheet() {
 
     card.innerHTML =
       '<div class="history-order-header">' +
+      '<div class="history-order-header-left">' +
       '<span class="history-order-num">' + escHtml(orderNum) + '</span>' +
+      nameBadgeHtml +
+      '</div>' +
       '<span class="history-order-status-badge ' + statusCls + '">' + statusText + '</span>' +
       '</div>' +
       '<div class="history-order-items">' + itemsHtml + '</div>' +
