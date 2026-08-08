@@ -595,7 +595,38 @@
 
   userSearchInput.addEventListener('input', renderUsersTable);
 
+  // --- PASSWORD VISIBILITY TOGGLE HELPERS ---
+  const eyeIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+  const eyeOffIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+
+  function setupPasswordToggle(inputEl, toggleBtnEl) {
+    if (!inputEl || !toggleBtnEl) return;
+    toggleBtnEl.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isVisible = inputEl.type === 'text';
+      inputEl.type = isVisible ? 'password' : 'text';
+      toggleBtnEl.innerHTML = isVisible ? eyeIconSvg : eyeOffIconSvg;
+      toggleBtnEl.setAttribute('aria-label', isVisible ? 'إظهار كلمة المرور' : 'إخفاء كلمة المرور');
+    });
+  }
+
+  function resetPasswordToggleState(inputEl, toggleBtnEl) {
+    if (!inputEl || !toggleBtnEl) return;
+    inputEl.type = 'password';
+    toggleBtnEl.innerHTML = eyeIconSvg;
+    toggleBtnEl.setAttribute('aria-label', 'إظهار كلمة المرور');
+  }
+
+  const userPasswordInput = document.getElementById('userPasswordInput');
+  const toggleUserPasswordBtn = document.getElementById('toggleUserPasswordBtn');
+  const newPasswordInput = document.getElementById('newPasswordInput');
+  const toggleNewPasswordBtn = document.getElementById('toggleNewPasswordBtn');
+
+  setupPasswordToggle(userPasswordInput, toggleUserPasswordBtn);
+  setupPasswordToggle(newPasswordInput, toggleNewPasswordBtn);
+
   function openUserModal(user = null, defaultCafeId = null) {
+    resetPasswordToggleState(userPasswordInput, toggleUserPasswordBtn);
     if (user) {
       document.getElementById('userModalTitle').textContent = 'تعديل حساب المستخدم';
       document.getElementById('userIdInput').value = user.id;
@@ -689,6 +720,7 @@
   function openResetPasswordModal(user) {
     document.getElementById('resetPasswordUserIdInput').value = user.id;
     document.getElementById('newPasswordInput').value = '';
+    resetPasswordToggleState(newPasswordInput, toggleNewPasswordBtn);
     resetPasswordModal.classList.add('active');
   }
 
