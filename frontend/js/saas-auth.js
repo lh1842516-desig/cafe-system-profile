@@ -6,6 +6,16 @@
  */
 
 (function (global) {
+  // Prevent browser back/forward history navigation across all system pages
+  try {
+    if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+      window.history.pushState(null, null, window.location.href);
+      window.addEventListener('popstate', function () {
+        window.history.pushState(null, null, window.location.href);
+      });
+    }
+  } catch (_) {}
+
   const TOKEN_KEY = 'cafezip_saas_token';
   const USER_KEY = 'cafezip_saas_user';
 

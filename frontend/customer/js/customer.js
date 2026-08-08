@@ -7,6 +7,16 @@
  */
 'use strict';
 
+// Prevent browser back/forward history navigation
+try {
+  if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, null, window.location.href);
+    });
+  }
+} catch (_) {}
+
 /* ══════════════════════════════════════════════════════════
    1. CONSTANTS & PARSE URL
 ══════════════════════════════════════════════════════════ */
