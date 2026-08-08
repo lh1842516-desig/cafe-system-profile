@@ -15,18 +15,24 @@
 const till = require('../data/till');
 const { getClient } = require('../lib/supabase');
 
-function getOpenDateFromIso(iso) {
+function getOpenDateFromIso(iso, timeZone = 'Asia/Baghdad') {
   if (!iso) return null;
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return null;
-  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  try {
+    const formatter = new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' });
+    return formatter.format(d);
+  } catch (_) {
+    const dLocal = new Date(d.getTime() + 3 * 3600 * 1000);
+    return dLocal.getUTCFullYear() + '-' + String(dLocal.getUTCMonth() + 1).padStart(2, '0') + '-' + String(dLocal.getUTCDate()).padStart(2, '0');
+  }
 }
 
 function tillFromDb(row) {
   const openedAt = row.opened_at || new Date().toISOString();
   const open_date = row.open_date || getOpenDateFromIso(openedAt);
   return {
-    date: row.open_date || getOpenDateFromIso(openedAt) || new Date().toISOString().split('T')[0],
+    date: row.open_date || getOpenDateFromIso(openedAt) || till.getTodayDateStr(),
     openedAt,
     open_date,
     openingBalance: Number(row.opening_balance) || 0,

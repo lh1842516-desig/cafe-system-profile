@@ -24,11 +24,17 @@ function getTodayDateStr(timeZone = 'Asia/Baghdad') {
   }
 }
 
-function getOpenDateFromIso(iso) {
+function getOpenDateFromIso(iso, timeZone = 'Asia/Baghdad') {
   if (!iso) return null;
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return null;
-  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  try {
+    const formatter = new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' });
+    return formatter.format(d);
+  } catch (_) {
+    const dLocal = new Date(d.getTime() + 3 * 3600 * 1000);
+    return dLocal.getUTCFullYear() + '-' + String(dLocal.getUTCMonth() + 1).padStart(2, '0') + '-' + String(dLocal.getUTCDate()).padStart(2, '0');
+  }
 }
 
 function defaultTill(dateStr, openedAt, status) {

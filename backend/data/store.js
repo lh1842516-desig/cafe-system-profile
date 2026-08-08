@@ -593,16 +593,33 @@ async function addTillClosing(cafeId, till, salesCash, salesCard) {
   const totalWithdrawals = withdrawalsList.reduce((s, w) => s + (Number(w.amount) || 0), 0);
   const openingBalance = Number(till.openingBalance) || 0;
   const net = openingBalance + totalSales - totalExpenses - totalWithdrawals;
+  const tillData = require('./till');
   const closedAtDate = till.closedAt ? new Date(till.closedAt) : new Date();
   const openedAtDate = till.openedAt ? new Date(till.openedAt) : closedAtDate;
-  const pad2 = n => String(n).padStart(2, '0');
-  const dateStr = openedAtDate.getFullYear() + '-' + pad2(openedAtDate.getMonth() + 1) + '-' + pad2(openedAtDate.getDate());
+  
+  function getTimeStrInTimezone(isoOrDate, timeZone = 'Asia/Baghdad') {
+    if (!isoOrDate) return '00:00';
+    const d = typeof isoOrDate === 'string' ? new Date(isoOrDate) : isoOrDate;
+    if (Number.isNaN(d.getTime())) return '00:00';
+    try {
+      const formatter = new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', minute: '2-digit', hour12: false });
+      return formatter.format(d);
+    } catch (_) {
+      const dLocal = new Date(d.getTime() + 3 * 3600 * 1000);
+      return String(dLocal.getUTCHours()).padStart(2, '0') + ':' + String(dLocal.getUTCMinutes()).padStart(2, '0');
+    }
+  }
+
+  const openDateStr = String(till.open_date || till.date || (till.openedAt ? tillData.getOpenDateFromIso(till.openedAt) : tillData.getTodayDateStr()) || '').trim();
+  const openTimeStr = getTimeStrInTimezone(till.openedAt || openedAtDate);
+  const closeTimeStr = getTimeStrInTimezone(till.closedAt || closedAtDate);
+
   const record = {
-    date: String(dateStr || till.date || ''),
-    open_date: String(dateStr || till.open_date || till.date || ''),
-    open_time: pad2(openedAtDate.getHours()) + ':' + pad2(openedAtDate.getMinutes()),
-    close_time: pad2(closedAtDate.getHours()) + ':' + pad2(closedAtDate.getMinutes()),
-    time: pad2(closedAtDate.getHours()) + ':' + pad2(closedAtDate.getMinutes()),
+    date: openDateStr,
+    open_date: openDateStr,
+    open_time: openTimeStr,
+    close_time: closeTimeStr,
+    time: closeTimeStr,
     openedAt: till.openedAt || openedAtDate.toISOString(),
     openedBy: String(till.openedBy || ''),
     openingBalance,
