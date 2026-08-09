@@ -1046,7 +1046,10 @@ async function submitOrder() {
     try {
       userLocation = await getCustomerGeolocation();
     } catch (geoErr) {
-      showToast('⚠️ ' + (geoErr.message || 'يرجى تفعيل الموقع لإكمال الطلب'), 'error', 5000);
+      closeNameModal();
+      var gMsg = geoErr && geoErr.message ? geoErr.message : 'يرجى تفعيل الموقع لإكمال الطلب';
+      showToast('⚠️ ' + gMsg, 'error', 6000);
+      alert('⚠️ ' + gMsg);
       btn.disabled = false;
       btn.textContent = 'تأكيد الطلب ✓';
       return;
@@ -1062,7 +1065,9 @@ async function submitOrder() {
         });
       } catch (cancelErr) {
         if (cancelErr.message && cancelErr.message.includes('التجهيز')) {
+          closeNameModal();
           showToast('❌ لا يمكن التعديل لأن المطبخ بدأ تجهيز الطلب السابق', 'error', 4000);
+          alert('❌ لا يمكن التعديل لأن المطبخ بدأ تجهيز الطلب السابق');
           btn.disabled = false;
           btn.textContent = 'تأكيد الطلب ✓';
           return;
@@ -1133,7 +1138,10 @@ async function submitOrder() {
     updateDrawerBadge();
 
   } catch (err) {
-    showToast('❌ ' + (err.message || 'فشل الإرسال'), 'error', 4000);
+    closeNameModal();
+    var errMsg = (err && err.message) || 'فشل الإرسال';
+    showToast('❌ ' + errMsg, 'error', 6000);
+    alert('❌ ' + errMsg);
   } finally {
     btn.disabled = false;
     btn.textContent = 'تأكيد الطلب ✓';
