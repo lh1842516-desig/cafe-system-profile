@@ -1031,6 +1031,15 @@ async function submitOrder() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> جارٍ الإرسال...';
 
+  // Fetch fresh cafe settings to get latest geofencing status
+  try {
+    var freshSettings = await apiFetch('/api/settings/cafe');
+    if (freshSettings) {
+      state.cafeInfo = state.cafeInfo || {};
+      state.cafeInfo.enableGeofence = !!freshSettings.enableGeofence;
+    }
+  } catch (_) {}
+
   // Request location if Geofencing is enabled
   var userLocation = null;
   if (state.cafeInfo && state.cafeInfo.enableGeofence) {

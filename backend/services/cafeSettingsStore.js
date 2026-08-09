@@ -113,8 +113,8 @@ async function getCafeSettings(cafeId) {
 }
 
 async function saveCafeSettings(cafeId, partial) {
+  settingsCacheMap.clear();
   const cid = String(cafeId || '').trim();
-  if (cid) settingsCacheMap.delete(cid);
 
   try {
     const supabase = getClient();
