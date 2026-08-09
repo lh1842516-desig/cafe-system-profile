@@ -198,7 +198,7 @@
       note: row.note || '',
     }));
     try {
-      await api.orders.create(selectedTableId, items);
+      await api.orders.create(selectedTableId, items, { isStaff: true, serviceMeta: { isStaff: true, placedBy: 'captain' } });
       currentOrder = [];
       updateOrderUI();
       alert('تم إرسال الطلب إلى الكاشير بنجاح.');

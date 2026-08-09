@@ -799,7 +799,7 @@
     openSendSuccessModal();
 
     api
-      .orders.create(selectedTableId, items)
+      .orders.create(selectedTableId, items, { isStaff: true, serviceMeta: { isStaff: true, placedBy: 'captain' } })
       .catch(function (err) {
         cart = cartSnapshot;
         updateCartUI();

@@ -318,18 +318,27 @@ function createOrdersRouter(io) {
       // ── Geofencing Protection Layer ──
       const cafeSettings = await cafeSettingsStore.getCafeSettings(cafeId);
       if (cafeSettings && cafeSettings.enableGeofence) {
-        const custLat = req.body.lat !== undefined && req.body.lat !== null ? Number(req.body.lat) : (req.body.latitude !== undefined && req.body.latitude !== null ? Number(req.body.latitude) : null);
-        const custLng = req.body.lng !== undefined && req.body.lng !== null ? Number(req.body.lng) : (req.body.longitude !== undefined && req.body.longitude !== null ? Number(req.body.longitude) : null);
+        const isStaffRequest = !!(
+          req.user ||
+          req.body.isStaff ||
+          req.body.isCaptain ||
+          (req.body.serviceMeta && (req.body.serviceMeta.isStaff || req.body.serviceMeta.placedBy === 'captain' || req.body.serviceMeta.placedBy === 'cashier'))
+        );
 
-        if (custLat === null || custLng === null || isNaN(custLat) || isNaN(custLng)) {
-          return res.status(403).json({ error: 'يرجى تفعيل الموقع لإكمال الطلب' });
-        }
+        if (!isStaffRequest) {
+          const custLat = req.body.lat !== undefined && req.body.lat !== null ? Number(req.body.lat) : (req.body.latitude !== undefined && req.body.latitude !== null ? Number(req.body.latitude) : null);
+          const custLng = req.body.lng !== undefined && req.body.lng !== null ? Number(req.body.lng) : (req.body.longitude !== undefined && req.body.longitude !== null ? Number(req.body.longitude) : null);
 
-        const distanceMeters = calculateHaversineDistance(custLat, custLng, cafeSettings.latitude, cafeSettings.longitude);
-        if (distanceMeters > cafeSettings.allowedRadius) {
-          return res.status(403).json({
-            error: `أنت خارج نطاق الكافيه المسموح بالطلب فيه (المسافة المحسوبة: ${Math.round(distanceMeters)} متر، النطاق المسموح: ${cafeSettings.allowedRadius} متر)`
-          });
+          if (custLat === null || custLng === null || isNaN(custLat) || isNaN(custLng)) {
+            return res.status(403).json({ error: 'يرجى تفعيل الموقع لإكمال الطلب' });
+          }
+
+          const distanceMeters = calculateHaversineDistance(custLat, custLng, cafeSettings.latitude, cafeSettings.longitude);
+          if (distanceMeters > cafeSettings.allowedRadius) {
+            return res.status(403).json({
+              error: `أنت خارج نطاق الكافيه المسموح بالطلب فيه (المسافة المحسوبة: ${Math.round(distanceMeters)} متر، النطاق المسموح: ${cafeSettings.allowedRadius} متر)`
+            });
+          }
         }
       }
 
