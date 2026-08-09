@@ -423,6 +423,9 @@ var api = {
     updateCafe: function (data) {
       return api.put('/api/settings/cafe', data || {});
     },
+    updateLocation: function (data) {
+      return api.put('/api/settings/cafe/location', data || {});
+    },
     updateKitchenApproval: function (requireCashierKitchenApproval) {
       return api.post('/api/settings/cafe/kitchen-approval', {
         requireCashierKitchenApproval: !!requireCashierKitchenApproval,

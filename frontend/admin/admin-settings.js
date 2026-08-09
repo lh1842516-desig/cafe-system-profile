@@ -367,6 +367,157 @@
       });
   }
 
+  var geofenceMapObj = null;
+  var geofenceMarker = null;
+  var geofenceCircle = null;
+
+  function initGeofenceMap(lat, lng, radius) {
+    if (typeof L === 'undefined') return;
+    var mapContainer = $('geofenceMap');
+    if (!mapContainer) return;
+
+    var initialLat = Number(lat) || 33.3152;
+    var initialLng = Number(lng) || 44.3661;
+    var initialRadius = Number(radius) || 100;
+
+    if (!geofenceMapObj) {
+      geofenceMapObj = L.map('geofenceMap').setView([initialLat, initialLng], 16);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(geofenceMapObj);
+
+      geofenceMarker = L.marker([initialLat, initialLng], { draggable: true }).addTo(geofenceMapObj);
+      geofenceCircle = L.circle([initialLat, initialLng], {
+        color: '#3182ce',
+        fillColor: '#3182ce',
+        fillOpacity: 0.25,
+        radius: initialRadius
+      }).addTo(geofenceMapObj);
+
+      function updateCoordsFromPos(latVal, lngVal) {
+        var roundedLat = Math.round(latVal * 1000000) / 1000000;
+        var roundedLng = Math.round(lngVal * 1000000) / 1000000;
+        var latInput = $('geofenceLatInput');
+        var lngInput = $('geofenceLngInput');
+        if (latInput) latInput.value = roundedLat;
+        if (lngInput) lngInput.value = roundedLng;
+        if (geofenceMarker) geofenceMarker.setLatLng([roundedLat, roundedLng]);
+        if (geofenceCircle) geofenceCircle.setLatLng([roundedLat, roundedLng]);
+      }
+
+      geofenceMarker.on('dragend', function (e) {
+        var pos = e.target.getLatLng();
+        updateCoordsFromPos(pos.lat, pos.lng);
+      });
+
+      geofenceMapObj.on('click', function (e) {
+        updateCoordsFromPos(e.latlng.lat, e.latlng.lng);
+      });
+
+      var radiusInput = $('geofenceRadiusInput');
+      if (radiusInput) {
+        radiusInput.addEventListener('input', function () {
+          var r = Number(radiusInput.value) || 100;
+          if (geofenceCircle) geofenceCircle.setRadius(r);
+        });
+      }
+    } else {
+      geofenceMapObj.setView([initialLat, initialLng], 16);
+      if (geofenceMarker) geofenceMarker.setLatLng([initialLat, initialLng]);
+      if (geofenceCircle) {
+        geofenceCircle.setLatLng([initialLat, initialLng]);
+        geofenceCircle.setRadius(initialRadius);
+      }
+      setTimeout(function () { geofenceMapObj.invalidateSize(); }, 300);
+    }
+  }
+
+  function renderGeofenceSettings(data) {
+    if (!data) return;
+    var enableToggle = $('geofenceEnableToggle');
+    var radiusInput = $('geofenceRadiusInput');
+    var latInput = $('geofenceLatInput');
+    var lngInput = $('geofenceLngInput');
+
+    if (enableToggle) enableToggle.checked = !!data.enableGeofence;
+    if (radiusInput) radiusInput.value = data.allowedRadius != null ? data.allowedRadius : 100;
+    if (latInput) latInput.value = data.latitude != null ? data.latitude : 33.3152;
+    if (lngInput) lngInput.value = data.longitude != null ? data.longitude : 44.3661;
+
+    initGeofenceMap(data.latitude, data.longitude, data.allowedRadius);
+  }
+
+  function saveGeofenceSettings(ev) {
+    if (ev && ev.preventDefault) ev.preventDefault();
+    var enableToggle = $('geofenceEnableToggle');
+    var radiusInput = $('geofenceRadiusInput');
+    var latInput = $('geofenceLatInput');
+    var lngInput = $('geofenceLngInput');
+
+    var payload = {
+      enableGeofence: enableToggle ? enableToggle.checked : false,
+      allowedRadius: radiusInput ? Number(radiusInput.value) || 100 : 100,
+      latitude: latInput ? Number(latInput.value) || 33.3152 : 33.3152,
+      longitude: lngInput ? Number(lngInput.value) || 44.3661 : 44.3661,
+    };
+
+    if (!global.api || !global.api.settings || !global.api.settings.updateLocation) {
+      toast('API غير متاح');
+      return Promise.resolve(null);
+    }
+
+    return global.api.settings.updateLocation(payload)
+      .then(function (saved) {
+        renderGeofenceSettings(saved);
+        toast('✨ تم حفظ إعدادات الموقع الجغرافي (Geofencing) بنجاح');
+        return saved;
+      })
+      .catch(function (err) {
+        toast((err && err.message) || 'فشل حفظ إعدادات الموقع');
+        return null;
+      });
+  }
+
+  function useCurrentLocation() {
+    if (!navigator.geolocation) {
+      toast('متصفحك لا يدعم تحديد الموقع الجغرافي');
+      return;
+    }
+    toast('جاري تحديد موقعك الحالي...');
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        var lat = pos.coords.latitude;
+        var lng = pos.coords.longitude;
+        var latInput = $('geofenceLatInput');
+        var lngInput = $('geofenceLngInput');
+        if (latInput) latInput.value = Math.round(lat * 1000000) / 1000000;
+        if (lngInput) lngInput.value = Math.round(lng * 1000000) / 1000000;
+        var r = $('geofenceRadiusInput') ? Number($('geofenceRadiusInput').value) || 100 : 100;
+        initGeofenceMap(lat, lng, r);
+        toast('📍 تم جلب موقعك الحالي بنجاح');
+      },
+      function (_) {
+        toast('⚠️ تعذر جلب الموقع الجغرافي الحالي');
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  }
+
+  function loadCafeSettings() {
+    if (!global.api || !global.api.settings || !global.api.settings.getCafe) {
+      return Promise.resolve(null);
+    }
+    return global.api.settings.getCafe().then(function (data) {
+      renderCafeSettings(data);
+      renderGeofenceSettings(data);
+      return data;
+    }).catch(function (err) {
+      toast((err && err.message) || 'فشل تحميل إعدادات الكافيه');
+      return null;
+    });
+  }
+
   function onTableListClick(ev) {
     var btn = ev.target && ev.target.closest ? ev.target.closest('[data-action]') : null;
     if (!btn) return;
@@ -381,6 +532,11 @@
     bound = true;
     var form = $('formCafeSettings');
     if (form) form.addEventListener('submit', saveCafeSettings);
+    var formGeo = $('formGeofenceSettings');
+    if (formGeo) formGeo.addEventListener('submit', saveGeofenceSettings);
+    var btnCurrentLoc = $('btnLocateCurrentPos');
+    if (btnCurrentLoc) btnCurrentLoc.addEventListener('click', useCurrentLocation);
+
     var btnLogo = $('btnSettingsLogoUpload');
     var logoInput = $('settingsLogoInput');
     if (btnLogo && logoInput) {

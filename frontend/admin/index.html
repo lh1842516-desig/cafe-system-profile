@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#F5F7FA">
   <title>لوحة تحكم الأدمن — نظام الكافيه</title>
   <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     :root {
       --safe-top: env(safe-area-inset-top, 0);
@@ -3267,6 +3269,42 @@
               </div>
               <div class="settings-table-list" id="settingsTableList"></div>
               <p class="settings-table-empty" id="settingsTableEmpty" style="display:none;">لا توجد طاولات. اضغط «إضافة طاولة».</p>
+            </section>
+
+            <section class="settings-card settings-card--full" aria-labelledby="settingsGeofenceTitle" style="margin-top: 24px;">
+              <h3 id="settingsGeofenceTitle" class="settings-card__title">📍 إعدادات الموقع الجغرافي (Geofencing)</h3>
+              <p class="settings-card__desc">تحديد موقع الكافيه وتفعيل نظام الحماية الجغرافية لمنع الطلبات من خارج نطاق الكافيه.</p>
+              <form id="formGeofenceSettings">
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.03); padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 16px;">
+                  <div>
+                    <label for="geofenceEnableToggle" style="margin: 0; font-weight: 600; font-size: 0.95rem; cursor: pointer; color: #fff;">تفعيل نظام الحماية الجغرافية (Geofencing)</label>
+                    <p style="margin: 2px 0 0; font-size: 0.8rem; color: #a0aec0;">عند تفعيله، لن يتمكن الزبائن خارج نطاق المقهى المحدد من إرسال الطلبات.</p>
+                  </div>
+                  <input type="checkbox" id="geofenceEnableToggle" style="width: 22px; height: 22px; cursor: pointer; accent-color: #3182ce;">
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                  <div class="form-group" style="margin: 0;">
+                    <label for="geofenceRadiusInput">نصف القطر المسموح (بالأمتار)</label>
+                    <input type="number" id="geofenceRadiusInput" min="10" max="5000" step="5" placeholder="100">
+                  </div>
+                  <div class="form-group" style="margin: 0;">
+                    <label for="geofenceLatInput">خط العرض (Latitude)</label>
+                    <input type="number" id="geofenceLatInput" step="any" placeholder="33.3152" readonly style="background: rgba(0,0,0,0.2);">
+                  </div>
+                  <div class="form-group" style="margin: 0;">
+                    <label for="geofenceLngInput">خط الطول (Longitude)</label>
+                    <input type="number" id="geofenceLngInput" step="any" placeholder="44.3661" readonly style="background: rgba(0,0,0,0.2);">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label style="margin-bottom: 8px; display: block;">موقع المقهى على الخريطة (انقر على الخريطة لتحديد الموقع):</label>
+                  <div id="geofenceMap" style="height: 320px; width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); z-index: 1;"></div>
+                </div>
+                <div class="form-actions" style="margin-top: 16px; display: flex; gap: 10px;">
+                  <button type="submit" class="btn btn-primary" id="btnSaveGeofence">حفظ إعدادات الموقع 📍</button>
+                  <button type="button" class="btn btn-secondary" id="btnLocateCurrentPos">استخدام موقعي الحالي 🧭</button>
+                </div>
+              </form>
             </section>
           </div>
         </div>

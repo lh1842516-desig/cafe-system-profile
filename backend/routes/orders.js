@@ -17,6 +17,18 @@ const { resolveTableStatus } = require('../services/tableStatusResolve');
 const kitchenRepo = require('../repository/kitchenRepository');
 const { tableRoomName } = require('../services/tableRoomHelper');
 const kitchenCashierApproval = require('../services/kitchenCashierApproval');
+const cafeSettingsStore = require('../services/cafeSettingsStore');
+
+function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371000; // Earth radius in meters
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
 
 function createOrdersRouter(io) {
   const router = express.Router();
@@ -300,6 +312,24 @@ function createOrdersRouter(io) {
       const tableIdStrEarly = needsTable ? String(tableId) : orderType;
       if (needsTable && tableSessions.isTableBillRequested(cafeId, tableIdStrEarly)) {
         return res.status(400).json({ error: 'تم طلب الفاتورة لهذه الطاولة. لا يمكن إضافة طلبات جديدة حتى إغلاق الفاتورة من الكاشير.' });
+      }
+
+      // ── Geofencing Protection Layer ──
+      const cafeSettings = await cafeSettingsStore.getCafeSettings(cafeId);
+      if (cafeSettings && cafeSettings.enableGeofence) {
+        const custLat = req.body.lat !== undefined && req.body.lat !== null ? Number(req.body.lat) : (req.body.latitude !== undefined && req.body.latitude !== null ? Number(req.body.latitude) : null);
+        const custLng = req.body.lng !== undefined && req.body.lng !== null ? Number(req.body.lng) : (req.body.longitude !== undefined && req.body.longitude !== null ? Number(req.body.longitude) : null);
+
+        if (custLat === null || custLng === null || isNaN(custLat) || isNaN(custLng)) {
+          return res.status(403).json({ error: 'يرجى تفعيل الموقع لإكمال الطلب' });
+        }
+
+        const distanceMeters = calculateHaversineDistance(custLat, custLng, cafeSettings.latitude, cafeSettings.longitude);
+        if (distanceMeters > cafeSettings.allowedRadius) {
+          return res.status(403).json({
+            error: `أنت خارج نطاق الكافيه المسموح بالطلب فيه (المسافة المحسوبة: ${Math.round(distanceMeters)} متر، النطاق المسموح: ${cafeSettings.allowedRadius} متر)`
+          });
+        }
       }
 
 

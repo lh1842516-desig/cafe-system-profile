@@ -119,6 +119,24 @@ function createSettingsRouter(io) {
   router.post('/cafe/kitchen-approval', authenticateToken, handleKitchenApprovalUpdate);
   router.patch('/cafe/kitchen-approval', authenticateToken, handleKitchenApprovalUpdate);
 
+  router.put('/cafe/location', authenticateToken, async function (req, res) {
+    try {
+      const body = req.body && typeof req.body === 'object' ? req.body : {};
+      const cafeId = req.cafeId;
+      const updates = {};
+      if (body.latitude !== undefined) updates.latitude = Number(body.latitude);
+      if (body.longitude !== undefined) updates.longitude = Number(body.longitude);
+      if (body.allowedRadius !== undefined) updates.allowedRadius = Number(body.allowedRadius);
+      if (body.enableGeofence !== undefined) updates.enableGeofence = !!body.enableGeofence;
+
+      const saved = await cafeSettingsStore.saveCafeSettings(cafeId, updates);
+      emitSettingsUpdated(io, saved);
+      res.json(saved);
+    } catch (err) {
+      res.status(500).json({ error: err.message || 'فشل حفظ إعدادات الموقع' });
+    }
+  });
+
   router.put('/cafe', authenticateToken, async function (req, res) {
     try {
       const body = req.body && typeof req.body === 'object' ? req.body : {};

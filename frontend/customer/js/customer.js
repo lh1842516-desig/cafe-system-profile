@@ -990,6 +990,30 @@ function closeNameModal() {
   $('nameModalOverlay').classList.remove('open');
 }
 
+function getCustomerGeolocation() {
+  return new Promise(function (resolve, reject) {
+    if (!navigator || !navigator.geolocation) {
+      return reject(new Error('متصفحك لا يدعم خدمات تحديد الموقع الجغرافي.'));
+    }
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        resolve({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        });
+      },
+      function (err) {
+        var msg = 'يرجى تفعيل الموقع لإكمال الطلب';
+        if (err && err.code === err.PERMISSION_DENIED) {
+          msg = 'يرجى تفعيل إذن الموقع الجغرافي في المتصفح لإكمال الطلب.';
+        }
+        reject(new Error(msg));
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  });
+}
+
 /* ══════════════════════════════════════════════════════════
    16. ORDER SUBMISSION
 ══════════════════════════════════════════════════════════ */
@@ -1006,6 +1030,19 @@ async function submitOrder() {
   var btn = $('btnConfirmOrder');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> جارٍ الإرسال...';
+
+  // Request location if Geofencing is enabled
+  var userLocation = null;
+  if (state.cafeInfo && state.cafeInfo.enableGeofence) {
+    try {
+      userLocation = await getCustomerGeolocation();
+    } catch (geoErr) {
+      showToast('⚠️ ' + (geoErr.message || 'يرجى تفعيل الموقع لإكمال الطلب'), 'error', 5000);
+      btn.disabled = false;
+      btn.textContent = 'تأكيد الطلب ✓';
+      return;
+    }
+  }
 
   try {
     if (state.editingOrderId) {
@@ -1034,15 +1071,21 @@ async function submitOrder() {
       };
     });
 
+    var payload = {
+      tableId: TABLE_ID,
+      items: items,
+      customerName: name,
+      customerSessionId: SESSION_ID,
+      orderType: 'DINE_IN',
+    };
+    if (userLocation) {
+      payload.lat = userLocation.lat;
+      payload.lng = userLocation.lng;
+    }
+
     var order = await apiFetch('/api/orders', {
       method: 'POST',
-      body: {
-        tableId: TABLE_ID,
-        items: items,
-        customerName: name,
-        customerSessionId: SESSION_ID,
-        orderType: 'DINE_IN',
-      },
+      body: payload,
     });
 
     state.orderId = order.id;
@@ -1954,6 +1997,7 @@ async function loadData() {
     state.cafeInfo = {
       cafeName: settingsData.cafeName || 'الكافيه',
       logoUrl: settingsData.logoUrl || null,
+      enableGeofence: !!settingsData.enableGeofence,
     };
     state.menu = Array.isArray(menuData) ? menuData : [];
     state.allCategories = Array.isArray(categoriesData) ? categoriesData : [];
