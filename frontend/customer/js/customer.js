@@ -993,7 +993,7 @@ function closeNameModal() {
 function getCustomerGeolocation() {
   return new Promise(function (resolve, reject) {
     if (!navigator || !navigator.geolocation) {
-      return reject(new Error('متصفحك لا يدعم خدمات تحديد الموقع الجغرافي.'));
+      return reject(new Error('خدمة تحديد الموقع غير مدعومة في المتصفح الحلي (تأكد من استخدام اتصال آمن HTTPS).'));
     }
     navigator.geolocation.getCurrentPosition(
       function (pos) {
@@ -1005,7 +1005,11 @@ function getCustomerGeolocation() {
       function (err) {
         var msg = 'يرجى تفعيل الموقع لإكمال الطلب';
         if (err && err.code === err.PERMISSION_DENIED) {
-          msg = 'يرجى تفعيل إذن الموقع الجغرافي في المتصفح لإكمال الطلب.';
+          msg = 'يرجى تفعيل إذن الموقع الجغرافي (GPS) في المتصفح لإكمال الطلب.';
+        } else if (err && err.code === err.POSITION_UNAVAILABLE) {
+          msg = 'تعذر الوصول لموقعك الحالي. يرجى التأكد من تفعيل خدمة GPS على جهازك.';
+        } else if (err && err.code === err.TIMEOUT) {
+          msg = 'انتهت مهلة استجابة تحديد الموقع. يرجى المحاولة مرة أخرى.';
         }
         reject(new Error(msg));
       },
@@ -1218,6 +1222,15 @@ function connectSocket() {
     sock.on('connect', function () {
       // Join the table room
       sock.emit('join_table_room', { cafeId: CAFE_ID, tableId: TABLE_ID });
+    });
+
+    sock.on('cafe-settings-updated', function (data) {
+      if (data && typeof data === 'object') {
+        state.cafeInfo = state.cafeInfo || {};
+        if (data.enableGeofence !== undefined) {
+          state.cafeInfo.enableGeofence = !!data.enableGeofence;
+        }
+      }
     });
 
     sock.on('table_bill_requested', function (data) {

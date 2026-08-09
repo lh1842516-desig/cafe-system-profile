@@ -67,7 +67,7 @@ async function getCafeSettings(cafeId) {
   const cid = String(cafeId || '').trim();
   if (cid && settingsCacheMap.has(cid)) {
     const cached = settingsCacheMap.get(cid);
-    if (Date.now() - cached.ts < 30000) {
+    if (Date.now() - cached.ts < 2000) {
       return cached.data;
     }
   }

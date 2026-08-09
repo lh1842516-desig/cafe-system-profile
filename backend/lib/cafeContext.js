@@ -53,6 +53,14 @@ async function autoMigrateDatabase() {
       ALTER TABLE cafes ADD COLUMN IF NOT EXISTS subscription_status TEXT NOT NULL DEFAULT 'active';
     `);
 
+    // Add geofencing columns to cafe_settings table if missing
+    await client.query(`
+      ALTER TABLE cafe_settings ADD COLUMN IF NOT EXISTS latitude NUMERIC(10, 7) DEFAULT 35.4681;
+      ALTER TABLE cafe_settings ADD COLUMN IF NOT EXISTS longitude NUMERIC(10, 7) DEFAULT 44.3922;
+      ALTER TABLE cafe_settings ADD COLUMN IF NOT EXISTS allowed_radius INTEGER DEFAULT 100;
+      ALTER TABLE cafe_settings ADD COLUMN IF NOT EXISTS enable_geofence BOOLEAN DEFAULT false;
+    `);
+
     console.log('  [cafeContext] Database schema check & auto-migration succeeded.');
   } catch (err) {
     console.error('  [cafeContext] Database auto-migration error:', err.message);

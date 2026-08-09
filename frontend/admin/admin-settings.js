@@ -422,6 +422,24 @@
           if (geofenceCircle) geofenceCircle.setRadius(r);
         });
       }
+
+      var latInput = $('geofenceLatInput');
+      var lngInput = $('geofenceLngInput');
+      function onManualCoordChange() {
+        var latVal = Number(latInput ? latInput.value : 0);
+        var lngVal = Number(lngInput ? lngInput.value : 0);
+        if (!isNaN(latVal) && !isNaN(lngVal) && latVal !== 0 && lngVal !== 0) {
+          if (geofenceMarker) geofenceMarker.setLatLng([latVal, lngVal]);
+          if (geofenceCircle) geofenceCircle.setLatLng([latVal, lngVal]);
+          if (geofenceMapObj) geofenceMapObj.setView([latVal, lngVal]);
+        }
+      }
+      if (latInput) latInput.addEventListener('input', onManualCoordChange);
+      if (lngInput) lngInput.addEventListener('input', onManualCoordChange);
+
+      setTimeout(function () {
+        if (geofenceMapObj) geofenceMapObj.invalidateSize();
+      }, 300);
     } else {
       geofenceMapObj.setView([initialLat, initialLng], 15);
       if (geofenceMarker) geofenceMarker.setLatLng([initialLat, initialLng]);
@@ -516,6 +534,16 @@
       toast((err && err.message) || 'فشل تحميل إعدادات الكافيه');
       return null;
     });
+  }
+
+  function loadPage() {
+    loadCafeSettings();
+    loadTables();
+    if (geofenceMapObj) {
+      setTimeout(function () {
+        geofenceMapObj.invalidateSize();
+      }, 250);
+    }
   }
 
   function onTableListClick(ev) {
