@@ -376,12 +376,12 @@
     var mapContainer = $('geofenceMap');
     if (!mapContainer) return;
 
-    var initialLat = Number(lat) || 33.3152;
-    var initialLng = Number(lng) || 44.3661;
+    var initialLat = Number(lat) || 35.4681;
+    var initialLng = Number(lng) || 44.3922;
     var initialRadius = Number(radius) || 100;
 
     if (!geofenceMapObj) {
-      geofenceMapObj = L.map('geofenceMap').setView([initialLat, initialLng], 16);
+      geofenceMapObj = L.map('geofenceMap').setView([initialLat, initialLng], 15);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap'
@@ -423,7 +423,7 @@
         });
       }
     } else {
-      geofenceMapObj.setView([initialLat, initialLng], 16);
+      geofenceMapObj.setView([initialLat, initialLng], 15);
       if (geofenceMarker) geofenceMarker.setLatLng([initialLat, initialLng]);
       if (geofenceCircle) {
         geofenceCircle.setLatLng([initialLat, initialLng]);
@@ -442,8 +442,8 @@
 
     if (enableToggle) enableToggle.checked = !!data.enableGeofence;
     if (radiusInput) radiusInput.value = data.allowedRadius != null ? data.allowedRadius : 100;
-    if (latInput) latInput.value = data.latitude != null ? data.latitude : 33.3152;
-    if (lngInput) lngInput.value = data.longitude != null ? data.longitude : 44.3661;
+    if (latInput) latInput.value = data.latitude != null ? data.latitude : 35.4681;
+    if (lngInput) lngInput.value = data.longitude != null ? data.longitude : 44.3922;
 
     initGeofenceMap(data.latitude, data.longitude, data.allowedRadius);
   }
@@ -458,8 +458,8 @@
     var payload = {
       enableGeofence: enableToggle ? enableToggle.checked : false,
       allowedRadius: radiusInput ? Number(radiusInput.value) || 100 : 100,
-      latitude: latInput ? Number(latInput.value) || 33.3152 : 33.3152,
-      longitude: lngInput ? Number(lngInput.value) || 44.3661 : 44.3661,
+      latitude: latInput ? Number(latInput.value) || 35.4681 : 35.4681,
+      longitude: lngInput ? Number(lngInput.value) || 44.3922 : 44.3922,
     };
 
     if (!global.api || !global.api.settings || !global.api.settings.updateLocation) {

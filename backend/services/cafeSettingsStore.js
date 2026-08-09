@@ -9,8 +9,8 @@ const DEFAULT_SETTINGS = {
   cafeName: 'Shot Cafe',
   logoUrl: null,
   requireCashierKitchenApproval: true,
-  latitude: 33.3152,
-  longitude: 44.3661,
+  latitude: 35.4681,
+  longitude: 44.3922,
   allowedRadius: 100,
   enableGeofence: false,
 };
