@@ -538,7 +538,7 @@
 
   function loadPage() {
     loadCafeSettings();
-    loadTables();
+    loadTablesSettings();
     if (geofenceMapObj) {
       setTimeout(function () {
         geofenceMapObj.invalidateSize();
