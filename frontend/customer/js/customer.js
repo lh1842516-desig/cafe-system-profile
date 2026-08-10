@@ -1841,7 +1841,16 @@ async function openBillConfirmModal() {
 
     var hasWaitingOrPrep = activeTableOrders.some(function (o) {
       var s = String(o.kitchenStatus || 'pending').toLowerCase();
-      return s === 'pending' || s === 'held' || s === 'waiting' || s === 'new' || s === 'preparing' || o.awaitingCashierApproval;
+      return (
+        s === 'pending' ||
+        s === 'held' ||
+        s === 'waiting' ||
+        s === 'new' ||
+        s === 'preparing' ||
+        s === 'in_progress' ||
+        s === 'editing' ||
+        !!o.awaitingCashierApproval
+      );
     });
 
     var hasCompleted = activeTableOrders.some(function (o) {
@@ -1850,12 +1859,12 @@ async function openBillConfirmModal() {
     });
 
     if (!hasCompleted) {
-      showToast('❌ لا يمكنك طلب الفاتورة إلا بعد أن يصبح هناك طلب مكتمل على الطاولة.', 'error', 4500);
+      showToast('❌ لا يمكنك طلب الفاتورة إلا بعد أن يصبح هناك طلب مكتمل (جاهز) على الطاولة.', 'error', 4500);
       return;
     }
 
     if (hasWaitingOrPrep) {
-      showToast('❌ لا يمكنك طلب الفاتورة لأن هناك طلبات على الطاولة ما زالت قيد التجهيز.', 'error', 4500);
+      showToast('❌ لا يمكنك طلب الفاتورة لأن هناك طلبات على الطاولة ما زالت قيد الانتظار أو التجهيز.', 'error', 4500);
       return;
     }
 
