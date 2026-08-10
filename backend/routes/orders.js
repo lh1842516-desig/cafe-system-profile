@@ -420,23 +420,25 @@ function createOrdersRouter(io) {
         emitTableUpdate(io, { tableId: tableIdStr, status: 'occupied', sessionId: null });
       }
 
-      if (io) {
-        if (await kitchenCashierApproval.shouldHoldCustomerOrder(newOrder)) {
-          await kitchenCashierApproval.holdCustomerOrderForCashier(cafeId, io, newOrder, 'pending-cashier-approval');
-        } else {
+      const isHeldOrder = await kitchenCashierApproval.shouldHoldCustomerOrder(newOrder);
+      if (isHeldOrder) {
+        await kitchenCashierApproval.holdCustomerOrderForCashier(cafeId, io, newOrder, 'pending-cashier-approval');
+      } else {
+        await kitchenRepo.setKitchenStatus(cafeId, newOrder.id, 'new');
+        if (io) {
           if (needsTable) io.to(tableRoomName(tableId, cafeId)).emit('new-order', newOrder);
           kitchenCashierApproval.emitFullKitchenRelease(io, newOrder, 'new-order');
         }
-        if (config.DEBUG_SOCKET) {
-          console.log(
-            '[socket emit] order created',
-            newOrder.id,
-            'held:',
-            kitchenCashierApproval.isOrderHeld(cafeId, newOrder.id),
-            'clients:',
-            io.engine.clientsCount
-          );
-        }
+      }
+      if (io && config.DEBUG_SOCKET) {
+        console.log(
+          '[socket emit] order created',
+          newOrder.id,
+          'held:',
+          isHeldOrder,
+          'clients:',
+          io.engine.clientsCount
+        );
       }
       res.status(201).json({ ...newOrder, displayOrderId: orderRepo.getOrderDisplayId(cafeId, newOrder.id) });
     } catch (err) {
@@ -769,14 +771,26 @@ function createOrdersRouter(io) {
         return res.json({ orderId, status: 'pending', closed: false, awaitingCashierApproval: false });
       }
 
-      let order = sameId.find((o) => o && !o.closed && session && session.openDate && orderBelongsToSession(o, session));
-      if (!order) order = sameId.find((o) => o && !o.closed);
+      const openSameId = sameId
+        .filter((o) => o && !o.closed)
+        .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+      let order = openSameId.find((o) => session && session.openDate && orderBelongsToSession(o, session)) || openSameId[0];
+
       if (!order && sameId.length > 0) {
         const tid = sameId[0].tableId;
-        const activeTableOrder = orders.find((o) => o && !o.closed && String(o.tableId) === String(tid));
+        const activeTableOrder = orders
+          .filter((o) => o && !o.closed && String(o.tableId) === String(tid))
+          .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))[0];
         if (activeTableOrder) order = activeTableOrder;
       }
-      if (!order) order = sameId[sameId.length - 1];
+
+      if (!order) {
+        const closedSameId = sameId
+          .filter((o) => o && o.closed)
+          .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        order = closedSameId[0] || sameId[sameId.length - 1];
+      }
       if (order.closed) {
         const wasRejected =
           Boolean(order.rejectedByCashier) || order.cancelReason === 'cashier_rejected_approval';
