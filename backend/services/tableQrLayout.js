@@ -4,7 +4,7 @@
 const sharp = require('sharp');
 
 const WIFI_INSTRUCTION =
-  'يرجى الاتصال بشبكة Wi-Fi الخاصة بالكافيه قبل مسح الكود';
+  'امسح الكود، اطلب اللي يعجبك واطلب الحساب وأنت بمكانك';
 
 const LAYOUT = {
   width: 560,
@@ -42,8 +42,8 @@ function buildTableQrCardSvg(opts) {
   const qrY = cafeY + LAYOUT.gapAfterCafe;
   const tableY = qrY + qrSize + LAYOUT.gapAfterQr + 26;
   const wifiY = tableY + LAYOUT.gapAfterTable + 8;
-  const wifiLine1 = escapeXml('📶 يرجى الاتصال بشبكة Wi-Fi الخاصة بالكافيه');
-  const wifiLine2 = escapeXml('قبل مسح الكود');
+  const wifiLine1 = escapeXml('امسح الكود، اطلب اللي يعجبك');
+  const wifiLine2 = escapeXml('واطلب الحساب وأنت بمكانك');
   const H = wifiY + LAYOUT.wifiBlockHeight + LAYOUT.paddingBottom;
   const cx = W / 2;
 
