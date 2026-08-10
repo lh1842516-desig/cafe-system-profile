@@ -124,7 +124,6 @@ async function runFullMigration() {
         full_name: u.fullName || u.full_name || 'User',
         email,
         password_hash: u.passwordHash || u.password_hash || '$2b$10$fallback',
-        plain_password: u.plainPassword || u.plain_password || '',
         role: u.role || 'staff',
         status: u.status || 'active',
         created_at: u.createdAt || u.created_at || new Date().toISOString(),

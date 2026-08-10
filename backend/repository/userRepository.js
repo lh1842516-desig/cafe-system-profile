@@ -15,7 +15,6 @@ function mapUserFromDb(row) {
     fullName: row.full_name,
     email: row.email,
     passwordHash: row.password_hash,
-    plainPassword: row.plain_password || row.plainPassword || '',
     role: row.role,
     status: row.status,
     createdAt: row.created_at,
@@ -82,7 +81,6 @@ async function createUser(cafeId, userData) {
     full_name: String(userData.fullName || '').trim(),
     email: String(userData.email || '').trim().toLowerCase(),
     password_hash: String(userData.passwordHash || ''),
-    plain_password: String(userData.plainPassword || userData.password || ''),
     role: String(userData.role || 'CASHIER').toUpperCase(),
     status: String(userData.status || 'active').toLowerCase(),
     created_at: userData.createdAt || new Date().toISOString(),
@@ -140,7 +138,6 @@ async function updateUser(id, userData) {
   if (userData.fullName !== undefined) updateFields.full_name = String(userData.fullName).trim();
   if (userData.email !== undefined) updateFields.email = String(userData.email).trim().toLowerCase();
   if (userData.passwordHash !== undefined) updateFields.password_hash = String(userData.passwordHash);
-  if (userData.plainPassword !== undefined) updateFields.plain_password = String(userData.plainPassword);
   if (userData.role !== undefined) updateFields.role = String(userData.role).trim().toUpperCase();
   if (userData.status !== undefined) updateFields.status = String(userData.status).trim().toLowerCase();
   if (userData.cafeId !== undefined) updateFields.cafe_id = userData.cafeId || null;

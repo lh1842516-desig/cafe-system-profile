@@ -17,10 +17,8 @@ CREATE TABLE IF NOT EXISTS admin_auth (
 );
 
 -- =============================================================================
--- USERS (Staff & Admin Accounts - ensuring plain_password column)
+-- USERS (Staff & Admin Accounts)
 -- =============================================================================
-
-ALTER TABLE users ADD COLUMN IF NOT EXISTS plain_password TEXT;
 
 -- =============================================================================
 -- CATEGORIES (Ensuring sorting and unique constraints)

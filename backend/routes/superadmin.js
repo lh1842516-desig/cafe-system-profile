@@ -131,9 +131,9 @@ router.delete('/cafes/:id', async (req, res) => {
 router.get('/users', async (req, res) => {
   try {
     const list = await userRepository.getAllUsers();
-    // Exclude password hashes and plain passwords for security
+    // Exclude password hashes for security
     const sanitized = list.map(u => {
-      const { passwordHash, plainPassword, ...rest } = u;
+      const { passwordHash, ...rest } = u;
       return rest;
     });
     res.json(sanitized);
@@ -170,7 +170,6 @@ router.post('/users', async (req, res) => {
       fullName,
       email: normEmail,
       passwordHash,
-      plainPassword: password,
       role: targetRole,
       status: status || 'active',
     });
@@ -234,7 +233,7 @@ router.post('/users/:id/reset-password', async (req, res) => {
     if (!existing) return res.status(404).json({ error: 'المستخدم غير موجود' });
 
     const passwordHash = saasAuthService.hashPassword(password);
-    await userRepository.updateUser(req.params.id, { passwordHash, plainPassword: password });
+    await userRepository.updateUser(req.params.id, { passwordHash });
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
