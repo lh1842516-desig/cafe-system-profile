@@ -1812,31 +1812,33 @@ async function openBillConfirmModal() {
     var tableOrders = await apiFetch('/api/orders/table/' + TABLE_ID);
     if (!Array.isArray(tableOrders)) tableOrders = [];
 
-    var myOrders = tableOrders.filter(function (o) {
+    var activeTableOrders = tableOrders.filter(function (o) {
       if (o.closed || o.cancelledByCustomer || o.cancelReason === 'customer_cancel_pending') return false;
-      // فلترة صارمة — لا نستخدم الاسم لمنع تسرب بيانات زبائن آخرين على نفس الطاولة
-      if (o.customerSessionId && o.customerSessionId === SESSION_ID) return true;
-      if (state.orderId && String(o.id) === String(state.orderId)) return true;
-      return false;
+      return true;
     });
 
-    if (myOrders.length === 0) {
-      showToast('❌ لا يمكنك طلب الفاتورة إلا بعد أن يصبح لديك طلب مكتمل.', 'error', 4500);
+    if (activeTableOrders.length === 0) {
+      showToast('❌ لا يمكنك طلب الفاتورة إلا بعد أن يصبح هناك طلب مكتمل على الطاولة.', 'error', 4500);
       return;
     }
 
-    var hasWaitingOrPrep = myOrders.some(function (o) {
+    var hasWaitingOrPrep = activeTableOrders.some(function (o) {
       var s = String(o.kitchenStatus || 'pending').toLowerCase();
       return s === 'pending' || s === 'held' || s === 'waiting' || s === 'new' || s === 'preparing' || o.awaitingCashierApproval;
     });
 
-    var hasCompleted = myOrders.some(function (o) {
+    var hasCompleted = activeTableOrders.some(function (o) {
       var s = String(o.kitchenStatus || '').toLowerCase();
       return s === 'done' || s === 'completed';
     });
 
-    if (hasWaitingOrPrep || !hasCompleted) {
-      showToast('❌ لا يمكنك طلب الفاتورة إلا بعد أن يصبح لديك طلب مكتمل.', 'error', 4500);
+    if (!hasCompleted) {
+      showToast('❌ لا يمكنك طلب الفاتورة إلا بعد أن يصبح هناك طلب مكتمل على الطاولة.', 'error', 4500);
+      return;
+    }
+
+    if (hasWaitingOrPrep) {
+      showToast('❌ لا يمكنك طلب الفاتورة لأن هناك طلبات على الطاولة ما زالت قيد التجهيز.', 'error', 4500);
       return;
     }
 
