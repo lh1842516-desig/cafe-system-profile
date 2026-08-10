@@ -198,17 +198,26 @@
   function renderDineInTableGrid() {
     if (!cashierDineInTableGrid) return;
     var html = '';
-    for (var i = 1; i <= 20; i++) {
-      var id = String(i);
+    var list = Array.isArray(tables) && tables.length > 0 ? tables : [];
+    if (!list.length) {
+      for (var i = 1; i <= 20; i++) {
+        list.push({ id: String(i), label: String(i) });
+      }
+    }
+    list.forEach(function (t) {
+      var id = String(t && t.id != null ? t.id : '').trim();
+      if (!id) return;
+      var label = String((t && (t.label != null && t.label !== '' ? t.label : t.id)) || id).trim();
+      var isSelected = selectedDineInTableId === id;
       html +=
         '<button type="button" class="cashier-table-pick-btn' +
-        (selectedDineInTableId === id ? ' active' : '') +
+        (isSelected ? ' active' : '') +
         '" data-table-id="' +
-        id +
+        escapeHtml(id) +
         '">' +
-        i +
+        escapeHtml(label) +
         '</button>';
-    }
+    });
     cashierDineInTableGrid.innerHTML = html;
     cashierDineInTableGrid.querySelectorAll('.cashier-table-pick-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -717,6 +726,8 @@
         }
       });
     });
+
+    renderDineInTableGrid();
   }
 
   function selectTable(tableId) {
