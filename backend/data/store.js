@@ -88,7 +88,7 @@ function orderFromDb(row) {
 function orderToDb(order) {
   return {
     id: order.id,
-    cafe_id: _cafeId,
+    cafe_id: order.cafeId || order.cafe_id || _cafeId,
     table_id: order.tableId || null,
     order_type: order.orderType || 'DINE_IN',
     items: order.items || [],
@@ -96,7 +96,7 @@ function orderToDb(order) {
     open_date: order.open_date || null,
     cash_session_id: order.cash_session_id || null,
     till_opened_at: order.tillOpenedAt || null,
-    closed: order.closed || false,
+    closed: order.closed === true,
     closed_at: order.closedAt || null,
     payment_method: order.paymentMethod || null,
     customer_name: order.customerName || null,

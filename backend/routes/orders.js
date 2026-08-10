@@ -191,7 +191,7 @@ function createOrdersRouter(io) {
         return res.status(400).json({ error: 'لا توجد قاصة مفتوحة حالياً، يرجى فتح قاصة أولاً.' });
       }
       const ordersRaw = await orderRepo.getOrdersByTable(cafeId, req.params.tableId);
-      const orders = ordersRaw.filter((o) => orderBelongsToSession(o, session));
+      const orders = ordersRaw.filter((o) => !o.closed && orderBelongsToSession(o, session));
       const list = await Promise.all(orders.map(async (o) => {
         const ks = await kitchenRepo.getKitchenStatus(cafeId, o.id);
         const isHeld = await kitchenCashierApproval.isOrderHeld(cafeId, o.id);

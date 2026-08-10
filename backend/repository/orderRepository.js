@@ -72,24 +72,25 @@ async function getOrdersByTable(cafeId, tableId) {
   if (!tid) return [];
   const cached = store.getOrdersByTable(cafeId, tid);
   if (cached && Array.isArray(cached) && cached.length > 0) {
-    return cached;
+    return cached.filter(o => !o.closed);
   }
-  if (!cafeId) return store.getOrdersByTable(cafeId, tableId);
+  if (!cafeId) return store.getOrdersByTable(cafeId, tableId).filter(o => !o.closed);
   try {
     const supabase = getClient();
     const { data, error } = await supabase
       .from('orders')
       .select('*')
       .eq('cafe_id', cafeId)
-      .eq('table_id', tid);
+      .eq('table_id', tid)
+      .eq('closed', false);
     if (error) {
       console.error('[orderRepository] getOrdersByTable error:', error.message);
-      return store.getOrdersByTable(cafeId, tableId);
+      return store.getOrdersByTable(cafeId, tableId).filter(o => !o.closed);
     }
-    return (data || []).map(orderFromDb);
+    return (data || []).map(orderFromDb).filter(o => !o.closed);
   } catch (err) {
     console.error('[orderRepository] getOrdersByTable exception:', err.message);
-    return store.getOrdersByTable(cafeId, tableId);
+    return store.getOrdersByTable(cafeId, tableId).filter(o => !o.closed);
   }
 }
 
@@ -109,7 +110,7 @@ async function getOrdersBlockingTableClaim(cafeId, tableId) {
       console.error('[orderRepository] getOrdersBlockingTableClaim error:', error.message);
       return store.getOrdersBlockingTableClaim(cafeId, tableId);
     }
-    return (data || []).map(orderFromDb);
+    return (data || []).map(orderFromDb).filter(o => !o.closed);
   } catch (err) {
     console.error('[orderRepository] getOrdersBlockingTableClaim exception:', err.message);
     return store.getOrdersBlockingTableClaim(cafeId, tableId);
@@ -117,7 +118,25 @@ async function getOrdersBlockingTableClaim(cafeId, tableId) {
 }
 
 async function getAllOrdersForTable(cafeId, tableId) {
-  return await getOrdersByTable(cafeId, tableId);
+  const tid = String(tableId || '').trim();
+  if (!tid) return [];
+  if (!cafeId) return store.getOrders(cafeId).filter(o => String(o.tableId || '').trim() === tid);
+  try {
+    const supabase = getClient();
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('cafe_id', cafeId)
+      .eq('table_id', tid);
+    if (error) {
+      console.error('[orderRepository] getAllOrdersForTable error:', error.message);
+      return store.getOrders(cafeId).filter(o => String(o.tableId || '').trim() === tid);
+    }
+    return (data || []).map(orderFromDb);
+  } catch (err) {
+    console.error('[orderRepository] getAllOrdersForTable exception:', err.message);
+    return store.getOrders(cafeId).filter(o => String(o.tableId || '').trim() === tid);
+  }
 }
 
 function getOrderDisplayId(cafeId, seq) {
