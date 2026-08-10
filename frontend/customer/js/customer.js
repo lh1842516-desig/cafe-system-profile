@@ -167,6 +167,10 @@ function getActiveOrderCache() {
 var WAITER_COOLDOWN_MS = 60000;
 var lastWaiterCall = 0;
 
+// Bill request cooldown: 60s between calls (same as waiter cooldown)
+var BILL_COOLDOWN_MS = 60000;
+var lastBillCall = 0;
+
 /* ══════════════════════════════════════════════════════════
    2. STATE
 ══════════════════════════════════════════════════════════ */
@@ -1803,6 +1807,19 @@ function handleCallWaiter() {
 }
 
 async function openBillConfirmModal() {
+  var now = Date.now();
+  var lastCallTime = 0;
+  try {
+    lastCallTime = Number(getPersistedItem('cust_last_bill_call_' + TABLE_ID)) || 0;
+  } catch (_) {}
+  lastCallTime = Math.max(lastBillCall, lastCallTime);
+
+  if (now - lastCallTime < BILL_COOLDOWN_MS) {
+    var remaining = Math.ceil((BILL_COOLDOWN_MS - (now - lastCallTime)) / 1000);
+    showToast('يرجى الانتظار ' + remaining + ' ثانية قبل طلب الحساب مرة أخرى', 'info', 4000);
+    return;
+  }
+
   if (state.isBillRequested) {
     showToast('⚠️ تم طلب الفاتورة لهذه الطاولة مسبقاً، سيصل النادل قريباً.', 'info', 4000);
     return;
@@ -1851,6 +1868,12 @@ function closeBillConfirmModal() {
   $('billConfirmModal').classList.remove('open');
 }
 function confirmRequestBill() {
+  var now = Date.now();
+  lastBillCall = now;
+  try {
+    setPersistedItem('cust_last_bill_call_' + TABLE_ID, String(now));
+  } catch (_) {}
+
   state.isBillRequested = true;
   emitStaffEvent('customer_request_bill');
   closeBillConfirmModal();
