@@ -29,7 +29,11 @@ function authenticateToken(req, res, next) {
     const decoded = saasAuthService.verifyToken(token);
     if (decoded) {
       req.user = decoded;
-      req.cafeId = explicitCafeId || decoded.cafeId || getDefaultCafeId();
+      const isSuperadmin = String(decoded.role || '').toUpperCase() === 'SUPERADMIN';
+      if (explicitCafeId && !isSuperadmin && decoded.cafeId && explicitCafeId !== decoded.cafeId) {
+        return res.status(403).json({ error: 'غير مصرح للوصول إلى بيانات كافيه آخر.' });
+      }
+      req.cafeId = (isSuperadmin && explicitCafeId) ? explicitCafeId : (decoded.cafeId || explicitCafeId || getDefaultCafeId());
       return next();
     }
   }
@@ -83,7 +87,11 @@ function optionalToken(req, res, next) {
     const decoded = saasAuthService.verifyToken(token);
     if (decoded) {
       req.user = decoded;
-      req.cafeId = explicitCafeId || decoded.cafeId || getDefaultCafeId();
+      const isSuperadmin = String(decoded.role || '').toUpperCase() === 'SUPERADMIN';
+      if (explicitCafeId && !isSuperadmin && decoded.cafeId && explicitCafeId !== decoded.cafeId) {
+        return res.status(403).json({ error: 'غير مصرح للوصول إلى بيانات كافيه آخر.' });
+      }
+      req.cafeId = (isSuperadmin && explicitCafeId) ? explicitCafeId : (decoded.cafeId || explicitCafeId || getDefaultCafeId());
       return next();
     }
   }

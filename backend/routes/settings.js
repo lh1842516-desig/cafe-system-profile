@@ -64,17 +64,29 @@ function removeExistingLogoFiles(cafeId) {
   } catch (_) {}
 }
 
-function emitSettingsUpdated(io, payload) {
+function emitSettingsUpdated(io, payload, cafeId) {
   if (!io) return;
   try {
-    io.emit('cafe-settings-updated', payload || {});
+    const cid = String(cafeId || (payload && payload.cafeId) || '').trim();
+    if (cid) {
+      io.to('cafe-' + cid + '-staff').emit('cafe-settings-updated', payload || {});
+      io.to('cafe-' + cid + '-customer').emit('cafe-settings-updated', payload || {});
+    } else {
+      io.emit('cafe-settings-updated', payload || {});
+    }
   } catch (_) {}
 }
 
-function emitTablesUpdated(io, payload) {
+function emitTablesUpdated(io, payload, cafeId) {
   if (!io) return;
   try {
-    io.emit('tables-updated', payload || {});
+    const cid = String(cafeId || (payload && payload.cafeId) || '').trim();
+    if (cid) {
+      io.to('cafe-' + cid + '-staff').emit('tables-updated', payload || {});
+      io.to('cafe-' + cid + '-customer').emit('tables-updated', payload || {});
+    } else {
+      io.emit('tables-updated', payload || {});
+    }
   } catch (_) {}
 }
 
@@ -105,7 +117,7 @@ function createSettingsRouter(io) {
       if (!saved.requireCashierKitchenApproval) {
         approvedOrderIds = await kitchenCashierApproval.approveAllHeldOrdersForCashier(cafeId, io);
       }
-      emitSettingsUpdated(io, saved);
+      emitSettingsUpdated(io, saved, cafeId);
       res.json({
         settings: saved,
         approvedOrderIds: approvedOrderIds,
@@ -130,7 +142,7 @@ function createSettingsRouter(io) {
       if (body.enableGeofence !== undefined) updates.enableGeofence = !!body.enableGeofence;
 
       const saved = await cafeSettingsStore.saveCafeSettings(cafeId, updates);
-      emitSettingsUpdated(io, saved);
+      emitSettingsUpdated(io, saved, cafeId);
       res.json(saved);
     } catch (err) {
       res.status(500).json({ error: err.message || 'فشل حفظ إعدادات الموقع' });
@@ -163,7 +175,7 @@ function createSettingsRouter(io) {
           );
         }
       }
-      emitSettingsUpdated(io, saved);
+      emitSettingsUpdated(io, saved, cafeId);
       res.json(Object.assign({}, saved, { tableQrsRegenerated: tableQrsRegenerated }));
     } catch (err) {
       res.status(500).json({ error: err.message || 'فشل حفظ الإعدادات' });
@@ -202,7 +214,7 @@ function createSettingsRouter(io) {
         } catch (_) {}
 
         const saved = await cafeSettingsStore.saveCafeSettings(cafeId, { logoUrl });
-        emitSettingsUpdated(io, saved);
+        emitSettingsUpdated(io, saved, cafeId);
         res.json(saved);
       } catch (e2) {
         res.status(500).json({ error: e2.message || 'فشل حفظ الشعار' });
@@ -215,7 +227,7 @@ function createSettingsRouter(io) {
       const cafeId = req.cafeId;
       removeExistingLogoFiles(cafeId);
       const saved = await cafeSettingsStore.clearLogoUrl(cafeId);
-      emitSettingsUpdated(io, saved);
+      emitSettingsUpdated(io, saved, cafeId);
       res.json(saved);
     } catch (err) {
       res.status(500).json({ error: err.message || 'فشل حذف الشعار' });
@@ -239,7 +251,7 @@ function createSettingsRouter(io) {
     try {
       const cafeId = req.cafeId;
       const result = await tableManagementService.addTable(cafeId, req);
-      emitTablesUpdated(io, { reason: 'table-added', tableId: result.table.id });
+      emitTablesUpdated(io, { reason: 'table-added', tableId: result.table.id }, cafeId);
       res.status(201).json(result);
     } catch (err) {
       res.status(err.status || 500).json({ error: err.message || 'فشل إضافة الطاولة' });
@@ -250,7 +262,7 @@ function createSettingsRouter(io) {
     try {
       const cafeId = req.cafeId;
       const result = await tableManagementService.deleteTable(cafeId, req.params.tableId, req);
-      emitTablesUpdated(io, { reason: 'table-deleted', tableId: result.deletedId });
+      emitTablesUpdated(io, { reason: 'table-deleted', tableId: result.deletedId }, cafeId);
       res.json(result);
     } catch (err) {
       const code = err.status || 500;
@@ -269,7 +281,7 @@ function createSettingsRouter(io) {
     try {
       const cafeId = req.cafeId;
       const result = await tableManagementService.regenerateTableQr(cafeId, req.params.tableId, req);
-      emitTablesUpdated(io, { reason: 'qr-regenerated', tableId: result.tableId });
+      emitTablesUpdated(io, { reason: 'qr-regenerated', tableId: result.tableId }, cafeId);
       res.json(result);
     } catch (err) {
       res.status(err.status || 500).json({ error: err.message || 'فشل توليد QR' });

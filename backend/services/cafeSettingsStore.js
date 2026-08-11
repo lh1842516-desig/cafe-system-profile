@@ -1,23 +1,30 @@
 const path = require('path');
 const fs = require('fs');
+const { getClient } = require('../lib/supabase');
 
-const LOCAL_SETTINGS_FILE = path.join(__dirname, '..', 'data', 'cafe-settings.json');
+function getLocalSettingsFile(cafeId) {
+  const cid = String(cafeId || 'default').trim();
+  const safeId = cid.replace(/[^a-zA-Z0-9_-]/g, '_');
+  return path.join(__dirname, '..', 'data', `cafe-settings-${safeId}.json`);
+}
 
-function readLocalSettings() {
+function readLocalSettings(cafeId) {
   try {
-    if (fs.existsSync(LOCAL_SETTINGS_FILE)) {
-      const raw = fs.readFileSync(LOCAL_SETTINGS_FILE, 'utf8');
+    const filePath = getLocalSettingsFile(cafeId);
+    if (fs.existsSync(filePath)) {
+      const raw = fs.readFileSync(filePath, 'utf8');
       return JSON.parse(raw) || {};
     }
   } catch (_) {}
   return {};
 }
 
-function writeLocalSettings(updates) {
+function writeLocalSettings(cafeId, updates) {
   try {
-    const current = readLocalSettings();
+    const filePath = getLocalSettingsFile(cafeId);
+    const current = readLocalSettings(cafeId);
     const merged = Object.assign({}, current, updates);
-    fs.writeFileSync(LOCAL_SETTINGS_FILE, JSON.stringify(merged, null, 2), 'utf8');
+    fs.writeFileSync(filePath, JSON.stringify(merged, null, 2), 'utf8');
     return merged;
   } catch (err) {
     console.error('[cafeSettingsStore] writeLocalSettings error:', err.message);
@@ -36,8 +43,8 @@ const DEFAULT_SETTINGS = {
 
 const settingsCacheMap = new Map();
 
-function normalizeSettings(raw) {
-  const local = readLocalSettings();
+function normalizeSettings(raw, cafeId) {
+  const local = readLocalSettings(cafeId);
   const src = Object.assign({}, local, raw && typeof raw === 'object' ? raw : {});
 
   const name = String(src.cafeName != null ? src.cafeName : (local.cafeName || DEFAULT_SETTINGS.cafeName)).trim();
@@ -72,20 +79,22 @@ async function getCafeSettings(cafeId) {
     }
   }
 
-  const local = readLocalSettings();
+  const local = readLocalSettings(cid);
 
   try {
     const supabase = getClient();
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
 
-    let targetId = cid;
-    if (!targetId || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetId)) {
-      const { data: cafes } = await supabase.from('cafes').select('id, name, logo_url').limit(1);
-      if (cafes && cafes.length > 0) {
+    let targetId = isUuid ? cid : null;
+
+    if (!targetId && !cid) {
+      const { data: cafes } = await supabase.from('cafes').select('id').limit(2);
+      if (cafes && cafes.length === 1) {
         targetId = cafes[0].id;
       }
     }
 
-    if (!targetId) return normalizeSettings(local);
+    if (!targetId) return normalizeSettings(local, cid);
 
     let cafeName = local.cafeName || DEFAULT_SETTINGS.cafeName;
     let logoUrl = local.logoUrl || null;
@@ -124,29 +133,33 @@ async function getCafeSettings(cafeId) {
       longitude,
       allowedRadius,
       enableGeofence,
-    });
+    }, cid);
     if (cid) settingsCacheMap.set(cid, { data: resObj, ts: Date.now() });
     return resObj;
   } catch (err) {
     console.error('[cafeSettingsStore] getCafeSettings exception:', err.message);
-    return normalizeSettings(local);
+    return normalizeSettings(local, cid);
   }
 }
 
 async function saveCafeSettings(cafeId, partial) {
-  settingsCacheMap.clear();
-  writeLocalSettings(partial);
   const cid = String(cafeId || '').trim();
+  if (cid) settingsCacheMap.delete(cid);
+  else settingsCacheMap.clear();
+
+  writeLocalSettings(cid, partial);
 
   try {
     const supabase = getClient();
-    let targetId = cid;
-    if (!targetId || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(targetId)) {
-      const { data: cafes } = await supabase.from('cafes').select('id').limit(1);
-      if (cafes && cafes.length > 0) targetId = cafes[0].id;
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cid);
+    let targetId = isUuid ? cid : null;
+
+    if (!targetId && !cid) {
+      const { data: cafes } = await supabase.from('cafes').select('id').limit(2);
+      if (cafes && cafes.length === 1) targetId = cafes[0].id;
     }
 
-    if (!targetId) return normalizeSettings(partial);
+    if (!targetId) return normalizeSettings(partial, cid);
 
     const cafeUpdates = {};
     if (partial.cafeName !== undefined) cafeUpdates.name = String(partial.cafeName).trim();
@@ -175,7 +188,7 @@ async function saveCafeSettings(cafeId, partial) {
     return await getCafeSettings(targetId);
   } catch (err) {
     console.error('[cafeSettingsStore] saveCafeSettings exception:', err.message);
-    return normalizeSettings(partial);
+    return normalizeSettings(partial, cid);
   }
 }
 

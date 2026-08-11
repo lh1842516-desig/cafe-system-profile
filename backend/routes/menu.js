@@ -48,7 +48,7 @@ function createMenuRouter(io) {
 
   router.get('/', async (req, res) => {
     try {
-      const cafeId = req.cafeId || '565c3b73-73be-45e1-9d38-92bc4a43db03';
+      const cafeId = req.cafeId || require('../lib/cafeContext').getDefaultCafeId();
       const menu = await menuRepo.getMenu(cafeId).catch(() => []);
       res.status(200).json(normalizeMenuList(menu || []));
     } catch (err) {

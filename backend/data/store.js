@@ -46,10 +46,10 @@ function menuItemFromDb(row) {
     createdAt: row.created_at,
   };
 }
-function menuItemToDb(item) {
+function menuItemToDb(item, cafeId) {
   return {
     id: item.id,
-    cafe_id: _cafeId,
+    cafe_id: cafeId || item.cafeId || item.cafe_id || _cafeId,
     name: item.name,
     price: Number(item.price) || 0,
     category: item.category || '',
@@ -112,10 +112,10 @@ function orderToDb(order) {
 function tableFromDb(row) {
   return { id: row.id, label: row.label };
 }
-function tableToDb(t) {
+function tableToDb(t, cafeId) {
   const id = String(t && t.id != null ? t.id : '').trim();
   const label = String(t && t.label != null ? t.label : id).trim() || id;
-  return { id, cafe_id: _cafeId, label };
+  return { id, cafe_id: cafeId || (t && (t.cafeId || t.cafe_id)) || _cafeId, label };
 }
 
 function closingFromDb(row) {
@@ -145,7 +145,7 @@ function closingFromDb(row) {
     totalSales_legacy: Number(row.total_sales) || 0,
   };
 }
-function closingToDb(c) {
+function closingToDb(c, cafeId) {
   const totalSales = (Number(c.salesCash) || 0) + (Number(c.salesCard) || 0) || Number(c.totalSales) || 0;
   const expensesList = Array.isArray(c.expenses) ? c.expenses : [];
   const withdrawalsList = Array.isArray(c.withdrawals) ? c.withdrawals : [];
@@ -156,7 +156,7 @@ function closingToDb(c) {
   const net = typeof c.net === 'number' ? c.net :
     (Number(c.openingBalance) || 0) + totalSales - totalExpenses - totalWithdrawals;
   return {
-    cafe_id: _cafeId,
+    cafe_id: cafeId || c.cafeId || c.cafe_id || _cafeId,
     date: c.date || '',
     open_date: c.open_date || c.date || '',
     open_time: c.open_time || '',
@@ -643,7 +643,7 @@ async function addTillClosing(cafeId, till, salesCash, salesCard) {
   if (targetCafeId) {
     const supabase = getClient();
     try {
-      await supabase.from('closings').insert([{ ...closingToDb(record), cafe_id: targetCafeId }]);
+      await supabase.from('closings').insert([{ ...closingToDb(record, targetCafeId), cafe_id: targetCafeId }]);
     } catch (err) {
       console.error('[store] addTillClosing error:', err.message);
     }
