@@ -15,7 +15,9 @@ function orderToArchiveRecord(order) {
     qty: it.quantity || it.qty || 1,
     price: it.price || 0,
   }));
-  const total = items.reduce((s, it) => s + it.price * it.qty, 0);
+  const total = order.total != null && !Number.isNaN(Number(order.total))
+    ? Number(order.total)
+    : items.reduce((s, it) => s + it.price * it.qty, 0);
   const d = order.closedAt ? new Date(order.closedAt) : new Date();
   const time = pad2(d.getHours()) + ':' + pad2(d.getMinutes());
   const tableId = order.tableId != null ? String(order.tableId) : (order.table != null ? String(order.table) : '');
@@ -220,7 +222,30 @@ async function getReportAsync(cafeId, type, dateStr) {
     } catch (_) {}
   }
 
-  return aggregateDays(daysMap);
+  const report = aggregateDays(daysMap);
+  try {
+    const closingRepo = require('../repository/closingRepository');
+    const parts = dateStr.trim().split('-');
+    let closingsList = [];
+    if (type === 'day' && parts.length >= 3) {
+      closingsList = await closingRepo.getClosingsByOpenDate(cid, dateStr.trim());
+    } else if (type === 'month' && parts.length >= 2) {
+      const m = String(parts[1]).padStart(2, '0');
+      const lastDay = new Date(Number(parts[0]), Number(m), 0).getDate();
+      const start = `${parts[0]}-${m}-01`;
+      const end = `${parts[0]}-${m}-${String(lastDay).padStart(2, '0')}`;
+      closingsList = await closingRepo.getClosingsByOpenDateRange(cid, start, end);
+    } else if (type === 'year') {
+      closingsList = await closingRepo.getClosingsByOpenDateRange(cid, `${parts[0]}-01-01`, `${parts[0]}-12-31`);
+    }
+    if (Array.isArray(closingsList) && closingsList.length > 0) {
+      const closingsSalesSum = closingsList.reduce((sum, c) => sum + (Number(c.totalSales) || 0), 0);
+      report.totalProfit = closingsSalesSum;
+    }
+  } catch (e) {
+    console.error('[archive] Error matching totalProfit from closings:', e.message);
+  }
+  return report;
 }
 
 function getReport(cafeId, type, dateStr) {

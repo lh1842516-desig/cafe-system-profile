@@ -2271,6 +2271,12 @@
         ? api.closings.listByOpenDate(range.start)
         : api.closings.listByOpenDateRange(range.start, range.end);
       var [data, closingsList] = await Promise.all([reportPromise, closingsPromise]);
+      if (data && Array.isArray(closingsList) && closingsList.length > 0) {
+        var closingsSum = closingsList.reduce(function (s, c) {
+          return s + (Number(c.totalSales) || 0);
+        }, 0);
+        data.totalProfit = closingsSum;
+      }
       renderArchiveReport(data);
       renderArchiveClosings(closingsList, type, dateVal, range);
     } catch (err) {
